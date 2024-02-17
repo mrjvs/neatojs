@@ -1,1 +1,1 @@
-export const hello = 'hello world';
+export { makeRouter } from './router/create';

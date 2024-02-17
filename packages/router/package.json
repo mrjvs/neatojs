@@ -21,7 +21,9 @@
     }
   },
   "eslintConfig": {
-    "extends": ["@repo/eslint-config"]
+    "extends": [
+      "@repo/eslint-config"
+    ]
   },
   "prettier": "@repo/prettier-config",
   "scripts": {
@@ -31,8 +33,12 @@
     "lint:fix": "eslint --fix-all ."
   },
   "devDependencies": {
-    "@repo/prettier-config": "workspace:*",
     "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*"
+  },
+  "dependencies": {
+    "fastify": "^4.26.1",
+    "fastify-type-provider-zod": "^1.1.9"
   }
 }
