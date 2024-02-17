@@ -1,12 +1,15 @@
 {
-  "name": "@neato/router",
-  "version": "0.0.1",
-  "description": "A clean route manager based on fastify",
+  "name": "@neato/config",
+  "version": "3.0.0",
+  "description": "Cloud-native type-safe configuration",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
+  ],
+  "keywords": [
+    "config"
   ],
   "exports": {
     ".": {
@@ -38,7 +41,9 @@
     "@repo/typescript-config": "workspace:*"
   },
   "dependencies": {
-    "fastify": "^4.26.1",
-    "fastify-type-provider-zod": "^1.1.9"
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.1",
+    "joi": "^17",
+    "zod": "^3"
   }
 }
