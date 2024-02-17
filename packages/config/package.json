@@ -38,7 +38,8 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.19"
   },
   "dependencies": {
     "chalk": "^4.1.2",

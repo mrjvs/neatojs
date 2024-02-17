@@ -1,4 +1,4 @@
-import type { Schema, Description } from 'utils/joiTypes';
+import type { Schema, Description } from 'utils/joi-types';
 import type { ConfigSchemaType } from 'builder/schema';
 import { LoaderInputError, ValidationError } from 'utils/errors';
 

@@ -1,5 +1,5 @@
-import type { AnyZodObject, TypeOf } from 'utils/zodTypes';
-import type { ObjectSchema } from 'utils/joiTypes';
+import type { ObjectSchema } from 'utils/joi-types';
+import type { AnyZodObject, TypeOf } from 'utils/zod-types';
 import type { ConfigKeys } from 'loaders/base';
 import type { CLILoader } from 'loaders/cli';
 import { getKeysFromCLI } from 'loaders/cli';

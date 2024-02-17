@@ -1,5 +1,5 @@
-import type { ObjectSchema } from 'utils/joiTypes';
 import type { AnyZodObject, z } from 'zod';
+import type { ObjectSchema } from 'utils/joi-types';
 import type { ConfigBuilder, ConfigLoader } from 'builder/base';
 import { loadLoaders } from 'builder/base';
 import { populateLoaderFromCLI } from 'loaders/cli';

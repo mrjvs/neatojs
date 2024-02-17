@@ -19,7 +19,7 @@ export {
 } from 'utils/errors';
 
 // utils
-export { zodCoercedBoolean } from 'utils/zodTypes';
+export { zodCoercedBoolean } from 'utils/zod-types';
 
 // types
 export type { ConfigBuilder } from 'builder/base';
