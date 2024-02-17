@@ -1,0 +1,38 @@
+{
+  "name": "@neato/router",
+  "version": "0.0.1",
+  "description": "A clean route manager based on fastify",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "eslintConfig": {
+    "extends": ["@repo/eslint-config"]
+  },
+  "prettier": "@repo/prettier-config",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix-all ."
+  },
+  "devDependencies": {
+    "@repo/prettier-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
+  }
+}

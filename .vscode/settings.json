@@ -1,0 +1,13 @@
+{
+  "editor.codeActionsOnSave": [
+    "source.fixAll.eslint"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "pattern": "./packages/*/"
+    },
+    {
+      "pattern": "./apps/*/"
+    }
+  ]
+}

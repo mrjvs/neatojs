@@ -1,0 +1,17 @@
+{
+  "name": "neatojs",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.14.1",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel --concurrency 25",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "turbo": "1.11.3",
+    "tsup": "7.2.0"
+  }
+}
