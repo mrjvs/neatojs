@@ -1,10 +1,6 @@
-const { resolve } = require("node:path");
 const prettierConfig = require("@repo/prettier-config");
 
-const project = resolve(__dirname, "tsconfig.json");
-
 module.exports = {
-  root: true,
   extends: [
     "eslint:recommended",
     require.resolve("@vercel/style-guide/eslint/node"),
@@ -12,13 +8,13 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   parserOptions: {
-    project,
+    project: "./tsconfig.json",
   },
   settings: {
     "prettier/prettier": ["error", {}, prettierConfig],
     "import/resolver": {
       typescript: {
-        project,
+        project: "./tsconfig.json",
       },
     },
   },
