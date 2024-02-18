@@ -14,4 +14,4 @@
 - @neato/email - JSX based email template engine
 - @neato/config - load configurations from various sources with type-safety and validation
 - @neato/auth - fully fledged authentication system, including permissions
-- @neato/guider - documentation generator framework based on nextjs
+- @neato/guider - beautiful documentation generator framework based on nextjs
