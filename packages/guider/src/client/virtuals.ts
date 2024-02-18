@@ -1,1 +1,1 @@
-export { default as Test } from '@neato/guider/loader!?virtual';
+export { theme } from '@neato/guider/loader!?virtual';

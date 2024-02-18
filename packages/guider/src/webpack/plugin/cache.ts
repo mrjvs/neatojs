@@ -1,19 +1,23 @@
+export type VirtualCache = {
+  items: string[];
+  themeFile: string;
+};
+
 function makeVirtualCache() {
-  let items: string[] = [];
-  let themeFile = '';
+  const cache: VirtualCache = {
+    items: [],
+    themeFile: '',
+  };
 
   return {
     setItems(newItems: string[]) {
-      items = newItems;
+      cache.items = newItems;
     },
     setThemeFile(newThemeFile: string) {
-      themeFile = newThemeFile;
+      cache.themeFile = newThemeFile;
     },
     get() {
-      return {
-        items,
-        themeFile,
-      };
+      return cache;
     },
   };
 }

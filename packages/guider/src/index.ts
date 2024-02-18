@@ -1,29 +1,16 @@
 import type { NextConfig } from 'next';
 import { GuiderPlugin } from './webpack/plugin/plugin';
+import type { GuiderInitConfig } from './types';
 
 export { getGuiderPluginCache } from './webpack/plugin/plugin';
 
-export interface GuiderInitConfig {
-  themeConfig: string | string[];
-}
-
-const guiderDefaultConfig: GuiderInitConfig = {
-  themeConfig: [
-    './guider.config.jsx',
-    './guider.config.js',
-    './guider.config.tsx',
-    './guider.config.ts',
-  ],
-};
-
-export function guider(initConfig: Partial<GuiderInitConfig>) {
-  const _guiderConfig: GuiderInitConfig = {
-    ...guiderDefaultConfig,
+export function guider(initConfig: GuiderInitConfig) {
+  const guiderConfig: GuiderInitConfig = {
     ...initConfig,
   };
 
   function withGuider(nextConfig: NextConfig = {}): NextConfig {
-    const guiderPlugin = new GuiderPlugin();
+    const guiderPlugin = new GuiderPlugin(guiderConfig);
     return {
       ...nextConfig,
       pageExtensions: [

@@ -1,3 +1,8 @@
 declare module '@neato/guider' {
-  export function getGuiderPluginCache(): any;
+  type VirtualCache = {
+    items: string[];
+    themeFile: string;
+  };
+
+  export function getGuiderPluginCache(): VirtualCache;
 }
