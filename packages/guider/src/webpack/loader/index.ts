@@ -9,14 +9,14 @@ export interface LoaderOptions {
 
 async function loader(
   context: LoaderContext<LoaderOptions>,
-  _source: string,
+  source: string,
 ): Promise<string> {
   const { type } = context.getOptions();
   context.cacheable(true);
 
   if (context.resourceQuery === '?virtual') return virtualLoader();
   if (type === 'meta') return metaLoader();
-  if (type === 'mdx') return mdLoader();
+  if (type === 'mdx') return mdLoader(source);
 
   throw new Error(`Loader used with incorrect type (${type})`);
 }

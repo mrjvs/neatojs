@@ -10,7 +10,6 @@
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
-    "module": "esnext",
     "resolveJsonModule": true,
     "jsx": "preserve"
   },

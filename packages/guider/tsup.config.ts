@@ -4,9 +4,11 @@ export default defineConfig([
   {
     name: 'guider',
     entry: ['src/index.ts', 'src/loader.ts'],
-    external: ['@neato/guider'], // the loader imports the standard entry for the cache
     format: 'cjs',
     dts: true,
+
+    // the loader imports the standard entrypoint for the cache
+    external: ['@neato/guider'],
   },
   {
     name: 'guider-client',

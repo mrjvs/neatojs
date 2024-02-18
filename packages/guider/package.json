@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Documentation site generator framework based on Next.js",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
   ],
@@ -44,14 +43,22 @@
     "lint:fix": "eslint --fix ."
   },
   "peerDependencies": {
-    "next": ">=14.1.0"
+    "next": ">=14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@mdx-js/mdx": "^3.0.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/react": "18.2.56",
     "@types/webpack": "^5.28.5",
+    "gray-matter": "^4.0.3",
     "next": "^14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remark-frontmatter": "^5.0.0",
     "tsup": "7.2.0",
     "webpack-virtual-modules": "^0.6.1"
   },
