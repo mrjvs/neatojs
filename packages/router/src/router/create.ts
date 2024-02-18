@@ -106,7 +106,7 @@ function makeHandler<
   TypeProvider,
   Logger
 > {
-  return async (req, reply): Promise<void> => {
+  return async (req, reply) => {
     const res = await handler({
       body: req.body,
       params: req.params,
