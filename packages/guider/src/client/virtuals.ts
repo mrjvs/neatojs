@@ -1,1 +1,1 @@
-export { theme } from '@neato/guider/loader!?virtual';
+export { theme, type GuiderThemeConfig } from '@neato/guider/loader!?virtual';

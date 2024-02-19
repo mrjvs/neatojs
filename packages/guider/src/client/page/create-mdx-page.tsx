@@ -1,4 +1,4 @@
-import { theme } from '@neato/guider/client';
+import { GuiderLayout } from './layout';
 
 export type CreateMdxPageOptions = {
   MDXContent: (props: any) => any;
@@ -12,10 +12,8 @@ export type CreateMdxPageOptions = {
 export function createMdxPage(opts: CreateMdxPageOptions) {
   const Content = opts.MDXContent;
   return () => (
-    <div>
-      <p>theme: {theme}</p>
-      <p>layout: {opts.pageOpts.meta.layout}</p>
+    <GuiderLayout>
       <Content />
-    </div>
+    </GuiderLayout>
   );
 }
