@@ -1,5 +1,4 @@
 import type { LoaderContext } from 'webpack';
-import { metaLoader } from './meta-loader';
 import { mdLoader } from './md-loader';
 import { virtualLoader } from './virtual-loader';
 
@@ -15,7 +14,6 @@ async function loader(
   context.cacheable(true);
 
   if (context.resourceQuery === '?virtual') return virtualLoader();
-  if (type === 'meta') return metaLoader();
   if (type === 'mdx') return mdLoader(source);
 
   throw new Error(`Loader used with incorrect type (${type})`);

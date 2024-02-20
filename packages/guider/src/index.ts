@@ -21,33 +21,18 @@ export function guider(initConfig: GuiderInitConfig) {
         if (!config.plugins) config.plugins = [];
         config.plugins.push(guiderPlugin);
 
-        config.module.rules.push(
-          {
-            test: /\.mdx?$/,
-            use: [
-              options.defaultLoaders.babel,
-              {
-                loader: '@neato/guider/loader',
-                options: {
-                  type: 'mdx',
-                },
+        config.module.rules.push({
+          test: /\.mdx?$/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@neato/guider/loader',
+              options: {
+                type: 'mdx',
               },
-            ],
-          },
-          {
-            test: /_meta.json$/,
-            issuer: (request: any) => !request,
-            use: [
-              options.defaultLoaders.babel,
-              {
-                loader: '@neato/guider/loader',
-                options: {
-                  type: 'meta',
-                },
-              },
-            ],
-          },
-        );
+            },
+          ],
+        });
 
         return nextConfig.webpack?.(config, options) ?? config;
       },

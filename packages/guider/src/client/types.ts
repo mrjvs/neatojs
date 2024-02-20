@@ -75,3 +75,9 @@ export type PopulatedSiteConf = {
   directories: PopulatedSiteDirectory[];
   layouts: PopulatedSiteLayout[];
 };
+
+export type PageMapItem = {
+  sitePath: string;
+  fileContents: Record<string, any>;
+  config: MetaConf;
+};

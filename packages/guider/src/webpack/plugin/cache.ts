@@ -1,5 +1,7 @@
+import type { CollectorItem } from './collector';
+
 export type VirtualCache = {
-  items: string[];
+  items: CollectorItem[];
   themeFile: string;
 };
 
@@ -10,7 +12,7 @@ function makeVirtualCache() {
   };
 
   return {
-    setItems(newItems: string[]) {
+    setItems(newItems: CollectorItem[]) {
       cache.items = newItems;
     },
     setThemeFile(newThemeFile: string) {

@@ -2,8 +2,9 @@ import type { ReactNode } from 'react';
 import { Icon } from '../components/icon';
 import { useGuider } from './use-guider';
 
+// TODO get current applicable page from page map
 export function GuiderLayout(props: { children?: ReactNode }) {
-  const { directory, layout } = useGuider();
+  const { directory, layout, pageMap } = useGuider();
 
   return (
     <div>
@@ -12,6 +13,7 @@ export function GuiderLayout(props: { children?: ReactNode }) {
         Layout: {layout.id}
       </p>
       <p>Sidebar: {JSON.stringify(directory.sidebarItems)}</p>
+      <p>pagemap: {JSON.stringify(pageMap)}</p>
       <hr />
       {props.children}
     </div>

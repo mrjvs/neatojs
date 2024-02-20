@@ -1,3 +1,4 @@
 {
-  "layout": "docs-b"
+  "layout": "docx",
+  "test": "foo"
 }

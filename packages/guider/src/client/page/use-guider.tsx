@@ -1,5 +1,5 @@
 import { mergeSiteLayoutSettings } from '../theme/merge';
-import { sites } from '../virtuals';
+import { sites, pageMap } from '../virtuals';
 
 export function useGuider() {
   const site = sites[0];
@@ -13,6 +13,7 @@ export function useGuider() {
   );
 
   return {
+    pageMap,
     layoutSettings,
     directory,
     layout,
