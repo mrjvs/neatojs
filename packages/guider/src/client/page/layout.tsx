@@ -6,7 +6,7 @@ export function GuiderLayout(props: { children?: ReactNode }) {
 
   return (
     <div>
-      <p>Layout: {layout.id}</p>
+      <p className="gd-font-bold">Layout: {layout.id}</p>
       <p>Sidebar: {JSON.stringify(directory.sidebarItems)}</p>
       <hr />
       {props.children}

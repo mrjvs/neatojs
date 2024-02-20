@@ -8,34 +8,48 @@ Documentation site generator.
 - customizable layouts, use layouts both in mdx files and outside
 - Multiple documentations in one Next.JS app
 
-## The internal structure
-- webpack plugin
-  - Loads map metadata files to a path, puts it in a cache (webpack context)
-  - Load correct path to the theme file, stores it in cache (webpack context)
-  - Make virtual module to import theme file
-  - Make virtual module for serialized metadata cache
-  - These virtual modules are importable from app context
-- webpack loader
-  - Loads all mdx and md files (webpack context), transforms into JS
-  - The JS will be an object and a call to `createGuiderPage(obj)`
-  - The JS will be transfered to the app context
-- `guider.config.tsx`
-  - It contains all app-side configuration for guider
-  - It is exclusively on the app context, it doesn't go into compilation territory
-  - Configurable per layout:
-    - Replace Header, Footer, Sidebar
-    - HeaderOptions - options for the default header
-- `useGuider()` hook
-  - It will resolve the full metadata based on path and return it
-  - It will get the theme configuration and return it
-  - It will resolve the current layout based on metadata+theme and return it
-- `<GuiderLayout />` component
-  - It will use `useGuider()` to get the current layout and display it
+## How to use it?
+1. Make a Next.JS app: https://nextjs.org/docs/getting-started/installation
+2. Install guider: `npm i next @neato/guider`
+3. Put this in `next.config.js`:
+```js
+const { guider } = require('@neato/guider');
 
-So in short
-1. **WEBPACK:** plugin loads metadata files
-2. **WEBPACK:** loader compiles md/mdx files into JS
-3. **WEBPACK->APP:** webpack transfers JS code to app context
-4. **WEBPACK->APP:** webpack virtual modules to inject metadata cache
-4. **WEBPACK->APP:** webpack virtual modules to import theme file
-6. **APP:** Resolve layout per page in `useGuider()`
+const withGuider = guider({
+  themeConfig: './theme.config.ts',
+});
+
+module.exports = withGuider();
+```
+4. Create a file `theme.config.ts` and put this in it:
+```ts
+import { defineTheme } from '@neato/guider/client';
+
+export default defineTheme({
+  directories: [
+    {
+      title: 'Directory title',
+      sidebarItems: {
+        '/a': 'Page A',
+        '/b': 'Page B',
+      },
+    },
+  ],
+});
+```
+5. Make a `pages/_app.ts` file and put this in it:
+```ts
+import type { AppProps } from 'next/app';
+import '@neato/guider/style.css';
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+```
+6. Make your first page by creating a new file `pages/index.mdx`, and put this in it:
+```md
+# Hello world
+
+Welcome to guider!
+```
+7. You're all set. Have fun making docs!

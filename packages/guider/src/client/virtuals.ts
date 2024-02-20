@@ -1,14 +1,4 @@
-export {
-  sites,
-  type GuiderConfig,
-  type PopulatedSiteConf,
-  type SiteConf,
-  type NavItem,
-  type NavItemDescriptor,
-  type SiteLayout,
-  type PopulatedSiteLayout,
-  type PopulatedSiteDirectory,
-  type SiteDirectory,
-  type DeepPartial,
-  type LayoutSettings,
-} from '@neato/guider/loader!?virtual';
+import { sites as untypedSites } from '@neato/guider/loader!?virtual';
+import type { PopulatedSiteConf } from './types';
+
+export const sites = untypedSites as PopulatedSiteConf[];

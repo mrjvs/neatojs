@@ -9,40 +9,8 @@ import type {
   PopulatedSiteDirectory,
   SiteDirectory,
   LayoutSettings,
-} from '../virtuals';
+} from '../types';
 import { mergeSiteLayoutSettings } from './merge';
-
-/*
-config requirements:
-- customize entire layout as a whole
-- use a preset layout with settings:
-  - custom color theme
-  - disable darkmode toggle
-  - primary navigation items
-  - sidebar navigation items
-  - disable table of contents
-- change core parts of a layout:
-  - navigation bar
-  - footer
-  - sidebar
-  - navigation items
-- all layouts settings:
-  - default components for mdx
-  - extra global components for mdx
-  - extra icons
-- default presets:
-  - default - topnav + sidebar + toc
-  - article - topnav + toc
-  - page - topnav
-  - raw - empty slate
-- navigation item settings:
-  - internal links or external links
-  - open in new tab or replace (replace by default)
-  - specify optional icon
-  - nested navigation items (collapsable in sidebar, dropdown on topnav)
-  - make it a seperator (not an actual item, just a seperator)
-  - make it a special highlighted link (like at the top of tailwind doc sidebar)
-*/
 
 function navItemsToDescriptors(key: string, item: NavItem): NavItemDescriptor {
   const obj = typeof item === 'string' ? { title: item } : item;
@@ -115,6 +83,8 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
     site.layoutSettings ?? {},
   );
   const siteLayout = site.layout ?? 'default';
+  if (site.directories.length === 0)
+    throw new Error('Site may not have an empty directory list');
   return {
     layoutSettings,
     navItems: navRecordToDescriptors(site.navItems ?? {}),
@@ -130,5 +100,6 @@ export function defineTheme(obj: GuiderConfig): PopulatedSiteConf[] {
   let sites = obj;
   if (!Array.isArray(sites)) sites = [sites];
 
+  if (sites.length === 0) throw new Error('Site list may not be empty');
   return sites.map((site) => populateSiteConfig(site));
 }

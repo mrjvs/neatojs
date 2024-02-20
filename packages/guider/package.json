@@ -4,7 +4,8 @@
   "description": "Documentation site generator framework based on Next.js",
   "main": "./dist/index.js",
   "files": [
-    "dist/**"
+    "dist/**",
+    "style.css"
   ],
   "exports": {
     "./client": {
@@ -28,7 +29,8 @@
         "types": "./dist/loader.d.ts",
         "default": "./dist/loader.js"
       }
-    }
+    },
+    "./style.css": "./style.css"
   },
   "eslintConfig": {
     "extends": [
@@ -37,8 +39,11 @@
   },
   "prettier": "@repo/prettier-config",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsup && pnpm tailwind:build",
+    "dev": "concurrently \"pnpm build:dev\" \"pnpm tailwind:dev\"",
+    "build:dev": "tsup --watch",
+    "tailwind:dev": "tailwindcss -i ./src/tailwind.css -o ./style.css --watch",
+    "tailwind:build": "tailwindcss -i ./src/tailwind.css -o ./style.css --verbose",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -54,11 +59,13 @@
     "@repo/typescript-config": "workspace:*",
     "@types/react": "18.2.56",
     "@types/webpack": "^5.28.5",
+    "concurrently": "^8.2.2",
     "gray-matter": "^4.0.3",
     "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark-frontmatter": "^5.0.0",
+    "tailwindcss": "^3.4.1",
     "tsup": "7.2.0",
     "webpack-virtual-modules": "^0.6.1"
   },

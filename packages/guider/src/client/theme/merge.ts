@@ -1,4 +1,4 @@
-import type { LayoutSettings, DeepPartial } from '../virtuals';
+import type { LayoutSettings, DeepPartial } from '../types';
 
 export function mergeSiteLayoutSettings(
   root: LayoutSettings,
