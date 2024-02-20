@@ -1,69 +1,81 @@
 declare module '@neato/guider/loader!?virtual' {
-  export type GuiderThemeNavItem =
+  export type GuiderConfig = SiteConf | SiteConf[];
+
+  export type DeepPartial<T> = T extends object
+    ? {
+        [P in keyof T]?: DeepPartial<T[P]>;
+      }
+    : T;
+
+  export type NavItemDescriptor = {
+    title: string;
+    to: string;
+    items: NavItemDescriptor[];
+    newTab: boolean;
+    icon?: string;
+  };
+
+  export type NavItem =
     | string
     | {
         title: string;
         to?: string;
         icon?: string;
         newTab?: boolean;
-        items?: Record<string, GuiderThemeNavItem>;
+        items?: Record<string, NavItem>;
       };
 
-  export type GuiderThemeLayout = {
+  export type LayoutSettings = {
+    colors: {
+      primary: string;
+    };
+  };
+
+  export type SiteLayout = {
     id: string;
-    sidebar: Record<string, GuiderThemeNavItem>;
+    settings?: DeepPartial<LayoutSettings>;
   };
 
-  export type GuiderThemeConfig = {
-    defaultLayout: string;
-    layout: GuiderThemeLayout[] | GuiderThemeLayout;
-  };
-
-  export const theme: GuiderThemeConfig;
-}
-
-type Conf = SiteConf | SiteConf[];
-
-type LayoutSettings = {
-  colours: any[];
-  urls: any;
-  sidebarConf?: SideBarConf;
-  sidebarEnabled?: boolean;
-  topNavEnabled?: boolean;
-  footerEnabled?: boolean;
-};
-
-type SiteConf = {
-  navItems?: Record<string, GuiderThemeNavItem>;
-  layout?: string;
-  layoutSettings?: PartialDeep<LayoutSettings>;
-
-  directories: {
+  export type SiteDirectory = {
     title: string;
-    sidebarItems: Record<string, GuiderThemeNavItem>;
+    sidebarItems: Record<string, NavItem>;
     layout?: string;
-    layoutSetings?: PartialDeep<LayoutSettings>;
-  }[];
+    layoutSetings?: DeepPartial<LayoutSettings>;
+  };
 
-  layouts?: {
+  export type SiteConf = {
+    navItems?: Record<string, NavItem>;
+    layout?: string;
+    layoutSettings?: DeepPartial<LayoutSettings>;
+    directories: SiteDirectory[];
+    layouts?: SiteLayout[];
+  };
+
+  export type MetaConf = {
+    site?: string;
+    directory?: string;
+    layout?: string;
+  };
+
+  export type PopulatedSiteLayout = {
     id: string;
-    settings?: PartialDeep<LayoutSettings>;
-  }[];
-};
+    settings: LayoutSettings;
+  };
 
-type MetaConf = {
-  site?: string;
-  directory?: string;
-  layout?: string;
-};
+  export type PopulatedSiteDirectory = {
+    title: string;
+    sidebarItems: NavItemDescriptor[];
+    layout: string;
+    layoutSetings: DeepPartial<LayoutSettings>;
+  };
 
-const _a: Conf = {
-  directories: [
-    {
-      sidebarItems: {
-        '/a': 'Page A',
-        '/b': 'Page B',
-      },
-    },
-  ],
-};
+  export type PopulatedSiteConf = {
+    navItems: NavItemDescriptor[];
+    layout: string;
+    layoutSettings: LayoutSettings;
+    directories: PopulatedSiteDirectory[];
+    layouts: PopulatedSiteLayout[];
+  };
+
+  export const sites: PopulatedSiteConf[];
+}

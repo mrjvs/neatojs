@@ -1,13 +1,20 @@
-import { theme } from '../virtuals';
+import { mergeSiteLayoutSettings } from '../theme/merge';
+import { sites } from '../virtuals';
 
 export function useGuider() {
-  const layoutId = theme.defaultLayout;
-  const layouts = Array.isArray(theme.layout) ? theme.layout : [theme.layout];
-
-  const currentLayout = layouts.find((v) => v.id === layoutId) ?? layouts[0];
+  const site = sites[0];
+  const directory = site.directories[0];
+  const layoutId = directory.layout;
+  const layout = site.layouts.find((v) => v.id === layoutId);
+  if (!layout) throw new Error('No layout found');
+  const layoutSettings = mergeSiteLayoutSettings(
+    layout.settings,
+    directory.layoutSetings,
+  );
 
   return {
-    layout: currentLayout,
-    theme,
+    layoutSettings,
+    directory,
+    layout,
   };
 }
