@@ -10,6 +10,7 @@ export async function mdLoader(source: string): Promise<string> {
     jsx: true,
     outputFormat: 'program',
     format: 'detect',
+    providerImportSource: '@neato/guider/client',
     remarkPlugins: [remarkFrontmatter],
   });
 

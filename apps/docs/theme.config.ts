@@ -9,7 +9,7 @@ export default defineTheme({
       sidebarItems: {
         '/': {
           title: 'Homepage',
-          icon: 'house',
+          icon: 'fa:house',
         },
         '/a': 'Page A',
         '/b': 'Page B',
