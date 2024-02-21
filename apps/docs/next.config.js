@@ -4,4 +4,6 @@ const withGuider = guider({
   themeConfig: './theme.config.ts',
 });
 
-module.exports = withGuider();
+module.exports = withGuider({
+  output: 'export',
+});

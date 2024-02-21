@@ -7,7 +7,10 @@ export default defineTheme({
       title: 'Directory title',
       id: 'd1',
       sidebarItems: {
-        '/': 'Homepage',
+        '/': {
+          title: 'Homepage',
+          icon: 'house',
+        },
         '/a': 'Page A',
         '/b': 'Page B',
       },
