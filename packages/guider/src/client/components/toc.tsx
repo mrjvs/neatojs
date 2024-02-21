@@ -3,7 +3,11 @@ import type { MdxHeadings } from '../page/context';
 import { GuiderLayoutContext } from '../page/context';
 
 export function TocLink(props: { heading: MdxHeadings }) {
-  return <a href={'#'}>{props.heading.value}</a>;
+  return (
+    <p>
+      <a href={`#${props.heading.data.id}`}>{props.heading.value}</a>
+    </p>
+  );
 }
 
 export function GuiderToc() {
