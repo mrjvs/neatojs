@@ -1,16 +1,22 @@
 import { type ReactNode } from 'react';
-import { Icon } from '../components/icon';
 import type { MetaConf } from '../types';
 import { GuiderSidebar } from '../components/sidebar';
 import { Header } from '../components/header';
-import { useGuider } from './use-guider';
+import { GuiderToc } from '../components/toc';
+import type { MdxHeadings } from './context';
 import { GuiderLayoutContext } from './context';
 
-export function GuiderLayout(props: { children?: ReactNode; meta?: MetaConf }) {
-  const { directory, layout, site, layoutSettings } = useGuider(props.meta);
+export type GuiderLayoutProps = {
+  children?: ReactNode;
+  meta?: MetaConf;
+  headings?: MdxHeadings[];
+};
 
+export function GuiderLayout(props: GuiderLayoutProps) {
   return (
-    <GuiderLayoutContext.Provider value={props.meta}>
+    <GuiderLayoutContext.Provider
+      value={{ meta: props.meta ?? {}, headings: props.headings ?? [] }}
+    >
       <div className="gd-w-11/12 gd-max-w-[1480px] gd-mx-auto">
         <Header />
 
@@ -18,11 +24,7 @@ export function GuiderLayout(props: { children?: ReactNode; meta?: MetaConf }) {
           <GuiderSidebar />
           <article>{props.children}</article>
           <div>
-            <Icon icon="house" />
-            <p>Site: {site.id}</p>
-            <p>Layout: {layout.id}</p>
-            <p>Settings: {JSON.stringify(layoutSettings)}</p>
-            <p>Directory: {JSON.stringify(directory.id)}</p>
+            <GuiderToc />
           </div>
         </div>
       </div>

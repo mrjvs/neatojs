@@ -1,5 +1,7 @@
 import { compile } from '@mdx-js/mdx';
 import remarkFrontmatter from 'remark-frontmatter';
+import remarkHeadings from '@vcarl/remark-headings';
+import remarkHeadingId from 'remark-heading-id';
 import grayMatter from 'gray-matter';
 
 const EXPORT_FOOTER = 'export default ';
@@ -11,7 +13,11 @@ export async function mdLoader(source: string): Promise<string> {
     outputFormat: 'program',
     format: 'detect',
     providerImportSource: '@neato/guider/client',
-    remarkPlugins: [remarkFrontmatter],
+    remarkPlugins: [
+      remarkFrontmatter,
+      [remarkHeadingId, { defaults: true }],
+      remarkHeadings,
+    ],
   });
 
   const mdxCode = file.toString();
@@ -22,6 +28,7 @@ export async function mdLoader(source: string): Promise<string> {
 
   const pageOpts = {
     meta: meta.data,
+    headings: file.data.headings,
   };
 
   return `

@@ -4,8 +4,8 @@ import { GuiderLayoutContext } from '../page/context';
 import { GuiderSidebarLink } from './sidebar-link';
 
 export function GuiderSidebar() {
-  const meta = useContext(GuiderLayoutContext);
-  const { directory } = useGuider(meta);
+  const ctx = useContext(GuiderLayoutContext);
+  const { directory } = useGuider(ctx?.meta ?? {});
 
   return (
     <div className="gd-flex gd-flex-col">

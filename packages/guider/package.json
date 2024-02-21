@@ -74,12 +74,14 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/mdx": "^3.0.1",
+    "@vcarl/remark-headings": "^0.1.0",
     "approximate-number": "^2.1.1",
     "classnames": "^2.5.1",
     "extra-watch-webpack-plugin": "^1.0.3",
     "glob": "^10.3.10",
     "gray-matter": "^4.0.3",
     "remark-frontmatter": "^5.0.0",
+    "remark-heading-id": "^1.0.1",
     "tailwindcss-themer": "^4.0.0",
     "webpack-virtual-modules": "^0.6.1"
   }

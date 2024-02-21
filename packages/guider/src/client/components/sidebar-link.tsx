@@ -13,7 +13,10 @@ export function GuiderSidebarLink(props: { link: NavItemDescriptor }) {
       target={link.newTab ? '_blank' : undefined}
     >
       {link.icon ? (
-        <Icon className="gd-inline-block gd-mr-2" icon={link.icon} />
+        <Icon
+          className="gd-inline-block text-[1.3rem] gd-mr-2"
+          icon={link.icon}
+        />
       ) : null}
       {link.title}
     </ActiveLink>

@@ -57,7 +57,7 @@ export function GithubDisplay(props: GithubDisplayProps) {
         icon="fab:github"
         className="gd-mr-3 gd-text-xl gd-text-textHeading"
       />
-      <div className="gd-flex-1">
+      <div className="gd-flex-1 gd-text-sm">
         <p className="gd-text-textHeading">{name}</p>
         <p className="gd-flex gd-items-center gd-gap-4">
           <span className="gd-space-x-1">
