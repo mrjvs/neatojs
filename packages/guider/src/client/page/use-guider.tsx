@@ -7,7 +7,7 @@ import { sites, pageMap } from '../virtuals';
 export function getPage(pageUrl: string) {
   const matches = pageMap
     .filter((v) => pageUrl.startsWith(v.sitePath))
-    .sort((a, b) => a.sitePath.length - b.sitePath.length);
+    .sort((a, b) => b.sitePath.length - a.sitePath.length);
   const match: PageMapItem | undefined = matches[0];
   return match ?? null;
 }

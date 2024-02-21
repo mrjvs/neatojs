@@ -19,12 +19,11 @@ export interface MetaCollectorResult {
 async function filePathToSitePath(
   filePath: string,
 ): Promise<CollectorItem | null> {
-  // TODO turn into actual path, check if it matches routing of nextjs
   const strippedPath = dirname(relative('./pages', filePath));
   const fileContents = await readFile(filePath, 'utf-8');
   const parsedContents = JSON.parse(fileContents);
   return {
-    sitePath: strippedPath,
+    sitePath: `/${strippedPath}`,
     fileContents: parsedContents,
     config: {},
   };

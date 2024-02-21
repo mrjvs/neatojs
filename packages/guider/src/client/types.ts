@@ -27,7 +27,17 @@ export type NavItem =
 export type LayoutSettings = {
   colors: {
     primary: string;
+    primaryLighter: string;
+    primaryDarker: string;
+    background: string;
+    backgroundLighter: string;
+    backgroundLightest: string;
+    text: string;
+    textLighter: string;
+    textHighlight: string;
   };
+  toc: boolean;
+  sidebar: boolean;
 };
 
 export type SiteLayout = {
@@ -45,7 +55,9 @@ export type SiteDirectory = {
 
 export type SiteConf = {
   id: string;
-  navItems?: Record<string, NavItem>;
+  navigation?: Record<string, NavItem>;
+  tabs?: Record<string, NavItem>;
+  github?: string;
   layout?: string;
   layoutSettings?: DeepPartial<LayoutSettings>;
   directories: SiteDirectory[];
@@ -73,7 +85,9 @@ export type PopulatedSiteDirectory = {
 
 export type PopulatedSiteConf = {
   id: string;
-  navItems: NavItemDescriptor[];
+  navigation: NavItemDescriptor[];
+  tabs: NavItemDescriptor[];
+  github?: string;
   layout: string;
   layoutSettings: LayoutSettings;
   directories: PopulatedSiteDirectory[];

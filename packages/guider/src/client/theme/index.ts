@@ -61,10 +61,17 @@ function addDefaultLayouts(layouts: SiteLayout[]): SiteLayout[] {
   if (!layouts.find((v) => v.id === 'article'))
     out.push({
       id: 'article',
+      settings: {
+        toc: false,
+      },
     });
   if (!layouts.find((v) => v.id === 'page'))
     out.push({
       id: 'page',
+      settings: {
+        sidebar: false,
+        toc: false,
+      },
     });
   if (!layouts.find((v) => v.id === 'raw'))
     out.push({
@@ -78,8 +85,18 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
   const layoutSettings = mergeSiteLayoutSettings(
     {
       colors: {
-        primary: '#fff',
+        primary: '#50A0EA',
+        primaryDarker: '#1B65A9',
+        primaryLighter: '#89C6FF',
+        text: '#4A7181',
+        textLighter: '#789CAB',
+        textHighlight: '#FFFFFF',
+        background: '#050F13',
+        backgroundLighter: '#07171C',
+        backgroundLightest: '#081E24',
       },
+      sidebar: true,
+      toc: true,
     },
     site.layoutSettings ?? {},
   );
@@ -89,7 +106,9 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
   return {
     id: site.id,
     layoutSettings,
-    navItems: navRecordToDescriptors(site.navItems ?? {}),
+    navigation: navRecordToDescriptors(site.navigation ?? {}),
+    tabs: navRecordToDescriptors(site.tabs ?? {}),
+    github: site.github,
     layout: siteLayout,
     directories: site.directories.map((dir) =>
       populateDirectory(siteLayout, dir),
