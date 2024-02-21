@@ -39,8 +39,6 @@ function isParent(parent: string, dir: string): boolean {
 export async function collectMetaFiles(
   _ops: MetaCollectorOptions,
 ): Promise<MetaCollectorResult> {
-  // TODO weird caching going on?
-  // TODO hotreload on _meta.json file changes
   const metaFiles = await glob('pages/**/_meta.json', {
     ignore: 'node_modules/**',
   });

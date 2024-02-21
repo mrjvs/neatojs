@@ -1,18 +1,17 @@
+import type { MetaConf } from '../types';
 import { GuiderLayout } from './layout';
 
 export type CreateMdxPageOptions = {
   MDXContent: (props: any) => any;
   pageOpts: {
-    meta: {
-      layout?: string;
-    };
+    meta: MetaConf;
   };
 };
 
 export function createMdxPage(opts: CreateMdxPageOptions) {
   const Content = opts.MDXContent;
   return () => (
-    <GuiderLayout>
+    <GuiderLayout meta={opts.pageOpts.meta}>
       <Content />
     </GuiderLayout>
   );

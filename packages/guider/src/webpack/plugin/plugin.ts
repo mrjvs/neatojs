@@ -11,6 +11,17 @@ export function getGuiderPluginCache() {
   return virtualCache.get();
 }
 
+export async function runScanner(config: GuiderInitConfig) {
+  const directories = findPagesDir(process.cwd());
+  if (!directories.pagesDir) {
+    return;
+  }
+
+  const result = await collectMetaFiles({ dir: directories.pagesDir });
+  virtualCache.setItems(result.items);
+  virtualCache.setThemeFile(themeFileResolver(config.themeConfig));
+}
+
 export class GuiderPlugin {
   #config: GuiderInitConfig;
 
@@ -20,16 +31,8 @@ export class GuiderPlugin {
 
   apply(compiler: Compiler) {
     compiler.hooks.beforeCompile.tapAsync(pluginName, async (_, callback) => {
-      const directories = findPagesDir(process.cwd());
-      if (!directories.pagesDir) {
-        callback();
-        return;
-      }
-
       try {
-        const result = await collectMetaFiles({ dir: directories.pagesDir });
-        virtualCache.setItems(result.items);
-        virtualCache.setThemeFile(themeFileResolver(this.#config.themeConfig));
+        await runScanner(this.#config);
       } catch (err) {
         callback(err as Error);
         return;

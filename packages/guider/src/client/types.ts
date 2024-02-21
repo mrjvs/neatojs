@@ -36,6 +36,7 @@ export type SiteLayout = {
 };
 
 export type SiteDirectory = {
+  id: string;
   title: string;
   sidebarItems: Record<string, NavItem>;
   layout?: string;
@@ -43,6 +44,7 @@ export type SiteDirectory = {
 };
 
 export type SiteConf = {
+  id: string;
   navItems?: Record<string, NavItem>;
   layout?: string;
   layoutSettings?: DeepPartial<LayoutSettings>;
@@ -62,6 +64,7 @@ export type PopulatedSiteLayout = {
 };
 
 export type PopulatedSiteDirectory = {
+  id: string;
   title: string;
   sidebarItems: NavItemDescriptor[];
   layout: string;
@@ -69,6 +72,7 @@ export type PopulatedSiteDirectory = {
 };
 
 export type PopulatedSiteConf = {
+  id: string;
   navItems: NavItemDescriptor[];
   layout: string;
   layoutSettings: LayoutSettings;

@@ -1,19 +1,18 @@
 import type { ReactNode } from 'react';
 import { Icon } from '../components/icon';
+import type { MetaConf } from '../types';
 import { useGuider } from './use-guider';
 
-// TODO get current applicable page from page map
-export function GuiderLayout(props: { children?: ReactNode }) {
-  const { directory, layout, pageMap } = useGuider();
+export function GuiderLayout(props: { children?: ReactNode; meta?: MetaConf }) {
+  const { directory, layout, site, layoutSettings } = useGuider(props.meta);
 
   return (
     <div>
-      <p className="gd-font-bold">
-        <Icon icon="house" />
-        Layout: {layout.id}
-      </p>
-      <p>Sidebar: {JSON.stringify(directory.sidebarItems)}</p>
-      <p>pagemap: {JSON.stringify(pageMap)}</p>
+      <Icon icon="house" />
+      <p>Site: {site.id}</p>
+      <p>Layout: {layout.id}</p>
+      <p>Settings: {JSON.stringify(layoutSettings)}</p>
+      <p>Directory: {JSON.stringify(directory.id)}</p>
       <hr />
       {props.children}
     </div>

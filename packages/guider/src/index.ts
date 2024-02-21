@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import { GuiderPlugin } from './webpack/plugin/plugin';
 import type { GuiderInitConfig } from './types';
 
@@ -11,6 +12,9 @@ export function guider(initConfig: GuiderInitConfig) {
 
   function withGuider(nextConfig: NextConfig = {}): NextConfig {
     const guiderPlugin = new GuiderPlugin(guiderConfig);
+    const extraWatchers = new ExtraWatchWebpackPlugin({
+      files: ['pages/**/_meta.json'],
+    });
     return {
       ...nextConfig,
       pageExtensions: [
@@ -20,6 +24,7 @@ export function guider(initConfig: GuiderInitConfig) {
       webpack(config, options) {
         if (!config.plugins) config.plugins = [];
         config.plugins.push(guiderPlugin);
+        config.plugins.push(extraWatchers);
 
         config.module.rules.push({
           test: /\.mdx?$/,
@@ -29,6 +34,7 @@ export function guider(initConfig: GuiderInitConfig) {
               loader: '@neato/guider/loader',
               options: {
                 type: 'mdx',
+                guiderConfig,
               },
             },
           ],

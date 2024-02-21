@@ -4,7 +4,7 @@ export default defineConfig([
   {
     name: 'guider',
     entry: ['src/index.ts', 'src/loader.ts'],
-    format: 'cjs',
+    format: ['cjs', 'esm'],
     dts: true,
 
     // the loader imports the standard entrypoint for the cache

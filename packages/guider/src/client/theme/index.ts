@@ -44,6 +44,7 @@ function populateDirectory(
   dir: SiteDirectory,
 ): PopulatedSiteDirectory {
   return {
+    id: dir.id,
     layout: dir.layout ?? defaultLayout,
     layoutSetings: dir.layoutSetings ?? {},
     sidebarItems: navRecordToDescriptors(dir.sidebarItems ?? {}),
@@ -86,6 +87,7 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
   if (site.directories.length === 0)
     throw new Error('Site may not have an empty directory list');
   return {
+    id: site.id,
     layoutSettings,
     navItems: navRecordToDescriptors(site.navItems ?? {}),
     layout: siteLayout,
