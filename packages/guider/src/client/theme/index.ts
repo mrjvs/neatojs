@@ -13,13 +13,25 @@ import type {
 import { mergeSiteLayoutSettings } from './merge';
 
 function navItemsToDescriptors(key: string, item: NavItem): NavItemDescriptor {
+  const cleanedKey = key.replace(/^#*/g, '');
   const obj = typeof item === 'string' ? { title: item } : item;
+  const type = obj.type ?? 'link';
+  if (obj.type === 'link' || !obj.type)
+    return {
+      type,
+      title: obj.title,
+      to: cleanedKey,
+      items: navRecordToDescriptors(obj.items ?? {}),
+      newTab: obj.newTab ?? false,
+      icon: obj.icon ?? undefined,
+    };
   return {
-    title: obj.title,
-    to: key,
-    items: navRecordToDescriptors(obj.items ?? {}),
-    newTab: obj.newTab ?? false,
-    icon: obj.icon,
+    type: obj.type,
+    to: cleanedKey,
+    items: [],
+    newTab: false,
+    title: obj.type === 'group' ? obj.title : undefined,
+    component: obj.type === 'component' ? obj.component : undefined,
   };
 }
 

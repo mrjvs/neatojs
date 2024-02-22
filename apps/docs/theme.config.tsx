@@ -21,8 +21,13 @@ export default defineTheme([
         id: 'guides',
         title: 'Guides',
         sidebarItems: {
+          '#intro': { type: 'group', title: 'Introduction' },
           '/docs/guides/': 'Guides',
           '/docs/guides/how-to': 'How to?',
+          '#other': { type: 'group', title: 'Other stuff' },
+          '#/docs/guides/': 'Guides',
+          '##/docs/guides/how-to': 'How to?',
+          '--': { type: 'seperator' },
           '/docs/guides/troubleshooting': 'Troubleshooting',
         },
       },
@@ -33,6 +38,22 @@ export default defineTheme([
           '/docs/cli/': 'Getting started',
           '/docs/cli/cli-a': 'CLI A',
           '/docs/cli/cli-b': 'CLI B',
+          '#card': {
+            type: 'component',
+            component() {
+              return (
+                <div
+                  style={{
+                    backgroundColor: '#191924',
+                    padding: 16,
+                    borderRadius: 7,
+                  }}
+                >
+                  Custom component
+                </div>
+              );
+            },
+          },
         },
       },
       {

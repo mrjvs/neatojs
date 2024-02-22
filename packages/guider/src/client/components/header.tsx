@@ -41,15 +41,23 @@ export function Header() {
       <div className="gd-flex gd-justify-between gd-mb-6">
         <Logo />
         <div className="gd-flex gd-items-center gd-space-x-6">
-          {site.navigation.map((v, i) => (
-            <ActiveLink
-              key={v.title + i}
-              activeClassName="gd-text-textHeading"
-              href={v.to}
-            >
-              {v.title}
-            </ActiveLink>
-          ))}
+          {site.navigation
+            .filter((v) => v.type === 'link' || v.type === 'seperator')
+            .map((v, i) => {
+              const key = v.to + i;
+              if (v.type === 'seperator') return <hr key={key} />;
+              if (v.type === 'link')
+                return (
+                  <ActiveLink
+                    key={key}
+                    activeClassName="gd-text-textHeading"
+                    href={v.to}
+                  >
+                    {v.title}
+                  </ActiveLink>
+                );
+              return null;
+            })}
           {site.github ? (
             <GithubDisplay
               org={site.github.split('/')[0]}
@@ -60,11 +68,16 @@ export function Header() {
       </div>
       {site.tabs.length > 0 ? (
         <div className="gd-border-t gd-border-bgLight gd-pt-3 gd-px-6 gd-pb-0 -gd-mx-6 gd-space-x-6">
-          {site.tabs.map((v, i) => (
-            <TabLink key={v.title + i} href={v.to}>
-              {v.title}
-            </TabLink>
-          ))}
+          {site.tabs
+            .filter((v) => v.type === 'link')
+            .map((v, i) => {
+              const key = v.to + i;
+              return (
+                <TabLink key={key} href={v.to}>
+                  {v.title}
+                </TabLink>
+              );
+            })}
         </div>
       ) : null}
     </header>

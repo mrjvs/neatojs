@@ -1,7 +1,7 @@
 const { guider } = require('@neato/guider');
 
 const withGuider = guider({
-  themeConfig: './theme.config.ts',
+  themeConfig: './theme.config.tsx',
 });
 
 module.exports = withGuider({

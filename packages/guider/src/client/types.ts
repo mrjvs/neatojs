@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type GuiderConfig = SiteConf | SiteConf[];
 
 export type DeepPartial<T> = T extends object
@@ -7,7 +9,9 @@ export type DeepPartial<T> = T extends object
   : T;
 
 export type NavItemDescriptor = {
-  title: string;
+  type: 'link' | 'seperator' | 'group' | 'component';
+  component?: () => ReactNode;
+  title?: string;
   to: string;
   items: NavItemDescriptor[];
   newTab: boolean;
@@ -17,11 +21,23 @@ export type NavItemDescriptor = {
 export type NavItem =
   | string
   | {
+      type?: 'link' | undefined;
       title: string;
       to?: string;
       icon?: string;
       newTab?: boolean;
       items?: Record<string, NavItem>;
+    }
+  | {
+      type: 'seperator';
+    }
+  | {
+      type: 'group';
+      title: string;
+    }
+  | {
+      type: 'component';
+      component: () => ReactNode;
     };
 
 export type LayoutSettings = {
