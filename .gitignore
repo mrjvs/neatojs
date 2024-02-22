@@ -7,3 +7,4 @@ dist
 .next
 out
 /test.js
+/test.ts

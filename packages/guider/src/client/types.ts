@@ -1,4 +1,8 @@
-import type { ReactNode } from 'react';
+import type {
+  DirectoryComponent,
+  TabsChildren,
+  TopNavChildren,
+} from './theme/components';
 
 export type GuiderConfig = SiteConf | SiteConf[];
 
@@ -7,38 +11,6 @@ export type DeepPartial<T> = T extends object
       [P in keyof T]?: DeepPartial<T[P]>;
     }
   : T;
-
-export type NavItemDescriptor = {
-  type: 'link' | 'seperator' | 'group' | 'component';
-  component?: () => ReactNode;
-  title?: string;
-  to: string;
-  items: NavItemDescriptor[];
-  newTab: boolean;
-  icon?: string;
-};
-
-export type NavItem =
-  | string
-  | {
-      type?: 'link' | undefined;
-      title: string;
-      to?: string;
-      icon?: string;
-      newTab?: boolean;
-      items?: Record<string, NavItem>;
-    }
-  | {
-      type: 'seperator';
-    }
-  | {
-      type: 'group';
-      title: string;
-    }
-  | {
-      type: 'component';
-      component: () => ReactNode;
-    };
 
 export type LayoutSettings = {
   colors: {
@@ -61,22 +33,14 @@ export type SiteLayout = {
   settings?: DeepPartial<LayoutSettings>;
 };
 
-export type SiteDirectory = {
-  id: string;
-  title: string;
-  sidebarItems: Record<string, NavItem>;
-  layout?: string;
-  layoutSetings?: DeepPartial<LayoutSettings>;
-};
-
 export type SiteConf = {
   id: string;
-  navigation?: Record<string, NavItem>;
-  tabs?: Record<string, NavItem>;
+  navigation?: TopNavChildren[];
+  tabs?: TabsChildren[];
   github?: string;
   layout?: string;
   layoutSettings?: DeepPartial<LayoutSettings>;
-  directories: SiteDirectory[];
+  directories: DirectoryComponent[];
   layouts?: SiteLayout[];
 };
 
@@ -91,22 +55,14 @@ export type PopulatedSiteLayout = {
   settings: LayoutSettings;
 };
 
-export type PopulatedSiteDirectory = {
-  id: string;
-  title: string;
-  sidebarItems: NavItemDescriptor[];
-  layout: string;
-  layoutSetings: DeepPartial<LayoutSettings>;
-};
-
 export type PopulatedSiteConf = {
   id: string;
-  navigation: NavItemDescriptor[];
-  tabs: NavItemDescriptor[];
+  navigation: TopNavChildren[];
+  tabs: TabsChildren[];
   github?: string;
   layout: string;
   layoutSettings: LayoutSettings;
-  directories: PopulatedSiteDirectory[];
+  directories: DirectoryComponent[];
   layouts: PopulatedSiteLayout[];
 };
 

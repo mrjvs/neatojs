@@ -1,45 +1,12 @@
 import type {
   GuiderConfig,
-  NavItemDescriptor,
   PopulatedSiteConf,
   SiteConf,
-  NavItem,
   PopulatedSiteLayout,
   SiteLayout,
-  PopulatedSiteDirectory,
-  SiteDirectory,
   LayoutSettings,
 } from '../types';
 import { mergeSiteLayoutSettings } from './merge';
-
-function navItemsToDescriptors(key: string, item: NavItem): NavItemDescriptor {
-  const cleanedKey = key.replace(/^#*/g, '');
-  const obj = typeof item === 'string' ? { title: item } : item;
-  const type = obj.type ?? 'link';
-  if (obj.type === 'link' || !obj.type)
-    return {
-      type,
-      title: obj.title,
-      to: cleanedKey,
-      items: navRecordToDescriptors(obj.items ?? {}),
-      newTab: obj.newTab ?? false,
-      icon: obj.icon ?? undefined,
-    };
-  return {
-    type: obj.type,
-    to: cleanedKey,
-    items: [],
-    newTab: false,
-    title: obj.type === 'group' ? obj.title : undefined,
-    component: obj.type === 'component' ? obj.component : undefined,
-  };
-}
-
-function navRecordToDescriptors(
-  map: Record<string, NavItem>,
-): NavItemDescriptor[] {
-  return Object.entries(map).map((v) => navItemsToDescriptors(v[0], v[1]));
-}
 
 function populateLayout(
   rootSettings: LayoutSettings,
@@ -48,19 +15,6 @@ function populateLayout(
   return {
     id: layout.id,
     settings: mergeSiteLayoutSettings(rootSettings, layout.settings ?? {}),
-  };
-}
-
-function populateDirectory(
-  defaultLayout: string,
-  dir: SiteDirectory,
-): PopulatedSiteDirectory {
-  return {
-    id: dir.id,
-    layout: dir.layout ?? defaultLayout,
-    layoutSetings: dir.layoutSetings ?? {},
-    sidebarItems: navRecordToDescriptors(dir.sidebarItems ?? {}),
-    title: dir.title,
   };
 }
 
@@ -118,13 +72,11 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
   return {
     id: site.id,
     layoutSettings,
-    navigation: navRecordToDescriptors(site.navigation ?? {}),
-    tabs: navRecordToDescriptors(site.tabs ?? {}),
+    navigation: site.navigation ?? [],
+    tabs: site.tabs ?? [],
     github: site.github,
     layout: siteLayout,
-    directories: site.directories.map((dir) =>
-      populateDirectory(siteLayout, dir),
-    ),
+    directories: site.directories,
     layouts: layouts.map((layout) => populateLayout(layoutSettings, layout)),
   };
 }
