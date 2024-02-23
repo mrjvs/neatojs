@@ -52,6 +52,7 @@ const linkFunc: LinkFunctions = function (
     const options: LinkOptions = titleOrOptions;
     return {
       newTab: false,
+      style: 'default',
       ...options,
       type: 'link',
     };
@@ -63,6 +64,7 @@ const linkFunc: LinkFunctions = function (
   return {
     title,
     type: 'link',
+    style: ops?.style ?? 'default',
     to: url,
     icon: ops?.icon,
     newTab: ops?.newTab ?? false,
@@ -70,4 +72,4 @@ const linkFunc: LinkFunctions = function (
 };
 (linkFunc as LinkBuilder).nested = nestedLink;
 
-export const link = linkFunc;
+export const link = linkFunc as LinkBuilder;

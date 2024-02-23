@@ -1,5 +1,3 @@
-// Blame Next.
-
 import { useRouter } from 'next/router';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';
@@ -9,15 +7,17 @@ import classNames from 'classnames';
 
 type ActiveLinkProps = LinkProps & {
   className?: string;
-  activeClassName: string;
-  inActiveClassName?: string;
+  activeClassName?: string;
+  exactMatchClassName?: string;
+  inactiveClassName?: string;
   target?: string;
 };
 
 const ActiveLink = ({
   children,
   activeClassName,
-  inActiveClassName,
+  exactMatchClassName,
+  inactiveClassName,
   className,
   ...props
 }: PropsWithChildren<ActiveLinkProps>) => {
@@ -25,22 +25,30 @@ const ActiveLink = ({
   const [computedClassName, setComputedClassName] = useState(className);
 
   useEffect(() => {
-    // Check if the router fields are updated client-side
     if (isReady) {
-      // Dynamic route will be matched via props.as
-      // Static route will be matched via props.href
       const linkPathname = new URL(
         (props.as || props.href) as string,
         location.href,
       ).pathname;
-
-      // Using URL().pathname to get rid of query and hash
       const activePathname = new URL(asPath, location.href).pathname;
 
-      const newClassName =
-        linkPathname === activePathname
-          ? classNames(className, activeClassName)
-          : classNames(className, inActiveClassName);
+      const linkPathArr = linkPathname.split('/').filter(Boolean);
+      const activePathArr = activePathname.split('/').filter(Boolean);
+
+      let matches = true;
+      for (let i = 0; i < linkPathArr.length; i++) {
+        if (linkPathArr[i] !== activePathArr[i]) {
+          matches = false;
+        }
+      }
+
+      const exactMatch = linkPathArr.join('/') === activePathArr.join('/');
+
+      const newClassName = matches
+        ? exactMatch
+          ? classNames(className, exactMatchClassName || activeClassName)
+          : classNames(className, activeClassName)
+        : classNames(className, inactiveClassName);
 
       if (newClassName !== computedClassName) {
         setComputedClassName(newClassName);

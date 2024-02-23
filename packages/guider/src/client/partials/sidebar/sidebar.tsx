@@ -1,7 +1,12 @@
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { useGuider } from '../../hooks/use-guider';
 import { GuiderLayoutContext } from '../../page/context';
-import { GuiderSidebarLink } from './sidebar-link';
+import { SidebarLink } from './link';
+import { SidebarCustomComponent } from './component';
+import { SidebarSeperator } from './seperator';
+import { SidebarGroup } from './group';
+import { SidebarNested } from './nested';
+import { SidebarStarLink } from './star-link';
 
 export function SidebarInternal() {
   const ctx = useContext(GuiderLayoutContext);
@@ -11,21 +16,18 @@ export function SidebarInternal() {
     <div className="gd-flex gd-flex-col">
       <div className="gd-space-y-1">
         {directory.sidebarItems.map((link, i) => {
-          const key = `${link.to}--${i}`;
+          const key = `--${i}`;
+          if (link.type === 'link' && link.style === 'star')
+            return <SidebarStarLink key={key} link={link} />;
           if (link.type === 'link')
-            return <GuiderSidebarLink key={key} link={link} />;
+            return <SidebarLink key={key} link={link} />;
+          if (link.type === 'nested-link')
+            return <SidebarNested key={key} link={link} />;
           if (link.type === 'component')
-            return <Fragment key={key}>{link.component?.() ?? null}</Fragment>;
-          if (link.type === 'seperator') return <hr key={key} />;
+            return <SidebarCustomComponent key={key} component={link} />;
+          if (link.type === 'seperator') return <SidebarSeperator key={key} />;
           if (link.type === 'group')
-            return (
-              <h3
-                key={key}
-                className="gd-text-sm gd-text-textHeading gd-font-medium gd-mb-2"
-              >
-                {link.title ?? ''}
-              </h3>
-            );
+            return <SidebarGroup key={key} group={link} />;
           return null;
         })}
       </div>

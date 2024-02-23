@@ -21,6 +21,11 @@ export function useToc(ids: string[]) {
         })
         .sort((a, b) => a.distance - b.distance);
 
+      if (viewList.length === 0) {
+        setActiveId(null);
+        return;
+      }
+
       // Check if user has scrolled past the bottom of the page
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         setActiveId(viewList[0].id);

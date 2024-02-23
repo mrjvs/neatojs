@@ -32,5 +32,6 @@ module.exports = {
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/unified-signatures": "off",
+    "no-nested-ternary": "off",
   },
 };

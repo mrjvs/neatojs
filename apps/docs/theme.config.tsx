@@ -9,8 +9,9 @@ import {
 
 const github = 'movie-web/movie-web';
 const topNav = [
-  link('Documentation', '/docs/guides'),
+  link('Documentation', '/docs/guides', { icon: 'fas:house' }),
   link('API reference', '/api-ref'),
+  seperator(),
 ];
 
 export default defineTheme([
@@ -19,7 +20,7 @@ export default defineTheme([
     navigation: topNav,
     github,
     tabs: [
-      link('Guides', '/docs/guides'),
+      link('Guides', '/docs/guides', { icon: 'fas:house' }),
       link('CLI', '/docs/cli'),
       link('Miscellaneous', '/docs/misc'),
     ],
@@ -27,6 +28,9 @@ export default defineTheme([
       directory({
         id: 'guides',
         sidebarItems: [
+          link('Guides', '/docs/guides/', { style: 'star', icon: 'fas:house' }),
+          link('How to?', '/docs/guides/how-to', { style: 'star' }),
+
           group('Introduction', [
             link('Guides', '/docs/guides/'),
             link('How to?', '/docs/guides/how-to'),
@@ -36,7 +40,10 @@ export default defineTheme([
             link('How to?', '/docs/guides/how-to'),
           ]),
           seperator(),
-          link('Troubleshooting', '/docs/guides/troubleshooting'),
+          link.nested('Troubleshooting', '/docs/guides/troubleshooting', [
+            link('Guides', '/docs/guides/'),
+            link('How to?', '/docs/guides/how-to'),
+          ]),
         ],
       }),
       directory({
@@ -45,10 +52,11 @@ export default defineTheme([
           link('Getting started', '/docs/cli/'),
           link('CLI A', '/docs/cli/cli-a'),
           link('CLI B', '/docs/cli/cli-b'),
+          link('David Tennant', '/docs/cli/tennant'),
           component(() => (
             <div
               style={{
-                backgroundColor: '#191924',
+                backgroundColor: '#ff00ff',
                 padding: 16,
                 borderRadius: 7,
               }}

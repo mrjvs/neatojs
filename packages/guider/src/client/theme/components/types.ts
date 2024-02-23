@@ -6,6 +6,7 @@ export type NestedLinkComponentChildren = LinkComponent | SeperatorComponent;
 export interface ExtraLinkOptions {
   icon?: string;
   newTab?: boolean;
+  style?: 'star' | 'default';
 }
 
 export interface LinkOptions {
@@ -29,6 +30,7 @@ export interface LinkComponent {
   to: string;
   newTab: boolean;
   icon?: string;
+  style: 'star' | 'default';
 }
 
 export interface NestableLinkComponent {

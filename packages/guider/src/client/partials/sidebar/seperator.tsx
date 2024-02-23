@@ -1,0 +1,5 @@
+export function SidebarSeperator() {
+  return (
+    <hr className="!gd-my-3 gd-h-px gd-w-full gd-border-0 gd-bg-bgLightest" />
+  );
+}

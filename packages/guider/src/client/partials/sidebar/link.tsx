@@ -2,13 +2,13 @@ import type { LinkComponent } from '../../theme/components';
 import { Icon } from '../../components/icon';
 import ActiveLink from '../../components/utils/activelink';
 
-export function GuiderSidebarLink(props: { link: LinkComponent }) {
+export function SidebarLink(props: { link: LinkComponent }) {
   const link = props.link;
   return (
     <ActiveLink
-      className="gd-block gd-w-full gd-py-2 gd-px-4 -gd-mx-4 gd-box-content gd-rounded-lg"
-      activeClassName="gd-bg-bgLightest gd-text-primary"
-      inActiveClassName="hover:gd-text-textLight hover:gd-bg-bgLight"
+      className="gd-block gd-w-full gd-py-2 gd-px-4 gd-rounded-lg"
+      exactMatchClassName="gd-bg-bgLightest gd-text-primary"
+      inactiveClassName="hover:gd-text-textLight hover:gd-bg-bgLight"
       href={link.to}
       target={link.newTab ? '_blank' : undefined}
     >
