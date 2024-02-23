@@ -56,7 +56,7 @@ export default defineTheme([
           component(() => (
             <div
               style={{
-                backgroundColor: '#ff00ff',
+                backgroundColor: '#000',
                 padding: 16,
                 borderRadius: 7,
               }}
