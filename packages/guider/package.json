@@ -19,6 +19,16 @@
         "default": "./dist/client.js"
       }
     },
+    "./theme": {
+      "import": {
+        "types": "./dist/theme.d.mts",
+        "default": "./dist/theme.mjs"
+      },
+      "require": {
+        "types": "./dist/theme.d.ts",
+        "default": "./dist/theme.js"
+      }
+    },
     ".": {
       "import": {
         "types": "./dist/index.d.mts",

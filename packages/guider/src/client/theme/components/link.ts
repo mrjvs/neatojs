@@ -7,11 +7,11 @@ import type {
   NestedLinkOptions,
 } from './types';
 
-const nestedLink: LinkBuilder['nested'] = (
+const nestedLink: LinkBuilder['nested'] = function (
   titleOrOptions: any,
   urlOrItems?: any,
   maybeItems?: any,
-) => {
+) {
   if (typeof titleOrOptions !== 'string') {
     const options: NestedLinkOptions = titleOrOptions;
     return {
@@ -43,11 +43,11 @@ const nestedLink: LinkBuilder['nested'] = (
   };
 };
 
-const linkFunc: LinkFunctions = (
+const linkFunc: LinkFunctions = function (
   titleOrOptions: any,
   maybeUrl?: any,
   maybeOps?: any,
-) => {
+) {
   if (typeof titleOrOptions !== 'string') {
     const options: LinkOptions = titleOrOptions;
     return {

@@ -118,7 +118,7 @@ interface DirectoryOptions {
 
 export interface DirectoryComponent {
   id: string;
-  layout?: string;
+  layout: string;
   layoutSettings: DeepPartial<LayoutSettings>;
   sidebarItems: DirectoryComponentChildren[];
 }

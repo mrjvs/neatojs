@@ -5,7 +5,7 @@ import {
   group,
   link,
   seperator,
-} from '@neato/guider/client';
+} from '@neato/guider/theme';
 
 const github = 'movie-web/movie-web';
 const topNav = [
