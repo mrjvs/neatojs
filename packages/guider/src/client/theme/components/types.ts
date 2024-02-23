@@ -1,20 +1,21 @@
 import type { ReactNode } from 'react';
+import type { DeepPartial, LayoutSettings } from '../..';
 
-type NestedLinkComponentChildren = LinkComponent | SeperatorComponent;
+export type NestedLinkComponentChildren = LinkComponent | SeperatorComponent;
 
-interface ExtraLinkOptions {
+export interface ExtraLinkOptions {
   icon?: string;
   newTab?: boolean;
 }
 
-interface LinkOptions {
+export interface LinkOptions {
   title: string;
   to: string;
   icon?: string;
   newTab?: boolean;
 }
 
-interface NestedLinkOptions {
+export interface NestedLinkOptions {
   title: string;
   to?: string;
   icon?: string;
@@ -39,9 +40,12 @@ export interface NestableLinkComponent {
   items: NestedLinkComponentChildren[];
 }
 
-export interface LinkBuilder {
+export interface LinkFunctions {
   (title: string, url: string, ops?: ExtraLinkOptions): LinkComponent;
   (options: LinkOptions): LinkComponent;
+}
+
+export interface LinkBuilder extends LinkFunctions {
   nested: {
     (
       title: string,
@@ -56,13 +60,13 @@ export interface LinkBuilder {
   };
 }
 
-type GroupComponentChildren =
+export type GroupComponentChildren =
   | NestableLinkComponent
   | LinkComponent
   | SeperatorComponent
   | CustomComponentComponent;
 
-interface GroupOptions {
+export interface GroupOptions {
   title: string;
   items: GroupComponentChildren[];
 }
@@ -107,11 +111,15 @@ type DirectoryComponentChildren =
 
 interface DirectoryOptions {
   id: string;
+  layout?: string;
+  layoutSettings?: DeepPartial<LayoutSettings>;
   sidebarItems: DirectoryComponentChildren[];
 }
 
 export interface DirectoryComponent {
   id: string;
+  layout?: string;
+  layoutSettings: DeepPartial<LayoutSettings>;
   sidebarItems: DirectoryComponentChildren[];
 }
 

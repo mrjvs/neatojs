@@ -1,11 +1,11 @@
 import { Fragment, useContext } from 'react';
-import { useGuider } from '../page/use-guider';
-import { GuiderLayoutContext } from '../page/context';
+import { useGuider } from '../../hooks/use-guider';
+import { GuiderLayoutContext } from '../../page/context';
 import { GuiderSidebarLink } from './sidebar-link';
 
-export function GuiderSidebar() {
+export function SidebarInternal() {
   const ctx = useContext(GuiderLayoutContext);
-  const { directory } = useGuider(ctx?.meta ?? {});
+  const { directory } = useGuider(ctx?.meta);
 
   return (
     <div className="gd-flex gd-flex-col">

@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { GuiderLayoutContext } from '../page/context';
-import { useGuider } from '../page/use-guider';
-import { GithubDisplay } from './github';
-import ActiveLink from './utils/activelink';
+import ActiveLink from '../../components/utils/activelink';
+import { GuiderLayoutContext } from '../../page/context';
+import { useGuider } from '../../hooks/use-guider';
+import { GithubDisplay } from '../../components/github';
 
-export function Logo() {
+function Logo() {
   return (
     <div className="gd-flex gd-items-center gd-gap-3">
       <img
@@ -32,9 +32,9 @@ function TabLink(props: { href: string; children: React.ReactNode }) {
   );
 }
 
-export function Header() {
+export function HeaderInternal() {
   const ctx = useContext(GuiderLayoutContext);
-  const { site } = useGuider(ctx?.meta ?? {});
+  const { site } = useGuider(ctx?.meta);
 
   return (
     <header className="gd-p-6 gd-pb-0 -gd-mx-6 gd-box-content gd-border-b gd-border-bgLight gd-mb-8">

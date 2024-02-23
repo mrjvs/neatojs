@@ -12,7 +12,7 @@ export function getPage(pageUrl: string) {
   return match ?? null;
 }
 
-export function getGuiderContext(pageUrl: string, pageMeta?: MetaConf) {
+export function getGuiderContext(pageUrl: string, pageMeta: MetaConf = {}) {
   const page = getPage(pageUrl);
   const siteId = page?.config.site ?? pageMeta?.site ?? sites[0].id;
   const site = sites.find((v) => v.id === siteId);
@@ -29,7 +29,7 @@ export function getGuiderContext(pageUrl: string, pageMeta?: MetaConf) {
 
   const layoutSettings = mergeSiteLayoutSettings(
     layout.settings,
-    dir.layoutSetings,
+    dir.layoutSettings,
   );
 
   return {
@@ -41,7 +41,7 @@ export function getGuiderContext(pageUrl: string, pageMeta?: MetaConf) {
   };
 }
 
-export function useGuider(pageMeta?: MetaConf) {
+export function useGuider(pageMeta: MetaConf = {}) {
   const router = useRouter();
   const pageUrl = router.pathname;
   const context = useMemo(() => {

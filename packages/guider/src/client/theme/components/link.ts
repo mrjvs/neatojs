@@ -1,46 +1,73 @@
-import type { LinkBuilder } from './types';
+import type {
+  ExtraLinkOptions,
+  LinkBuilder,
+  LinkFunctions,
+  LinkOptions,
+  NestedLinkComponentChildren,
+  NestedLinkOptions,
+} from './types';
 
 const nestedLink: LinkBuilder['nested'] = (
-  titleOrOptions,
-  urlOrItems,
-  items,
+  titleOrOptions: any,
+  urlOrItems?: any,
+  maybeItems?: any,
 ) => {
   if (typeof titleOrOptions !== 'string') {
+    const options: NestedLinkOptions = titleOrOptions;
     return {
-      ...titleOrOptions,
+      newTab: false,
+      ...options,
       type: 'nested-link',
     };
   }
   if (typeof urlOrItems !== 'string') {
+    const title: string = titleOrOptions;
+    const items: NestedLinkComponentChildren[] = urlOrItems;
     return {
-      items: urlOrItems,
+      items,
       newTab: false,
-      title: titleOrOptions,
+      title,
       type: 'nested-link',
     };
   }
+
+  const items: NestedLinkComponentChildren[] = maybeItems;
+  const title: string = titleOrOptions;
+  const url: string = urlOrItems;
   return {
     items,
     newTab: false,
-    title: titleOrOptions,
+    title,
     type: 'nested-link',
-    to: urlOrItems,
+    to: url,
   };
 };
 
-export const link: LinkBuilder = (titleOrOptions, url, ops) => {
+const linkFunc: LinkFunctions = (
+  titleOrOptions: any,
+  maybeUrl?: any,
+  maybeOps?: any,
+) => {
   if (typeof titleOrOptions !== 'string') {
+    const options: LinkOptions = titleOrOptions;
     return {
-      ...titleOrOptions,
-      type: 'nested-link',
+      newTab: false,
+      ...options,
+      type: 'link',
     };
   }
+
+  const title: string = titleOrOptions;
+  const url: string = maybeUrl;
+  const ops: ExtraLinkOptions | undefined = maybeOps;
   return {
-    title: titleOrOptions,
+    title,
     type: 'link',
     to: url,
     icon: ops?.icon,
     newTab: ops?.newTab ?? false,
   };
 };
-link.nested = nestedLink;
+(linkFunc as LinkBuilder).nested = nestedLink;
+
+export const link = linkFunc;

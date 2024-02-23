@@ -1,10 +1,9 @@
-import { useContext, useMemo } from 'react';
 import classNames from 'classnames';
-import type { MdxHeadings } from '../page/context';
-import { GuiderLayoutContext } from '../page/context';
-import { useToc } from '../hooks/use-toc';
+import { useContext, useMemo } from 'react';
+import { GuiderLayoutContext, type MdxHeadings } from '../../page/context';
+import { useToc } from '../../hooks/use-toc';
 
-export function TocLink(props: {
+function TocLink(props: {
   heading: MdxHeadings;
   active?: boolean;
   onClick?: () => void;
@@ -30,7 +29,7 @@ export function TocLink(props: {
   );
 }
 
-export function GuiderToc() {
+export function TocInternal() {
   const ctx = useContext(GuiderLayoutContext);
   const ids = useMemo(
     () => ctx?.headings.map((v) => v.data.id) ?? [],

@@ -10,4 +10,5 @@ export * from './page/create-mdx-page';
 export * from './theme';
 export * from './types';
 export * from './theme/components';
+export * from './partials/index';
 export { useMDXComponents } from './components/markdown';

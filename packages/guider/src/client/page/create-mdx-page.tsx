@@ -1,6 +1,6 @@
+import { GuiderLayout } from '../partials/layout';
 import type { MetaConf } from '../types';
 import type { MdxHeadings } from './context';
-import { GuiderLayout } from './layout';
 
 export type CreateMdxPageOptions = {
   MDXContent: (props: any) => any;

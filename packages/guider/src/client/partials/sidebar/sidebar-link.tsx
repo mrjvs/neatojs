@@ -1,8 +1,8 @@
-import type { NavItemDescriptor } from '../types';
-import { Icon } from './icon';
-import ActiveLink from './utils/activelink';
+import type { LinkComponent } from '../../theme/components';
+import { Icon } from '../../components/icon';
+import ActiveLink from '../../components/utils/activelink';
 
-export function GuiderSidebarLink(props: { link: NavItemDescriptor }) {
+export function GuiderSidebarLink(props: { link: LinkComponent }) {
   const link = props.link;
   return (
     <ActiveLink
