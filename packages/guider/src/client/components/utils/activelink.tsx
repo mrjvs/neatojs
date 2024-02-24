@@ -5,6 +5,44 @@ import type { ReactNode } from 'react';
 import { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 
+export function useIsRouteActive(ops: {
+  as?: string;
+  href: string;
+  exact?: boolean;
+}) {
+  const { asPath, isReady } = useRouter();
+  const [isActive, setIsActive] = useState(false);
+  useEffect(() => {
+    if (!isReady) {
+      setIsActive(false);
+      return;
+    }
+
+    const linkPathname = new URL(ops.href, location.href).pathname;
+    const activePathname = new URL(asPath, location.href).pathname;
+
+    const linkPathArr = linkPathname.split('/').filter(Boolean);
+    const activePathArr = activePathname.split('/').filter(Boolean);
+
+    if (ops.exact) {
+      const exactMatch = linkPathArr.join('/') === activePathArr.join('/');
+      setIsActive(exactMatch);
+      return;
+    }
+
+    let matches = true;
+    for (let i = 0; i < linkPathArr.length; i++) {
+      if (linkPathArr[i] !== activePathArr[i]) {
+        matches = false;
+      }
+    }
+
+    setIsActive(matches);
+  }, [asPath, isReady, ops.href, ops.exact]);
+
+  return isActive;
+}
+
 type ActiveLinkProps = LinkProps & {
   className?: string;
   activeClassName?: string;
@@ -21,43 +59,12 @@ const ActiveLink = ({
   className,
   ...props
 }: ActiveLinkProps) => {
-  const { asPath, isReady } = useRouter();
-  const [isActive, setIsActive] = useState(false);
+  const isActive = useIsRouteActive({ href: props.href as string, exact });
   const computedClassName = useMemo(() => {
-    if (isActive) return classNames(className, activeClassName);
+    if (isActive)
+      return classNames('neato-guider-active-link', className, activeClassName);
     return classNames(className, inactiveClassName);
   }, [className, activeClassName, inactiveClassName, isActive]);
-
-  useEffect(() => {
-    if (!isReady) {
-      setIsActive(false);
-      return;
-    }
-
-    const linkPathname = new URL(
-      (props.as || props.href) as string,
-      location.href,
-    ).pathname;
-    const activePathname = new URL(asPath, location.href).pathname;
-
-    const linkPathArr = linkPathname.split('/').filter(Boolean);
-    const activePathArr = activePathname.split('/').filter(Boolean);
-
-    if (exact) {
-      const exactMatch = linkPathArr.join('/') === activePathArr.join('/');
-      setIsActive(exactMatch);
-      return;
-    }
-
-    let matches = true;
-    for (let i = 0; i < linkPathArr.length; i++) {
-      if (linkPathArr[i] !== activePathArr[i]) {
-        matches = false;
-      }
-    }
-
-    setIsActive(matches);
-  }, [asPath, isReady, props.as, props.href, exact]);
 
   const children =
     typeof props.children === 'function'

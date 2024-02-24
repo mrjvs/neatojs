@@ -51,6 +51,10 @@ export default defineTheme([
             link('Guides', '/docs/guides/'),
             link('How to?', '/docs/guides/how-to'),
           ]),
+          link.nested('Troubleshooting 2', [
+            link('Guides', '/docs/guides/'),
+            link('How to?', '/docs/guides/how-to'),
+          ]),
         ],
         layoutSettings: {
           colors: {
