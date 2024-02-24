@@ -21,6 +21,7 @@ export function MarkdownLi(props: MarkdownProps) {
   );
 }
 
+// TODO numbers are list with this method
 export function MarkdownOl(props: MarkdownProps) {
   return (
     <ol
