@@ -21,7 +21,7 @@ const TabsContainer = (props: TabsProps) => {
     <Tab.Group>
       <Tab.List>
         {props.items.map((v) => (
-          <Tab>{v}</Tab>
+          <Tab key={v}>{v}</Tab>
         ))}
       </Tab.List>
       <Tab.Panels>{props.children}</Tab.Panels>

@@ -5,6 +5,13 @@ import remarkHeadingId from 'remark-heading-id';
 import grayMatter from 'gray-matter';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { remarkNpm2Yarn } from '@theguild/remark-npm2yarn';
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationFocus,
+  transformerNotationWordHighlight,
+  transformerNotationErrorLevel,
+} from '@shikijs/transformers';
 
 const EXPORT_FOOTER = 'export default ';
 
@@ -28,7 +35,20 @@ export async function mdLoader(source: string): Promise<string> {
         },
       ],
     ],
-    rehypePlugins: [rehypePrettyCode],
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          transformers: [
+            transformerNotationDiff(),
+            transformerNotationHighlight(),
+            transformerNotationFocus(),
+            transformerNotationWordHighlight(),
+            transformerNotationErrorLevel(),
+          ],
+        },
+      ],
+    ],
   });
 
   const mdxCode = file.toString();

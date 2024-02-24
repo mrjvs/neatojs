@@ -30,10 +30,51 @@ body {
   @apply gd-inline-block gd-mr-4 gd-text-right gd-opacity-50;
 }
 
-.neato-guider-codeblockcode[data-line-numbers-max-digits="2"] > [data-line]::before {
+.neato-guider-codeblock code[data-line-numbers-max-digits="2"] > [data-line]::before {
   width: 2rem;
 }
 
-.neato-guider-codeblockcode[data-line-numbers-max-digits="3"] > [data-line]::before {
+.neato-guider-codeblock code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
+}
+
+.neato-guider-codeblock code .highlighted, .neato-guider-codeblock code span[data-highlighted-line] {
+  @apply gd-bg-white;
+}
+
+.neato-guider-codeblock code .highlighted-word {
+  @apply gd-bg-white;
+}
+
+.neato-guider-codeblock code .highlighted.error {
+  @apply gd-bg-red-600;
+}
+
+.neato-guider-codeblock code .highlighted.warning {
+  @apply gd-bg-amber-400;
+}
+
+.neato-guider-codeblock code mark {
+  @apply gd-bg-amber-200;
+}
+
+.neato-guider-codeblock code mark {
+  @apply gd-bg-amber-200;
+}
+
+.neato-guider-codeblock code .diff.remove {
+  @apply gd-bg-red-600;
+}
+
+.neato-guider-codeblock code .diff.add {
+  @apply gd-bg-green-400;
+}
+
+.neato-guider-codeblock code:has(.focused) [data-line]:not(.focused) {
+  opacity: .25;
+  transition: opacity 200ms ease-in-out;
+}
+
+.neato-guider-codeblock code:has(.focused):hover [data-line]:not(.focused) {
+  opacity: 1 !important;
 }
