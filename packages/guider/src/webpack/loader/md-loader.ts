@@ -3,6 +3,8 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkHeadings from '@vcarl/remark-headings';
 import remarkHeadingId from 'remark-heading-id';
 import grayMatter from 'gray-matter';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { remarkNpm2Yarn } from '@theguild/remark-npm2yarn';
 
 const EXPORT_FOOTER = 'export default ';
 
@@ -17,7 +19,16 @@ export async function mdLoader(source: string): Promise<string> {
       remarkFrontmatter,
       [remarkHeadingId, { defaults: true }],
       remarkHeadings,
+      [
+        remarkNpm2Yarn,
+        {
+          packageName: '@neato/guider/client',
+          tabNamesProp: 'items',
+          storageKey: '__guider_packageManager',
+        },
+      ],
     ],
+    rehypePlugins: [rehypePrettyCode],
   });
 
   const mdxCode = file.toString();
