@@ -9,7 +9,7 @@ import {
 
 const github = 'movie-web/movie-web';
 const topNav = [
-  link('Documentation', '/docs/guides', { icon: 'fas:house' }),
+  link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
   link('API reference', '/api-ref'),
   seperator(),
 ];
@@ -20,7 +20,7 @@ export default defineTheme([
     navigation: topNav,
     github,
     tabs: [
-      link('Guides', '/docs/guides', { icon: 'fas:house' }),
+      link('Guides', '/docs/guides', { icon: 'fa6-solid:house' }),
       link('CLI', '/docs/cli'),
       link('Miscellaneous', '/docs/misc'),
     ],
@@ -28,11 +28,14 @@ export default defineTheme([
       directory({
         id: 'guides',
         sidebarItems: [
-          link('Guides', '/docs/guides/', { style: 'star', icon: 'fas:house' }),
+          link('Guides', '/docs/guides/', {
+            style: 'star',
+            icon: 'fa6-solid:house',
+          }),
           link('How to?', '/docs/guides/how-to', { style: 'star' }),
           link('GFM', '/docs/guides/github', {
             style: 'star',
-            icon: 'fab:github',
+            icon: 'radix-icons:github-logo',
           }),
 
           group('Introduction', [
