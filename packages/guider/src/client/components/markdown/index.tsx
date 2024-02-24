@@ -1,5 +1,7 @@
 import { MarkdownCodeBlock } from './code';
 import { MarkdownH1, MarkdownH2 } from './headings';
+import { MarkdownItalic, MarkdownStrike, MarkdownStrong } from './inline';
+import { MarkdownLi, MarkdownOl, MarkdownUl } from './lists';
 import { MarkdownParagraph } from './paragraph';
 import type { ElementProps } from './types';
 
@@ -19,7 +21,7 @@ export function useMDXComponents() {
     figure(props: ElementProps) {
       if (props['data-rehype-pretty-code-figure'] !== undefined)
         return <MarkdownCodeBlock>{props.children}</MarkdownCodeBlock>;
-      return null;
+      return <figure {...props} />;
     },
     pre(props: ElementProps) {
       return (
@@ -27,6 +29,24 @@ export function useMDXComponents() {
           <pre>{props.children}</pre>
         </MarkdownCodeBlock>
       );
+    },
+    em(props: ElementProps) {
+      return <MarkdownItalic attrs={props}>{props.children}</MarkdownItalic>;
+    },
+    del(props: ElementProps) {
+      return <MarkdownStrike attrs={props}>{props.children}</MarkdownStrike>;
+    },
+    strong(props: ElementProps) {
+      return <MarkdownStrong attrs={props}>{props.children}</MarkdownStrong>;
+    },
+    ul(props: ElementProps) {
+      return <MarkdownUl attrs={props}>{props.children}</MarkdownUl>;
+    },
+    li(props: ElementProps) {
+      return <MarkdownLi attrs={props}>{props.children}</MarkdownLi>;
+    },
+    ol(props: ElementProps) {
+      return <MarkdownOl attrs={props}>{props.children}</MarkdownOl>;
     },
   };
 }
