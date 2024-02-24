@@ -30,6 +30,10 @@ export default defineTheme([
         sidebarItems: [
           link('Guides', '/docs/guides/', { style: 'star', icon: 'fas:house' }),
           link('How to?', '/docs/guides/how-to', { style: 'star' }),
+          link('GFM', '/docs/guides/github', {
+            style: 'star',
+            icon: 'fab:github',
+          }),
 
           group('Introduction', [
             link('Guides', '/docs/guides/'),

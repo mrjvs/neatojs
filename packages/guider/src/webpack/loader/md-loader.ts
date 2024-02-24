@@ -5,6 +5,7 @@ import remarkHeadingId from 'remark-heading-id';
 import grayMatter from 'gray-matter';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { remarkNpm2Yarn } from '@theguild/remark-npm2yarn';
+import remarkGfm from 'remark-gfm';
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -34,6 +35,7 @@ export async function mdLoader(source: string): Promise<string> {
           storageKey: '__guider_packageManager',
         },
       ],
+      remarkGfm,
     ],
     rehypePlugins: [
       [

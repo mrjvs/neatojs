@@ -96,6 +96,7 @@
     "gray-matter": "^4.0.3",
     "rehype-pretty-code": "^0.13.0",
     "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.0",
     "remark-heading-id": "^1.0.1",
     "shiki": "^1.1.7",
     "tailwindcss-themer": "^4.0.0",

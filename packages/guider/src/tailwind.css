@@ -17,7 +17,7 @@ body {
 }
 
 .neato-guider-codeblock pre {
-  @apply gd-p-4 gd-overflow-x-auto;
+  @apply gd-p-4 gd-overflow-x-auto gd-font-mono;
 }
 
 .neato-guider-codeblock code[data-line-numbers] {
