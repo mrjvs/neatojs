@@ -11,7 +11,7 @@ export function HeaderInternal() {
   const { site } = useGuider(ctx?.meta);
 
   return (
-    <header className="gd-p-6 gd-pb-0 -gd-mx-6 gd-box-content gd-border-b gd-border-bgLight gd-mb-8 gd-sticky gd-top-0 gd-bg-bg">
+    <header className="gd-p-6 gd-pb-0 -gd-mx-6 gd-box-content gd-border-b gd-border-bgLight gd-mb-8 gd-sticky gd-z-50 gd-top-0 gd-bg-bg">
       <div className="gd-flex gd-justify-between gd-mb-6">
         <Logo />
         <div className="gd-flex gd-items-center gd-space-x-6">

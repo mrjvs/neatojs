@@ -10,7 +10,7 @@ import { Icon } from '../../components/icon';
 function TabLink(props: { link: LinkComponent }) {
   return (
     <ActiveLink
-      className="gd-inline-block gd-py-2 gd-border-b -gd-mb-px gd-px-1 -gd-ml-1"
+      className="gd-inline-block gd-py-4 gd-border-b -gd-mb-px gd-px-1 -gd-ml-1"
       activeClassName="gd-text-textHeading gd-border-primary"
       inactiveClassName="gd-border-transparent"
       href={props.link.to}
@@ -32,7 +32,7 @@ function CustomComponentTab(props: { component: CustomComponentComponent }) {
 
 export function HeaderTabs(props: { tabs: TabsChildren[] }) {
   return (
-    <div className="gd-border-t gd-border-bgLight gd-pt-3 gd-px-6 gd-pb-0 -gd-mx-6 gd-space-x-6">
+    <div className="gd-border-t gd-border-bgLight gd-px-6 gd-pb-0 -gd-mx-6 gd-space-x-6">
       {props.tabs.map((v, i) => {
         const key = `--${i}`;
         if (v.type === 'component')

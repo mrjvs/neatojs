@@ -7,7 +7,8 @@ export function SidebarLink(props: { link: LinkComponent }) {
   return (
     <ActiveLink
       className="gd-block gd-w-full gd-py-2 gd-px-4 gd-rounded-lg"
-      exactMatchClassName="gd-bg-bgLightest gd-text-primary"
+      activeClassName="gd-bg-bgLightest gd-text-primary"
+      exact
       inactiveClassName="hover:gd-text-textLight hover:gd-bg-bgLight"
       href={link.to}
       target={link.newTab ? '_blank' : undefined}
