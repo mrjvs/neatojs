@@ -78,3 +78,8 @@ body {
 .neato-guider-codeblock code:has(.focused):hover [data-line]:not(.focused) {
   opacity: 1 !important;
 }
+
+/* sidebar styling */
+.neato-guider-sidebar .neato-guider-sidebar-group:first-child {
+  margin-top: 0px !important; /* groups shouldnt have top margin if its the first item */
+}

@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';
-import type { PropsWithChildren } from 'react';
-import React, { useState, useEffect, useMemo } from 'react';
+import type { ReactNode } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 
 type ActiveLinkProps = LinkProps & {
@@ -11,16 +11,16 @@ type ActiveLinkProps = LinkProps & {
   exact?: boolean;
   inactiveClassName?: string;
   target?: string;
+  children?: ReactNode | ((props: { isActive: boolean }) => ReactNode);
 };
 
 const ActiveLink = ({
-  children,
   activeClassName,
   exact,
   inactiveClassName,
   className,
   ...props
-}: PropsWithChildren<ActiveLinkProps>) => {
+}: ActiveLinkProps) => {
   const { asPath, isReady } = useRouter();
   const [isActive, setIsActive] = useState(false);
   const computedClassName = useMemo(() => {
@@ -59,6 +59,10 @@ const ActiveLink = ({
     setIsActive(matches);
   }, [asPath, isReady, props.as, props.href, exact]);
 
+  const children =
+    typeof props.children === 'function'
+      ? props.children({ isActive })
+      : props.children;
   return (
     <Link className={computedClassName} {...props}>
       {children}

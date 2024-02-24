@@ -24,7 +24,12 @@ export function HeaderInternal() {
           ) : null}
         </div>
       </div>
-      {site.tabs.length > 0 ? <HeaderTabs tabs={site.tabs} /> : null}
+      <div className="gd-hidden md:gd-block">
+        {site.tabs.length > 0 ? <HeaderTabs tabs={site.tabs} /> : null}
+      </div>
+      <div className="gd-block md:gd-hidden gd-border-t gd-border-bgLight gd-px-6 -gd-mx-6">
+        <p>Mobile nav will go here</p>
+      </div>
     </header>
   );
 }

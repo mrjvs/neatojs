@@ -5,7 +5,7 @@ export function Icon(props: { icon: string; className?: string }) {
   return (
     <span
       className={classNames(
-        'gd-text-base gd-inline-flex gd-items-center gd-justify-center gd-size-4',
+        'gd-inline-flex gd-items-center gd-justify-center gd-size-[1em]',
         props.className,
       )}
     >

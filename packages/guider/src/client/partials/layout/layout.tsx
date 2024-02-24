@@ -12,10 +12,12 @@ export function LayoutInternal(props: GuiderLayoutProps) {
     <div className="gd-w-11/12 gd-max-w-[1480px] gd-mx-auto">
       <GuiderHeader />
 
-      <div className="gd-grid gd-grid-cols-[280px,1fr,280px] gd-gap-16">
-        <GuiderSidebar />
+      <div className="gd-grid gd-grid-cols-[1fr] gd-gap-16 md:gd-grid-cols-[280px,1fr] xl:gd-grid-cols-[280px,1fr,280px]">
+        <div className="gd-hidden md:gd-block">
+          <GuiderSidebar />
+        </div>
         <article>{props.children}</article>
-        <div>
+        <div className="gd-hidden xl:gd-block">
           <GuiderToc />
         </div>
       </div>
