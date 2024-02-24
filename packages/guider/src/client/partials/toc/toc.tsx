@@ -21,6 +21,7 @@ function TocLink(props: {
         }}
         href={`#${props.heading.data.id}`}
         className={classNames({
+          'hover:gd-text-textLight gd-transition-colors gd-duration-100': true,
           'gd-text-primary': props.active,
         })}
       >
@@ -42,7 +43,7 @@ export function TocInternal() {
   return (
     <ScrollPageHeight>
       <div className="gd-flex gd-flex-col">
-        <div className="gd-space-y-1">
+        <div className="gd-space-y-2.5">
           {headings.map((heading, i) => (
             <TocLink
               key={i}

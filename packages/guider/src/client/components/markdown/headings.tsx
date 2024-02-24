@@ -14,7 +14,7 @@ function HeadingAnchor(props: { attrs: ElementProps }) {
   return (
     <a
       href={`#${props.attrs.id}`}
-      className="group-hover:gd-opacity-50 gd-hidden md:gd-inline gd-text-textLight gd-transition-opacity gd-duration-50 gd-select-none gd-absolute gd-left-0 gd-opacity-0 gd-pr-[.3em] -gd-ml-[1em] hover:!gd-opacity-75 gd-font-normal"
+      className="group-hover:gd-opacity-50 gd-hidden md:gd-inline gd-text-textLight gd-transition-opacity gd-duration-100 gd-select-none gd-absolute gd-left-0 gd-opacity-0 gd-pr-[.3em] -gd-ml-[1em] hover:!gd-opacity-75 gd-font-normal"
     >
       #
     </a>

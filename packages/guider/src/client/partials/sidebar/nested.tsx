@@ -25,7 +25,7 @@ function MaybeLink(props: {
       <Icon
         className={classNames({
           'gd-hidden': props.open === undefined,
-          'gd-transition-transform gd-duration-50': true,
+          'gd-transition-transform gd-duration-100': true,
           'gd-rotate-90': props.open,
         })}
         icon="heroicons:chevron-right"

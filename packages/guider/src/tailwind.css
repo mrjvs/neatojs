@@ -75,7 +75,7 @@ body {
   transition: opacity 200ms ease-in-out;
 }
 
-.neato-guider-codeblock code:has(.focused):hover [data-line]:not(.focused) {
+.neato-guider-codeblock:hover code:has(.focused) [data-line]:not(.focused) {
   opacity: 1 !important;
 }
 
