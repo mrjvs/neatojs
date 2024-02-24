@@ -52,6 +52,13 @@ export default defineTheme([
             link('How to?', '/docs/guides/how-to'),
           ]),
         ],
+        layoutSettings: {
+          colors: {
+            primary: '#50EA8E',
+            primaryDarker: '#1BA965',
+            primaryLighter: '#89FFAA',
+          },
+        },
       }),
       directory({
         id: 'cli',
