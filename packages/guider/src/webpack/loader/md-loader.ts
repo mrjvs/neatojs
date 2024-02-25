@@ -39,8 +39,8 @@ export async function mdLoader(source: string): Promise<string> {
       remarkGfm,
     ],
     rehypePlugins: [
+      rehypeExtractExcerpt,
       [
-        rehypeExtractExcerpt,
         rehypePrettyCode,
         {
           transformers: [
