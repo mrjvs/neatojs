@@ -9,9 +9,9 @@ export function guider(initConfig: GuiderInitConfig) {
   const guiderConfig: GuiderInitConfig = {
     ...initConfig,
   };
+  const guiderPlugin = new GuiderPlugin(guiderConfig);
 
   function withGuider(nextConfig: NextConfig = {}): NextConfig {
-    const guiderPlugin = new GuiderPlugin(guiderConfig);
     const extraWatchers = new ExtraWatchWebpackPlugin({
       files: ['pages/**/_meta.json'],
     });
@@ -34,6 +34,19 @@ export function guider(initConfig: GuiderInitConfig) {
               loader: '@neato/guider/loader',
               options: {
                 type: 'mdx',
+                guiderConfig,
+              },
+            },
+          ],
+        });
+        config.module.rules.push({
+          test: /\.guider.virtual$/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@neato/guider/loader',
+              options: {
+                type: 'virtual',
                 guiderConfig,
               },
             },

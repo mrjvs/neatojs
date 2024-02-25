@@ -1,4 +1,4 @@
-declare module '@neato/guider/loader!?virtual' {
+declare module '*.guider.virtual' {
   export const sites: any[];
   export const pageMap: any[];
 }

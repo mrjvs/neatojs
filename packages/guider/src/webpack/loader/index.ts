@@ -1,12 +1,13 @@
 import type { LoaderContext } from 'webpack';
 import { findPagesDir } from 'next/dist/lib/find-pages-dir.js';
+import { getGuiderPluginCache } from '@neato/guider';
 import { runScanner } from '../plugin/plugin';
 import type { GuiderInitConfig } from '../../types';
 import { mdLoader } from './md-loader';
 import { virtualLoader } from './virtual-loader';
 
 export interface LoaderOptions {
-  type?: 'mdx';
+  type?: 'mdx' | 'virtual';
   guiderConfig?: GuiderInitConfig;
 }
 
@@ -21,7 +22,7 @@ async function loader(
   const directories = findPagesDir(process.cwd());
   if (directories.pagesDir) context.addContextDependency(directories.pagesDir);
 
-  if (context.resourceQuery === '?virtual') return virtualLoader();
+  if (type === 'virtual') return virtualLoader(getGuiderPluginCache());
   if (type === 'mdx') return mdLoader(source);
 
   throw new Error(`Loader used with incorrect type (${type})`);

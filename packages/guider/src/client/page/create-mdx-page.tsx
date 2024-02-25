@@ -6,8 +6,8 @@ export type CreateMdxPageOptions = {
   MDXContent: (props: any) => any;
   pageOpts: {
     meta: PageMeta;
-    headings: MdxHeadings[];
-    excerpt: string;
+    headings?: MdxHeadings[];
+    excerpt?: string;
   };
 };
 

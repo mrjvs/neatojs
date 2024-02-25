@@ -8,13 +8,13 @@ export default defineConfig([
     dts: true,
 
     // the loader imports the standard entrypoint for the cache
-    external: ['@neato/guider'],
+    external: ['@neato/guider', '@neato/guider/shim.guider.virtual'],
   },
   {
     name: 'guider-client',
     entry: ['src/client.ts'],
     format: ['cjs', 'esm'],
     dts: true,
-    external: ['@neato/guider/loader!?virtual'],
+    external: ['@neato/guider/shim.guider.virtual'],
   },
 ]);
