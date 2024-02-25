@@ -135,3 +135,4 @@ export type TopNavChildren =
   | CustomComponentComponent;
 
 export type TabsChildren = LinkComponent | CustomComponentComponent;
+export type DropdownChildren = LinkComponent;

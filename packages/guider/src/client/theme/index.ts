@@ -73,6 +73,7 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
     id: site.id,
     layoutSettings,
     navigation: site.navigation ?? [],
+    dropdown: site.dropdown ?? [],
     tabs: site.tabs ?? [],
     github: site.github,
     layout: siteLayout,

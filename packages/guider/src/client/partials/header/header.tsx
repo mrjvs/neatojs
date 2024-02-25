@@ -5,6 +5,7 @@ import { GithubDisplay } from '../../components/github';
 import { HeaderTabs } from './tabs';
 import { HeaderNav } from './nav';
 import { Logo } from './logo';
+import { HeaderDropdown } from './dropdown';
 
 export function HeaderInternal() {
   const ctx = useContext(GuiderLayoutContext);
@@ -13,7 +14,15 @@ export function HeaderInternal() {
   return (
     <header className="gd-p-6 gd-pb-0 -gd-mx-6 gd-box-content gd-border-b gd-border-bgLight gd-mb-8 gd-sticky gd-z-50 gd-top-0 gd-bg-bg">
       <div className="gd-flex gd-justify-between gd-mb-6">
-        <Logo />
+        <div className="gd-flex gd-items-center">
+          <Logo />
+          {site.dropdown.length > 0 ? (
+            <>
+              <div className="gd-w-px gd-h-full gd-bg-bgLightest gd-rotate-12 gd-mx-6" />
+              <HeaderDropdown dropdown={site.dropdown} />
+            </>
+          ) : null}
+        </div>
         <div className="gd-flex gd-items-center gd-space-x-6">
           <HeaderNav items={site.navigation} />
           {site.github ? (

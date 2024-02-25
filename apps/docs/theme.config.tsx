@@ -13,11 +13,16 @@ const topNav = [
   link('API reference', '/api-ref'),
   seperator(),
 ];
+const dropdown = [
+  link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
+  link('API reference', '/api-ref'),
+];
 
 export default defineTheme([
   {
     id: 'docs',
     navigation: topNav,
+    dropdown,
     github,
     tabs: [
       link('Guides', '/docs/guides', { icon: 'fa6-solid:house' }),
@@ -96,6 +101,7 @@ export default defineTheme([
   {
     id: 'api-ref',
     navigation: topNav,
+    dropdown,
     github,
     directories: [
       directory({

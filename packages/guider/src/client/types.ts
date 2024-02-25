@@ -1,5 +1,6 @@
 import type {
   DirectoryComponent,
+  DropdownChildren,
   TabsChildren,
   TopNavChildren,
 } from './theme/components';
@@ -37,6 +38,7 @@ export type SiteConf = {
   id: string;
   navigation?: TopNavChildren[];
   tabs?: TabsChildren[];
+  dropdown?: DropdownChildren[];
   github?: string;
   layout?: string;
   layoutSettings?: DeepPartial<LayoutSettings>;
@@ -59,6 +61,7 @@ export type PopulatedSiteConf = {
   id: string;
   navigation: TopNavChildren[];
   tabs: TabsChildren[];
+  dropdown: DropdownChildren[];
   github?: string;
   layout: string;
   layoutSettings: LayoutSettings;
