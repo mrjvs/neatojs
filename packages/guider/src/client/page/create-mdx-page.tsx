@@ -1,19 +1,24 @@
 import { GuiderLayout } from '../partials/layout';
-import type { MetaConf } from '../types';
 import type { MdxHeadings } from './context';
+import type { PageMeta } from './types';
 
 export type CreateMdxPageOptions = {
   MDXContent: (props: any) => any;
   pageOpts: {
-    meta: MetaConf;
+    meta: PageMeta;
     headings: MdxHeadings[];
+    excerpt: string;
   };
 };
 
 export function createMdxPage(opts: CreateMdxPageOptions) {
   const Content = opts.MDXContent;
   return () => (
-    <GuiderLayout meta={opts.pageOpts.meta} headings={opts.pageOpts.headings}>
+    <GuiderLayout
+      meta={opts.pageOpts.meta}
+      headings={opts.pageOpts.headings}
+      excerpt={opts.pageOpts.excerpt}
+    >
       <Content />
     </GuiderLayout>
   );

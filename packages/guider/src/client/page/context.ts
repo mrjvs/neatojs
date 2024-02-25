@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { MetaConf } from '../types';
+import type { PageMeta } from './types';
 
 export type MdxHeadings = {
   depth: number;
@@ -11,8 +11,9 @@ export type MdxHeadings = {
 
 export const GuiderLayoutContext = createContext<
   | {
-      meta: MetaConf;
+      meta: PageMeta;
       headings: MdxHeadings[];
+      excerpt?: string;
     }
   | undefined
 >(undefined);

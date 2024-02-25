@@ -4,6 +4,7 @@ import remarkHeadings from '@vcarl/remark-headings';
 import remarkHeadingId from 'remark-heading-id';
 import grayMatter from 'gray-matter';
 import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeExtractExcerpt from 'rehype-extract-excerpt';
 import { remarkNpm2Yarn } from '@theguild/remark-npm2yarn';
 import remarkGfm from 'remark-gfm';
 import {
@@ -39,6 +40,7 @@ export async function mdLoader(source: string): Promise<string> {
     ],
     rehypePlugins: [
       [
+        rehypeExtractExcerpt,
         rehypePrettyCode,
         {
           transformers: [
@@ -62,6 +64,7 @@ export async function mdLoader(source: string): Promise<string> {
   const pageOpts = {
     meta: meta.data,
     headings: file.data.headings,
+    excerpt: file.data.excerpt,
   };
 
   return `

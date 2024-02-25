@@ -136,6 +136,9 @@ importers:
       react-helmet-async:
         specifier: ^2.0.4
         version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
+      rehype-extract-excerpt:
+        specifier: ^0.3.1
+        version: 0.3.1
       rehype-pretty-code:
         specifier: ^0.13.0
         version: 0.13.0(shiki@1.1.7)
@@ -5154,6 +5157,13 @@ packages:
     dependencies:
       jsesc: 0.5.0
     dev: true
+
+  /rehype-extract-excerpt@0.3.1:
+    resolution: {integrity: sha512-i3RaHbpqdbDzZNXujAalGdb2rVI4EK4IdIXP6thviQPP0d2jIB5vK8EmEPQv5vnVXZyW+GP11j4HIgK+Vcr0wQ==}
+    dependencies:
+      hast-util-to-string: 3.0.0
+      unist-util-visit: 5.0.0
+    dev: false
 
   /rehype-parse@9.0.0:
     resolution: {integrity: sha512-WG7nfvmWWkCR++KEkZevZb/uw41E8TsH4DsY9UxsTbIXCVGbAs4S+r8FrQ+OtH5EEQAs+5UxKC42VinkmpA1Yw==}
