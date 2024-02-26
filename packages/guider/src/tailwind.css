@@ -129,3 +129,11 @@ ol.neato-guider-list > li .neato-guider-list-line::before {
   counter-increment: listitem;
   content: counter(listitem) ".";
 }
+
+.neato-guider-list .neato-guider-list {
+  @apply gd-mt-3;
+}
+
+.neato-guider-list:not(:has(.neato-guider-list)) {
+  @apply gd-mb-8;
+}
