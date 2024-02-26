@@ -1,9 +1,12 @@
-import type { ReactNode } from 'react';
+import type { MarkdownProps } from './types';
 
-export interface MarkdownCodeBlockProps {
-  children?: ReactNode;
-}
-
-export function MarkdownCodeBlock(props: MarkdownCodeBlockProps) {
-  return <div className="neato-guider-codeblock">{props.children}</div>;
+export function MarkdownCodeBlock(props: MarkdownProps) {
+  if (props.attrs['data-theme']) {
+    return props.children;
+  }
+  return (
+    <div className="neato-guider-codeblock" {...props.attrs}>
+      {props.children}
+    </div>
+  );
 }

@@ -7,9 +7,13 @@ body {
 	@apply gd-bg-bg gd-text-text;
 }
 
+#__next {
+  @apply gd-min-h-screen;
+}
+
 /* codeblock styling */
 .neato-guider-codeblock {
-  @apply gd-bg-bgLight gd-text-textLight gd-rounded-lg gd-mb-4 gd-text-sm;
+  @apply gd-bg-bgLight gd-text-textLight gd-rounded-lg gd-mb-4 gd-grid gd-text-sm gd-grid-cols-1;
 }
 
 .neato-guider-codeblock figcaption {
@@ -17,7 +21,7 @@ body {
 }
 
 .neato-guider-codeblock pre {
-  @apply gd-p-4 gd-overflow-x-auto gd-font-mono;
+  @apply gd-p-4 gd-overflow-x-auto gd-font-mono gd-w-full;
 }
 
 .neato-guider-codeblock code[data-line-numbers] {
@@ -82,4 +86,10 @@ body {
 /* sidebar styling */
 .neato-guider-sidebar .neato-guider-sidebar-group:first-child {
   margin-top: 0px !important; /* groups shouldnt have top margin if its the first item */
+}
+
+/* table */
+.neato-guider-table th:empty {
+  /* hide empty <th>, so heading will dissappear if nothing is contained */
+  display: none;
 }

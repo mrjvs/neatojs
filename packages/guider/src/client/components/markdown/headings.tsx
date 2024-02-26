@@ -1,11 +1,5 @@
-import type { ReactNode } from 'react';
 import classNames from 'classnames';
-import type { ElementProps } from './types';
-
-export type MarkdownProps = {
-  attrs: ElementProps;
-  children?: ReactNode;
-};
+import type { ElementProps, MarkdownProps } from './types';
 
 const headingClasses = 'gd-relative gd-group';
 
@@ -50,5 +44,69 @@ export function MarkdownH2(props: MarkdownProps) {
       {props.children}
       <HeadingAnchor attrs={props.attrs} />
     </h2>
+  );
+}
+
+export function MarkdownH3(props: MarkdownProps) {
+  return (
+    <h3
+      {...props.attrs}
+      className={classNames(
+        'gd-font-bold gd-text-textHeading gd-text-lg gd-mt-10 gd-mb-4',
+        props.attrs.class,
+        headingClasses,
+      )}
+    >
+      {props.children}
+      <HeadingAnchor attrs={props.attrs} />
+    </h3>
+  );
+}
+
+export function MarkdownH4(props: MarkdownProps) {
+  return (
+    <h3
+      {...props.attrs}
+      className={classNames(
+        'gd-font-bold gd-text-textHeading gd-text-lg gd-mt-10 gd-mb-4',
+        props.attrs.class,
+        headingClasses,
+      )}
+    >
+      {props.children}
+      <HeadingAnchor attrs={props.attrs} />
+    </h3>
+  );
+}
+
+export function MarkdownH5(props: MarkdownProps) {
+  return (
+    <h3
+      {...props.attrs}
+      className={classNames(
+        'gd-font-bold gd-text-textHeading gd-text-lg gd-mt-10 gd-mb-4',
+        props.attrs.class,
+        headingClasses,
+      )}
+    >
+      {props.children}
+      <HeadingAnchor attrs={props.attrs} />
+    </h3>
+  );
+}
+
+export function MarkdownH6(props: MarkdownProps) {
+  return (
+    <h3
+      {...props.attrs}
+      className={classNames(
+        'gd-font-bold gd-text-textHeading gd-text-lg gd-mt-10 gd-mb-4',
+        props.attrs.class,
+        headingClasses,
+      )}
+    >
+      {props.children}
+      <HeadingAnchor attrs={props.attrs} />
+    </h3>
   );
 }
