@@ -59,7 +59,9 @@ export function Callout(props: CalloutProps) {
       >
         <Icon icon={iconMap[type]} />
       </div>
-      <div className="gd-flex-1">{props.children}</div>
+      <div className="gd-flex-1 neato-guider-callout-child">
+        {props.children}
+      </div>
     </div>
   );
 }

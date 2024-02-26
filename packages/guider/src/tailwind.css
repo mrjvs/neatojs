@@ -93,3 +93,39 @@ body {
   /* hide empty <th>, so heading will dissappear if nothing is contained */
   display: none;
 }
+
+/* callouts */
+.neato-guider-callout-child > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* lists */
+ol.neato-guider-list {
+  counter-reset: listitem;
+}
+
+.neato-guider-list:has(li > input[type="checkbox"]) .neato-guider-list-line,
+.neato-guider-list > li > input[type="checkbox"] {
+  display: none;
+}
+
+.neato-guider-list:has(li > input[type="checkbox"]) > li > .neato-guider-task {
+  display: inline-flex;
+}
+
+.neato-guider-list > li:has(.neato-guider-task ~ input[type="checkbox"][checked]) > .neato-guider-task {
+  @apply gd-bg-primaryDark gd-border-primaryDark;
+}
+
+.neato-guider-list > li:has(.neato-guider-task ~ input[type="checkbox"][checked]) > .neato-guider-task > .neato-guider-task-icon {
+  display: inline-block;
+}
+
+ol.neato-guider-list > li .neato-guider-list-line {
+  @apply gd-bg-transparent gd-mt-0 gd-text-text;
+}
+
+ol.neato-guider-list > li .neato-guider-list-line::before {
+  counter-increment: listitem;
+  content: counter(listitem) ".";
+}
