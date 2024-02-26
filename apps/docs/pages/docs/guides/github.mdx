@@ -1,4 +1,4 @@
-import { Tip, Important, Caution, Warning, Note, Steps } from "@neato/guider/client"
+import { Tip, Important, Caution, Warning, Note, Steps, Tabs } from "@neato/guider/client"
 
 # All markdown and components
 
@@ -160,6 +160,19 @@ export function foo() {
     You don't need a title btw
   </Steps.Step>
 </Steps>
+
+## Tabs
+<Tabs items={["one", "two", "three"]}>
+  <Tabs.Tab>
+    Tab number one!
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab number two!
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab number three!
+  </Tabs.Tab>
+</Tabs>
 
 ## Lists
 
