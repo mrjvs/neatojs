@@ -137,3 +137,8 @@ ol.neato-guider-list > li .neato-guider-list-line::before {
 .neato-guider-list:not(:has(.neato-guider-list)) {
   @apply gd-mb-8;
 }
+
+/* blockquote */
+.neato-guider-blockquote > *:last-child {
+  margin-bottom: 0px !important;
+}

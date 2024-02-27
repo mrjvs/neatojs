@@ -10,6 +10,7 @@ import {
 import { MarkdownItalic, MarkdownStrike, MarkdownStrong } from './inline';
 import { MarkdownLi, MarkdownOl, MarkdownUl } from './lists';
 import { MarkdownParagraph } from './paragraph';
+import { MarkdownQuote } from './quote';
 import {
   MarkdownTBody,
   MarkdownTD,
@@ -90,6 +91,9 @@ export function useMDXComponents() {
     },
     th(props: ElementProps) {
       return <MarkdownTH attrs={props}>{props.children}</MarkdownTH>;
+    },
+    blockquote(props: ElementProps) {
+      return <MarkdownQuote attrs={props}>{props.children}</MarkdownQuote>;
     },
   };
 }

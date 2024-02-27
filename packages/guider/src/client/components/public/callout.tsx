@@ -47,14 +47,14 @@ export function Callout(props: CalloutProps) {
     <div
       className={classNames(
         classes,
-        'gd-p-5 gd-rounded-md gd-mb-2 gd-bg-opacity-[7%] gd-border gd-border-opacity-50',
+        'gd-p-4 gd-rounded-md gd-mb-2 gd-text-sm gd-bg-opacity-[7%] gd-border gd-border-opacity-50',
         'gd-flex',
       )}
     >
       <div
         className={classNames(
           iconClasses,
-          'gd-text-xl gd-flex items-center gd-mr-3',
+          'gd-text-lg gd-flex items-center gd-mr-3',
         )}
       >
         <Icon icon={iconMap[type]} />
