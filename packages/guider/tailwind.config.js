@@ -31,6 +31,12 @@ module.exports = {
             bgLightest: '#081E24',
             line: '#0F2B33',
 
+            codeWarning: '#222D20',
+            codeError: '#2B1B1F',
+            codeGreen: '#0B2823',
+            codeHighlight: '#0E2429',
+            codeWordHighlight: '#365C68',
+
             semanticTip: '#39B864',
             semanticTipLighter: '#75F2B6',
             semanticNote: '#817EF3',

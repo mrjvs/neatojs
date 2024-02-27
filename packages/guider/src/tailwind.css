@@ -16,6 +16,10 @@ body {
   @apply gd-bg-bgLight gd-text-textLight gd-rounded-lg gd-mb-4 gd-grid gd-text-sm gd-grid-cols-1;
 }
 
+.neato-guider-codeblock code {
+  @apply gd-relative;
+}
+
 .neato-guider-codeblock figcaption {
   @apply gd-text-textLight gd-px-4 gd-py-2 gd-border-b gd-border-text gd-border-opacity-25;
 }
@@ -43,35 +47,43 @@ body {
 }
 
 .neato-guider-codeblock code .highlighted, .neato-guider-codeblock code span[data-highlighted-line] {
-  @apply gd-bg-white;
-}
-
-.neato-guider-codeblock code .highlighted-word {
-  @apply gd-bg-white;
+  @apply gd-bg-codeHighlight -gd-mx-4 gd-px-4;
 }
 
 .neato-guider-codeblock code .highlighted.error {
-  @apply gd-bg-red-600;
+  @apply gd-bg-codeError -gd-mx-4 gd-px-4;
 }
 
 .neato-guider-codeblock code .highlighted.warning {
-  @apply gd-bg-amber-400;
+  @apply gd-bg-codeWarning -gd-mx-4 gd-px-4;
 }
 
-.neato-guider-codeblock code mark {
-  @apply gd-bg-amber-200;
+.neato-guider-codeblock code mark, .neato-guider-codeblock code .highlighted-word {
+  @apply gd-bg-bgLightest gd-border gd-border-codeWordHighlight gd-rounded-lg gd-py-0.5 gd-px-2;
 }
 
-.neato-guider-codeblock code mark {
-  @apply gd-bg-amber-200;
+.neato-guider-codeblock code:has(.diff) {
+  @apply gd-pl-4;
+}
+
+.neato-guider-codeblock code .diff {
+  @apply -gd-ml-8 -gd-mr-4 gd-pl-8 gd-pr-4 gd-relative;
 }
 
 .neato-guider-codeblock code .diff.remove {
-  @apply gd-bg-red-600;
+  @apply gd-bg-codeError;
+}
+.neato-guider-codeblock code .diff.remove::before {
+  content: "-";
+  @apply gd-text-semanticCaution gd-absolute gd-left-3;
 }
 
 .neato-guider-codeblock code .diff.add {
-  @apply gd-bg-green-400;
+  @apply gd-bg-codeGreen;
+}
+.neato-guider-codeblock code .diff.add::before {
+  content: "+";
+  @apply gd-text-semanticTip gd-absolute gd-left-3;
 }
 
 .neato-guider-codeblock code:has(.focused) [data-line]:not(.focused) {
@@ -81,6 +93,11 @@ body {
 
 .neato-guider-codeblock:hover code:has(.focused) [data-line]:not(.focused) {
   opacity: 1 !important;
+}
+
+.neato-guider-codeblock code[data-language]::after {
+  content: attr(data-language);
+  @apply gd-absolute gd-opacity-50 gd-scale-90 gd-origin-top-right gd-uppercase gd-text-sm -gd-top-1 gd-font-sans -gd-right-1 gd-font-bold gd-text-text;
 }
 
 /* sidebar styling */
