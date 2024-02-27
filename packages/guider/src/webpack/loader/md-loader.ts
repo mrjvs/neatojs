@@ -43,6 +43,8 @@ export async function mdLoader(source: string): Promise<string> {
       [
         rehypePrettyCode,
         {
+          defaultLang: 'txt',
+          keepBackground: false,
           transformers: [
             transformerNotationDiff(),
             transformerNotationHighlight(),
