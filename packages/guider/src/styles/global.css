@@ -1,0 +1,13 @@
+body {
+	@apply gd-bg-bg gd-text-text;
+}
+
+#__next {
+  @apply gd-min-h-screen;
+}
+
+body[data-header-dropdown-open] {
+  .neato-guider-overlay {
+    @apply !gd-opacity-100
+  }
+}

@@ -1,0 +1,84 @@
+import { Callout } from "@neato/guider/client"
+
+# How to?
+
+This is a test
+
+<Callout>
+Hello world!
+</Callout>
+<Callout type="error">
+Hello world!
+</Callout>
+<Callout type="important">
+Hello world!
+</Callout>
+<Callout type="info">
+Hello world!
+</Callout>
+<Callout type="warning">
+Hello world!
+</Callout>
+
+```ts
+const hello = "world"; const hello = "world"; const hello = "world"; const hello = "world"; const hello = "world"; const hello = "world";
+```
+
+```ts showLineNumbers
+const hello = "world";
+```
+
+```txt title="test" showLineNumbers
+const hello = "world";
+```
+
+```sh npm2yarn
+npm i @neato/guider
+```
+
+```ts title="div test"
+export function foo() {
+  console.log('hewwo') // [!code --]
+  console.log('hello') // [!code ++]
+}
+```
+
+```ts title="line highlight test"
+export function foo() {
+  console.log('hello') // [!code highlight]
+}
+```
+
+```ts title="word highlight test"
+export function foo() { // [!code word:Hello]
+  const msg = 'Hello World'
+  console.log('Hello')
+}
+```
+
+```ts title="focus test"
+export function foo() {
+  console.log('Hello') // [!code focus]
+}
+```
+
+```ts title="error notation test"
+export function foo() {
+  console.error('Error') // [!code error]
+  console.warn('Warning') // [!code warning]
+}
+```
+
+```ts {1,3-4} title="line highlight test (meta)"
+console.log('1')
+console.log('2')
+console.log('3')
+console.log('4')
+```
+
+```ts /Hello/ title="word highlight test (meta)"
+export function foo() {
+  const msg = 'Hello World'
+  console.log('Hello')
+}
+```

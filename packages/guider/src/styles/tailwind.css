@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Rubik:wght@300..900&display=swap');
+
+@import "./global.css";
+
+@import "./components/nested.css";
+@import "./components/codeblocks.css";
+@import "./components/lists.css";
+@import "./components/table.css";
+@import "./components/sidebar.css";
+@import "./components/inlinecode.css";
+@import "./components/steps.css";
+@import "./components/footnotes.css";
+@import "./components/frame.css";
+@import "./components/codegroup.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

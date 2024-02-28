@@ -1,0 +1,15 @@
+.neato-guider-codegroup {
+  .neato-guider-codegroup-child {
+    > *:last-child {
+      @apply !gd-mb-0;
+    }
+
+    .neato-guider-codeblock {
+      @apply !gd-rounded-none;
+    }
+
+    .neato-guider-frame {
+      @apply !gd-rounded-t-none !gd-rounded-b-lg;
+    }
+  }
+}

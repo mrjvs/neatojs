@@ -1,33 +1,12 @@
 import type {
   GuiderConfig,
-  NavItemDescriptor,
   PopulatedSiteConf,
   SiteConf,
-  NavItem,
   PopulatedSiteLayout,
   SiteLayout,
-  PopulatedSiteDirectory,
-  SiteDirectory,
   LayoutSettings,
 } from '../types';
 import { mergeSiteLayoutSettings } from './merge';
-
-function navItemsToDescriptors(key: string, item: NavItem): NavItemDescriptor {
-  const obj = typeof item === 'string' ? { title: item } : item;
-  return {
-    title: obj.title,
-    to: key,
-    items: navRecordToDescriptors(obj.items ?? {}),
-    newTab: obj.newTab ?? false,
-    icon: obj.icon,
-  };
-}
-
-function navRecordToDescriptors(
-  map: Record<string, NavItem>,
-): NavItemDescriptor[] {
-  return Object.entries(map).map((v) => navItemsToDescriptors(v[0], v[1]));
-}
 
 function populateLayout(
   rootSettings: LayoutSettings,
@@ -36,18 +15,6 @@ function populateLayout(
   return {
     id: layout.id,
     settings: mergeSiteLayoutSettings(rootSettings, layout.settings ?? {}),
-  };
-}
-
-function populateDirectory(
-  defaultLayout: string,
-  dir: SiteDirectory,
-): PopulatedSiteDirectory {
-  return {
-    layout: dir.layout ?? defaultLayout,
-    layoutSetings: dir.layoutSetings ?? {},
-    sidebarItems: navRecordToDescriptors(dir.sidebarItems ?? {}),
-    title: dir.title,
   };
 }
 
@@ -60,10 +27,17 @@ function addDefaultLayouts(layouts: SiteLayout[]): SiteLayout[] {
   if (!layouts.find((v) => v.id === 'article'))
     out.push({
       id: 'article',
+      settings: {
+        toc: false,
+      },
     });
   if (!layouts.find((v) => v.id === 'page'))
     out.push({
       id: 'page',
+      settings: {
+        sidebar: false,
+        toc: false,
+      },
     });
   if (!layouts.find((v) => v.id === 'raw'))
     out.push({
@@ -77,8 +51,18 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
   const layoutSettings = mergeSiteLayoutSettings(
     {
       colors: {
-        primary: '#fff',
+        primary: '#50A0EA',
+        primaryDarker: '#1B65A9',
+        primaryLighter: '#89C6FF',
+        text: '#4A7181',
+        textLighter: '#789CAB',
+        textHighlight: '#FFFFFF',
+        background: '#050F13',
+        backgroundLighter: '#07171C',
+        backgroundLightest: '#081E24',
       },
+      sidebar: true,
+      toc: true,
     },
     site.layoutSettings ?? {},
   );
@@ -86,12 +70,14 @@ function populateSiteConfig(site: SiteConf): PopulatedSiteConf {
   if (site.directories.length === 0)
     throw new Error('Site may not have an empty directory list');
   return {
+    id: site.id,
     layoutSettings,
-    navItems: navRecordToDescriptors(site.navItems ?? {}),
+    navigation: site.navigation ?? [],
+    dropdown: site.dropdown ?? [],
+    tabs: site.tabs ?? [],
+    github: site.github,
     layout: siteLayout,
-    directories: site.directories.map((dir) =>
-      populateDirectory(siteLayout, dir),
-    ),
+    directories: site.directories,
     layouts: layouts.map((layout) => populateLayout(layoutSettings, layout)),
   };
 }

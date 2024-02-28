@@ -1,0 +1,4 @@
+.neato-guider-sidebar .neato-guider-sidebar-group:first-child {
+  /* groups shouldnt have top margin if its the first item */
+  margin-top: 0px !important;
+}

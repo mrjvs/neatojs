@@ -1,21 +1,28 @@
 import type { LoaderContext } from 'webpack';
-import { metaLoader } from './meta-loader';
+import { findPagesDir } from 'next/dist/lib/find-pages-dir.js';
+import { getGuiderPluginCache } from '@neato/guider';
+import { runScanner } from '../plugin/plugin';
+import type { GuiderInitConfig } from '../../types';
 import { mdLoader } from './md-loader';
 import { virtualLoader } from './virtual-loader';
 
 export interface LoaderOptions {
-  type?: 'meta' | 'mdx';
+  type?: 'mdx' | 'virtual';
+  guiderConfig?: GuiderInitConfig;
 }
 
 async function loader(
   context: LoaderContext<LoaderOptions>,
   source: string,
 ): Promise<string> {
-  const { type } = context.getOptions();
+  const { type, guiderConfig } = context.getOptions();
   context.cacheable(true);
+  if (guiderConfig) await runScanner(guiderConfig);
 
-  if (context.resourceQuery === '?virtual') return virtualLoader();
-  if (type === 'meta') return metaLoader();
+  const directories = findPagesDir(process.cwd());
+  if (directories.pagesDir) context.addContextDependency(directories.pagesDir);
+
+  if (type === 'virtual') return virtualLoader(getGuiderPluginCache());
   if (type === 'mdx') return mdLoader(source);
 
   throw new Error(`Loader used with incorrect type (${type})`);
@@ -24,8 +31,8 @@ async function loader(
 export default function cbLoader(
   this: LoaderContext<LoaderOptions>,
   source: string,
+  callback: (err: Error | null, content?: string | undefined) => void,
 ): void {
-  const callback = this.async();
   loader(this, source)
     .then((result) => {
       callback(null, result);

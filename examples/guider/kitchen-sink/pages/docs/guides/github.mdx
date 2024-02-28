@@ -1,0 +1,268 @@
+import { Tip, Important, Caution, Warning, Note, Steps, Tabs, Frame, Button, CodeGroup } from "@neato/guider/client"
+
+# All markdown and components
+
+This page describes all markdown and components that are supported by `@neato/guider`.
+
+## Inline styles
+These are all inline styles.
+
+- **This is bold text**
+- _This text is italicized_
+- ~~This is strikethrough text~~
+- **This text is _extremely_ important**
+- ***All this text is important***
+- This text has `Inline code` inside it.
+- The following has inline syntax highlighting:  `const ts = "test"{:ts}`. Very cool!
+
+### Scripts
+Sometimes you want to use sub or superscript, this is how that looks:
+- This is a <sub>subscript</sub> text
+- This is a <sup>superscript</sup> text
+
+## Quotes
+
+Text that is not a quote
+
+> Text that is a quote
+
+> A multiline quote,
+>
+> It's a few lines long!
+
+## Links
+
+Links can be embedded in standard markdown style [like this](https://google.com).
+But you can also just paste links and it will work: https://google.com.
+
+Using the same syntax with an exclamation mark in front of it will embed an image:
+![Cool picture](https://picsum.photos/seed/near/600/300/?blur=10)
+
+## Code blocks
+
+Here is a basic code block:
+```
+git status
+git add
+git commit
+```
+
+With a language specified:
+```sh
+git status
+git add
+git commit
+```
+
+Scrollable code block:
+```ts
+const hello = "world"; const hello = "world"; const hello = "world"; const hello = "world"; const hello = "world"; const hello = "world";
+```
+
+Code block with line numbers:
+```ts showLineNumbers
+const hello = "world";
+```
+
+Code block with title:
+```ts title="test"
+const hello = "world";
+```
+
+Code block with npm2yarn integration:
+```sh npm2yarn
+npm i @neato/guider
+```
+
+```ts title="Code block with difference view"
+export function foo() {
+  console.log('hewwo') // [!code --]
+  console.log('hello') // [!code ++]
+}
+```
+
+```ts title="Code block with difference view and lines" showLineNumbers
+export function foo() {
+  console.log('hewwo') // [!code --]
+  console.log('hello') // [!code ++]
+}
+```
+
+```ts title="Code block with line highlight"
+export function foo() {
+  console.log('hello') // [!code highlight]
+}
+```
+
+```ts title="Code block with word highlight"
+export function foo() { // [!code word:hello]
+  console.log('hello') // hello world!
+}
+```
+
+```ts title="Code block with a focus"
+export function foo() {
+  console.log('Hello') // [!code focus]
+}
+```
+
+```ts title="Code block with notations"
+export function foo() {
+  console.error('Error') // [!code error]
+  console.warn('Warning') // [!code warning]
+}
+```
+
+```ts {1,3-4} title="Code block with meta line highlight"
+console.log('1')
+console.log('2')
+console.log('3')
+console.log('4')
+```
+
+```ts /Hello/ title="Code block with meta word highlight"
+export function foo() {
+  const msg = 'Hello World'
+  console.log('Hello')
+}
+```
+
+<CodeGroup>
+  <CodeGroup.Code title="Item A">
+    ```ts
+    const a = "a";
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="Item B">
+    ```ts showLineNumbers title="This is item B!"
+    const b = "b";
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="Item C">
+    <Frame>
+      <Button>Normal frame</Button>
+    </Frame>
+  </CodeGroup.Code>
+</CodeGroup>
+
+## Callouts
+
+<Tip>
+  Hello world!
+</Tip>
+<Caution>
+  Hello world!
+</Caution>
+<Important>
+  Hello world!
+</Important>
+<Note>
+  Hello world!
+</Note>
+<Warning>
+  Hello world!
+</Warning>
+
+## Steppers
+
+<Steps>
+  <Steps.Step>
+    ### Second step
+    This is the first step!
+  </Steps.Step>
+  <Steps.Step>
+    ### Second step
+    This is the second step!
+  </Steps.Step>
+  <Steps.Step>
+    This is the third step!
+    You don't need a title btw
+  </Steps.Step>
+</Steps>
+
+## Tabs
+<Tabs items={["one", "two", "three"]}>
+  <Tabs.Tab>
+    Tab number one!
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab number two!
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab number three!
+  </Tabs.Tab>
+</Tabs>
+
+## Dividers
+---
+
+
+Here is some text
+
+---
+
+Here is more text!
+
+## Lists
+
+**Unordered list:**
+- George Washington
+- John Adams
+- Thomas Jefferson
+
+**Numbered list:**
+1. James Madison
+2. James Monroe
+3. John Quincy Adams
+
+**Another numbered list:**
+1. James Madison
+1. James Monroe
+1. John Quincy Adams
+
+**Nested list:**
+1. First list item
+   - First nested list item
+     - Second nested list item
+
+**Task list:**
+- [x] Task one
+- [ ] Task two
+- [ ] Task three :tada:
+
+## Foot notes
+Here is a simple footnote[^1].
+A footnote can also have multiple lines[^2].
+
+[^1]: My reference.
+[^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
+  This is a second line.
+
+You can look at the bottom of the page for all the footnotes.
+
+## Tables
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+
+| Command | Description |
+| --- | --- |
+| `git status` | List all *new or modified* files |
+| `git diff` | Show file differences that **haven't been** staged |
+
+|     |     |     |
+| --- | --- | --- |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+
+## Frames
+Frames are a neat way to showcase previews or components.
+
+<Frame>
+  <Button>Normal frame</Button>
+</Frame>
+
+<Frame plain>
+  <Button>Plain frame</Button>
+</Frame>

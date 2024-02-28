@@ -1,3 +1,10 @@
+import type {
+  DirectoryComponent,
+  DropdownChildren,
+  TabsChildren,
+  TopNavChildren,
+} from './theme/components';
+
 export type GuiderConfig = SiteConf | SiteConf[];
 
 export type DeepPartial<T> = T extends object
@@ -6,28 +13,20 @@ export type DeepPartial<T> = T extends object
     }
   : T;
 
-export type NavItemDescriptor = {
-  title: string;
-  to: string;
-  items: NavItemDescriptor[];
-  newTab: boolean;
-  icon?: string;
-};
-
-export type NavItem =
-  | string
-  | {
-      title: string;
-      to?: string;
-      icon?: string;
-      newTab?: boolean;
-      items?: Record<string, NavItem>;
-    };
-
 export type LayoutSettings = {
   colors: {
     primary: string;
+    primaryLighter: string;
+    primaryDarker: string;
+    background: string;
+    backgroundLighter: string;
+    backgroundLightest: string;
+    text: string;
+    textLighter: string;
+    textHighlight: string;
   };
+  toc: boolean;
+  sidebar: boolean;
 };
 
 export type SiteLayout = {
@@ -35,18 +34,15 @@ export type SiteLayout = {
   settings?: DeepPartial<LayoutSettings>;
 };
 
-export type SiteDirectory = {
-  title: string;
-  sidebarItems: Record<string, NavItem>;
-  layout?: string;
-  layoutSetings?: DeepPartial<LayoutSettings>;
-};
-
 export type SiteConf = {
-  navItems?: Record<string, NavItem>;
+  id: string;
+  navigation?: TopNavChildren[];
+  tabs?: TabsChildren[];
+  dropdown?: DropdownChildren[];
+  github?: string;
   layout?: string;
   layoutSettings?: DeepPartial<LayoutSettings>;
-  directories: SiteDirectory[];
+  directories: DirectoryComponent[];
   layouts?: SiteLayout[];
 };
 
@@ -61,17 +57,20 @@ export type PopulatedSiteLayout = {
   settings: LayoutSettings;
 };
 
-export type PopulatedSiteDirectory = {
-  title: string;
-  sidebarItems: NavItemDescriptor[];
-  layout: string;
-  layoutSetings: DeepPartial<LayoutSettings>;
-};
-
 export type PopulatedSiteConf = {
-  navItems: NavItemDescriptor[];
+  id: string;
+  navigation: TopNavChildren[];
+  tabs: TabsChildren[];
+  dropdown: DropdownChildren[];
+  github?: string;
   layout: string;
   layoutSettings: LayoutSettings;
-  directories: PopulatedSiteDirectory[];
+  directories: DirectoryComponent[];
   layouts: PopulatedSiteLayout[];
+};
+
+export type PageMapItem = {
+  sitePath: string;
+  fileContents: Record<string, any>;
+  config: MetaConf;
 };

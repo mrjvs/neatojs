@@ -1,6 +1,19 @@
 import { compile } from '@mdx-js/mdx';
 import remarkFrontmatter from 'remark-frontmatter';
+import remarkHeadings from '@vcarl/remark-headings';
+import remarkHeadingId from 'remark-heading-id';
 import grayMatter from 'gray-matter';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeExtractExcerpt from 'rehype-extract-excerpt';
+import { remarkNpm2Yarn } from '@theguild/remark-npm2yarn';
+import remarkGfm from 'remark-gfm';
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationFocus,
+  transformerNotationWordHighlight,
+  transformerNotationErrorLevel,
+} from '@shikijs/transformers';
 
 const EXPORT_FOOTER = 'export default ';
 
@@ -10,7 +23,38 @@ export async function mdLoader(source: string): Promise<string> {
     jsx: true,
     outputFormat: 'program',
     format: 'detect',
-    remarkPlugins: [remarkFrontmatter],
+    providerImportSource: '@neato/guider/client',
+    remarkPlugins: [
+      remarkFrontmatter,
+      [remarkHeadingId, { defaults: true }],
+      remarkHeadings,
+      [
+        remarkNpm2Yarn,
+        {
+          packageName: '@neato/guider/client',
+          tabNamesProp: 'items',
+          storageKey: '__guider_packageManager',
+        },
+      ],
+      remarkGfm,
+    ],
+    rehypePlugins: [
+      rehypeExtractExcerpt,
+      [
+        rehypePrettyCode,
+        {
+          defaultLang: 'txt',
+          keepBackground: false,
+          transformers: [
+            transformerNotationDiff(),
+            transformerNotationHighlight(),
+            transformerNotationFocus(),
+            transformerNotationWordHighlight(),
+            transformerNotationErrorLevel(),
+          ],
+        },
+      ],
+    ],
   });
 
   const mdxCode = file.toString();
@@ -21,6 +65,8 @@ export async function mdLoader(source: string): Promise<string> {
 
   const pageOpts = {
     meta: meta.data,
+    headings: file.data.headings,
+    excerpt: file.data.excerpt,
   };
 
   return `
