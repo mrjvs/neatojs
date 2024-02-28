@@ -8,6 +8,7 @@
 @import "./components/table.css";
 @import "./components/sidebar.css";
 @import "./components/blockquote.css";
+@import "./components/inlinecode.css";
 
 @tailwind base;
 @tailwind components;
