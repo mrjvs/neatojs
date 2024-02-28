@@ -11,10 +11,7 @@ function NavLink(props: { link: LinkComponent }) {
   return (
     <ActiveLink activeClassName="gd-text-textHeading" href={props.link.to}>
       {props.link.icon ? (
-        <Icon
-          className="gd-inline-block text-[1.3rem] gd-mr-2"
-          icon={props.link.icon}
-        />
+        <Icon className="gd-inline-block gd-mr-2" icon={props.link.icon} />
       ) : null}
       {props.link.title}
     </ActiveLink>

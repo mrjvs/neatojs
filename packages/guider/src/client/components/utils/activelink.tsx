@@ -2,8 +2,9 @@ import { useRouter } from 'next/router';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
+import { usePathname } from 'next/navigation';
 
 export function useAreRoutesActive(
   ops: {
@@ -12,16 +13,12 @@ export function useAreRoutesActive(
     exact?: boolean;
   }[],
 ) {
-  const { asPath, isReady } = useRouter();
+  const pathName = usePathname();
 
   const isActiveCheck = useCallback(
     (href: string, exact?: boolean) => {
-      if (!isReady) {
-        return false;
-      }
-
       const linkPathname = new URL(href, location.href).pathname;
-      const activePathname = new URL(asPath, location.href).pathname;
+      const activePathname = new URL(pathName, location.href).pathname;
 
       const linkPathArr = linkPathname.split('/').filter(Boolean);
       const activePathArr = activePathname.split('/').filter(Boolean);
@@ -40,12 +37,14 @@ export function useAreRoutesActive(
 
       return matches;
     },
-    [asPath, isReady],
+    [pathName],
   );
 
-  const actives = useMemo(() => {
-    return ops.map((v) => isActiveCheck(v.href, v.exact));
-  }, [asPath, isActiveCheck]);
+  const [actives, setActives] = useState<boolean[]>(ops.map(() => false));
+  const opsString = JSON.stringify(ops);
+  useEffect(() => {
+    setActives(ops.map((v) => isActiveCheck(v.href, v.exact)));
+  }, [pathName, opsString, isActiveCheck]);
 
   return actives;
 }

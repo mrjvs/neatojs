@@ -18,10 +18,7 @@ export function SidebarLink(props: { link: LinkComponent; indent?: boolean }) {
       target={link.newTab ? '_blank' : undefined}
     >
       {link.icon ? (
-        <Icon
-          className="gd-inline-block text-[1.3rem] gd-mr-2"
-          icon={link.icon}
-        />
+        <Icon className="gd-inline-block gd-mr-2" icon={link.icon} />
       ) : null}
       {link.title}
     </ActiveLink>

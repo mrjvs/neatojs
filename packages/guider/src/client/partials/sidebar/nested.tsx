@@ -16,10 +16,7 @@ function MaybeLink(props: {
   const contents = (
     <span className="gd-flex gd-items-center">
       {props.link.icon ? (
-        <Icon
-          className="gd-inline-block text-[1.3rem] gd-mr-2"
-          icon={props.link.icon}
-        />
+        <Icon className="gd-inline-block gd-mr-2" icon={props.link.icon} />
       ) : null}
       <span className="gd-flex-1">{props.link.title}</span>
       <Icon
