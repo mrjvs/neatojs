@@ -3,7 +3,7 @@
   /*
    * basic styling of the block
    */
-  @apply gd-bg-bgLight gd-text-textLight gd-rounded-lg gd-mb-4 gd-text-sm;
+  @apply gd-bg-bgLight gd-text-textLight gd-relative gd-rounded-lg gd-mb-4 gd-text-sm;
 
   figcaption {
     @apply gd-text-textLight gd-px-4 gd-py-2 gd-border-b gd-border-text gd-border-opacity-25;
@@ -122,6 +122,23 @@
    */
   code[data-language]::after {
     content: attr(data-language);
-    @apply gd-absolute gd-opacity-50 gd-scale-90 gd-select-none gd-origin-top-right gd-uppercase gd-text-sm gd-top-3 gd-font-sans gd-right-3 gd-font-bold gd-text-text;
+    @apply gd-absolute gd-opacity-50 gd-transition-opacity gd-duration-150 gd-scale-90 gd-select-none gd-origin-top-right gd-uppercase gd-text-sm gd-top-3 gd-font-sans gd-right-3 gd-font-bold gd-text-text;
+  }
+  code[data-language]:hover::after, &:has(.neato-guider-copy:hover) code::after {
+    @apply gd-opacity-0;
+  }
+
+
+  /*
+   * copy button
+   */
+  .neato-guider-copy {
+    @apply gd-absolute gd-right-2 gd-top-2 gd-opacity-0 gd-z-20;
+  }
+  &:has(figcaption) .neato-guider-copy {
+    @apply gd-top-12;
+  }
+  &:has(code:hover) .neato-guider-copy, .neato-guider-copy:hover {
+    @apply gd-opacity-100;
   }
 }
