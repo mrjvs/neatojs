@@ -1,5 +1,10 @@
 import { MarkdownCodeBlock } from './code';
 import {
+  MarkdownFootnoteLink,
+  MarkdownFootnoteNumber,
+  MarkdownFootnotes,
+} from './footnotes';
+import {
   MarkdownH1,
   MarkdownH2,
   MarkdownH3,
@@ -97,10 +102,29 @@ export function useMDXComponents() {
       return <MarkdownQuote attrs={props}>{props.children}</MarkdownQuote>;
     },
     a(props: ElementProps) {
+      if (props['data-footnote-ref'])
+        return (
+          <MarkdownFootnoteNumber attrs={props}>
+            {props.children}
+          </MarkdownFootnoteNumber>
+        );
+      if (props['data-footnote-backref'] !== undefined)
+        return (
+          <MarkdownFootnoteLink attrs={props}>
+            {props.children}
+          </MarkdownFootnoteLink>
+        );
       return <MarkdownLink attrs={props}>{props.children}</MarkdownLink>;
     },
     hr(props: ElementProps) {
       return <MarkdownHr attrs={props} />;
+    },
+    section(props: ElementProps) {
+      if (props['data-footnotes'])
+        return (
+          <MarkdownFootnotes attrs={props}>{props.children}</MarkdownFootnotes>
+        );
+      return <section {...props}>{props.children}</section>;
     },
   };
 }

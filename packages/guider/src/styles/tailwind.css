@@ -2,13 +2,14 @@
 
 @import "./global.css";
 
+@import "./components/nested.css";
 @import "./components/codeblocks.css";
 @import "./components/lists.css";
-@import "./components/callout.css";
 @import "./components/table.css";
 @import "./components/sidebar.css";
-@import "./components/blockquote.css";
 @import "./components/inlinecode.css";
+@import "./components/steps.css";
+@import "./components/footnotes.css";
 
 @tailwind base;
 @tailwind components;

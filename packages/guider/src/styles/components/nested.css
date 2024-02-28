@@ -1,0 +1,13 @@
+/* margins inside nested elements like callouts or steppers */
+.neato-guider-steps-step-content,
+.neato-guider-callout-child,
+.neato-guider-blockquote
+ {
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}

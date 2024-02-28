@@ -7,7 +7,7 @@ export function MarkdownHr(props: MarkdownProps) {
       {...props.attrs}
       className={classNames(
         'gd-my-4 gd-border-0 gd-h-px gd-bg-line',
-        props.attrs.class,
+        props.attrs.className,
       )}
     />
   );
