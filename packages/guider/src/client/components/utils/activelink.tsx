@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import type { LinkProps } from 'next/link';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
