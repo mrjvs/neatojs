@@ -1,4 +1,4 @@
-import { Tip, Important, Caution, Warning, Note, Steps, Tabs, Frame, Button } from "@neato/guider/client"
+import { Tip, Important, Caution, Warning, Note, Steps, Tabs, Frame, Button, CodeGroup } from "@neato/guider/client"
 
 # All markdown and components
 
@@ -127,9 +127,23 @@ export function foo() {
 }
 ```
 
-<Important>
-  **TODO:** missing code groups
-</Important>
+<CodeGroup>
+  <CodeGroup.Code title="Item A">
+    ```ts
+    const a = "a";
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="Item B">
+    ```ts showLineNumbers title="This is item B!"
+    const b = "b";
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="Item C">
+    <Frame>
+      <Button>Normal frame</Button>
+    </Frame>
+  </CodeGroup.Code>
+</CodeGroup>
 
 ## Callouts
 
