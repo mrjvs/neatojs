@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import type { MarkdownProps } from './headings';
+import type { MarkdownProps } from './types';
 
 export function MarkdownStrong(props: MarkdownProps) {
   return (

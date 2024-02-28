@@ -7,6 +7,7 @@ import {
   MarkdownH5,
   MarkdownH6,
 } from './headings';
+import { MarkdownHr } from './hr';
 import { MarkdownItalic, MarkdownStrike, MarkdownStrong } from './inline';
 import { MarkdownLi, MarkdownOl, MarkdownUl } from './lists';
 import { MarkdownLink, MarkdownParagraph } from './paragraph';
@@ -97,6 +98,9 @@ export function useMDXComponents() {
     },
     a(props: ElementProps) {
       return <MarkdownLink attrs={props}>{props.children}</MarkdownLink>;
+    },
+    hr(props: ElementProps) {
+      return <MarkdownHr attrs={props} />;
     },
   };
 }
