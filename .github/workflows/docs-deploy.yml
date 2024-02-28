@@ -10,15 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - uses: pnpm/action-setup@v2
       with:
         version: 8
 
-    - name: Install Node.js
-      uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: 'pnpm'
@@ -26,11 +24,11 @@ jobs:
     - name: Install pnpm packages
       run: pnpm install
 
-    - name: Build project
+    - name: Build
       run: cd apps/docs && pnpm run build
 
-    - name: Upload production-ready build files
-      uses: actions/upload-pages-artifact@v4
+    - name: Upload site
+      uses: actions/upload-pages-artifact@v3
       with:
         path: apps/docs/out
 
