@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import ActiveLink, {
   useAreRoutesActive,
@@ -25,16 +25,27 @@ function DropdownItem(props: { link: LinkComponent; active?: boolean }) {
 function DropdownLink(props: { link: LinkComponent }) {
   return (
     <Menu.Item>
-      <ActiveLink href={props.link.to} exact>
+      <ActiveLink href={props.link.to}>
         {({ isActive }) => <DropdownItem link={props.link} active={isActive} />}
       </ActiveLink>
     </Menu.Item>
   );
 }
 
+function UpdateHead(props: { active?: boolean }) {
+  useEffect(() => {
+    if (props.active)
+      document.body.setAttribute('data-header-dropdown-open', 'true');
+    return () => {
+      document.body.removeAttribute('data-header-dropdown-open');
+    };
+  });
+  return null;
+}
+
 export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
   const actives = useAreRoutesActive(
-    props.dropdown.map((v) => ({ href: v.to, exact: true })),
+    props.dropdown.map((v) => ({ href: v.to })),
   );
 
   const activeItem = useMemo(() => {
@@ -44,7 +55,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
   }, [actives, props.dropdown]);
 
   return (
-    <Menu as="div" className="gd-relative -gd-ml-2 gd-inline-block">
+    <Menu as="div" className="gd-relative -gd-ml-2 gd-inline-block gd-z-[70]">
       <Menu.Button>
         {({ open }) => (
           <div
@@ -56,6 +67,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
           >
             <span className="gd-mr-2 gd-pb-0.5">{activeItem.title}</span>
             <Icon icon="flowbite:chevron-sort-solid" className="gd-text-text" />
+            <UpdateHead active={open} />
           </div>
         )}
       </Menu.Button>
