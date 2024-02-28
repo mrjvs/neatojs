@@ -6,4 +6,5 @@ const withGuider = guider({
 
 module.exports = withGuider({
   output: 'export',
+  basePath: '/neatojs',
 });
