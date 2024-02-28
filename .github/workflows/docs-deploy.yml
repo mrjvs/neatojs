@@ -1,3 +1,5 @@
+name: "docs-deploy"
+
 on:
   push:
     branches:
@@ -23,6 +25,9 @@ jobs:
 
     - name: Install pnpm packages
       run: pnpm install
+
+    - name: Build @neato/guider
+      run: cd packages/guider && pnpm run build
 
     - name: Build
       run: cd apps/docs && pnpm run build
