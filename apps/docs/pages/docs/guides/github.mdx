@@ -1,4 +1,4 @@
-import { Tip, Important, Caution, Warning, Note, Steps, Tabs } from "@neato/guider/client"
+import { Tip, Important, Caution, Warning, Note, Steps, Tabs, Frame, Button } from "@neato/guider/client"
 
 # All markdown and components
 
@@ -245,6 +245,10 @@ You can look at the bottom of the page for all the footnotes.
 ## Frames
 Frames are a neat way to showcase previews or components.
 
-<Important>
-  **TODO:** missing frames
-</Important>
+<Frame>
+  <Button>Normal frame</Button>
+</Frame>
+
+<Frame plain>
+  <Button>Plain frame</Button>
+</Frame>

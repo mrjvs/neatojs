@@ -10,6 +10,7 @@
 @import "./components/inlinecode.css";
 @import "./components/steps.css";
 @import "./components/footnotes.css";
+@import "./components/frame.css";
 
 @tailwind base;
 @tailwind components;
