@@ -1,115 +1,28 @@
-import {
-  component,
-  defineTheme,
-  directory,
-  group,
-  link,
-  seperator,
-} from '@neato/guider/theme';
+import { defineTheme, directory, link } from '@neato/guider/theme';
 
-const github = 'movie-web/movie-web';
-const topNav = [
-  link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
-  link('API reference', '/api-ref'),
-  seperator(),
-];
+const github = 'mrjvs/neatojs';
 const dropdown = [
-  link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
-  link('API reference', '/api-ref'),
+  link('Guider', '/docs/guider'),
+  link('Config', '/docs/config'),
 ];
 
 export default defineTheme([
   {
-    id: 'docs',
-    navigation: topNav,
+    id: 'guider',
     dropdown,
     github,
     tabs: [
-      link('Guides', '/docs/guides', { icon: 'fa6-solid:house' }),
-      link('CLI', '/docs/cli'),
-      link('Miscellaneous', '/docs/misc'),
+      link('Documentation', '/docs/guider/docs'),
+      link('Writing', '/docs/guider/writing'),
     ],
     directories: [
       directory({
-        id: 'guides',
-        sidebarItems: [
-          link('Guides', '/docs/guides/', {
-            style: 'star',
-            icon: 'fa6-solid:house',
-          }),
-          link('How to?', '/docs/guides/how-to', { style: 'star' }),
-          link('GFM', '/docs/guides/github', {
-            style: 'star',
-            icon: 'radix-icons:github-logo',
-          }),
-
-          group('Introduction', [
-            link('Guides', '/docs/guides/'),
-            link('How to?', '/docs/guides/how-to'),
-          ]),
-          group('Other stuff', [
-            link('Guides', '/docs/guides/'),
-            link('How to?', '/docs/guides/how-to'),
-          ]),
-          seperator(),
-          link.nested('Troubleshooting', '/docs/guides/troubleshooting', [
-            link('Guides', '/docs/guides/'),
-            link('How to?', '/docs/guides/how-to'),
-          ]),
-          link.nested('Troubleshooting 2', [
-            link('Guides', '/docs/guides/'),
-            link('How to?', '/docs/guides/how-to'),
-          ]),
-        ],
-        layoutSettings: {
-          colors: {
-            primary: '#50EA8E',
-            primaryDarker: '#1BA965',
-            primaryLighter: '#89FFAA',
-          },
-        },
+        id: 'guider-docs',
+        sidebarItems: [link('Getting started', '/docs/guider/docs')],
       }),
       directory({
-        id: 'cli',
-        sidebarItems: [
-          link('Getting started', '/docs/cli/'),
-          link('CLI A', '/docs/cli/cli-a'),
-          link('CLI B', '/docs/cli/cli-b'),
-          link('David Tennant', '/docs/cli/tennant'),
-          component(() => (
-            <div
-              style={{
-                backgroundColor: '#000',
-                padding: 16,
-                borderRadius: 7,
-              }}
-            >
-              Custom component
-            </div>
-          )),
-        ],
-      }),
-      directory({
-        id: 'misc',
-        sidebarItems: [
-          link('The misc', '/docs/misc/'),
-          link('The cure', '/docs/misc/the-cure'),
-        ],
-      }),
-    ],
-  },
-  {
-    id: 'api-ref',
-    navigation: topNav,
-    dropdown,
-    github,
-    directories: [
-      directory({
-        id: 'ref',
-        sidebarItems: [
-          link('The API reference', '/api-ref/'),
-          link('Other info', '/api-ref/other'),
-        ],
+        id: 'guider-writing',
+        sidebarItems: [link('Getting started', '/docs/guider')],
       }),
     ],
   },
