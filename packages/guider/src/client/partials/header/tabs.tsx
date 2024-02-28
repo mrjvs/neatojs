@@ -32,7 +32,7 @@ function CustomComponentTab(props: { component: CustomComponentComponent }) {
 
 export function HeaderTabs(props: { tabs: TabsChildren[] }) {
   return (
-    <div className="gd-border-t gd-border-bgLight gd-px-6 gd-pb-0 -gd-mx-6 gd-space-x-6">
+    <div className="gd-border-t gd-border-line gd-px-6 gd-pb-0 -gd-mx-6 gd-space-x-6">
       {props.tabs.map((v, i) => {
         const key = `--${i}`;
         if (v.type === 'component')

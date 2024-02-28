@@ -26,7 +26,7 @@ function NavCustomComponent(props: { component: CustomComponentComponent }) {
 }
 
 function NavSeperator() {
-  return <hr className="gd-w-px gd-h-full gd-border-0 gd-bg-bgLightest" />;
+  return <hr className="gd-w-px gd-h-full gd-border-0 gd-bg-line" />;
 }
 
 export function HeaderNav(props: { items: TopNavChildren[] }) {

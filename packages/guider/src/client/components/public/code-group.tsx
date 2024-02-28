@@ -57,7 +57,7 @@ const CodeGroupContainer = (props: CodeGroupProps) => {
   return (
     <div className="gd-rounded-lg gd-overflow-hidden gd-mb-8">
       <Tab.Group>
-        <Tab.List className="gd-bg-[#071418] gd-px-3 gd-py-2 gd-space-x-2">
+        <Tab.List className="gd-bg-bgDark gd-px-3 gd-py-2 gd-space-x-2">
           {tabs.map((v) => (
             <Tab key={v} className="focus:gd-outline-none">
               {({ selected }) => (

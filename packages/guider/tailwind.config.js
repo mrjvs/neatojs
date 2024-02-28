@@ -29,6 +29,7 @@ module.exports = {
             bg: '#050F13',
             bgLight: '#07171C',
             bgLightest: '#081E24',
+            bgDark: '#040C0F',
             line: '#0F2B33',
 
             codeWarning: '#222D20',
