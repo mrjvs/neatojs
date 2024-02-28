@@ -1,0 +1,7 @@
+body {
+	@apply gd-bg-bg gd-text-text;
+}
+
+#__next {
+  @apply gd-min-h-screen;
+}

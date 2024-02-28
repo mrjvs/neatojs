@@ -1,0 +1,4 @@
+/* last child of blockquote doesn't need bottom margin, looks dumb */
+.neato-guider-blockquote > *:last-child {
+  margin-bottom: 0px !important;
+}

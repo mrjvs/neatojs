@@ -1,0 +1,4 @@
+/* last child of callout doesn't need bottom margin, looks dumb */
+.neato-guider-callout-child > *:last-child {
+  margin-bottom: 0 !important;
+}
