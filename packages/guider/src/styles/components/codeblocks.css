@@ -3,18 +3,36 @@
   /*
    * basic styling of the block
    */
-  @apply gd-bg-bgLight gd-text-textLight gd-rounded-lg gd-mb-4 gd-grid gd-text-sm gd-grid-cols-1;
-
-  code {
-    @apply gd-relative;
-  }
+  @apply gd-bg-bgLight gd-text-textLight gd-rounded-lg gd-mb-4 gd-text-sm;
 
   figcaption {
     @apply gd-text-textLight gd-px-4 gd-py-2 gd-border-b gd-border-text gd-border-opacity-25;
   }
 
   pre {
-    @apply gd-p-4 gd-overflow-x-auto gd-font-mono gd-w-full;
+    @apply gd-relative;
+  }
+  code {
+    @apply gd-p-4 gd-overflow-x-auto gd-grid gd-grid-cols-1 gd-font-mono gd-w-full;
+  }
+
+  /*
+   * make space for diff and line numbers
+   */
+  pre:has(code[data-line-numbers]) {
+    code[data-line-numbers] > [data-line] {
+      padding-left: 1rem;
+    }
+    code[data-line-numbers-max-digits="2"] > [data-line] {
+      padding-left: 2rem;
+    }
+    code[data-line-numbers-max-digits="3"] > [data-line] {
+      padding-left: 3rem;
+    }
+  }
+
+  code:has(.diff) {
+    @apply gd-pl-6;
   }
 
 
@@ -27,16 +45,8 @@
     > [data-line]::before {
       counter-increment: line;
       content: counter(line);
-      @apply gd-inline-block gd-mr-4 gd-text-right gd-opacity-50;
+      @apply gd-inline-block gd-mr-4 gd-text-right gd-opacity-50 gd-absolute gd-left-3 gd-z-10;
     }
-  }
-
-  code[data-line-numbers-max-digits="2"] > [data-line]::before {
-    width: 2rem;
-  }
-
-  code[data-line-numbers-max-digits="3"] > [data-line]::before {
-    width: 3rem;
   }
 
 
@@ -44,15 +54,21 @@
    * annotated lines + highlighted lines
    */
   code .highlighted, code span[data-highlighted-line] {
-    @apply gd-bg-codeHighlight -gd-mx-4 gd-px-4;
+    &::before {
+      content: "";
+      @apply gd-bg-codeHighlight gd-absolute gd-inset-x-0 gd-h-[1.5em];
+    }
+    > * {
+      @apply gd-relative;
+    }
   }
 
-  code .highlighted.error {
-    @apply gd-bg-codeError -gd-mx-4 gd-px-4;
+  code .highlighted.error::before {
+    @apply gd-bg-codeError;
   }
 
-  code .highlighted.warning {
-    @apply gd-bg-codeWarning -gd-mx-4 gd-px-4;
+  code .highlighted.warning::before {
+    @apply gd-bg-codeWarning;
   }
 
 
@@ -60,35 +76,31 @@
    * highlighted words
    */
   code mark, code .highlighted-word {
-    @apply gd-bg-bgLightest gd-border gd-border-codeWordHighlight gd-rounded-lg gd-py-0.5 gd-px-2;
+    @apply gd-bg-bgLightest gd-border gd-border-codeWordHighlight gd-rounded-lg gd-scale-95 gd-inline-block gd-px-2;
   }
 
 
   /*
    * diff view
    */
-  code:has(.diff) {
-    @apply gd-pl-4;
-  }
-
   code .diff {
-    @apply -gd-ml-8 -gd-mr-4 gd-pl-8 gd-pr-4 gd-relative;
+    &::after {
+      @apply gd-absolute gd-inset-x-0 gd-pl-2 gd-h-[1.5em];
+    }
+    > * {
+      @apply gd-relative gd-z-10;
+    }
   }
-
-  code .diff.remove {
-    @apply gd-bg-codeError;
+  code[data-line-numbers] .diff::after {
+    @apply gd-pl-7;
   }
-  code .diff.remove::before {
+  code .diff.remove::after {
     content: "-";
-    @apply gd-text-semanticCaution gd-absolute gd-left-3;
+    @apply gd-text-semanticCaution gd-bg-codeError;
   }
-
-  code .diff.add {
-    @apply gd-bg-codeGreen;
-  }
-  code .diff.add::before {
+  code .diff.add::after {
     content: "+";
-    @apply gd-text-semanticTip gd-absolute gd-left-3;
+    @apply gd-text-semanticTip gd-bg-codeGreen;
   }
 
 
@@ -110,6 +122,6 @@
    */
   code[data-language]::after {
     content: attr(data-language);
-    @apply gd-absolute gd-opacity-50 gd-scale-90 gd-origin-top-right gd-uppercase gd-text-sm -gd-top-1 gd-font-sans -gd-right-1 gd-font-bold gd-text-text;
+    @apply gd-absolute gd-opacity-50 gd-scale-90 gd-select-none gd-origin-top-right gd-uppercase gd-text-sm gd-top-3 gd-font-sans gd-right-3 gd-font-bold gd-text-text;
   }
 }
