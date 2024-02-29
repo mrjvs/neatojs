@@ -16,22 +16,23 @@ Documentation site generator.
 const { guider } = require('@neato/guider');
 
 const withGuider = guider({
-  themeConfig: './theme.config.ts',
+  themeConfig: './theme.config.tsx',
 });
 
 module.exports = withGuider();
 ```
-4. Create a file `theme.config.ts` and put this in it:
+4. Create a file `theme.config.tsx` and put this in it:
 ```ts
-import { defineTheme } from '@neato/guider/client';
+import { defineTheme, link } from '@neato/guider/theme';
 
 export default defineTheme({
+  id: "main"
   directories: [
     {
-      title: 'Directory title',
+      id: "main"
       sidebarItems: {
-        '/a': 'Page A',
-        '/b': 'Page B',
+        link('Page A', '/a'),
+        link('Page B', '/b'),
       },
     },
   ],
