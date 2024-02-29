@@ -1,8 +1,8 @@
 /* margins inside nested elements like callouts or steppers */
 .neato-guider-steps-step-content,
 .neato-guider-callout-child,
-.neato-guider-blockquote
- {
+.neato-guider-blockquote,
+.neato-guider-list {
   > *:first-child {
     margin-top: 0 !important;
   }
