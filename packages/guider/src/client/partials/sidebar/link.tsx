@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import type { LinkComponent } from '../../theme/components';
+import type { LinkComponent } from '../../../theme';
 import { Icon } from '../../components/icon';
 import ActiveLink from '../../components/utils/activelink';
 

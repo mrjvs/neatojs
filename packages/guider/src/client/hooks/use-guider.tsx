@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import type { MetaConf, PageMapItem } from '../types';
-import { mergeSiteLayoutSettings } from '../theme/merge';
+import type { MetaConf, PageMapItem } from '../../theme';
+import { mergeLayoutSettings } from '../../theme/components/layout';
 import { sites, pageMap } from '../virtuals';
 
 export function getPage(pageUrl: string) {
@@ -27,10 +27,7 @@ export function getGuiderContext(pageUrl: string, pageMeta: MetaConf = {}) {
   const layout = site.layouts.find((v) => v.id === layoutId);
   if (!layout) throw new Error('No layout found');
 
-  const layoutSettings = mergeSiteLayoutSettings(
-    layout.settings,
-    dir.layoutSettings,
-  );
+  const layoutSettings = mergeLayoutSettings(layout.settings, dir.settings);
 
   return {
     pageMap,

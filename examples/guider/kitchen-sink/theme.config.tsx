@@ -5,6 +5,7 @@ import {
   group,
   link,
   seperator,
+  site,
 } from '@neato/guider/theme';
 
 const siteTemplate = site('docs', {
@@ -18,27 +19,20 @@ const siteTemplate = site('docs', {
     seperator(),
   ],
   github: 'movie-web/movie-web',
-})
+});
 
 export default defineTheme([
   site('docs', {
     extends: [siteTemplate],
-    settings: {
-      sidebar: false,
-      backgroundPattern: false, // 'flare' | 'grid' | 'sparkles'
-    },
-    metaTags: () => <></>,
+    meta: () => <></>,
     contentFooter: {
-      socials: [
-        social.twitter("..."),
-        social.discord("..."),
-        social.github("..."),
-      ],
-      text: "Copyright (c) 2023",
-      editRepositoryBase: "https://github.com/mrjvs/neatojs/examples/guider/kitchen-sink",
+      socials: [],
+      text: 'Copyright (c) 2023',
+      editRepositoryBase:
+        'https://github.com/mrjvs/neatojs/examples/guider/kitchen-sink',
     },
     pageFooter: {
-      text: "Made with love <3"
+      text: 'Made with love <3',
     },
     directories: [
       directory('guides', {
@@ -77,11 +71,6 @@ export default defineTheme([
             primaryDarker: '#1BA965',
             primaryLighter: '#89FFAA',
           },
-          sidebar () => {}, // undefined|null = use from upper layer; boolean = turn on or off; func = custom component
-          toc: false, // same as above
-          navigation: true, // same as above
-          pageFooter: false, // same as above
-          contentFooter: () => {}, // same as above
         },
       }),
       directory('cli', {
@@ -110,7 +99,7 @@ export default defineTheme([
         ],
       }),
     ],
-  },
+  }),
   site('api-ref', {
     extends: [siteTemplate],
     directories: [
@@ -121,5 +110,5 @@ export default defineTheme([
         ],
       }),
     ],
-  })
+  }),
 ]);

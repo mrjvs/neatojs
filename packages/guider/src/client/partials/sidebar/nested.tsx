@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Icon } from '../../components/icon';
-import type { NestableLinkComponent } from '../../theme/components';
+import type { NestableLinkComponent } from '../../../theme';
 import ActiveLink, {
   useIsRouteActive,
 } from '../../components/utils/activelink';

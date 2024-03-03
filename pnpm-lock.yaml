@@ -167,6 +167,9 @@ importers:
       color:
         specifier: ^4.2.3
         version: 4.2.3
+      defu:
+        specifier: ^6.1.4
+        version: 6.1.4
       extra-watch-webpack-plugin:
         specifier: ^1.0.3
         version: 1.0.3
@@ -2190,6 +2193,10 @@ packages:
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
     dev: true
+
+  /defu@6.1.4:
+    resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
+    dev: false
 
   /dequal@2.0.3:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}

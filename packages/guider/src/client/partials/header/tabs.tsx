@@ -4,7 +4,7 @@ import type {
   CustomComponentComponent,
   LinkComponent,
   TabsChildren,
-} from '../../theme/components';
+} from '../../../theme';
 import { Icon } from '../../components/icon';
 
 function TabLink(props: { link: LinkComponent }) {

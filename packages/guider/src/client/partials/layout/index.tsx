@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { MetaConf } from '../../types';
+import type { MetaConf } from '../../../theme';
 import { GuiderLayoutContext, type MdxHeadings } from '../../page/context';
 import { LayoutInternal } from './layout';
 import { ThemeProvider } from './theme';

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ActiveLink, {
   useAreRoutesActive,
 } from '../../components/utils/activelink';
-import type { DropdownChildren, LinkComponent } from '../../theme/components';
+import type { DropdownChildren, LinkComponent } from '../../../theme';
 import { Icon } from '../../components/icon';
 
 function DropdownItem(props: { link: LinkComponent; active?: boolean }) {

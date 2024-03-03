@@ -1,4 +1,4 @@
-import type { GroupComponent } from '../../theme/components';
+import type { GroupComponent } from '../../../theme';
 import { SidebarLink } from './link';
 import { SidebarCustomComponent } from './component';
 import { SidebarSeperator } from './seperator';
