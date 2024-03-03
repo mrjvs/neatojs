@@ -12,10 +12,10 @@ function convertColor(color: string): string {
 
 export function ThemeProvider() {
   const ctx = useContext(GuiderLayoutContext);
-  const { layoutSettings } = useGuider(ctx?.meta);
-  const serializedSettings = JSON.stringify(layoutSettings.colors);
+  const { settings } = useGuider(ctx?.meta);
+  const serializedSettings = JSON.stringify(settings.colors);
   const style = useMemo(() => {
-    const colors = layoutSettings.colors;
+    const colors = settings.colors;
     return {
       '--colors-primary': convertColor(colors.primary),
       '--colors-primaryDark': convertColor(colors.primaryDarker),

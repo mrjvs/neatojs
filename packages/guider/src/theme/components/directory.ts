@@ -1,8 +1,9 @@
+import type { PartialDeep } from 'type-fest';
 import type { LinkComponent, NestableLinkComponent } from './link';
 import type { SeperatorComponent } from './seperator';
 import type { CustomComponentComponent } from './component';
 import type { GroupComponent } from './group';
-import type { DeepPartial, LayoutSettings } from './settings';
+import type { LayoutSettings } from './settings';
 
 type DirectoryComponentChildren =
   | NestableLinkComponent
@@ -13,14 +14,14 @@ type DirectoryComponentChildren =
 
 interface DirectoryOptions {
   layout?: string;
-  settings?: DeepPartial<LayoutSettings>;
+  settings?: PartialDeep<LayoutSettings>;
   sidebar: DirectoryComponentChildren[];
 }
 
 export interface DirectoryComponent {
   id: string;
   layout: string;
-  settings: DeepPartial<LayoutSettings>;
+  settings: PartialDeep<LayoutSettings>;
   sidebar: DirectoryComponentChildren[];
 }
 

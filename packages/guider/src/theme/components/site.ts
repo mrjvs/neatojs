@@ -1,8 +1,9 @@
+import type { PartialDeep } from 'type-fest';
 import type { DirectoryComponent } from './directory';
 import type { LinkComponent } from './link';
 import type { CustomComponentComponent } from './component';
 import type { SeperatorComponent } from './seperator';
-import type { DeepPartial, LayoutSettings } from './settings';
+import type { LayoutSettings } from './settings';
 import {
   mergeWithRoot,
   populateLayout,
@@ -33,7 +34,7 @@ export interface SiteOptions {
   dropdown?: DropdownChildren[];
   github?: string;
   layout?: string;
-  settings?: DeepPartial<LayoutSettings>;
+  settings?: PartialDeep<LayoutSettings>;
   directories?: DirectoryComponent[];
   layouts?: SiteLayoutOptions[];
   contentFooter?: ContentFooterOptions;
@@ -48,8 +49,8 @@ export interface SiteComponent {
   dropdown: DropdownChildren[];
   github?: string;
   layout: string;
-  meta?: any; // TODO
-  settings: DeepPartial<LayoutSettings>;
+  meta?: any; // TODO add meta tags
+  settings: PartialDeep<LayoutSettings>;
   directories: DirectoryComponent[];
   layouts: SiteLayoutComponent[];
   contentFooter?: ContentFooterComponent;
@@ -87,6 +88,8 @@ function addDefaultLayouts(layouts: SiteLayoutOptions[]): SiteLayoutOptions[] {
 }
 
 // TODO make extending work
+// TODO add custom layout support
+// TODO merge correctly
 
 export const site: SiteBuilder = function (id, ops) {
   const settings = mergeWithRoot(ops.settings ?? {});

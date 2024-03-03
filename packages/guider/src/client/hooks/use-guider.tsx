@@ -27,11 +27,11 @@ export function getGuiderContext(pageUrl: string, pageMeta: MetaConf = {}) {
   const layout = site.layouts.find((v) => v.id === layoutId);
   if (!layout) throw new Error('No layout found');
 
-  const layoutSettings = mergeLayoutSettings(layout.settings, dir.settings);
+  const settings = mergeLayoutSettings(layout.settings, dir.settings);
 
   return {
     pageMap,
-    layoutSettings,
+    settings,
     directory: dir,
     layout,
     site,

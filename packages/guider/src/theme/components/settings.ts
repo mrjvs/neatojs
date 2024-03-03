@@ -1,13 +1,7 @@
 import type { ReactNode } from 'react';
 
-export type DeepPartial<T> = T extends object
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]> | undefined;
-    }
-  : T;
-
 export type BackgroundPatterns = 'flare' | 'grid' | 'sparkles';
-export type ToggleSetting = false | true | null;
+export type ToggleSetting = false | true;
 export type ToggleablePartial = ToggleSetting | (() => ReactNode);
 
 export type LayoutSettings = {
@@ -22,10 +16,10 @@ export type LayoutSettings = {
     textLighter: string;
     textHighlight: string;
   };
-  toc?: ToggleablePartial;
-  sidebar?: ToggleablePartial;
-  navigation?: ToggleablePartial;
-  contentFooter?: ToggleablePartial;
-  pageFooter?: ToggleablePartial;
-  backgroundPattern?: ToggleSetting | BackgroundPatterns;
+  toc: ToggleablePartial;
+  sidebar: ToggleablePartial;
+  navigation: ToggleablePartial;
+  contentFooter: ToggleablePartial;
+  pageFooter: ToggleablePartial;
+  backgroundPattern: ToggleSetting | BackgroundPatterns;
 };

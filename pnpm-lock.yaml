@@ -167,9 +167,6 @@ importers:
       color:
         specifier: ^4.2.3
         version: 4.2.3
-      defu:
-        specifier: ^6.1.4
-        version: 6.1.4
       extra-watch-webpack-plugin:
         specifier: ^1.0.3
         version: 1.0.3
@@ -203,6 +200,9 @@ importers:
       tailwindcss-themer:
         specifier: ^4.0.0
         version: 4.0.0(tailwindcss@3.4.1)
+      type-fest:
+        specifier: ^4.10.3
+        version: 4.10.3
       webpack-virtual-modules:
         specifier: ^0.6.1
         version: 0.6.1
@@ -2193,10 +2193,6 @@ packages:
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
     dev: true
-
-  /defu@6.1.4:
-    resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
-    dev: false
 
   /dequal@2.0.3:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
@@ -6190,6 +6186,11 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
     dev: true
+
+  /type-fest@4.10.3:
+    resolution: {integrity: sha512-JLXyjizi072smKGGcZiAJDCNweT8J+AuRxmPZ1aG7TERg4ijx9REl8CNhbr36RV4qXqL1gO1FF9HL8OkVmmrsA==}
+    engines: {node: '>=16'}
+    dev: false
 
   /typed-array-buffer@1.0.1:
     resolution: {integrity: sha512-RSqu1UEuSlrBhHTWC8O9FnPjOduNs4M7rJ4pRKoEjtx1zUNOPN2sSXHLDX+Y2WPbHIxbvg4JFo2DNAEfPIKWoQ==}

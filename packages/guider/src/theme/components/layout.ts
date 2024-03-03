@@ -1,9 +1,9 @@
-import { defu } from 'defu';
-import type { DeepPartial, LayoutSettings } from './settings';
+import type { PartialDeep } from 'type-fest';
+import type { LayoutSettings } from './settings';
 
 export type SiteLayoutOptions = {
   id: string;
-  settings?: DeepPartial<LayoutSettings>;
+  settings?: PartialDeep<LayoutSettings>;
 };
 
 export type SiteLayoutComponent = {
@@ -28,18 +28,31 @@ const baseLayoutConfig: LayoutSettings = {
   contentFooter: true,
   pageFooter: true,
   navigation: true,
-  backgroundPattern: undefined,
+  backgroundPattern: false,
 };
 
 export function mergeLayoutSettings(
   root: LayoutSettings,
-  target: DeepPartial<LayoutSettings>,
+  target: PartialDeep<LayoutSettings>,
 ): LayoutSettings {
-  return defu(root, target);
+  return {
+    ...root,
+    ...target,
+    colors: {
+      ...root.colors,
+      ...target.colors,
+    },
+    backgroundPattern: target.backgroundPattern ?? root.backgroundPattern,
+    contentFooter: target.contentFooter ?? root.contentFooter,
+    navigation: target.navigation ?? root.navigation,
+    sidebar: target.sidebar ?? root.sidebar,
+    pageFooter: target.pageFooter ?? root.pageFooter,
+    toc: target.toc ?? root.toc,
+  };
 }
 
 export function mergeWithRoot(
-  settings: DeepPartial<LayoutSettings>,
+  settings: PartialDeep<LayoutSettings>,
 ): LayoutSettings {
   return mergeLayoutSettings(baseLayoutConfig, settings);
 }
