@@ -1,28 +1,32 @@
 import { useEffect, useRef } from 'react';
 
+function onResize(element?: HTMLDivElement | null) {
+  if (!element) return;
+
+  element.style.top = 'initial';
+  element.style.maxHeight = 'auto';
+
+  const top = element.getBoundingClientRect().top + window.scrollY;
+  const height = window.innerHeight - top;
+  element.style.maxHeight = `${height}px`;
+  element.style.top = `${top}px`;
+}
+
 export function ScrollPageHeight(props: { children: React.ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  function onResize() {
-    if (!elementRef.current) return;
-
-    elementRef.current.style.top = 'initial';
-    elementRef.current.style.maxHeight = 'auto';
-
-    const top = elementRef.current.getBoundingClientRect().top + window.scrollY;
-    const height = window.innerHeight - top;
-    elementRef.current.style.maxHeight = `${height}px`;
-    elementRef.current.style.top = `${top}px`;
-  }
-
   useEffect(() => {
-    window.addEventListener('resize', onResize);
+    function eventHandler() {
+      console.log('you get called?');
+      onResize(elementRef.current);
+    }
+    window.addEventListener('resize', eventHandler);
     onResize();
 
     return () => {
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', eventHandler);
     };
-  });
+  }, []);
 
   return (
     <div className="-gd-mt-6 gd-sticky gd-top-0" ref={elementRef}>
