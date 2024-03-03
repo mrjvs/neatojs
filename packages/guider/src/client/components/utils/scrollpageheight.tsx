@@ -17,7 +17,6 @@ export function ScrollPageHeight(props: { children: React.ReactNode }) {
 
   useEffect(() => {
     function eventHandler() {
-      console.log('you get called?');
       onResize(elementRef.current);
     }
     window.addEventListener('resize', eventHandler);
