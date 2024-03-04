@@ -5,6 +5,7 @@ import type { CustomComponentComponent } from './component';
 import type { SeperatorComponent } from './seperator';
 import type { LayoutSettings } from './settings';
 import {
+  mergeLayoutSettings,
   mergeWithRoot,
   populateLayout,
   type SiteLayoutComponent,
@@ -87,14 +88,31 @@ function addDefaultLayouts(layouts: SiteLayoutOptions[]): SiteLayoutOptions[] {
   return out;
 }
 
-// TODO make extending work
-// TODO add custom layout support
+// TODO add custom layout component support
 // TODO merge correctly
+
+function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
+  const base = root;
+  if (target.directories.length > 0) base.directories = target.directories;
+  if (target.dropdown.length > 0) base.dropdown = target.dropdown;
+  if (target.navigation.length > 0) base.navigation = target.navigation;
+  if (target.tabs.length > 0) base.tabs = target.tabs;
+  if (target.github) base.github = target.github;
+  base.layouts = [...base.layouts, ...target.layouts];
+  base.id = target.id;
+  base.layout = target.layout;
+  base.settings = mergeLayoutSettings(
+    mergeWithRoot(base.settings ?? {}),
+    target.settings,
+  );
+  // TODO contentFooter, pageFooter, meta, layout (default)
+  return base;
+}
 
 export const site: SiteBuilder = function (id, ops) {
   const settings = mergeWithRoot(ops.settings ?? {});
   const layouts = addDefaultLayouts(ops.layouts ?? []);
-  return {
+  const theSite: SiteComponent = {
     id,
     directories: ops.directories ?? [],
     dropdown: ops.dropdown ?? [],
@@ -111,4 +129,6 @@ export const site: SiteBuilder = function (id, ops) {
       : undefined,
     pageFooter: ops.pageFooter,
   };
+  const [firstSite, ...extendables] = [...(ops.extends ?? []), theSite];
+  return extendables.reduce((a, v) => mergeSites(a, v), firstSite);
 };
