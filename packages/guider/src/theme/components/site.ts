@@ -89,23 +89,28 @@ function addDefaultLayouts(layouts: SiteLayoutOptions[]): SiteLayoutOptions[] {
 }
 
 // TODO add custom layout component support
-// TODO merge correctly
 
 function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
-  const base = root;
+  const base = { ...root }; // making a hard copy
   if (target.directories.length > 0) base.directories = target.directories;
   if (target.dropdown.length > 0) base.dropdown = target.dropdown;
   if (target.navigation.length > 0) base.navigation = target.navigation;
   if (target.tabs.length > 0) base.tabs = target.tabs;
   if (target.github) base.github = target.github;
-  base.layouts = [...base.layouts, ...target.layouts];
+
+  const newLayoutIds = target.layouts.map((v) => v.id);
+  base.layouts = [
+    ...base.layouts.filter((v) => !newLayoutIds.includes(v.id)),
+    ...target.layouts,
+  ];
+
   base.id = target.id;
   base.layout = target.layout;
   base.settings = mergeLayoutSettings(
     mergeWithRoot(base.settings ?? {}),
     target.settings,
   );
-  // TODO contentFooter, pageFooter, meta, layout (default)
+  // TODO contentFooter, pageFooter, meta
   return base;
 }
 
