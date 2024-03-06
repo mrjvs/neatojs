@@ -5,6 +5,7 @@ import { useGuider } from '../../hooks/use-guider';
 import { LayoutInternal } from './layout';
 import { ThemeProvider } from './theme';
 import { LayoutHead } from './head';
+import { LayoutBackground } from './background';
 
 export type InternalGuiderLayoutProps = {
   children?: ReactNode;
@@ -25,6 +26,7 @@ export function GuiderLayout(props: InternalGuiderLayoutProps) {
       }}
     >
       <LayoutHead />
+      <LayoutBackground />
       <ThemeProvider />
       <Comp>{props.children}</Comp>
     </GuiderLayoutContext.Provider>

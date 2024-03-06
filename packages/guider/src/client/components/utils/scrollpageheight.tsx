@@ -38,11 +38,6 @@ export function ScrollPageHeight(props: { children: React.ReactNode }) {
   return (
     <div className="-gd-mt-6 gd-sticky gd-top-0">
       <div className="gd-w-full gd-relative" ref={setRef}>
-        {/* Gradients */}
-        <div className="gd-h-6 gd-bg-gradient-to-b gd-from-bg gd-to-transparent gd-absolute gd-w-full gd-top-0 gd-left-0 pointer-events-none gd-z-10 gd-px-4 -gd-mx-4 gd-box-content" />
-        <div className="gd-h-6 gd-bg-gradient-to-t gd-from-bg gd-to-transparent gd-absolute gd-w-full gd-bottom-0 gd-left-0 pointer-events-none gd-z-10 gd-px-4 -gd-mx-4 gd-box-content" />
-
-        {/* Scrollable section */}
         <div className="gd-absolute gd-inset-0 gd-h-full gd-overflow-y-auto gd-pb-12 gd-pt-6 gd-px-4 -gd-mx-4">
           {props.children}
         </div>

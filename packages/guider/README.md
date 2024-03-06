@@ -51,6 +51,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 ```md
 # Hello world
 
-Welcome to guider!
+Welcome to Guider!
 ```
 7. You're all set. Have fun making docs!

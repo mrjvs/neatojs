@@ -76,6 +76,7 @@ function addDefaultLayouts(layouts: SiteLayoutOptions[]): SiteLayoutOptions[] {
       id: 'article',
       settings: {
         toc: false,
+        contentFooter: false,
       },
     });
   if (!layouts.find((v) => v.id === 'page'))
@@ -83,12 +84,21 @@ function addDefaultLayouts(layouts: SiteLayoutOptions[]): SiteLayoutOptions[] {
       id: 'page',
       settings: {
         sidebar: false,
+        contentFooter: false,
         toc: false,
       },
     });
   if (!layouts.find((v) => v.id === 'raw'))
     out.push({
       id: 'raw',
+      settings: {
+        sidebar: false,
+        contentFooter: false,
+        toc: false,
+        navigation: false,
+        backgroundPattern: false,
+        pageFooter: false,
+      },
     });
   return out;
 }

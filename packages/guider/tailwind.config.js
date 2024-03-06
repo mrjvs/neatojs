@@ -4,6 +4,7 @@ module.exports = {
   content: ['./src/**/*.tsx', './src/**/*.ts'],
   theme: {
     fontSize: {
+      xs: '0.75rem',
       sm: '0.875rem',
       base: '1rem',
       lg: '1.25rem',
@@ -23,8 +24,8 @@ module.exports = {
             primary: '#50A0EA',
             primaryDark: '#1B65A9',
             primaryLight: '#89C6FF',
-            text: '#4A7181',
-            textLight: '#789CAB',
+            text: '#668896',
+            textLight: '#9AB3BD',
             textHeading: '#FFFFFF',
             bg: '#050F13',
             bgLight: '#07171C',

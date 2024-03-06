@@ -20,8 +20,8 @@ const baseLayoutConfig: PopulatedLayoutSettings = {
     primary: '#50A0EA',
     primaryDarker: '#1B65A9',
     primaryLighter: '#89C6FF',
-    text: '#4A7181',
-    textLighter: '#789CAB',
+    text: '#668896',
+    textLighter: '#9AB3BD',
     textHighlight: '#FFFFFF',
     background: '#050F13',
     backgroundLighter: '#07171C',
@@ -93,6 +93,8 @@ export function mergeLayoutSettings(
     contentFooterState: target.contentFooterState ?? root.contentFooterState,
     pageFooterState: target.pageFooterState ?? root.pageFooterState,
     logoState: target.logoState ?? root.logoState,
+    backgroundPatternState:
+      target.backgroundPatternState ?? root.backgroundPatternState,
 
     pageLayoutComponent: target.pageLayoutComponent ?? root.pageLayoutComponent,
     backgroundPatternSetting:

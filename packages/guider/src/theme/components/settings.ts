@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type BackgroundPatterns = 'flare' | 'grid' | 'sparkles';
+export type BackgroundPatterns = 'flare';
 export type ToggleSetting = false | true;
 export type Partial = () => ReactNode;
 export type ToggleablePartial = ToggleSetting | Partial;

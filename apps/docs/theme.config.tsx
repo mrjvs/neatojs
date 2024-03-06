@@ -28,6 +28,9 @@ export default defineTheme([
       link('Writing', '/docs/guider/writing'),
       link('API reference', '/docs/guider/api-reference'),
     ],
+    settings: {
+      backgroundPattern: 'flare',
+    },
     directories: [
       directory('guider-docs', {
         sidebar: [
