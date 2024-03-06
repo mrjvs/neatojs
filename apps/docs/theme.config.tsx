@@ -3,6 +3,10 @@ import { defineTheme, directory, group, link, site } from '@neato/guider/theme';
 const template = site('template', {
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
+  logo: {
+    name: 'NeatoJS',
+    to: '/',
+  },
 });
 
 const starLinks = [

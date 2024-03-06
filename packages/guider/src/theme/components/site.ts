@@ -38,6 +38,10 @@ export interface SiteOptions {
   dropdown?: DropdownChildren[];
   github?: string;
   layout?: string;
+  logo?: {
+    to?: string;
+    name?: string;
+  };
   settings?: PartialDeep<LayoutSettings>;
   directories?: DirectoryComponent[];
   layouts?: SiteLayoutOptions[];
@@ -54,6 +58,10 @@ export interface SiteComponent {
   tabs: TabsChildren[];
   dropdown: DropdownChildren[];
   github?: string;
+  logo: {
+    to?: string;
+    name?: string;
+  };
   layout?: string;
   meta?: MetaTagComponent;
   settings: PartialDeep<LayoutSettings>;
@@ -124,6 +132,10 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
     mergeWithRoot(base.settings ?? {}),
     target.settings,
   );
+  base.logo = {
+    ...base.logo,
+    ...target.logo,
+  };
   // TODO contentFooter, pageFooter
   return base;
 }
@@ -143,6 +155,7 @@ export const site: SiteBuilder = function (id, ops) {
     github: ops.github,
     type: 'site',
     meta: ops.meta,
+    logo: ops.logo ?? {},
     contentFooter: ops.contentFooter
       ? populateContentFooter(ops.contentFooter)
       : undefined,
