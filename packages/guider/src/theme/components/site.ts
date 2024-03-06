@@ -1,5 +1,6 @@
 import type { PartialDeep } from 'type-fest';
 import type { ReactNode } from 'react';
+import type { NextSeoProps } from 'next-seo';
 import type { DirectoryComponent } from './directory';
 import type { LinkComponent } from './link';
 import type { CustomComponentComponent } from './component';
@@ -44,7 +45,7 @@ export interface SiteOptions {
   pageFooter?: PageFooterOptions;
 }
 
-export type MetaTagComponent = () => ReactNode;
+export type MetaTagComponent = (() => ReactNode) | NextSeoProps;
 
 export interface SiteComponent {
   type: 'site';
