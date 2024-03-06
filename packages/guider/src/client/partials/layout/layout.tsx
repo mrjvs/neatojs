@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { GuiderSidebar } from '../sidebar';
 import { GuiderHeader } from '../header';
 import { GuiderToc } from '../toc';
+import { GuiderContentFooter } from '../content-footer';
+import { GuiderpageFooter } from '../page-footer';
 
 export type GuiderLayoutProps = {
   children?: ReactNode;
@@ -16,11 +18,16 @@ export function LayoutInternal(props: GuiderLayoutProps) {
         <div className="gd-hidden md:gd-block">
           <GuiderSidebar />
         </div>
-        <article>{props.children}</article>
+        <div>
+          <article>{props.children}</article>
+          <GuiderContentFooter />
+        </div>
         <div className="gd-hidden xl:gd-block">
           <GuiderToc />
         </div>
       </div>
+
+      <GuiderpageFooter />
     </div>
   );
 }
