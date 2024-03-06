@@ -1,11 +1,65 @@
-import type {
-  ExtraLinkOptions,
-  LinkBuilder,
-  LinkFunctions,
-  LinkOptions,
-  NestedLinkComponentChildren,
-  NestedLinkOptions,
-} from './types';
+import type { SeperatorComponent } from './seperator';
+
+export type NestedLinkComponentChildren = LinkComponent | SeperatorComponent;
+
+export interface ExtraLinkOptions {
+  icon?: string;
+  newTab?: boolean;
+  style?: 'star' | 'default';
+}
+
+export interface LinkOptions {
+  title: string;
+  to: string;
+  icon?: string;
+  newTab?: boolean;
+}
+
+export interface NestedLinkOptions {
+  title: string;
+  to?: string;
+  icon?: string;
+  newTab?: boolean;
+  items: LinkComponent[];
+}
+
+export interface LinkComponent {
+  type: 'link';
+  title: string;
+  to: string;
+  newTab: boolean;
+  icon?: string;
+  style: 'star' | 'default';
+}
+
+export interface NestableLinkComponent {
+  type: 'nested-link';
+  title: string;
+  to?: string;
+  newTab: boolean;
+  icon?: string;
+  items: NestedLinkComponentChildren[];
+}
+
+export interface LinkFunctions {
+  (title: string, url: string, ops?: ExtraLinkOptions): LinkComponent;
+  (options: LinkOptions): LinkComponent;
+}
+
+export interface LinkBuilder extends LinkFunctions {
+  nested: {
+    (
+      title: string,
+      url: string,
+      items: NestedLinkComponentChildren[],
+    ): NestableLinkComponent;
+    (
+      title: string,
+      items: NestedLinkComponentChildren[],
+    ): NestableLinkComponent;
+    (options: NestedLinkOptions): NestableLinkComponent;
+  };
+}
 
 const nestedLink: LinkBuilder['nested'] = function (
   titleOrOptions: any,

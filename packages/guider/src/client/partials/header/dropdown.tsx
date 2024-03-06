@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ActiveLink, {
   useAreRoutesActive,
 } from '../../components/utils/activelink';
-import type { DropdownChildren, LinkComponent } from '../../theme/components';
+import type { DropdownChildren, LinkComponent } from '../../../theme';
 import { Icon } from '../../components/icon';
 
 function DropdownItem(props: { link: LinkComponent; active?: boolean }) {
@@ -65,7 +65,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
               '!gd-border-opacity-100 gd-text-textHeading': open,
             })}
           >
-            <span className="gd-mr-2 gd-pb-0.5">{activeItem.title}</span>
+            <span className="gd-mr-2">{activeItem.title}</span>
             <Icon icon="flowbite:chevron-sort-solid" className="gd-text-text" />
             <UpdateHead active={open} />
           </div>

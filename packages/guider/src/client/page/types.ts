@@ -1,4 +1,4 @@
-import type { MetaConf } from '..';
+import type { MetaConf } from '../../theme';
 
 export type FrontmatterConf = {
   title?: string;

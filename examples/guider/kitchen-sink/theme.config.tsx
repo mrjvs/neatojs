@@ -5,34 +5,38 @@ import {
   group,
   link,
   seperator,
+  site,
 } from '@neato/guider/theme';
 
-const github = 'movie-web/movie-web';
-const topNav = [
-  link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
-  link('API reference', '/api-ref'),
-  seperator(),
-];
-const dropdown = [
-  link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
-  link('API reference', '/api-ref'),
-];
+const siteTemplate = site('docs', {
+  dropdown: [
+    link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
+    link('API reference', '/api-ref'),
+  ],
+  navigation: [
+    link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
+    link('API reference', '/api-ref'),
+    seperator(),
+  ],
+  github: 'movie-web/movie-web',
+});
 
 export default defineTheme([
-  {
-    id: 'docs',
-    navigation: topNav,
-    dropdown,
-    github,
-    tabs: [
-      link('Guides', '/docs/guides', { icon: 'fa6-solid:house' }),
-      link('CLI', '/docs/cli'),
-      link('Miscellaneous', '/docs/misc'),
-    ],
+  site('docs', {
+    extends: [siteTemplate],
+    meta: () => <></>,
+    contentFooter: {
+      socials: [],
+      text: 'Copyright (c) 2023',
+      editRepositoryBase:
+        'https://github.com/mrjvs/neatojs/examples/guider/kitchen-sink',
+    },
+    pageFooter: {
+      text: 'Made with love <3',
+    },
     directories: [
-      directory({
-        id: 'guides',
-        sidebarItems: [
+      directory('guides', {
+        sidebar: [
           link('Guides', '/docs/guides/', {
             style: 'star',
             icon: 'fa6-solid:house',
@@ -61,7 +65,7 @@ export default defineTheme([
             link('How to?', '/docs/guides/how-to'),
           ]),
         ],
-        layoutSettings: {
+        settings: {
           colors: {
             primary: '#50EA8E',
             primaryDarker: '#1BA965',
@@ -69,9 +73,8 @@ export default defineTheme([
           },
         },
       }),
-      directory({
-        id: 'cli',
-        sidebarItems: [
+      directory('cli', {
+        sidebar: [
           link('Getting started', '/docs/cli/'),
           link('CLI A', '/docs/cli/cli-a'),
           link('CLI B', '/docs/cli/cli-b'),
@@ -89,28 +92,23 @@ export default defineTheme([
           )),
         ],
       }),
-      directory({
-        id: 'misc',
-        sidebarItems: [
+      directory('misc', {
+        sidebar: [
           link('The misc', '/docs/misc/'),
           link('The cure', '/docs/misc/the-cure'),
         ],
       }),
     ],
-  },
-  {
-    id: 'api-ref',
-    navigation: topNav,
-    dropdown,
-    github,
+  }),
+  site('api-ref', {
+    extends: [siteTemplate],
     directories: [
-      directory({
-        id: 'ref',
-        sidebarItems: [
+      directory('ref', {
+        sidebar: [
           link('The API reference', '/api-ref/'),
           link('Other info', '/api-ref/other'),
         ],
       }),
     ],
-  },
+  }),
 ]);

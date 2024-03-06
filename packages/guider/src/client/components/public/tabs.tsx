@@ -1,9 +1,11 @@
 import { type ReactNode } from 'react';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
+import { useLocalStorage } from '../../hooks/use-localstorage';
 
 export interface TabsProps {
   items: string[];
+  storageKey?: string;
   default?: number;
   children?: ReactNode;
 }
@@ -18,8 +20,12 @@ export interface TabsComponent {
 }
 
 const TabsContainer = (props: TabsProps) => {
+  const [activeTab, setActiveTab] = useLocalStorage(
+    props.default ?? 0,
+    props.storageKey,
+  );
   return (
-    <Tab.Group>
+    <Tab.Group selectedIndex={activeTab} onChange={setActiveTab}>
       <Tab.List className="gd-border-b gd-border-line gd-pb-0 gd-space-x-3">
         {props.items.map((v) => (
           <Tab key={v} className="focus:gd-outline-none">

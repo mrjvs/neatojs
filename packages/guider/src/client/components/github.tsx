@@ -27,13 +27,13 @@ export function GithubDisplay(props: GithubDisplayProps) {
           <span className="gd-space-x-1 gd-flex gd-items-center">
             <Icon icon="mingcute:star-line" />
             <span className="gd-pt-0.5">
-              {stats ? approx(stats.stars) : null}
+              {stats ? approx(stats.stars) : '-'}
             </span>
           </span>
           <span className="gd-space-x-1 gd-inline-flex gd-items-center">
             <Icon icon="fe:fork" />
             <span className="gd-pt-0.5">
-              {stats ? approx(stats.forks) : null}
+              {stats ? approx(stats.forks) : '-'}
             </span>
           </span>
         </p>

@@ -1,18 +1,16 @@
-import { useContext } from 'react';
-import { GuiderLayoutContext } from '../../page/context';
-import { useGuider } from '../../hooks/use-guider';
+import { useGuiderPage } from '../../hooks/use-guider-page';
 import { ScrollPageHeight } from '../../components/utils/scrollpageheight';
 import { SidebarInternal } from './sidebar';
 
 export function GuiderSidebar() {
-  const ctx = useContext(GuiderLayoutContext);
-  const { layoutSettings } = useGuider(ctx?.meta);
-
-  if (!layoutSettings.sidebar) return null;
+  const { settings } = useGuiderPage();
+  const enabled = settings.sidebarState;
+  const Comp = settings.sidebarComponent ?? SidebarInternal;
+  if (!enabled) return null;
 
   return (
     <ScrollPageHeight>
-      <SidebarInternal />
+      <Comp />
     </ScrollPageHeight>
   );
 }

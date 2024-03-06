@@ -95,6 +95,7 @@
     "extra-watch-webpack-plugin": "^1.0.3",
     "glob": "^10.3.10",
     "gray-matter": "^4.0.3",
+    "next-seo": "^6.5.0",
     "react-helmet-async": "^2.0.4",
     "rehype-extract-excerpt": "^0.3.1",
     "rehype-pretty-code": "^0.13.0",
@@ -103,6 +104,7 @@
     "remark-heading-id": "^1.0.1",
     "shiki": "^1.1.7",
     "tailwindcss-themer": "^4.0.0",
+    "type-fest": "^4.10.3",
     "webpack-virtual-modules": "^0.6.1"
   }
 }

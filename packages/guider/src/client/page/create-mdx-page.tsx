@@ -1,4 +1,5 @@
 import { GuiderLayout } from '../partials/layout';
+import * as components from '../components/public';
 import type { MdxHeadings } from './context';
 import type { PageMeta } from './types';
 
@@ -19,7 +20,7 @@ export function createMdxPage(opts: CreateMdxPageOptions) {
       headings={opts.pageOpts.headings}
       excerpt={opts.pageOpts.excerpt}
     >
-      <Content />
+      <Content components={{ ...components }} />
     </GuiderLayout>
   );
 }

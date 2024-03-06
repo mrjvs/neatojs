@@ -6,13 +6,22 @@ export interface ButtonProps {
   to?: string;
   children?: ReactNode;
   className?: string;
+  type?: 'primary' | 'secondary';
   onClick?: () => void;
 }
 
+const buttonStyles = {
+  primary:
+    'gd-from-primary gd-to-primaryDark gd-text-textHeading gd-border-primary hover:gd-from-primaryDark hover:gd-to-primaryDark',
+  secondary:
+    'gd-from-bgLight gd-to-bg gd-text-textLight hover:gd-text-textHeading gd-border-line hover:gd-from-bg hover:gd-to-bg',
+};
+
 export function Button(props: ButtonProps) {
   const classes = classNames(
-    'gd-bg-gradient-to-b gd-from-primary gd-to-primaryDark gd-px-4 gd-py-2 gd-text-textHeading gd-rounded-md gd-border gd-border-primary',
-    'hover:gd-from-primaryDark hover:gd-to-primaryDark hover:gd-text-opacity-100 gd-transition-[background-color,transform]',
+    buttonStyles[props.type ?? 'primary'],
+    'gd-bg-gradient-to-b gd-text-opacity-90 gd-px-4 gd-py-2 gd-rounded-md gd-border',
+    'gd-transition-[background,transform]',
     'active:gd-scale-105',
     props.className,
   );

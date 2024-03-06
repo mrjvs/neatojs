@@ -9,11 +9,13 @@ export interface GithubRepoStats {
 const globalRepoCache: Record<string, GithubRepoStats> = {};
 
 export function useGithubRepoStats(org: string, repo: string) {
-  const [stats, setStats] = useState<null | GithubRepoStats>(null);
+  const url = `${org}/${repo}`;
+  const [stats, setStats] = useState<null | GithubRepoStats>(
+    globalRepoCache[url] ?? null,
+  );
 
   useEffect(() => {
     void (async () => {
-      const url = `${org}/${repo}`;
       if (globalRepoCache[url]) {
         setStats(globalRepoCache[url]);
         return;
@@ -28,7 +30,7 @@ export function useGithubRepoStats(org: string, repo: string) {
       globalRepoCache[url] = newStats;
       setStats(newStats);
     })();
-  }, [org, repo]);
+  }, [url]);
 
   return {
     stats,

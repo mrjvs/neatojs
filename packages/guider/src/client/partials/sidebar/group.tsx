@@ -1,7 +1,8 @@
-import type { GroupComponent } from '../../theme/components';
+import type { GroupComponent } from '../../../theme';
 import { SidebarLink } from './link';
 import { SidebarCustomComponent } from './component';
 import { SidebarSeperator } from './seperator';
+import { SidebarNested } from './nested';
 
 export function SidebarGroup(props: { group: GroupComponent }) {
   return (
@@ -12,6 +13,8 @@ export function SidebarGroup(props: { group: GroupComponent }) {
       {props.group.items.map((link, i) => {
         const key = `--${i}`;
         if (link.type === 'link') return <SidebarLink key={key} link={link} />;
+        if (link.type === 'nested-link')
+          return <SidebarNested key={key} link={link} />;
         if (link.type === 'component')
           return <SidebarCustomComponent key={key} component={link} />;
         if (link.type === 'seperator') return <SidebarSeperator key={key} />;

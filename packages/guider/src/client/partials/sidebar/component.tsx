@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import type { CustomComponentComponent } from '../../theme/components';
+import type { CustomComponentComponent } from '../../../theme';
 
 export function SidebarCustomComponent(props: {
   component: CustomComponentComponent;

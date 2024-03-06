@@ -4,7 +4,7 @@ import type {
   CustomComponentComponent,
   LinkComponent,
   TabsChildren,
-} from '../../theme/components';
+} from '../../../theme';
 import { Icon } from '../../components/icon';
 
 function TabLink(props: { link: LinkComponent }) {
@@ -12,7 +12,7 @@ function TabLink(props: { link: LinkComponent }) {
     <ActiveLink
       className="gd-inline-block gd-py-4 gd-border-b -gd-mb-px gd-px-1 -gd-ml-1"
       activeClassName="gd-text-textHeading gd-border-primary"
-      inactiveClassName="gd-border-transparent"
+      inactiveClassName="gd-border-transparent hover:gd-text-textLight"
       href={props.link.to}
     >
       {props.link.icon ? (

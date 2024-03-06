@@ -3,7 +3,7 @@ import type {
   CustomComponentComponent,
   LinkComponent,
   TopNavChildren,
-} from '../../theme/components';
+} from '../../../theme';
 import { Icon } from '../../components/icon';
 import ActiveLink from '../../components/utils/activelink';
 
