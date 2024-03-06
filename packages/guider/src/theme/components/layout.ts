@@ -30,9 +30,10 @@ const baseLayoutConfig: PopulatedLayoutSettings = {
   sidebarState: true,
   tocState: true,
   contentFooterState: true,
-  pageFooterState: true,
+  pageFooterState: false,
   navigationState: true,
   backgroundPatternState: false,
+  logoState: true,
 };
 
 function extractState<T>(
@@ -61,6 +62,7 @@ export function makeLayoutSettings(
     navigationState: extractState(val.navigation),
     contentFooterState: extractState(val.contentFooter),
     pageFooterState: extractState(val.pageFooter),
+    logoState: extractState(val.logo),
 
     pageLayoutComponent: val.pageLayout,
     backgroundPatternSetting: extractSetting(val.backgroundPattern),
@@ -69,6 +71,7 @@ export function makeLayoutSettings(
     navigationComponent: extractSetting(val.navigation),
     contentFooterComponent: extractSetting(val.contentFooter),
     pageFooterComponent: extractSetting(val.pageFooter),
+    logoComponent: extractSetting(val.logo),
   };
 }
 
@@ -89,6 +92,7 @@ export function mergeLayoutSettings(
     navigationState: target.navigationState ?? root.navigationState,
     contentFooterState: target.contentFooterState ?? root.contentFooterState,
     pageFooterState: target.pageFooterState ?? root.pageFooterState,
+    logoState: target.logoState ?? root.logoState,
 
     pageLayoutComponent: target.pageLayoutComponent ?? root.pageLayoutComponent,
     backgroundPatternSetting:
@@ -98,6 +102,7 @@ export function mergeLayoutSettings(
     navigationComponent: target.navigationComponent ?? root.navigationComponent,
     contentFooterComponent:
       target.contentFooterComponent ?? root.contentFooterComponent,
+    logoComponent: target.logoComponent ?? root.logoComponent,
   };
 }
 

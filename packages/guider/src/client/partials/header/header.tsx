@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { GuiderLayoutContext } from '../../page/context';
 import { useGuider } from '../../hooks/use-guider';
 import { GithubDisplay } from '../../components/github';
+import { GuiderLogo } from '../logo';
 import { HeaderTabs } from './tabs';
 import { HeaderNav } from './nav';
-import { Logo } from './logo';
 import { HeaderDropdown } from './dropdown';
 
 export function HeaderInternal() {
@@ -16,7 +16,7 @@ export function HeaderInternal() {
       <div className="gd-fixed neato-guider-overlay gd-transition-opacity gd-duration-150 gd-opacity-0 gd-inset-0 gd-bg-gradient-to-b gd-from-black/80 gd-to-transparent gd-z-[60] gd-pointer-events-none" />
       <div className="gd-flex gd-justify-between gd-mb-6">
         <div className="gd-flex gd-items-center">
-          <Logo />
+          <GuiderLogo />
           {site.dropdown.length > 0 ? (
             <>
               <div className="gd-w-px gd-h-full gd-bg-line gd-rotate-12 gd-mx-6" />

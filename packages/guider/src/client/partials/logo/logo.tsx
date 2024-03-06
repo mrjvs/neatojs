@@ -1,4 +1,4 @@
-export function Logo() {
+export function LogoInternal() {
   return (
     <div className="gd-flex gd-items-center gd-gap-3">
       <img
