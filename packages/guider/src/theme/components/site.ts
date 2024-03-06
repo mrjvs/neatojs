@@ -55,7 +55,7 @@ export interface SiteComponent {
   dropdown: DropdownChildren[];
   github?: string;
   layout?: string;
-  meta: MetaTagComponent[];
+  meta?: MetaTagComponent;
   settings: PartialDeep<LayoutSettings>;
   directories: DirectoryComponent[];
   layouts: SiteLayoutComponent[];
@@ -100,6 +100,7 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
   if (target.navigation.length > 0) base.navigation = target.navigation;
   if (target.tabs.length > 0) base.tabs = target.tabs;
   if (target.github) base.github = target.github;
+  if (target.meta) base.meta = target.meta;
 
   const newLayoutIds = target.layouts.map((v) => v.id);
   base.layouts = [
@@ -109,7 +110,6 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
 
   base.id = target.id;
   base.layout = target.layout;
-  base.meta = [...base.meta, ...target.meta];
   base.settings = mergeLayoutSettings(
     mergeWithRoot(base.settings ?? {}),
     target.settings,
@@ -132,7 +132,7 @@ export const site: SiteBuilder = function (id, ops) {
     layout: ops.layout,
     github: ops.github,
     type: 'site',
-    meta: ops.meta ? [ops.meta] : [],
+    meta: ops.meta,
     contentFooter: ops.contentFooter
       ? populateContentFooter(ops.contentFooter)
       : undefined,
