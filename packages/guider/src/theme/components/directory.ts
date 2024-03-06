@@ -4,6 +4,7 @@ import type { SeperatorComponent } from './seperator';
 import type { CustomComponentComponent } from './component';
 import type { GroupComponent } from './group';
 import type { LayoutSettings } from './settings';
+import { makeLayoutSettings } from './layout';
 
 type DirectoryComponentChildren =
   | NestableLinkComponent
@@ -33,8 +34,8 @@ export type DirectoryBuilder = (
 export const directory: DirectoryBuilder = function (id, ops) {
   return {
     id,
-    settings: {},
     layout: 'default',
     ...ops,
+    settings: makeLayoutSettings(ops.settings ?? {}),
   };
 };

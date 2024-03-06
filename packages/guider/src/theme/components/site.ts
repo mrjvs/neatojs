@@ -6,6 +6,7 @@ import type { CustomComponentComponent } from './component';
 import type { SeperatorComponent } from './seperator';
 import type { LayoutSettings } from './settings';
 import {
+  makeLayoutSettings,
   mergeLayoutSettings,
   mergeWithRoot,
   populateLayout,
@@ -119,7 +120,7 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
 }
 
 export const site: SiteBuilder = function (id, ops) {
-  const settings = mergeWithRoot(ops.settings ?? {});
+  const settings = mergeWithRoot(makeLayoutSettings(ops.settings ?? {}));
   const layouts = addDefaultLayouts(ops.layouts ?? []);
   const theSite: SiteComponent = {
     id,

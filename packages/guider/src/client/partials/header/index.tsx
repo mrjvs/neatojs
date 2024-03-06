@@ -3,8 +3,8 @@ import { HeaderInternal } from './header';
 
 export function GuiderHeader() {
   const { settings } = useGuiderPage();
-  const Val = settings.navigation;
-  if (!Val) return null;
-  if (typeof Val === 'function') return <Val />;
-  return <HeaderInternal />;
+  const enabled = settings.navigationState;
+  const Comp = settings.navigationComponent ?? HeaderInternal;
+  if (!enabled) return null;
+  return <Comp />;
 }
