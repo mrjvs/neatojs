@@ -92,8 +92,6 @@ function addDefaultLayouts(layouts: SiteLayoutOptions[]): SiteLayoutOptions[] {
   return out;
 }
 
-// TODO add custom layout component support
-
 function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
   const base = { ...root }; // making a hard copy
   if (target.directories.length > 0) base.directories = target.directories;
