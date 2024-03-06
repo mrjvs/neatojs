@@ -1,4 +1,5 @@
 import type { PartialDeep } from 'type-fest';
+import type { ReactNode } from 'react';
 import type { DirectoryComponent } from './directory';
 import type { LinkComponent } from './link';
 import type { CustomComponentComponent } from './component';
@@ -31,7 +32,7 @@ export interface SiteOptions {
   navigation?: TopNavChildren[];
   extends?: SiteComponent[];
   tabs?: TabsChildren[];
-  meta?: any; // TODO
+  meta?: MetaTagComponent;
   dropdown?: DropdownChildren[];
   github?: string;
   layout?: string;
@@ -42,6 +43,8 @@ export interface SiteOptions {
   pageFooter?: PageFooterOptions;
 }
 
+export type MetaTagComponent = () => ReactNode;
+
 export interface SiteComponent {
   type: 'site';
   id: string;
@@ -49,8 +52,8 @@ export interface SiteComponent {
   tabs: TabsChildren[];
   dropdown: DropdownChildren[];
   github?: string;
-  layout: string;
-  meta?: any; // TODO add meta tags
+  layout?: string;
+  meta: MetaTagComponent[];
   settings: PartialDeep<LayoutSettings>;
   directories: DirectoryComponent[];
   layouts: SiteLayoutComponent[];
@@ -106,11 +109,12 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
 
   base.id = target.id;
   base.layout = target.layout;
+  base.meta = [...base.meta, ...target.meta];
   base.settings = mergeLayoutSettings(
     mergeWithRoot(base.settings ?? {}),
     target.settings,
   );
-  // TODO contentFooter, pageFooter, meta
+  // TODO contentFooter, pageFooter
   return base;
 }
 
@@ -125,10 +129,10 @@ export const site: SiteBuilder = function (id, ops) {
     settings,
     tabs: ops.tabs ?? [],
     layouts: layouts.map((v) => populateLayout(settings, v)),
-    layout: ops.layout ?? 'default',
+    layout: ops.layout,
     github: ops.github,
     type: 'site',
-    meta: ops.meta,
+    meta: ops.meta ? [ops.meta] : [],
     contentFooter: ops.contentFooter
       ? populateContentFooter(ops.contentFooter)
       : undefined,

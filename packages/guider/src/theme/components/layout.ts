@@ -1,5 +1,9 @@
 import type { PartialDeep } from 'type-fest';
-import type { LayoutSettings } from './settings';
+import type {
+  LayoutSettings,
+  PopulatedLayoutSettings,
+  ToggleSetting,
+} from './settings';
 
 export type SiteLayoutOptions = {
   id: string;
@@ -8,10 +12,10 @@ export type SiteLayoutOptions = {
 
 export type SiteLayoutComponent = {
   id: string;
-  settings: LayoutSettings;
+  settings: PopulatedLayoutSettings;
 };
 
-const baseLayoutConfig: LayoutSettings = {
+const baseLayoutConfig: PopulatedLayoutSettings = {
   colors: {
     primary: '#50A0EA',
     primaryDarker: '#1B65A9',
@@ -23,18 +27,55 @@ const baseLayoutConfig: LayoutSettings = {
     backgroundLighter: '#07171C',
     backgroundLightest: '#081E24',
   },
-  sidebar: true,
-  toc: true,
-  contentFooter: true,
-  pageFooter: true,
-  navigation: true,
-  backgroundPattern: false,
+  sidebarState: true,
+  tocState: true,
+  contentFooterState: true,
+  pageFooterState: true,
+  navigationState: true,
+  backgroundPatternState: false,
 };
 
+function extractState<T>(
+  val: T | ToggleSetting | undefined,
+): ToggleSetting | undefined {
+  if (typeof val === 'boolean') return val;
+  if (val === undefined) return undefined;
+  return true;
+}
+
+function extractSetting<T>(val: T | ToggleSetting | undefined): T | undefined {
+  if (typeof val === 'boolean') return undefined;
+  if (val === undefined) return undefined;
+  return val;
+}
+
+export function makeLayoutSettings(
+  val: PartialDeep<LayoutSettings>,
+): PartialDeep<PopulatedLayoutSettings> {
+  return {
+    colors: val.colors,
+
+    backgroundPatternState: extractState(val.backgroundPattern),
+    tocState: extractState(val.toc),
+    sidebarState: extractState(val.sidebar),
+    navigationState: extractState(val.navigation),
+    contentFooterState: extractState(val.contentFooter),
+    pageFooterState: extractState(val.pageFooter),
+
+    pageLayoutComponent: val.pageLayout,
+    backgroundPatternSetting: extractSetting(val.backgroundPattern),
+    tocComponent: extractSetting(val.toc),
+    sidebarComponent: extractSetting(val.sidebar),
+    navigationComponent: extractSetting(val.navigation),
+    contentFooterComponent: extractSetting(val.contentFooter),
+    pageFooterComponent: extractSetting(val.pageFooter),
+  };
+}
+
 export function mergeLayoutSettings(
-  root: LayoutSettings,
-  target: PartialDeep<LayoutSettings>,
-): LayoutSettings {
+  root: PopulatedLayoutSettings,
+  target: PartialDeep<PopulatedLayoutSettings>,
+): PopulatedLayoutSettings {
   return {
     ...root,
     ...target,
@@ -42,27 +83,39 @@ export function mergeLayoutSettings(
       ...root.colors,
       ...target.colors,
     },
-    backgroundPattern: target.backgroundPattern ?? root.backgroundPattern,
-    contentFooter: target.contentFooter ?? root.contentFooter,
-    navigation: target.navigation ?? root.navigation,
-    sidebar: target.sidebar ?? root.sidebar,
-    pageFooter: target.pageFooter ?? root.pageFooter,
-    toc: target.toc ?? root.toc,
+
+    tocState: target.tocState ?? root.tocState,
+    sidebarState: target.sidebarState ?? root.sidebarState,
+    navigationState: target.navigationState ?? root.navigationState,
+    contentFooterState: target.contentFooterState ?? root.contentFooterState,
+    pageFooterState: target.pageFooterState ?? root.pageFooterState,
+
+    pageLayoutComponent: target.pageLayoutComponent ?? root.pageLayoutComponent,
+    backgroundPatternSetting:
+      target.backgroundPatternSetting ?? root.backgroundPatternSetting,
+    tocComponent: target.tocComponent ?? root.tocComponent,
+    sidebarComponent: target.sidebarComponent ?? root.sidebarComponent,
+    navigationComponent: target.navigationComponent ?? root.navigationComponent,
+    contentFooterComponent:
+      target.contentFooterComponent ?? root.contentFooterComponent,
   };
 }
 
 export function mergeWithRoot(
-  settings: PartialDeep<LayoutSettings>,
-): LayoutSettings {
+  settings: PartialDeep<PopulatedLayoutSettings>,
+): PopulatedLayoutSettings {
   return mergeLayoutSettings(baseLayoutConfig, settings);
 }
 
 export function populateLayout(
-  rootSettings: LayoutSettings,
+  rootSettings: PopulatedLayoutSettings,
   layout: SiteLayoutOptions,
 ): SiteLayoutComponent {
   return {
     id: layout.id,
-    settings: mergeLayoutSettings(rootSettings, layout.settings ?? {}),
+    settings: mergeLayoutSettings(
+      rootSettings,
+      makeLayoutSettings(layout.settings ?? {}),
+    ),
   };
 }

@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 
 export type BackgroundPatterns = 'flare' | 'grid' | 'sparkles';
 export type ToggleSetting = false | true;
-export type ToggleablePartial = ToggleSetting | (() => ReactNode);
+export type Partial = () => ReactNode;
+export type ToggleablePartial = ToggleSetting | Partial;
 
 export type LayoutSettings = {
   colors: {
@@ -21,5 +22,34 @@ export type LayoutSettings = {
   navigation: ToggleablePartial;
   contentFooter: ToggleablePartial;
   pageFooter: ToggleablePartial;
+  pageLayout?: Partial;
   backgroundPattern: ToggleSetting | BackgroundPatterns;
+};
+
+export type PopulatedLayoutSettings = {
+  colors: {
+    primary: string;
+    primaryLighter: string;
+    primaryDarker: string;
+    background: string;
+    backgroundLighter: string;
+    backgroundLightest: string;
+    text: string;
+    textLighter: string;
+    textHighlight: string;
+  };
+  backgroundPatternState: ToggleSetting;
+  tocState: ToggleSetting;
+  sidebarState: ToggleSetting;
+  navigationState: ToggleSetting;
+  contentFooterState: ToggleSetting;
+  pageFooterState: ToggleSetting;
+
+  pageLayoutComponent?: Partial;
+  backgroundPatternSetting?: BackgroundPatterns;
+  tocComponent?: Partial;
+  sidebarComponent?: Partial;
+  navigationComponent?: Partial;
+  contentFooterComponent?: Partial;
+  pageFooterComponent?: Partial;
 };
