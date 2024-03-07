@@ -143,12 +143,13 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
 export const site: SiteBuilder = function (id, ops) {
   const settings = mergeWithRoot(makeLayoutSettings(ops.settings ?? {}));
   const layouts = addDefaultLayouts(ops.layouts ?? []);
+  // TODO layout merging isnt correct
   const theSite: SiteComponent = {
     id,
     directories: ops.directories ?? [],
     dropdown: ops.dropdown ?? [],
     navigation: ops.navigation ?? [],
-    settings,
+    settings: makeLayoutSettings(ops.settings ?? {}),
     tabs: ops.tabs ?? [],
     layouts: layouts.map((v) => populateLayout(settings, v)),
     layout: ops.layout,
