@@ -54,21 +54,27 @@ export default defineTheme([
         sidebar: [
           ...starLinks,
           group('Getting started', [
-            link('Installation', gdGuides('/getting-started/installation')),
-            link.nested('Migrating to Guider', [
-              link(
-                'From Nextra',
-                gdGuides('/getting-started/migration/from-nextra'),
-              ),
-              link(
-                'From Docus',
-                gdGuides('/getting-started/migration/from-docus'),
-              ),
-              link(
-                'From Mintlify',
-                gdGuides('/getting-started/migration/from-mintlify'),
-              ),
-            ]),
+            link('Installation', gdGuides('/getting-started/installation'), {
+              icon: 'fa6-solid:download',
+            }),
+            link.nested({
+              title: 'Migrating to Guider',
+              icon: 'fa6-solid:sailboat',
+              items: [
+                link(
+                  'From Nextra',
+                  gdGuides('/getting-started/migration/from-nextra'),
+                ),
+                link(
+                  'From Docus',
+                  gdGuides('/getting-started/migration/from-docus'),
+                ),
+                link(
+                  'From Mintlify',
+                  gdGuides('/getting-started/migration/from-mintlify'),
+                ),
+              ],
+            }),
           ]),
           group('Configuration', [
             link('Colors & theme', gdGuides('/config/theming')),
@@ -108,26 +114,54 @@ export default defineTheme([
         sidebar: [
           ...starLinks,
           group('Markdown', [
-            link('Making pages', gdWriting('/markdown/making-pages')),
-            link('Basic text', gdWriting('/markdown/basic-text')),
-            link('Lists', gdWriting('/markdown/lists')),
-            link('Code blocks', gdWriting('/markdown/code-blocks')),
+            link('Making pages', gdWriting('/markdown/making-pages'), {
+              icon: 'fa6-solid:file-lines',
+            }),
+            link('Basic text', gdWriting('/markdown/basic-text'), {
+              icon: 'fa6-solid:font',
+            }),
+            link('Lists', gdWriting('/markdown/lists'), {
+              icon: 'fa6-solid:list-ul',
+            }),
+            link('Code blocks', gdWriting('/markdown/code-blocks'), {
+              icon: 'fa6-solid:code',
+            }),
           ]),
 
           group('Advanced markdown', [
-            link('Tables', gdWriting('/advanced/tables')),
-            link('Quotes', gdWriting('/advanced/quotes')),
-            link('Footnotes', gdWriting('/advanced/footnotes')),
-            link('Dividers', gdWriting('/advanced/dividers')),
+            link('Tables', gdWriting('/advanced/tables'), {
+              icon: 'fa6-solid:table',
+            }),
+            link('Quotes', gdWriting('/advanced/quotes'), {
+              icon: 'fa6-solid:quote-left',
+            }),
+            link('Footnotes', gdWriting('/advanced/footnotes'), {
+              icon: 'fa6-solid:note-sticky',
+            }),
+            link('Dividers', gdWriting('/advanced/dividers'), {
+              icon: 'fa6-solid:grip-lines',
+            }),
           ]),
 
           group('Components', [
-            link('Code groups', gdWriting('/components/code-groups')),
-            link('Callouts', gdWriting('/components/callouts')),
-            link('Tabs', gdWriting('/components/tabs')),
-            link('Steps', gdWriting('/components/steps')),
-            link('Frames', gdWriting('/components/frames')),
-            link('Custom components', gdWriting('/components/custom')),
+            link('Code groups', gdWriting('/components/code-groups'), {
+              icon: 'fa6-solid:layer-group',
+            }),
+            link('Callouts', gdWriting('/components/callouts'), {
+              icon: 'fa6-solid:bell-concierge',
+            }),
+            link('Tabs', gdWriting('/components/tabs'), {
+              icon: 'fa6-solid:window-restore',
+            }),
+            link('Steps', gdWriting('/components/steps'), {
+              icon: 'fa6-solid:list-ol',
+            }),
+            link('Frames', gdWriting('/components/frames'), {
+              icon: 'fa6-solid:image',
+            }),
+            link('Custom components', gdWriting('/components/custom'), {
+              icon: 'fa6-solid:boxes-stacked',
+            }),
           ]),
         ],
       }),
