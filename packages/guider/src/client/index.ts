@@ -9,4 +9,5 @@ export * from './hooks/use-toc';
 
 export * from './partials/index';
 export * from './components/public';
+export * from './components/icon';
 export { useMDXComponents } from './components/markdown';
