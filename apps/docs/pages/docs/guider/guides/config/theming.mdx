@@ -1,21 +1,21 @@
 # Colors & theme
 
 Guider has been designed fit almost any use case for documentation.
-Naturally, this means that there are lots of configuration options and is very flexible.
+Naturally, this means that there are lots of configuration options to provide the flexibility Guider offers.
 
-Usually the first thing you want to change is the branding.
+Usually, the first thing to change is the branding.
 
 ## Introduction to layout settings
 
-Layout settings can be modified on multiple layers, all of them flow into each other:
+Layout settings can be modified on three layers, each one overriding settings from a previous layer. The layers are as follows:
 - **Site layout settings:** The base layer of layout settings is simply on `Site.settings`.
-- **Layout settings:** The second layer that counts is on a layer itself at `Layout.settings`.
-- **Directory layout settings:** The last layer is on a directory, `Directory.settings`.
+- **Layout settings:** The second layer that counts is on a layout itself at `Layout.settings`.
+- **Directory layout settings:** The last layer is on a directory at `Directory.settings`.
 
 All of these layers are resolved in order. So if you have something specified on the directory layer, it will overwrite all other layers.
 If you specify something on the layout layer, it will overwrite the site layer but not the directory layer.
 
-```ts title="layer examples"
+```ts title="Layer examples"
 site('main', {
   settings: {
     toc: false,
@@ -43,37 +43,37 @@ site('main', {
 })
 ```
 
-In this example, the final result will be `toc == false{:ts}` because directory are the highest layer and `sidebar == true{:ts}` because layouts are a higher layer than the site.
+In this example, the final result will be `toc == false{:ts}` because the directory settings have the highest priority and `sidebar == true{:ts}` because the settings in layouts are a higher priority than the site settings.
 
 ## Changing colors
 
-Now that you know about how layout settings are resolved. We can start customising the colors and other layout settings:
+Now that you know how layout settings are resolved. We can start customising the colors and other layout settings:
 
 ```ts
 settings: {
   colors: {
-    // main theme colors
-    primary: '#50A0EA', // primary color of the site
-    primaryDarker: '#1B65A9', // a darker variant of primary color
-    primaryLighter: '#89C6FF', // a lighter variant of the primary color
-    text: '#668896', // normal text color
-    textLighter: '#9AB3BD', // slightly lighter text color
-    textHighlight: '#FFFFFF', // heading and highlight text color.
-    background: '#050F13', // main page background color
-    backgroundLighter: '#07171C', // lighter background color for code blocks and such
-    backgroundLightest: '#081E24', // lightest background color for hover effects
-    backgroundDark: '#040C0F' // darker variant of the background color
-    line: '#0F2B33', // color of all lines
+    // Main theme colors
+    primary: '#50A0EA', // Primary color of the site
+    primaryDarker: '#1B65A9', // A darker variant of primary color
+    primaryLighter: '#89C6FF', // A lighter variant of the primary color
+    text: '#668896', // Normal text color
+    textLighter: '#9AB3BD', // Slightly lighter text color
+    textHighlight: '#FFFFFF', // Heading and highlight text color.
+    background: '#050F13', // Main page background color
+    backgroundLighter: '#07171C', // Lighter background color for code blocks and such
+    backgroundLightest: '#081E24', // Lightest background color for hover effects
+    backgroundDark: '#040C0F' // Darker variant of the background color
+    line: '#0F2B33', // Color of all lines
 
-    // colors in code blocks
-    codeWarning: '#222D20', // codeblock background for a warning annotation
-    codeError: '#2B1B1F', // codeblock background for a warning annotation
-    codeGreen: '#0B2823', // codeblock background for a diff green
-    codeHighlight: '#0E2429', // codeblock background for a highlighted line
-    codeWordHighlight: '#365C68', // background of a highlighted word in a codeblock
+    // Colors in code blocks
+    codeWarning: '#222D20', // Codeblock background for a warning annotation
+    codeError: '#2B1B1F', // Codeblock background for a error annotation and diff remove
+    codeGreen: '#0B2823', // Codeblock background for a diff add
+    codeHighlight: '#0E2429', // Codeblock background for a highlighted line
+    codeWordHighlight: '#365C68', // Background of a highlighted word in a codeblock
 
-    // semantic colors - primarily used in callouts
-    // the lighter variants are used for text colors in callouts
+    // Semantic colors - Primarily used in callouts
+    // The lighter variants are used for text colors in callouts
     semanticTip: '#39B864',
     semanticTipLighter: '#75F2B6',
     semanticNote: '#817EF3',
@@ -90,7 +90,7 @@ settings: {
 
 ## Changing the logo
 
-If just want to modify the site name and homepage link. You can simple change it in site configuration:
+If just want to modify the site name and homepage link, you can simple change it in site configuration:
 ```ts
 site('site-id', {
   logo: {
@@ -101,7 +101,7 @@ site('site-id', {
 })
 ```
 
-If you want to fully customize how your logo looks, you can overwrite the full partial in **any settings layer**:
+If you want to fully customize how your logo looks (For example, using an image as your logo), you can overwrite the full partial in **any settings layer**:
 ```tsx
 settings: {
   logo: <p>My logo</p>
