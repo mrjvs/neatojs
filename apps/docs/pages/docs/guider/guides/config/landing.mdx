@@ -1,5 +1,74 @@
 # Landing page
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Landing pages are a good way to introduce your project without going directly into the documentation.
+On this page you will learn how to make a landing page or use a preset.
+
+
+## Creating a basic landing page
+
+To make a landing page (or any page that isn't MDX for that matter), you will first need to wrap it in a `<GuiderLayout />{:tsx}` component.
+
+If you want the layout to belong to a specific layout or site, you can specify it the `meta` prop - this is completely optional. It accepts the same data as the Frontmatter from a page.
+
+```tsx title="index.mdx" showLineNumbers
+import { GuiderLayout } from '@neato/guider/client';
+
+export default function LandingPage() {
+  return (
+    <GuiderLayout meta={{ site: 'my-site' }}>
+      <p>My page goes here</p>
+    </GuiderLayout>
+  );
+}
+```
+
+You can add any content you need inside of the `<GuiderLayout />{:tsx}` component.
+
+
+## Use premade landing page
+
+In the case that you don't want to put in extra effort into making a landing page, you can opt for using our premade landing page:
+
+```tsx title="index.mdx" showLineNumbers {12-38}
+import {
+  Button,
+  Card,
+  CardGrid,
+  GuiderLayout,
+  Hero,
+} from '@neato/guider/client';
+
+export default function LandingPage() {
+  return (
+    <GuiderLayout meta={{ site: 'my-site' }}>
+      <Hero>
+        <Hero.Badge title="V1.0.0" to="/docs/guider/guides">
+          Just went out of alpha!
+        </Hero.Badge>
+        <Hero.Title>Documentation that looks great out of the box</Hero.Title>
+        <Hero.Subtitle>
+          Flexible but beautiful documentation, easy to write and easier to
+          extend. Exactly what you need everytime.
+        </Hero.Subtitle>
+        <Hero.Actions>
+          <Button to="/docs/guider/guides">Get started</Button>
+          <Button to="https://github.com/mrjvs/neatojs" type="secondary">
+            View on github
+          </Button>
+        </Hero.Actions>
+      </Hero>
+      <CardGrid>
+        <Card icon="mdi:cube-outline" title="Focus on writing">
+          Effortlessly create beautiful documentation sites with just markdown.
+        </Card>
+        <Card icon="mdi:cube-outline" title="Focus on writing">
+          Effortlessly create beautiful documentation sites with just markdown.
+        </Card>
+        <Card icon="mdi:cube-outline" title="Focus on writing">
+          Effortlessly create beautiful documentation sites with just markdown.
+        </Card>
+      </CardGrid>
+    </GuiderLayout>
+  );
+}
+```

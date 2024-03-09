@@ -59,6 +59,30 @@ Get started with `@neato/guider` project in under 5 minutes.
         ```
       </Steps.Step>
       <Steps.Step>
+        ### Create entrypoint files
+        Next, create two files `pages/_app.tsx` and `pages/404.tsx`. They should be in your pages directory.
+        The app file is used to import the global styles for Guider. The 404 file holds a preset "page not found" view, feel free to customize it.
+        <CodeGroup>
+          <CodeGroup.Code title="pages/_app.tsx">
+            ```tsx
+            import type { AppProps } from 'next/app';
+            import '@neato/guider/style.css';
+
+            export default function MyApp({ Component, pageProps }: AppProps) {
+              return <Component {...pageProps} />;
+            }
+            ```
+          </CodeGroup.Code>
+          <CodeGroup.Code title="pages/404.tsx">
+            ```tsx
+            import { createNotFoundPage } from '@neato/guider/client';
+
+            export default createNotFoundPage();
+            ```
+          </CodeGroup.Code>
+        </CodeGroup>
+      </Steps.Step>
+      <Steps.Step>
         ### Ready to write documentation!
         Your project has been fully setup, all that's left is to fill it with content. Try it out by making a file in your pages directory:
         ```md title="pages/index.mdx"
@@ -117,7 +141,7 @@ Get started with `@neato/guider` project in under 5 minutes.
       </Steps.Step>
       <Steps.Step>
         ### Create a theme config
-        Finally, create a `theme.config.tsx`. This will be the home for all of your configuration and customization of Guider:
+        Next, create a `theme.config.tsx`. This will be the home for all of your configuration and customization of Guider:
         ```ts title="theme.config.tsx" showLineNumbers
         import { defineTheme, directory, link } from '@neato/guider/theme';
 
@@ -134,6 +158,30 @@ Get started with `@neato/guider` project in under 5 minutes.
           ],
         });
         ```
+      </Steps.Step>
+      <Steps.Step>
+        ### Create entrypoint files
+        Finally, create two files `pages/_app.tsx` and `pages/404.tsx`. They should be in your pages directory.
+        The app file is used to import the global styles for Guider. The 404 file holds a preset "page not found" view, feel free to customize it.
+        <CodeGroup>
+          <CodeGroup.Code title="pages/_app.tsx">
+            ```tsx
+            import type { AppProps } from 'next/app';
+            import '@neato/guider/style.css';
+
+            export default function MyApp({ Component, pageProps }: AppProps) {
+              return <Component {...pageProps} />;
+            }
+            ```
+          </CodeGroup.Code>
+          <CodeGroup.Code title="pages/404.tsx">
+            ```tsx
+            import { createNotFoundPage } from '@neato/guider/client';
+
+            export default createNotFoundPage();
+            ```
+          </CodeGroup.Code>
+        </CodeGroup>
       </Steps.Step>
       <Steps.Step>
         ### Ready to write documentation!
