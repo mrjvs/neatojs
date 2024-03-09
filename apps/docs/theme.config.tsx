@@ -84,7 +84,7 @@ export default defineTheme([
             link('Navigation', gdGuides('/config/navigation')),
             link.nested('Common setups', [
               link(
-                'Mutliple docs sites',
+                'Multiple docs sites',
                 gdGuides('/config/common/multi-docs'),
               ),
               link('API reference + docs', gdGuides('/config/common/api-ref')),
