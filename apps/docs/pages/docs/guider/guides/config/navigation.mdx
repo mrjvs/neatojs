@@ -1,5 +1,108 @@
 # Navigation
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Guider has many possibilities in navigation. This page will go through
+all methods and how to use them to their full potentional.
+
+
+## Filling the sidebar
+
+The sidebar is the most expressive out of all the navigation structures.
+
+You can use the following components, all of which are imported from `@neato/guider/theme`.
+- `link(){:ts}`: A standard sidebar link with optional icon.
+- `link.nested(){:ts}`: A nested link, it's collapsable by the user.
+- `group(){:ts}`: A group or section, used for visual hierarchy.
+- `seperator(){:ts}`: A plain & simple line.
+- `component(){:ts}`: A custom component, you can render any React component in here.
+
+<Note>
+  Groups can contain any other components except another group. Nested links can only contain normal links and seperators.
+</Note>
+
+Here is an example that uses every component. This sidebar configuration will
+need to be added to the directory of your choosing.
+
+```tsx title="theme.config.tsx"
+sidebar: [
+  link("Link A", "/link/a"),
+  link("Link B with icon", "/link/b", { icon: 'fa6-solid:b' }),
+  link.nested("Link C in group", [
+    link("Link C.1", "/link/c/1"),
+    link("Link C.2", "/link/c/2"),
+  ]),
+  link.nested("Link D in group", "/link/d", [
+    link("Link D.1", "/link/d/1"),
+    link("Link D.2", "/link/d/2"),
+  ]),
+  link.nested("Title", [
+    link("Title", "/link"),
+  ]),
+  group("Group A", [
+    link("Link E", "/link/e"),
+  ])
+  seperator(),
+  component(() => <p>Custom component</p>),
+]
+```
+
+
+## Adding links to the header
+
+Adding links to the navigation bar is quite easy.
+
+You can use the following components, all of which are imported from `@neato/guider/theme`.
+- `link(){:ts}`: A standard link with optional icon.
+- `seperator(){:ts}`: A plain & simple line.
+
+You can configure the top navigation per site. Here is an example that uses every component:
+
+```tsx title="theme.config.tsx"
+site("my-site", {
+  navigation: [
+    link("Link A", "/link/a"),
+    link("Link B with icon", "/link/b", { icon: 'fa6-solid:b' }),
+    seperator(),
+    link("Link C", "/link/c"),
+  ]
+})
+```
+
+
+## Adding tabs
+
+Sometimes you want to split up your documentation site into multiple sections. As an example, you can split it up between "Documentation" and "API reference". That's a perfect case for tabs.
+
+You can use the following components, all of which are imported from `@neato/guider/theme`.
+- `link(){:ts}`: A standard tab with optional icon.
+- `component(){:ts}`: A custom component, you can render any React component in here.
+
+You can configure tabs per site, here is an example that uses every component:
+
+```tsx title="theme.config.tsx"
+site("my-site", {
+  tabs: [
+    link("Link A", "/link/a"),
+    link("Link B", "/link/b"),
+    component(() => <p>Custom component</p>),
+  ]
+})
+```
+
+
+## A dropdown for your sites
+
+In cases where you have multiple projects, all with seperate documentation sites, the dropdown may be a better fit than links in the top navigation.
+
+You can use the following components, all of which are imported from `@neato/guider/theme`.
+- `link(){:ts}`: A standard dropdown with optional icon.
+
+You can configure the dropdown per site, here is an example that uses every component:
+
+```tsx title="theme.config.tsx"
+site("my-site", {
+  dropdown: [
+    link("Link A", "/link/a"),
+    link("Link B", "/link/b"),
+  ]
+})
+```
