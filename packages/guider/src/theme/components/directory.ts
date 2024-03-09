@@ -16,7 +16,7 @@ type DirectoryComponentChildren =
 interface DirectoryOptions {
   layout?: string;
   settings?: PartialDeep<LayoutSettings>;
-  sidebar: DirectoryComponentChildren[];
+  sidebar?: DirectoryComponentChildren[];
 }
 
 export interface DirectoryComponent {
@@ -35,7 +35,7 @@ export const directory: DirectoryBuilder = function (id, ops) {
   return {
     id,
     layout: 'default',
-    ...ops,
+    sidebar: ops.sidebar ?? [],
     settings: makeLayoutSettings(ops.settings ?? {}),
   };
 };
