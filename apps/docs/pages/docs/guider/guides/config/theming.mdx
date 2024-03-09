@@ -1,5 +1,109 @@
 # Colors & theme
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Guider has been designed fit almost any use case for documentation.
+Naturally, this means that there are lots of configuration options and is very flexible.
+
+Usually the first thing you want to change is the branding.
+
+## Introduction to layout settings
+
+Layout settings can be modified on multiple layers, all of them flow into each other:
+- **Site layout settings:** The base layer of layout settings is simply on `Site.settings`.
+- **Layout settings:** The second layer that counts is on a layer itself at `Layout.settings`.
+- **Directory layout settings:** The last layer is on a directory, `Directory.settings`.
+
+All of these layers are resolved in order. So if you have something specified on the directory layer, it will overwrite all other layers.
+If you specify something on the layout layer, it will overwrite the site layer but not the directory layer.
+
+```ts title="layer examples"
+site('main', {
+  settings: {
+    toc: false,
+    sidebar: false,
+  }
+  directories: [
+    directory("main", {
+      layout: "test-layout"
+      sidebar: [
+        link("Home", "/")
+      ],
+      settings: {
+        toc: false,
+      }
+    })
+  ],
+  layouts: [
+    layout('test-layout', {
+      settings: {
+        toc: true,
+        sidebar: true,
+      }
+    })
+  ]
+})
+```
+
+In this example, the final result will be `toc == false{:ts}` because directory are the highest layer and `sidebar == true{:ts}` because layouts are a higher layer than the site.
+
+## Changing colors
+
+Now that you know about how layout settings are resolved. We can start customising the colors and other layout settings:
+
+```ts
+settings: {
+  colors: {
+    // main theme colors
+    primary: '#50A0EA', // primary color of the site
+    primaryDarker: '#1B65A9', // a darker variant of primary color
+    primaryLighter: '#89C6FF', // a lighter variant of the primary color
+    text: '#668896', // normal text color
+    textLighter: '#9AB3BD', // slightly lighter text color
+    textHighlight: '#FFFFFF', // heading and highlight text color.
+    background: '#050F13', // main page background color
+    backgroundLighter: '#07171C', // lighter background color for code blocks and such
+    backgroundLightest: '#081E24', // lightest background color for hover effects
+    backgroundDark: '#040C0F' // darker variant of the background color
+    line: '#0F2B33', // color of all lines
+
+    // colors in code blocks
+    codeWarning: '#222D20', // codeblock background for a warning annotation
+    codeError: '#2B1B1F', // codeblock background for a warning annotation
+    codeGreen: '#0B2823', // codeblock background for a diff green
+    codeHighlight: '#0E2429', // codeblock background for a highlighted line
+    codeWordHighlight: '#365C68', // background of a highlighted word in a codeblock
+
+    // semantic colors - primarily used in callouts
+    // the lighter variants are used for text colors in callouts
+    semanticTip: '#39B864',
+    semanticTipLighter: '#75F2B6',
+    semanticNote: '#817EF3',
+    semanticNoteLighter: '#B9B8FC',
+    semanticImportant: '#A958E8',
+    semanticImportantLighter: '#D3A2F9',
+    semanticWarning: '#C0BC43',
+    semanticWarningLighter: '#ECE873',
+    semanticCaution: '#FC6359',
+    semanticCautionLighter: '#FFA59F',
+  }
+}
+```
+
+## Changing the logo
+
+If just want to modify the site name and homepage link. You can simple change it in site configuration:
+```ts
+site('site-id', {
+  logo: {
+    to: '/',
+    name: 'My docs'
+  },
+  // ... other settings
+})
+```
+
+If you want to fully customize how your logo looks, you can overwrite the full partial in **any settings layer**:
+```tsx
+settings: {
+  logo: <p>My logo</p>
+}
+```
