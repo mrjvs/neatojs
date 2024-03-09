@@ -1,5 +1,66 @@
 # Making pages
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+On this page, you will learn how to write content pages in Guider.
+
+
+## Create a new page
+
+Guider uses file system routing from Next.JS, this means the folder structure of in your `pages` directory
+directly corresponds to the final URL of your page.
+
+A few examples:
+- `/pages/hello/world.mdx` becomes `example.com/hello/world`
+- `/pages/goodbye/moon/index.mdx` becomes `example.com/goodbye/moon`
+
+<Tip>
+You can use both `.md` and `.mdx` extension for your content files.
+</Tip>
+
+
+## Linking your page to a theme
+
+In your theme file, you will have configured sites, directories and maybe layouts. If you only have one directory and site,
+then there will be no need to link anything explicitly.
+
+If you have multiple sites or directories, you will need to specify which pages belong to which directory/site.
+If unspecified the first site and directory is chosen from your theme.
+
+You can choose a site/directory with a `_meta.json` file.
+If you have a meta file inside of `/pages/hello/_meta.json` then it will apply to all pages starting with `/hello`.
+
+A example meta file:
+```json title="/pages/hello/_meta.json"
+{
+  "site": "site-a",
+  "directory": "dir-a",
+  "layout": "default"
+}
+```
+
+You can omit any field in this file and it will default to a upper level (like `/pages/_meta.json`) or just use the default.
+
+
+## Creating a page that doesn't use MDX or MD
+
+If you want to run other pages that aren't related to your documentation, you can simply make `.jsx` or `.tsx` files in the pages directory.
+
+It will be a completely blank page by default, if you want to still use the general layout of a site. You can use `<GuiderLayout />{:tsx}` to make use of the standard layout.
+
+```tsx showLineNumbers
+import { GuiderLayout } from '@neato/guider/client';
+
+export default function MyPage() {
+  return (
+    <GuiderLayout meta={{ site: 'my-site' }}>
+      <p>My page goes here</p>
+    </GuiderLayout>
+  );
+}
+```
+
+
+## Writing in MD or MDX
+
+Guider uses most of [Github Flavoured Markdown](https://github.github.com/gfm/). If you are familiar with it, you can use everything you know.
+
+If you aren't familiar, you can refer to [Basic text](/docs/guider/writing/basic-text) to learn how to write in Markdown.
