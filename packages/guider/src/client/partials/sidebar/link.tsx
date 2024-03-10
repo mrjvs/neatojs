@@ -8,7 +8,8 @@ export function SidebarLink(props: { link: LinkComponent; indent?: boolean }) {
   return (
     <ActiveLink
       className={classNames({
-        'gd-block gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg': true,
+        'gd-flex gd-items-center gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg':
+          true,
         'gd-pl-8': props.indent,
       })}
       activeClassName="gd-bg-bgLightest gd-text-primary"

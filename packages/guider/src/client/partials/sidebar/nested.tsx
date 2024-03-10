@@ -32,7 +32,7 @@ function MaybeLink(props: {
   if (props.link.to)
     return (
       <ActiveLink
-        className="gd-block gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg"
+        className="gd-flex gd-items-center gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg"
         activeClassName="gd-bg-bgLightest gd-text-primary"
         exact
         inactiveClassName="hover:gd-text-textLight hover:gd-bg-bgLight"
@@ -44,7 +44,7 @@ function MaybeLink(props: {
     );
   return (
     <div
-      className="gd-block gd-cursor-pointer gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg hover:gd-text-textLight hover:gd-bg-bgLight gd-select-none"
+      className="gd-flex gd-items-center gd-cursor-pointer gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg hover:gd-text-textLight hover:gd-bg-bgLight gd-select-none"
       onClick={props.onClick}
     >
       {contents}
