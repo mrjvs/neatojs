@@ -57,9 +57,9 @@ export default defineTheme([
     extends: [template],
     settings: {
       colors: {
-        primary: '#8E5BFB',
-        primaryDarker: '#542FA3',
-        primaryLighter: '#AF89FF',
+        primary: '#A880FF',
+        primaryDarker: '#6C3DD0',
+        primaryLighter: '#D0BAFF',
       },
       logo: () => <Logo />,
     },
