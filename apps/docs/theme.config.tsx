@@ -4,10 +4,11 @@ import {
   group,
   link,
   site,
+  siteTemplate,
   social,
 } from '@neato/guider/theme';
 
-const template = site('template', {
+const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
   settings: {

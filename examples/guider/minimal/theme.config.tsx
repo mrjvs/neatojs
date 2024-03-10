@@ -1,7 +1,6 @@
-import { defineTheme, directory, link, site } from '@neato/guider/theme';
+import { defineTheme, directory, link } from '@neato/guider/theme';
 
-export default defineTheme(
-  site('main', {
+export default defineTheme({
   directories: [
     directory('main', {
       sidebar: [
@@ -9,4 +8,4 @@ export default defineTheme(
       ]
     })
   ],
-}));
+});
