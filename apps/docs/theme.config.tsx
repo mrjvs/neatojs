@@ -7,12 +7,14 @@ import {
   siteTemplate,
   social,
 } from '@neato/guider/theme';
+import { Logo } from 'components/logo';
 
 const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
   settings: {
     backgroundPattern: 'flare',
+    logo: () => <Logo />,
   },
   logo: {
     name: 'NeatoJS',
@@ -53,6 +55,9 @@ export default defineTheme([
   }),
   site('guider', {
     extends: [template],
+    settings: {
+      logo: () => <Logo />,
+    },
     contentFooter: {
       text: 'hello-world',
       editRepositoryBase: 'https://google.com',
