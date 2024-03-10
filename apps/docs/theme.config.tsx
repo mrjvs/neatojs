@@ -1,4 +1,11 @@
-import { defineTheme, directory, group, link, site } from '@neato/guider/theme';
+import {
+  defineTheme,
+  directory,
+  group,
+  link,
+  site,
+  social,
+} from '@neato/guider/theme';
 
 const template = site('template', {
   github: 'mrjvs/neatojs',
@@ -44,6 +51,15 @@ export default defineTheme([
   }),
   site('guider', {
     extends: [template],
+    contentFooter: {
+      text: 'hello-world',
+      editRepositoryBase: 'https://google.com',
+      socials: [
+        social.discord('https://google.com'),
+        social.twitter('https://google.com'),
+        social.github('https://google.com'),
+      ],
+    },
     tabs: [
       link('Guides', '/docs/guider/guides'),
       link('Writing', '/docs/guider/writing'),

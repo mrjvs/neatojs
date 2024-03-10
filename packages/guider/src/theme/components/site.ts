@@ -15,7 +15,6 @@ import {
   type SiteLayoutOptions,
 } from './layout';
 import {
-  populateContentFooter,
   type ContentFooterComponent,
   type ContentFooterOptions,
   type PageFooterComponent,
@@ -119,6 +118,16 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
   if (target.tabs.length > 0) base.tabs = target.tabs;
   if (target.github) base.github = target.github;
   if (target.meta) base.meta = target.meta;
+  if (target.contentFooter)
+    base.contentFooter = {
+      ...base.contentFooter,
+      ...target.contentFooter,
+    };
+  if (target.pageFooter)
+    base.pageFooter = {
+      ...base.pageFooter,
+      ...target.pageFooter,
+    };
 
   const newLayoutIds = target.layouts.map((v) => v.id);
   base.layouts = [
@@ -136,7 +145,6 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
     ...base.logo,
     ...target.logo,
   };
-  // TODO contentFooter, pageFooter
   return base;
 }
 
@@ -157,9 +165,7 @@ export const site: SiteBuilder = function (id, ops) {
     type: 'site',
     meta: ops.meta,
     logo: ops.logo ?? {},
-    contentFooter: ops.contentFooter
-      ? populateContentFooter(ops.contentFooter)
-      : undefined,
+    contentFooter: ops.contentFooter,
     pageFooter: ops.pageFooter,
   };
   const [firstSite, ...extendables] = [...(ops.extends ?? []), theSite];

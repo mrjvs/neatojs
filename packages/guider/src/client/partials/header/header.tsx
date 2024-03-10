@@ -7,6 +7,7 @@ import { GuiderLogo } from '../logo';
 import { HeaderTabs } from './tabs';
 import { HeaderNav } from './nav';
 import { HeaderDropdown } from './dropdown';
+import { MobileNav } from './mobilenav';
 
 export function HeaderInternal() {
   const ctx = useContext(GuiderLayoutContext);
@@ -64,7 +65,7 @@ export function HeaderInternal() {
           {site.tabs.length > 0 ? <HeaderTabs tabs={site.tabs} /> : null}
         </div>
         <div className="gd-block md:gd-hidden gd-border-t gd-border-line gd-px-6 -gd-mx-6">
-          <p>Mobile nav will go here</p>
+          <MobileNav tabs={site.tabs} />
         </div>
       </header>
     </div>

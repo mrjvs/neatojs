@@ -12,6 +12,10 @@ body[data-header-dropdown-open] {
   }
 }
 
+body[data-stop-overflow="true"] {
+  @apply gd-overflow-hidden;
+}
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
