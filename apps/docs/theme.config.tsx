@@ -74,6 +74,9 @@ export default defineTheme([
             link('Installation', gdGuides('/getting-started/installation'), {
               icon: 'fa6-solid:download',
             }),
+            link('Development', gdGuides('/getting-started/development'), {
+              icon: 'icon-park-solid:cpu',
+            }),
             link.nested({
               title: 'Migrating to Guider',
               icon: 'fa6-solid:sailboat',

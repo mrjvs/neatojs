@@ -16,7 +16,11 @@ function TabLink(props: { link: LinkComponent }) {
       href={props.link.to}
     >
       {props.link.icon ? (
-        <Icon className="gd-inline-block gd-mr-2" icon={props.link.icon} />
+        <Icon
+          inline
+          className="gd-inline-block gd-mr-2"
+          icon={props.link.icon}
+        />
       ) : null}
       {props.link.title}
     </ActiveLink>
