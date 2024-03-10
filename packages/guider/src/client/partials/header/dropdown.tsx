@@ -4,7 +4,11 @@ import classNames from 'classnames';
 import ActiveLink, {
   useAreRoutesActive,
 } from '../../components/utils/activelink';
-import type { DropdownChildren, LinkComponent } from '../../../theme';
+import type {
+  DropdownChildren,
+  GroupComponent,
+  LinkComponent,
+} from '../../../theme';
 import { Icon } from '../../components/icon';
 
 function DropdownItem(props: { link: LinkComponent; active?: boolean }) {
@@ -32,6 +36,21 @@ function DropdownLink(props: { link: LinkComponent }) {
   );
 }
 
+function DropdownGroup(props: { group: GroupComponent<LinkComponent> }) {
+  return (
+    <div>
+      <p className="gd-px-3 gd-opacity-50 gd-text-xs gd-font-bold gd-mt-4 gd-pb-1 gd-mb-1 gd-uppercase gd-border-b gd-border-b-line">
+        {props.group.title}
+      </p>
+      {props.group.items.map((item, i) => {
+        const key = `--${i}-${item.to}`;
+        if (item.type === 'link') return <DropdownLink key={key} link={item} />;
+        return null;
+      })}
+    </div>
+  );
+}
+
 function UpdateHead(props: { active?: boolean }) {
   useEffect(() => {
     if (props.active)
@@ -44,15 +63,16 @@ function UpdateHead(props: { active?: boolean }) {
 }
 
 export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
-  const actives = useAreRoutesActive(
-    props.dropdown.map((v) => ({ href: v.to })),
-  );
+  const links = props.dropdown
+    .map((v) => (v.type === 'group' ? v.items : [v]))
+    .flat();
+  const actives = useAreRoutesActive(links.map((v) => ({ href: v.to })));
 
   const activeItem = useMemo(() => {
     const activeIndex = actives.indexOf(true);
-    if (activeIndex === -1) return props.dropdown[0];
-    return props.dropdown[activeIndex];
-  }, [actives, props.dropdown]);
+    if (activeIndex === -1) return links[0];
+    return links[activeIndex];
+  }, [actives, links]);
 
   return (
     <Menu as="div" className="gd-relative -gd-ml-2 gd-inline-block gd-z-[70]">
@@ -83,7 +103,9 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
       >
         <Menu.Items className="gd-absolute gd-p-2 gd-left-0 gd-mt-2 gd-w-72 gd-origin-top-left gd-rounded-md gd-bg-bg gd-border gd-border-bgLightest">
           {props.dropdown.map((item, i) => {
-            const key = `--${i}-${item.to}`;
+            const key = `--${i}`;
+            if (item.type === 'group')
+              return <DropdownGroup key={key} group={item} />;
             if (item.type === 'link')
               return <DropdownLink key={key} link={item} />;
             return null;

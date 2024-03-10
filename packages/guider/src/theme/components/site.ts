@@ -20,6 +20,7 @@ import {
   type PageFooterComponent,
   type PageFooterOptions,
 } from './footer';
+import type { GroupComponent } from '.';
 
 export type TopNavChildren =
   | LinkComponent
@@ -27,7 +28,7 @@ export type TopNavChildren =
   | CustomComponentComponent;
 
 export type TabsChildren = LinkComponent | CustomComponentComponent;
-export type DropdownChildren = LinkComponent;
+export type DropdownChildren = LinkComponent | GroupComponent<LinkComponent>;
 
 export interface SiteOptions {
   navigation?: TopNavChildren[];

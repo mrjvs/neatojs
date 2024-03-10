@@ -8,25 +8,25 @@ export type GroupComponentChildren =
   | SeperatorComponent
   | CustomComponentComponent;
 
-export interface GroupOptions {
+export interface GroupOptions<T> {
   title: string;
-  items: GroupComponentChildren[];
+  items: T[];
 }
 
-export interface GroupComponent {
+export interface GroupComponent<T> {
   type: 'group';
   title: string;
-  items: GroupComponentChildren[];
+  items: T[];
 }
 
 export interface GroupBuilder {
-  (title: string, items: GroupComponentChildren[]): GroupComponent;
-  (options: GroupOptions): GroupComponent;
+  <T>(title: string, items: T[]): GroupComponent<T>;
+  <T>(options: GroupOptions<T>): GroupComponent<T>;
 }
 
 export const group: GroupBuilder = (titleOrOptions: any, maybeItems?: any) => {
   if (typeof titleOrOptions !== 'string') {
-    const options: GroupOptions = titleOrOptions;
+    const options: GroupOptions<any> = titleOrOptions;
     return {
       ...options,
       type: 'group',
