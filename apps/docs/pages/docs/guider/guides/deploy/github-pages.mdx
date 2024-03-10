@@ -1,5 +1,67 @@
 # Github Pages
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A Github Action to deploy a Guider documentation site.
+
+## Prerequisites
+
+- Enable Github Pages, go to `Your repo > Settings > Pages` and set `Source` to `Github Actions`.
+
+## The workflow
+
+Add this code to a file in the github workflows folder, for example: `/.github/workflows/docs-deploy.yml`.
+
+There are highlighted words in the code, double check if those match your environment.
+This code sample assumes you use `npm`, with the branch `main` as your release branch and the docs being in the root of your repository.
+
+```yml title=".github/workflows/"
+name: "docs-deploy"
+
+on:
+  push:
+    branches:
+     # [!code word:main:1]
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # [!code word:npm]
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    # [!code word:./]
+    - name: Install dependencies
+      working-directory: ./
+      run: npm ci
+
+    - name: Build
+      working-directory: ./
+      run: npm run build
+
+    - name: Upload
+      uses: actions/upload-pages-artifact@v3
+      working-directory: ./
+      with:
+        path: out
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
