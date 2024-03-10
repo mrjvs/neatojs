@@ -22,6 +22,7 @@ const template = siteTemplate({
 
 const gdGuides = (url: string) => `/docs/guider/guides${url}`;
 const gdWriting = (url: string) => `/docs/guider/writing${url}`;
+const gdApi = (url: string) => `/docs/guider/api-reference${url}`;
 
 const starLinks = [
   link('Github', 'https://github.com/mrjvs/neatojs', {
@@ -190,31 +191,34 @@ export default defineTheme([
         sidebar: [
           ...starLinks,
           group('Theme configuration', [
-            link('defineTheme()', gdWriting('/writing/markdown')),
-            link('site()', '/docs/guider/docs'),
-            link('directory()', '/docs/guider/docs'),
-            link('link()', '/docs/guider/docs'),
-            link('group()', '/docs/guider/docs'),
-            link('seperator()', '/docs/guider/docs'),
-            link('component()', '/docs/guider/docs'),
+            link('defineTheme()', gdApi('/theme/define-theme')),
+            link('site()', gdApi('/theme/site')),
+            link('directory()', gdApi('/theme/directory')),
+            link('link()', gdApi('/theme/link')),
+            link('group()', gdApi('/theme/group')),
+            link('seperator()', gdApi('/theme/seperator')),
+            link('component()', gdApi('/theme/component')),
           ]),
 
           group('_meta.json', [
-            link('Structure of _meta.json', '/docs/guider/docs'),
+            link('Structure of _meta.json', gdApi('/meta/structure')),
           ]),
 
           group('Client functions', [
-            link('createRedirect()', '/docs/guider/docs'),
-            link('createNotFoundPage()', '/docs/guider/docs'),
-            link('useGuider()', '/docs/guider/docs'),
-            link('useGuiderPage()', '/docs/guider/docs'),
+            link('createRedirect()', gdApi('/functions/create-redirect')),
+            link(
+              'createNotFoundPage()',
+              gdApi('/functions/create-not-found-page'),
+            ),
+            link('useGuider()', gdApi('/functions/use-guider')),
+            link('useGuiderPage()', gdApi('/functions/use-guider-page')),
           ]),
 
           group('Theme components', [
-            link('<GuiderHeader/>', '/docs/guider/docs'),
-            link('<GuiderLayout/>', '/docs/guider/docs'),
-            link('<GuiderSidebar/>', '/docs/guider/docs'),
-            link('<GuiderToc/>', '/docs/guider/docs'),
+            link('<GuiderHeader/>', gdApi('/components/guider-header')),
+            link('<GuiderLayout/>', gdApi('/components/guider-layout')),
+            link('<GuiderSidebar/>', gdApi('/components/guider-sidebar')),
+            link('<GuiderToc/>', gdApi('/components/guider-toc')),
           ]),
         ],
       }),
