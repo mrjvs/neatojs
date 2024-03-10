@@ -56,6 +56,11 @@ export default defineTheme([
   site('guider', {
     extends: [template],
     settings: {
+      colors: {
+        primary: '#8E5BFB',
+        primaryDarker: '#542FA3',
+        primaryLighter: '#AF89FF',
+      },
       logo: () => <Logo />,
     },
     contentFooter: {
