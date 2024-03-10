@@ -47,7 +47,7 @@ export function useToc(ids: string[]) {
     if (!el) return null;
     const y = el.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({
-      top: y - 120,
+      top: y - 180,
       behavior: 'smooth',
     });
   }, []);
