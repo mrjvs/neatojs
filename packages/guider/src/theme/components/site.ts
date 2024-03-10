@@ -172,3 +172,7 @@ export const site: SiteBuilder = function (id, ops) {
   const [firstSite, ...extendables] = [...(ops.extends ?? []), theSite];
   return extendables.reduce((a, v) => mergeSites(a, v), firstSite);
 };
+
+export function siteTemplate(ops: SiteOptions) {
+  return site('gd:template', ops);
+}

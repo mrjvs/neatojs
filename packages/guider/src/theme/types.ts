@@ -1,6 +1,6 @@
-import type { SiteComponent } from './components/site';
+import type { SiteComponent, SiteOptions } from './components/site';
 
-export type GuiderConfig = SiteComponent | SiteComponent[];
+export type GuiderConfig = SiteOptions | SiteComponent[];
 
 export type MetaConf = {
   site?: string;

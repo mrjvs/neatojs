@@ -1,13 +1,14 @@
-import type { SiteComponent } from './components/site';
+import { site, type SiteComponent } from './components/site';
 import type { GuiderConfig } from './types';
 
 export function defineTheme(obj: GuiderConfig): SiteComponent[] {
-  let sites = obj;
-  if (!Array.isArray(sites)) sites = [sites];
+  let sites: SiteComponent[] = [];
+  if (!Array.isArray(obj)) sites = [site('main', obj)];
+  else sites = obj;
 
   if (sites.length === 0) throw new Error('Site list may not be empty');
-  sites.forEach((site) => {
-    if (site.directories.length === 0)
+  sites.forEach((siteItem) => {
+    if (siteItem.directories.length === 0)
       throw new Error('Site may not have an empty directory list');
   });
 
