@@ -1,5 +1,45 @@
 import { useCallback, useEffect, useState } from 'react';
 
+export function useVisibleIds(contentId: string, ids: string[]) {
+  const [finalList, setFinalList] = useState(ids);
+
+  const check = useCallback(
+    (idList: string[]) => {
+      const newList: string[] = [];
+      idList.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.offsetParent === null) return;
+        newList.push(id);
+      });
+      setFinalList(newList);
+    },
+    [ids],
+  );
+
+  useEffect(() => {
+    const targetNode = document.getElementById(contentId);
+    if (!targetNode) return;
+
+    const observer = new MutationObserver(() => {
+      check(ids);
+    });
+
+    observer.observe(targetNode, {
+      childList: true,
+      subtree: true,
+    });
+
+    check(ids);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [contentId, check, JSON.stringify(ids)]);
+
+  return finalList;
+}
+
 export function useToc(ids: string[]) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
