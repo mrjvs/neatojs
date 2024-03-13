@@ -18,9 +18,9 @@ function FooterSocial(props: { icon: string; url: string }) {
       href={props.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="gd-p-1 gd-flex gd-items-center gd-justify-center hover:gd-bg-bgLight gd-rounded"
+      className="gd-size-7 gd-flex gd-items-center gd-justify-center hover:gd-bg-bgLight gd-rounded"
     >
-      <Icon icon={props.icon} className="text-[1rem]" />
+      <Icon icon={props.icon} className="gd-text-[1.1rem]" />
     </Link>
   );
 }
@@ -47,10 +47,10 @@ export function ContentFooterInternal() {
   const socials = site.contentFooter?.socials ?? [];
 
   return (
-    <footer className="gd-py-3 gd-border-t gd-border-line gd-mt-12 gd-text-text gd-flex gd-items-center gd-justify-between">
-      <div className="gd-flex gd-items-center">
+    <footer className="gd-py-3 gd-border-t gd-border-line gd-mt-12 gd-text-text gd-text-sm gd-flex gd-justify-between">
+      <div className="gd-flex gd-gap-2 md:gd-gap-4 md:gd-items-center md:gd-flex-row gd-flex-col">
         {socials.length > 0 ? (
-          <div className="gd-flex gd-items-center gd-mr-6">
+          <div className="gd-flex gd-items-center gd-space-x-0.5">
             {(site.contentFooter?.socials ?? []).map((v) => (
               <FooterSocial key={v.type} icon={iconMap[v.type]} url={v.url} />
             ))}
@@ -58,12 +58,11 @@ export function ContentFooterInternal() {
         ) : null}
         <div>
           {site.contentFooter?.text ?? copyright}{' '}
-          <span className="gd-text-line gd-inline-block gd-mx-2">—</span>{' '}
-          Powered by Guider
+          <span className="gd-text-line gd-mx-1">—</span> Powered by Guider
         </div>
       </div>
       {site.contentFooter?.editRepositoryBase ? (
-        <div>
+        <div className="gd-w-40 gd-text-right">
           <GithubEditLink
             baseUrl={site.contentFooter.editRepositoryBase}
             pageUrl={pathname}
