@@ -13,6 +13,7 @@ export type SiteLayoutOptions = {
 export type SiteLayoutComponent = {
   id: string;
   settings: PopulatedLayoutSettings;
+  settingsOverrides: PartialDeep<PopulatedLayoutSettings>;
 };
 
 const baseLayoutConfig: PopulatedLayoutSettings = {
@@ -137,11 +138,10 @@ export function populateLayout(
   rootSettings: PopulatedLayoutSettings,
   layout: SiteLayoutOptions,
 ): SiteLayoutComponent {
+  const layoutSettings = makeLayoutSettings(layout.settings ?? {});
   return {
     id: layout.id,
-    settings: mergeLayoutSettings(
-      rootSettings,
-      makeLayoutSettings(layout.settings ?? {}),
-    ),
+    settings: mergeLayoutSettings(rootSettings, layoutSettings),
+    settingsOverrides: layoutSettings,
   };
 }

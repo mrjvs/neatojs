@@ -5,7 +5,7 @@ import type { DirectoryComponent } from './directory';
 import type { LinkComponent } from './link';
 import type { CustomComponentComponent } from './component';
 import type { SeperatorComponent } from './seperator';
-import type { LayoutSettings } from './settings';
+import type { LayoutSettings, PopulatedLayoutSettings } from './settings';
 import {
   makeLayoutSettings,
   mergeLayoutSettings,
@@ -64,7 +64,8 @@ export interface SiteComponent {
   };
   layout?: string;
   meta?: MetaTagComponent;
-  settings: PartialDeep<LayoutSettings>;
+  settingOverrides: PartialDeep<PopulatedLayoutSettings>;
+  settings: PopulatedLayoutSettings;
   directories: DirectoryComponent[];
   layouts: SiteLayoutComponent[];
   contentFooter?: ContentFooterComponent;
@@ -130,18 +131,26 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
       ...target.pageFooter,
     };
 
+  const newSettings = mergeLayoutSettings(
+    base.settings,
+    target.settingOverrides,
+  );
   const newLayoutIds = target.layouts.map((v) => v.id);
-  base.layouts = [
+  const newLayouts = [
     ...base.layouts.filter((v) => !newLayoutIds.includes(v.id)),
     ...target.layouts,
   ];
+  base.layouts = newLayouts.map((layout) => {
+    layout.settings = mergeLayoutSettings(
+      newSettings,
+      layout.settingsOverrides,
+    );
+    return layout;
+  });
 
   base.id = target.id;
   base.layout = target.layout;
-  base.settings = mergeLayoutSettings(
-    mergeWithRoot(base.settings ?? {}),
-    target.settings,
-  );
+  base.settings = newSettings;
   base.logo = {
     ...base.logo,
     ...target.logo,
@@ -152,13 +161,13 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
 export const site: SiteBuilder = function (id, ops) {
   const settings = mergeWithRoot(makeLayoutSettings(ops.settings ?? {}));
   const layouts = addDefaultLayouts(ops.layouts ?? []);
-  // TODO layout merging isnt correct
   const theSite: SiteComponent = {
     id,
     directories: ops.directories ?? [],
     dropdown: ops.dropdown ?? [],
     navigation: ops.navigation ?? [],
-    settings: makeLayoutSettings(ops.settings ?? {}),
+    settingOverrides: ops.settings ?? {},
+    settings,
     tabs: ops.tabs ?? [],
     layouts: layouts.map((v) => populateLayout(settings, v)),
     layout: ops.layout,
