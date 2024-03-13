@@ -39,6 +39,18 @@ A example meta file:
 
 You can omit any field in this file and it will default to a upper level (like `/pages/_meta.json`) or just use the default.
 
+If you don't want to apply these settings to an entire directory but just a single page. You can also specify all options that are available in a meta file inside of the Frontmatter of the page:
+```md
+---
+site: "site-a"
+directory: "dir-a"
+layout: "default"
+---
+# My heading
+my paragraph
+```
+
+Just like the meta file, you can omit any field for it to default to an upper level.
 
 ## Creating a page that doesn't use MDX or MD
 

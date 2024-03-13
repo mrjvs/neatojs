@@ -1,5 +1,80 @@
 # Code groups
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Codegroups are a great way to group multiple codeblocks together, for example when
+you need to showcase multiple files. It's also a great way to show previews of code.
+
+
+## General usage
+
+To make a code group, simply add a `<CodeGroup>{:tsx}` component, with any number of `<CodeGroup.Code>{:tsx}` inside it.
+
+The `<CodeGroup.Code>{:tsx}` will need a title and should only contain codeblocks or `<Frame>{:tsx}` components. Only put in one codeblock or `<Frame>{:tsx}` inside at a time.
+
+````tsx
+<CodeGroup>
+  <CodeGroup.Code title="test.ts">
+    ```ts
+    export function hello() {
+      return "world";
+    }
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="main.ts">
+    ```ts
+    import { hello } from "./test";
+
+    console.log(hello());
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+````
+
+<CodeGroup>
+  <CodeGroup.Code title="test.ts">
+    ```ts
+    export function hello() {
+      return "world";
+    }
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="main.ts">
+    ```ts
+    import { hello } from "./test";
+
+    console.log(hello());
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+## Combining with Frames
+
+Codegroup children can also contain `<Frame>` components. See the example below.
+
+````tsx
+<CodeGroup>
+  <CodeGroup.Code title="Code">
+    ```tsx
+    <Button>Hello world</Button>
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="Preview">
+    <Frame>
+      <Button>Hello world</Button>
+    </Frame>
+  </CodeGroup.Code>
+</CodeGroup>
+````
+
+<CodeGroup>
+  <CodeGroup.Code title="Code">
+    ```tsx
+    <Button>Hello world</Button>
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="Preview">
+    <Frame>
+      <Button>Hello world</Button>
+    </Frame>
+  </CodeGroup.Code>
+</CodeGroup>
