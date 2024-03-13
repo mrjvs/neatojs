@@ -20,7 +20,7 @@ import {
   type PageFooterComponent,
   type PageFooterOptions,
 } from './footer';
-import type { GroupComponent } from '.';
+import type { GroupComponent } from './group';
 
 export type TopNavChildren =
   | LinkComponent
