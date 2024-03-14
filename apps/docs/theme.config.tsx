@@ -16,6 +16,15 @@ const template = siteTemplate({
     backgroundPattern: 'flare',
     logo: () => <Logo />,
   },
+  meta: {
+    titleTemplate: '%s - NeatoJS',
+    additionalLinkTags: [
+      {
+        rel: 'icon',
+        href: '/favicon.png',
+      },
+    ],
+  },
   logo: {
     name: 'NeatoJS',
     to: '/',
