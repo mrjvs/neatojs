@@ -1,10 +1,62 @@
 # Customising layout
 
-- turning off/on partials
-- overwriting partials
-- Using layouts
-- The default layouts
+The flexibilty of Guider really shines with it's overwritable partials.
+
+
+## Partials
+
+Partials are sections of the interface, you can replace them and toggle them at will.
+Here are all possibilities:
+ - `toc`: The table of contents section.
+ - `sidebar`: the sidebar navigation menu.
+ - `navigation`: The header navigation menu.
+ - `contentFooter`: the content footer, placed right below content.
+ - `pageFooter`: The page footer, placed at the very bottom of the page. Disabled by default.
+ - `logo`: The logo, shown in the navigation bar and page footer.
+ - `pageLayout`: the entire page, cannot be turned off.
+
+
+## Turning partials on or off
+
+You can turn off any partial on or off at [any layout settings level](/docs/guider/guides/config/theming#introduction-to-layout-settings).
+Simply set the partial to true or false. Here is an example with the sidebar:
+
+```tsx
+settings: {
+  sidebar: false,
+}
+```
+
+This will turn off the sidebar for that settings level.
+
+
+## Overwriting the partial
+
+Any partial you can replace with your own component at [any layout settings level](/docs/guider/guides/config/theming#introduction-to-layout-settings).
+Just set the partial to your component function, this will also enable it at the same time. Here is an example that overwrites the logo:
+
+```tsx
+settings: {
+  logo: () => <p>My Company<p>,
+}
+```
+
+If you are making a more complex partial that needs to display another partial, you can use the theme components (e.g. `<GuiderSidebar />{:tsx}`).
+Find all of them in the API reference tab.
+
+
+## Using layouts
 
 <Caution>
 This article is a stub, please help by contributing to the docs.
 </Caution>
+
+
+## The default layouts
+
+The default layouts will always be present. They can not be removed but they can be overwritten. Just add a layout with the same ID as the
+default layout of your choice. These are the defaults:
+- `default`: The default layout of every page
+- `page`: Layout for simple pages without sidebar, TOC or content footer.
+- `article`: Layout for articles, without a sidebar or content footer.
+- `raw`: Layout for if you just to make a raw page without any of the other layout present.
