@@ -1,7 +1,22 @@
 # Header
 
-- Adding github widget to header
+Learn about configuring the page header.
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+## Navigation
+
+If you are looking for ways to customise the navigation links in the header. You can [read more here](/docs/guider/guides/config/navigation).
+
+## Github widget
+
+To showcase your GitHub repository with it's stars and forks. You can configure a github widget.
+
+Simply add your username or organisation followed by a slash and your repo name:
+
+```tsx title="theme.config.tsx"
+site('site-a', {
+  github: "mrjvs/neatojs", // [!code focus]
+  directories: [
+    // ...
+  ]
+})
+```
