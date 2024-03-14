@@ -12,7 +12,7 @@ on how to configure these sites.
 Sites in Guider don't neccesarily have completely seperate entities. Anything that is customized
 beyond just the contents of the sidebar is a new site. Think of sites as just a new instance of a Guider site.
 
-A good usecase of when to use a different site is if you want to have different content in the navigation header.
+A good use case of when to use a different site is if you want to have different content in the navigation header.
 
 ---
 
@@ -32,7 +32,7 @@ export default defineTheme([
 
 When you have many different sites that are mostly similar, it can be very verbose to reconfigure every site with the same settings.
 
-That is where site templates come in: you can make a template and any site can make use a template.
+That is where site templates come in: you can make a template and any site can use a template as its base.
 
 ```tsx title="theme.config.tsx" showLineNumbers
 import { site, link, defineTheme, siteTemplate } from "@neato/guider/theme"
@@ -61,18 +61,18 @@ You can provide multiple sites to extend from, they are merged in order of how t
 
 ## Recommended folder structure
 
-Folder structure of your pages directory is completely flexible and up to the writers choice.
+Folder structure of your pages directory is completely flexible and up to the writer's choice.
 However, below we have some recommendations for bigger projects.
 
 1. **Reserve a space for non-documentation:** It's likely that big documentation sites will expand slightly outside of purely documentation.
-Think showcases, contact page, brand informations. So it's wise to put your documentation on `/docs` so you can put everything else outside of it.
-2. **Put your concepts in on one level:** When you have multiple concepts like a list of libraries or a list of applications. You should all of them
-in the same level. For example for library `shoejs`, `jacketjs` and `sockdotnet`. You would have folders: `/docs/shoejs`, `/docs/jacketjs` and `docs/sockdotnet`.
-Do not group them as `/docs/libs/xxx` or `/docs/apps/xxx`, it will only make it harder to find in your project structure and less predictable URLs.
+Think showcases, contact page, brand information. So it's wise to put your documentation on `/docs` so you can put everything else outside of it.
+2. **Put your concepts all on one level:** When you have multiple concepts like a list of libraries or a list of applications. You should put all of them
+in the same level. For example, for library `shoejs`, `jacketjs` and `sockdotnet`. You would have folders: `/docs/shoejs`, `/docs/jacketjs` and `docs/sockdotnet`.
+Do not group them as `/docs/libs/xxx` or `/docs/apps/xxx`, it will only make it harder to find in your project structure with less predictable URLs.
 3. **Have a `_meta.json` file at the root of every concept:** you should have a `_meta.json` file containing common configuration per concept.
 Following the previous examples, put one at `/docs/shoejs/_meta.json`. with `{ "site": "shoejs" }{:json}`.
 4. **Have a `theme.config.tsx` file at the root of every concept:** to prevent your site configuration from being gigantic, you can split it up per concept.
-Create a theme config that just exports the single `site(...)` instance for that concept. At the top level `theme.config.tsx` you can import them all and just add them to the `defineTheme()`
+Create a theme config that just exports the single `site(...)` instance for that concept. At the top level `theme.config.tsx`, you can import them all and just add them to the `defineTheme()`
 
 To combine everything, here is the example folder structure from all the examples:
 ```sh

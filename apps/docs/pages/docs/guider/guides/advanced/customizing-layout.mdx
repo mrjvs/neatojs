@@ -1,6 +1,6 @@
 # Customising layout
 
-The flexibilty of Guider really shines with it's overwritable partials.
+The flexibilty of Guider really shines with its overwritable partials.
 
 
 ## Partials
@@ -8,18 +8,18 @@ The flexibilty of Guider really shines with it's overwritable partials.
 Partials are sections of the interface, you can replace them and toggle them at will.
 Here are all possibilities:
  - `toc`: The table of contents section.
- - `sidebar`: the sidebar navigation menu.
+ - `sidebar`: The sidebar navigation menu.
  - `navigation`: The header navigation menu.
- - `contentFooter`: the content footer, placed right below content.
+ - `contentFooter`: The content footer, placed right below content.
  - `pageFooter`: The page footer, placed at the very bottom of the page. Disabled by default.
  - `logo`: The logo, shown in the navigation bar and page footer.
- - `pageLayout`: the entire page, cannot be turned off.
+ - `pageLayout`: The entire page, cannot be turned off.
 
 
 ## Turning partials on or off
 
 You can turn off any partial on or off at [any layout settings level](/docs/guider/guides/config/theming#introduction-to-layout-settings).
-Simply set the partial to true or false. Here is an example with the sidebar:
+Simply set the partial to `true{:ts}` or `false{:ts}`. Here is an example with the sidebar:
 
 ```tsx
 settings: {
@@ -32,8 +32,8 @@ This will turn off the sidebar for that settings level.
 
 ## Overwriting the partial
 
-Any partial you can replace with your own component at [any layout settings level](/docs/guider/guides/config/theming#introduction-to-layout-settings).
-Just set the partial to your component function, this will also enable it at the same time. Here is an example that overwrites the logo:
+You can replace any partial with your own component at [any layout settings level](/docs/guider/guides/config/theming#introduction-to-layout-settings).
+Just set the partial to your component function - this will also enable it at the same time. Here is an example that overwrites the logo:
 
 ```tsx
 settings: {
@@ -47,11 +47,11 @@ Find all of them in the API reference tab.
 
 ## Using layouts
 
-- making layouts
-- how to use them effectively
+- Making layouts
+- How to use them effectively
 
 <Caution>
-This article is a stub, please help by contributing to the docs.
+This section is a stub, please help by contributing to the docs.
 </Caution>
 
 
@@ -62,4 +62,4 @@ default layout of your choice. These are the defaults:
 - `default`: The default layout of every page
 - `page`: Layout for simple pages without sidebar, TOC or content footer.
 - `article`: Layout for articles, without a sidebar or content footer.
-- `raw`: Layout for if you just to make a raw page without any of the other layout present.
+- `raw`: Layout for when you just want to make a raw page without any of the other layouts.

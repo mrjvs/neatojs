@@ -1,13 +1,13 @@
 # Tabs
 
-If you want different variants or subsections to be toggleable. The tab element may be your best fit.
+If you would like different variants or subsections to be toggleable, the tab element may be your best fit.
 
 
 ## General usage
 
-Tabs are made by wrapping all your tabs in a container element (`<Tab>{:tsx}`) and then every tab is enclosed in a `<Tabs.Tab>{:tsx}`.
+Tabs are made by wrapping each tab's content in a `<Tabs.Tab>{:tsx}` element. All tabs are then enclosed in a container element (`<Tab>{:tsx}`).
 
-The container element needs a list of items. Like so: `<Tab items={["Item A", "Item B", "Item C"]}>{:tsx}`. See the full example below:
+The container element needs a list of navigation items that match the number of tabs. For example: `<Tab items={["Item A", "Item B", "Item C"]}>{:tsx}`. See the full example below.
 
 You can put any content inside of a tab, so don't feel restricted to just text.
 
@@ -40,9 +40,9 @@ You can put any content inside of a tab, so don't feel restricted to just text.
 
 ## Default tab
 
-You can set a default tab, the one that is selected before the reader chooses a specific one.
+You can set a default tab which is the tab that is selected before the reader chooses a specific one.
 
-The counter starts at 0, so the first tab is index 0, second tab index 1 and so on.
+The counter starts at 0. This means the first tab is index 0, the second tab index 1 and so on.
 
 ````tsx
 <Tabs items={["Item A", "Item B", "Item C"]} default={1}>
@@ -65,9 +65,9 @@ The counter starts at 0, so the first tab is index 0, second tab index 1 and so 
 
 ## Storing the tab choice
 
-By default, the readers tab choice is not persistent: When they switch to a different page, the tab choice is forgotten and next time they visit the page it will be the default again.
+By default, the reader's tab choice is not persistent. When they switch to a different page, the tab choice is forgotten and next time they visit the page it will be the default again.
 
-If you want it to store the user choice, you can give a `storageKey` prop. **If you give two or more tabs the same storage key, it will synchronize the tabs. Switching tab on one will also switch on the others.**
+If you would like the user's choice to be stored, you can give a `storageKey` prop. **If you give two or more tabs the same storage key, it will synchronize the tabs. Switching tab on one will also switch on the others.**
 
 ````tsx
 <Tabs items={["Item A", "Item B", "Item C"]} storageKey="tab-example">
