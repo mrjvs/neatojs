@@ -119,6 +119,7 @@
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
     "remark-heading-id": "^1.0.1",
+    "remark-link-rewrite": "^1.0.7",
     "shiki": "^1.1.7",
     "tailwindcss-themer": "^4.0.0",
     "type-fest": "^4.10.3",

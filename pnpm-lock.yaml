@@ -200,6 +200,9 @@ importers:
       remark-heading-id:
         specifier: ^1.0.1
         version: 1.0.1
+      remark-link-rewrite:
+        specifier: ^1.0.7
+        version: 1.0.7
       shiki:
         specifier: ^1.1.7
         version: 1.1.7
@@ -5383,6 +5386,13 @@ packages:
     dependencies:
       lodash: 4.17.21
       unist-util-visit: 1.4.1
+    dev: false
+
+  /remark-link-rewrite@1.0.7:
+    resolution: {integrity: sha512-jfmXL8VL3O7Ca4g+Ya0A0S9LIpVhCUSqMHiei4N8Z8Mx9z/oEI1HDoa1ZcF9/tS0I7NwydGsPkw2zT4eeoD6+Q==}
+    engines: {node: '>=12.20'}
+    dependencies:
+      unist-util-visit: 4.1.2
     dev: false
 
   /remark-mdx@3.0.1:
