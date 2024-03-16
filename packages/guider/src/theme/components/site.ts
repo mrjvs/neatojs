@@ -49,7 +49,14 @@ export interface SiteOptions {
   pageFooter?: PageFooterOptions;
 }
 
-export type MetaTagComponent = (() => ReactNode) | NextSeoProps;
+export type MetaTagPageMeta = {
+  title?: string;
+  description?: string;
+};
+
+export type MetaTagComponent =
+  | ((pageMeta: MetaTagPageMeta) => ReactNode)
+  | NextSeoProps;
 
 export interface SiteComponent {
   type: 'site';
