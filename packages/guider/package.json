@@ -21,7 +21,8 @@
   "files": [
     "dist/**",
     "style.css",
-    "loader.js"
+    "loader.js",
+    "shim.guider.virtual"
   ],
   "exports": {
     "./client": {
