@@ -29,9 +29,13 @@ function DropdownItem(props: { link: LinkComponent; active?: boolean }) {
 function DropdownLink(props: { link: LinkComponent }) {
   return (
     <Menu.Item>
-      <ActiveLink href={props.link.to}>
-        {({ isActive }) => <DropdownItem link={props.link} active={isActive} />}
-      </ActiveLink>
+      <span>
+        <ActiveLink href={props.link.to}>
+          {({ isActive }) => (
+            <DropdownItem link={props.link} active={isActive} />
+          )}
+        </ActiveLink>
+      </span>
     </Menu.Item>
   );
 }
