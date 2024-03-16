@@ -16,6 +16,8 @@ const siteTemplate = site('docs', {
   navigation: [
     link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
     link('API reference', '/api-ref'),
+    link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
+    link('API reference', '/api-ref'),
     seperator(),
   ],
   github: 'movie-web/movie-web',
