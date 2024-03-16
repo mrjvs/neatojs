@@ -20,6 +20,12 @@
    * make space for diff and line numbers
    */
   pre:has(code[data-line-numbers]) {
+    code[data-line-numbers]::before {
+      content: "";
+      background: var(--colors-bgLight);
+      background: linear-gradient(to right, rgb(var(--colors-bgLight) / 1) 0% , rgb(var(--colors-bgLight) / 1) 90%, rgb(var(--colors-bgLight) / 0) 100%);
+      @apply gd-absolute gd-inset-y-0 gd-left-0 gd-w-8;
+    }
     code[data-line-numbers] > [data-line] {
       padding-left: 1rem;
     }
@@ -28,6 +34,21 @@
     }
     code[data-line-numbers-max-digits="3"] > [data-line] {
       padding-left: 3rem;
+    }
+    code[data-line-numbers] > [data-line]::before {
+      @apply gd-w-4;
+    }
+    code[data-line-numbers-max-digits="2"] > [data-line]::before {
+      @apply gd-w-6;
+    }
+    code[data-line-numbers-max-digits="3"] > [data-line]::before {
+      @apply gd-w-8;
+    }
+    code[data-line-numbers-max-digits="2"]::before {
+      @apply gd-w-10;
+    }
+    code[data-line-numbers-max-digits="3"]::before {
+      @apply gd-w-12;
     }
   }
 
@@ -45,7 +66,7 @@
     > [data-line]::before {
       counter-increment: line;
       content: counter(line);
-      @apply gd-inline-block gd-mr-4 gd-text-right gd-opacity-50 gd-absolute gd-left-3 gd-z-10;
+      @apply gd-inline-block gd-mr-4 gd-text-right gd-opacity-50 gd-absolute gd-left-2 gd-z-10;
     }
   }
 
@@ -54,12 +75,12 @@
    * annotated lines + highlighted lines
    */
   code .highlighted, code span[data-highlighted-line] {
-    &::before {
+    &::after {
       content: "";
       @apply gd-bg-codeHighlight gd-absolute gd-inset-x-0 gd-h-[1.5em];
     }
     > * {
-      @apply gd-relative;
+      @apply gd-relative gd-z-10;
     }
   }
 
