@@ -6,6 +6,7 @@ import { Icon } from '../../components/icon';
 import type { TabsChildren } from '../../../theme/components/site';
 import type { CustomComponentComponent } from '../../../theme/components/component';
 import { SidebarStarLink } from '../sidebar/star-link';
+import { SidebarSeperator } from '../sidebar/seperator';
 
 function CustomComponentTab(props: { component: CustomComponentComponent }) {
   return <Fragment>{props.component.component?.()}</Fragment>;
@@ -61,9 +62,19 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
             if (v.type === 'component')
               return <CustomComponentTab key={key} component={v} />;
             if (v.type === 'link')
-              return <SidebarStarLink key={key} link={v} />;
+              return (
+                <SidebarStarLink
+                  key={key}
+                  link={{
+                    ...v,
+                    icon: v.icon ?? 'ph:book-open-fill',
+                    exact: v.exact ?? false,
+                  }}
+                />
+              );
             return null;
           })}
+          {props.tabs.length > 0 ? <SidebarSeperator /> : null}
         </div>
         <div>
           <GuiderSidebarContent />

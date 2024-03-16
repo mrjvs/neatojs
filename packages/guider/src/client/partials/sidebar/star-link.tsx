@@ -9,7 +9,7 @@ export function SidebarStarLink(props: { link: LinkComponent }) {
     <ActiveLink
       className="gd-flex gd-w-full gd-items-center gd-gap-3 gd-py-1.5 gd-text-sm gd-px-4 !gd-my-0 gd-group"
       activeClassName="gd-text-primary"
-      exact
+      exact={props.link.exact ?? true}
       inactiveClassName="hover:gd-text-textLight"
       href={link.to}
       target={link.newTab ? '_blank' : undefined}

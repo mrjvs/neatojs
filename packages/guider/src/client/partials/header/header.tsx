@@ -12,7 +12,7 @@ import { TopMobileNav } from './top-mobile-nav';
 
 export function HeaderInternal() {
   const ctx = useContext(GuiderLayoutContext);
-  const { site } = useGuider(ctx?.meta);
+  const { site, settings } = useGuider(ctx?.meta);
 
   const [isScrolledFromTop, setIsScrolledFromTop] = useState(false);
 
@@ -75,7 +75,9 @@ export function HeaderInternal() {
           {site.tabs.length > 0 ? <HeaderTabs tabs={site.tabs} /> : null}
         </div>
         <div className="gd-block md:gd-hidden gd-border-t gd-border-line gd-px-6 -gd-mx-6">
-          <SidebarMobileNav tabs={site.tabs} />
+          {site.tabs.length > 0 || settings.sidebarState ? (
+            <SidebarMobileNav tabs={site.tabs} />
+          ) : null}
         </div>
       </header>
     </div>
