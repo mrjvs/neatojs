@@ -1,0 +1,88 @@
+# Tabs
+
+If you would like different variants or subsections to be toggleable, the tab element may be your best fit.
+
+
+## General usage
+
+Tabs are made by wrapping each tab's content in a `<Tabs.Tab>{:tsx}` element. All tabs are then enclosed in a container element (`<Tab>{:tsx}`).
+
+The container element needs a list of navigation items that match the number of tabs. For example: `<Tab items={["Item A", "Item B", "Item C"]}>{:tsx}`. See the full example below.
+
+You can put any content inside of a tab, so don't feel restricted to just text.
+
+````tsx
+<Tabs items={["Item A", "Item B", "Item C"]}>
+  <Tabs.Tab>
+    Tab A
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab B
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab C
+  </Tabs.Tab>
+</Tabs>
+````
+
+<Tabs items={["Item A", "Item B", "Item C"]}>
+  <Tabs.Tab>
+    Tab A
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab B
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab C
+  </Tabs.Tab>
+</Tabs>
+
+
+## Default tab
+
+You can set a default tab which is the tab that is selected before the reader chooses a specific one.
+
+The counter starts at 0. This means the first tab is index 0, the second tab index 1 and so on.
+
+````tsx
+<Tabs items={["Item A", "Item B", "Item C"]} default={1}>
+  ...
+</Tabs>
+````
+
+<Tabs items={["Item A", "Item B", "Item C"]} default={1}>
+  <Tabs.Tab>
+    Tab A
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab B
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab C
+  </Tabs.Tab>
+</Tabs>
+
+
+## Storing the tab choice
+
+By default, the reader's tab choice is not persistent. When they switch to a different page, the tab choice is forgotten and next time they visit the page it will be the default again.
+
+If you would like the user's choice to be stored, you can give a `storageKey` prop. **If you give two or more tabs the same storage key, it will synchronize the tabs. Switching tab on one will also switch on the others.**
+
+````tsx
+<Tabs items={["Item A", "Item B", "Item C"]} storageKey="tab-example">
+  ...
+</Tabs>
+````
+
+<Tabs items={["Item A", "Item B", "Item C"]} storageKey="tab-example">
+  <Tabs.Tab>
+    Tab A
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab B
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Tab C
+  </Tabs.Tab>
+</Tabs>

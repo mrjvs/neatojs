@@ -1,56 +1,33 @@
-# @neato/guider
+# ⚡@neato/guider
 
-Documentation site generator.
+Beautiful documentation sites, without all the hassle. Check out the documentation
 
-## Features
-- Easy to write in, its just markdown
-- Use react components in your markdown through MDX, with support for global components.
-- customizable layouts, use layouts both in mdx files and outside
-- Multiple documentations in one Next.JS app
 
-## How to use it?
-1. Make a Next.JS app: https://nextjs.org/docs/getting-started/installation
-2. Install guider: `npm i next @neato/guider`
-3. Put this in `next.config.js`:
-```js
-const { guider } = require('@neato/guider');
+## 🔥Features
+- Beautiful default theme.
+- Use React components inside your markdown, through MDX.
+- Run as many documentation sites as you want with just one deployment.
+- Based on NextJS, so not restricted to just documentation.
+- Customize every part of the layout, possible on a per page basis.
 
-const withGuider = guider({
-  themeConfig: './theme.config.tsx',
-});
 
-module.exports = withGuider();
+## 🍄Installation / usage
+
+> [TIP]
+> **Visit the [documentation](https://neatojs.com/docs/guider/guides/installation) on how to install.
+
+
+## 📖Documentation
+
+**Visit the [website](https://neatojs.com/docs/guider) for documentation.
+
+
+## 🧬 Running locally for development
+
+```sh
+npm i -g pnpm # install PNPM if you don't have it already
+pnpm i # install dependencies of the entire repo
+
+pnpm -C packages/guider run dev # run library dev script in directory
+pnpm -C apps/docs run dev # run documentation site dev script in directory
 ```
-4. Create a file `theme.config.tsx` and put this in it:
-```ts
-import { defineTheme, link } from '@neato/guider/theme';
-
-export default defineTheme({
-  id: "main"
-  directories: [
-    {
-      id: "main"
-      sidebarItems: {
-        link('Page A', '/a'),
-        link('Page B', '/b'),
-      },
-    },
-  ],
-});
-```
-5. Make a `pages/_app.ts` file and put this in it:
-```ts
-import type { AppProps } from 'next/app';
-import '@neato/guider/style.css';
-
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
-```
-6. Make your first page by creating a new file `pages/index.mdx`, and put this in it:
-```md
-# Hello world
-
-Welcome to Guider!
-```
-7. You're all set. Have fun making docs!

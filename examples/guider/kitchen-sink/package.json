@@ -1,6 +1,6 @@
 {
-  "name": "docs",
-  "description": "Documentation for neatojs",
+  "name": "@repo/examples-guider-kitchen-sink",
+  "description": "@neato/guider kitchen sink",
   "private": true,
   "version": "0.0.0",
   "eslintConfig": {

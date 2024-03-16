@@ -5,7 +5,7 @@ import type { DirectoryComponent } from './directory';
 import type { LinkComponent } from './link';
 import type { CustomComponentComponent } from './component';
 import type { SeperatorComponent } from './seperator';
-import type { LayoutSettings } from './settings';
+import type { LayoutSettings, PopulatedLayoutSettings } from './settings';
 import {
   makeLayoutSettings,
   mergeLayoutSettings,
@@ -15,12 +15,12 @@ import {
   type SiteLayoutOptions,
 } from './layout';
 import {
-  populateContentFooter,
   type ContentFooterComponent,
   type ContentFooterOptions,
   type PageFooterComponent,
   type PageFooterOptions,
 } from './footer';
+import type { GroupComponent } from './group';
 
 export type TopNavChildren =
   | LinkComponent
@@ -28,7 +28,7 @@ export type TopNavChildren =
   | CustomComponentComponent;
 
 export type TabsChildren = LinkComponent | CustomComponentComponent;
-export type DropdownChildren = LinkComponent;
+export type DropdownChildren = LinkComponent | GroupComponent<LinkComponent>;
 
 export interface SiteOptions {
   navigation?: TopNavChildren[];
@@ -38,6 +38,10 @@ export interface SiteOptions {
   dropdown?: DropdownChildren[];
   github?: string;
   layout?: string;
+  logo?: {
+    to?: string;
+    name?: string;
+  };
   settings?: PartialDeep<LayoutSettings>;
   directories?: DirectoryComponent[];
   layouts?: SiteLayoutOptions[];
@@ -45,7 +49,14 @@ export interface SiteOptions {
   pageFooter?: PageFooterOptions;
 }
 
-export type MetaTagComponent = (() => ReactNode) | NextSeoProps;
+export type MetaTagPageMeta = {
+  title?: string;
+  description?: string;
+};
+
+export type MetaTagComponent =
+  | ((pageMeta: MetaTagPageMeta) => ReactNode)
+  | NextSeoProps;
 
 export interface SiteComponent {
   type: 'site';
@@ -54,9 +65,14 @@ export interface SiteComponent {
   tabs: TabsChildren[];
   dropdown: DropdownChildren[];
   github?: string;
+  logo: {
+    to?: string;
+    name?: string;
+  };
   layout?: string;
   meta?: MetaTagComponent;
-  settings: PartialDeep<LayoutSettings>;
+  settingOverrides: PartialDeep<PopulatedLayoutSettings>;
+  settings: PopulatedLayoutSettings;
   directories: DirectoryComponent[];
   layouts: SiteLayoutComponent[];
   contentFooter?: ContentFooterComponent;
@@ -111,20 +127,41 @@ function mergeSites(root: SiteComponent, target: SiteComponent): SiteComponent {
   if (target.tabs.length > 0) base.tabs = target.tabs;
   if (target.github) base.github = target.github;
   if (target.meta) base.meta = target.meta;
+  if (target.contentFooter)
+    base.contentFooter = {
+      ...base.contentFooter,
+      ...target.contentFooter,
+    };
+  if (target.pageFooter)
+    base.pageFooter = {
+      ...base.pageFooter,
+      ...target.pageFooter,
+    };
 
+  const newSettings = mergeLayoutSettings(
+    base.settings,
+    target.settingOverrides,
+  );
   const newLayoutIds = target.layouts.map((v) => v.id);
-  base.layouts = [
+  const newLayouts = [
     ...base.layouts.filter((v) => !newLayoutIds.includes(v.id)),
     ...target.layouts,
   ];
+  base.layouts = newLayouts.map((layout) => {
+    layout.settings = mergeLayoutSettings(
+      newSettings,
+      layout.settingsOverrides,
+    );
+    return layout;
+  });
 
   base.id = target.id;
   base.layout = target.layout;
-  base.settings = mergeLayoutSettings(
-    mergeWithRoot(base.settings ?? {}),
-    target.settings,
-  );
-  // TODO contentFooter, pageFooter
+  base.settings = newSettings;
+  base.logo = {
+    ...base.logo,
+    ...target.logo,
+  };
   return base;
 }
 
@@ -136,6 +173,7 @@ export const site: SiteBuilder = function (id, ops) {
     directories: ops.directories ?? [],
     dropdown: ops.dropdown ?? [],
     navigation: ops.navigation ?? [],
+    settingOverrides: ops.settings ?? {},
     settings,
     tabs: ops.tabs ?? [],
     layouts: layouts.map((v) => populateLayout(settings, v)),
@@ -143,11 +181,14 @@ export const site: SiteBuilder = function (id, ops) {
     github: ops.github,
     type: 'site',
     meta: ops.meta,
-    contentFooter: ops.contentFooter
-      ? populateContentFooter(ops.contentFooter)
-      : undefined,
+    logo: ops.logo ?? {},
+    contentFooter: ops.contentFooter,
     pageFooter: ops.pageFooter,
   };
   const [firstSite, ...extendables] = [...(ops.extends ?? []), theSite];
   return extendables.reduce((a, v) => mergeSites(a, v), firstSite);
 };
+
+export function siteTemplate(ops: SiteOptions) {
+  return site('gd:template', ops);
+}

@@ -1,26 +1,79 @@
-import { defineTheme, directory, group, link, site } from '@neato/guider/theme';
+import {
+  defineTheme,
+  directory,
+  group,
+  link,
+  site,
+  siteTemplate,
+  social,
+} from '@neato/guider/theme';
+import { Logo } from 'components/logo';
 
-const template = site('template', {
+const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
+  settings: {
+    colors: {
+      primary: '#A880FF',
+      primaryDarker: '#6C3DD0',
+      primaryLighter: '#D0BAFF',
+    },
+    backgroundPattern: 'flare',
+    logo: () => <Logo />,
+  },
+  contentFooter: {
+    editRepositoryBase: 'https://github.com/mrjvs/neatojs/tree/dev/apps/docs',
+    socials: [
+      social.discord('https://discord.gg/cGd5pKxWyK'),
+      social.github('https://github.com/mrjvs/neatojs'),
+    ],
+  },
+  meta: {
+    titleTemplate: '%s - NeatoJS',
+    additionalLinkTags: [
+      {
+        rel: 'icon',
+        href: '/favicon.png',
+      },
+    ],
+  },
+  logo: {
+    name: 'NeatoJS',
+    to: '/',
+  },
 });
 
+const gdGuides = (url: string) => `/docs/guider/guides${url}`;
+const gdWriting = (url: string) => `/docs/guider/writing${url}`;
+const gdApi = (url: string) => `/docs/guider/api-reference${url}`;
+
 const starLinks = [
-  link('Github', '/docs/guider/docs/a', {
+  link('Github', 'https://github.com/mrjvs/neatojs', {
     style: 'star',
+    newTab: true,
     icon: 'akar-icons:github-fill',
   }),
-  link('Discord', '/docs/guider/docs/d', {
+  link('Discord', 'https://discord.gg/cGd5pKxWyK', {
     style: 'star',
+    newTab: true,
     icon: 'fa6-brands:discord',
   }),
-  link('Suggest features', '/docs/guider/docs/c', {
+  link('Suggest features', 'https://github.com/mrjvs/neatojs/issues', {
     style: 'star',
+    newTab: true,
     icon: 'streamline:chat-bubble-typing-oval-solid',
   }),
 ];
 
 export default defineTheme([
+  site('main', {
+    extends: [template],
+    directories: [
+      directory('main', {
+        sidebar: [],
+      }),
+    ],
+  }),
   site('guider', {
     extends: [template],
     tabs: [
@@ -28,47 +81,68 @@ export default defineTheme([
       link('Writing', '/docs/guider/writing'),
       link('API reference', '/docs/guider/api-reference'),
     ],
-    settings: {
-      backgroundPattern: 'flare',
-    },
     directories: [
       directory('guider-docs', {
         sidebar: [
           ...starLinks,
           group('Getting started', [
-            link('Installation', '/docs/guider/docs/test'), // making a new project
-            link('Setting up', '/docs/guider/docs'), // basic of configuring a project
-            link.nested('Migrating to Guider', [
-              link('From Nextra', '/docs/guider/docs'), // nextra -> guider
-              link('From Docus', '/docs/guider/docs'), // docus -> guider
-              link('From Mintlify', '/docs/guider/docs'), // mintlify -> guider
-            ]),
+            link('Installation', gdGuides('/getting-started/installation'), {
+              icon: 'fa6-solid:download',
+            }),
+            link('Development', gdGuides('/getting-started/development'), {
+              icon: 'icon-park-solid:cpu',
+            }),
+            link.nested({
+              title: 'Migrating to Guider',
+              icon: 'fa6-solid:sailboat',
+              items: [
+                link(
+                  'From Nextra',
+                  gdGuides('/getting-started/migration/from-nextra'),
+                ),
+                link(
+                  'From Docus',
+                  gdGuides('/getting-started/migration/from-docus'),
+                ),
+                link(
+                  'From Mintlify',
+                  gdGuides('/getting-started/migration/from-mintlify'),
+                ),
+              ],
+            }),
           ]),
           group('Configuration', [
-            link('Colors & theme', '/docs/guider/docs'),
-            link('Redirects', '/docs/guider/docs'),
-            link('SEO & Meta tags', '/docs/guider/docs'),
-            link('Landing page', '/docs/guider/docs'),
-            link('Navigation', '/docs/guider/docs'), // changing tabs, dropdown, sidebar
+            link('Colors & theme', gdGuides('/config/theming')),
+            link('Redirects', gdGuides('/config/redirects')),
+            link('SEO & Meta tags', gdGuides('/config/seo')),
+            link('Landing page', gdGuides('/config/landing')),
+            link('Navigation', gdGuides('/config/navigation')),
             link.nested('Common setups', [
-              link('Mutliple docs sites', '/docs/guider/docs'),
-              link('API reference + docs', '/docs/guider/docs'),
-              link('Blog posts + docs', '/docs/guider/docs'),
+              link(
+                'Multiple docs sites',
+                gdGuides('/config/common/multi-docs'),
+              ),
+              link('API reference + docs', gdGuides('/config/common/api-ref')),
+              link('Blog posts + docs', gdGuides('/config/common/blog')),
             ]),
-            link('Examples', '/docs/guider/docs'),
+            link('Examples', gdGuides('/config/examples')),
           ]),
           group('Advanced', [
-            link('Running multiple sites', '/docs/guider/docs'), // How to use _meta.json and multiple dirs/sites
-            link('Header', '/docs/guider/docs'), // Changing settings about header (just repo)
-            link('Footer', '/docs/guider/docs'), // Changing settings footer
-            link('Customising layout', '/docs/guider/docs'), // Custom partials
-            link('Deep-dive concepts', '/docs/guider/docs'), // Deep dive into directories, sites and layouts
+            link('Running multiple sites', gdGuides('/advanced/multi-site')),
+            link('Header', gdGuides('/advanced/header')),
+            link('Footer', gdGuides('/advanced/footer')),
+            link(
+              'Customizing layout',
+              gdGuides('/advanced/customizing-layout'),
+            ),
+            link('Deep-dive concepts', gdGuides('/advanced/deep-dive')),
           ]),
           group('Deploying', [
-            link('Github Pages', '/docs/guider/docs'), // deploy on github pages
-            link('Netlify', '/docs/guider/docs'), // Deploy on netlify
-            link('Vercel', '/docs/guider/docs'), // Deploy on Vercel
-            link('Cloudflare pages', '/docs/guider/docs'), // Deploy on CF pages
+            link('Github Pages', gdGuides('/deploy/github-pages')),
+            link('Netlify', gdGuides('/deploy/netlify')),
+            link('Vercel', gdGuides('/deploy/vercel')),
+            link('Cloudflare pages', gdGuides('/deploy/cloudflare')),
+            link('Docker', gdGuides('/deploy/docker')),
           ]),
         ],
       }),
@@ -76,25 +150,54 @@ export default defineTheme([
         sidebar: [
           ...starLinks,
           group('Markdown', [
-            link('Making pages', '/docs/guider/docs'), // How to make pages
-            link('Basic text', '/docs/guider/docs'), // Text & headings & inlines & links
-            link('Lists', '/docs/guider/docs'), // tables
-            link('Code blocks', '/docs/guider/docs'), // code blocks & npm2yarn
+            link('Making pages', gdWriting('/markdown/making-pages'), {
+              icon: 'fa6-solid:file-lines',
+            }),
+            link('Basic text', gdWriting('/markdown/basic-text'), {
+              icon: 'fa6-solid:font',
+            }),
+            link('Lists', gdWriting('/markdown/lists'), {
+              icon: 'fa6-solid:list-ul',
+            }),
+            link('Code blocks', gdWriting('/markdown/code-blocks'), {
+              icon: 'fa6-solid:code',
+            }),
           ]),
 
           group('Advanced markdown', [
-            link('Tables', '/docs/guider/docs'), // Making tables
-            link('Quotes', '/docs/guider/docs'), // quotes
-            link('Footnotes', '/docs/guider/docs'), // footnotes
-            link('Dividers', '/docs/guider/docs'), // dividers
+            link('Tables', gdWriting('/advanced/tables'), {
+              icon: 'fa6-solid:table',
+            }),
+            link('Quotes', gdWriting('/advanced/quotes'), {
+              icon: 'fa6-solid:quote-left',
+            }),
+            link('Footnotes', gdWriting('/advanced/footnotes'), {
+              icon: 'fa6-solid:note-sticky',
+            }),
+            link('Dividers', gdWriting('/advanced/dividers'), {
+              icon: 'fa6-solid:grip-lines',
+            }),
           ]),
 
           group('Components', [
-            link('Code groups', '/docs/guider/docs'), // <CodeGroup/>
-            link('Callouts', '/docs/guider/docs'), // <all tipes of callouts
-            link('Tabs', '/docs/guider/docs'), // <Tabs />
-            link('Frames', '/docs/guider/docs'), // <Frame />
-            link('Custom components', '/docs/guider/docs'), // making custom components
+            link('Code groups', gdWriting('/components/code-groups'), {
+              icon: 'fa6-solid:layer-group',
+            }),
+            link('Callouts', gdWriting('/components/callouts'), {
+              icon: 'fa6-solid:bell-concierge',
+            }),
+            link('Tabs', gdWriting('/components/tabs'), {
+              icon: 'fa6-solid:window-restore',
+            }),
+            link('Steps', gdWriting('/components/steps'), {
+              icon: 'fa6-solid:list-ol',
+            }),
+            link('Frames', gdWriting('/components/frames'), {
+              icon: 'fa6-solid:image',
+            }),
+            link('Custom components', gdWriting('/components/custom'), {
+              icon: 'fa6-solid:boxes-stacked',
+            }),
           ]),
         ],
       }),
@@ -102,31 +205,34 @@ export default defineTheme([
         sidebar: [
           ...starLinks,
           group('Theme configuration', [
-            link('defineTheme()', '/docs/guider/docs'),
-            link('site()', '/docs/guider/docs'),
-            link('directory()', '/docs/guider/docs'),
-            link('link()', '/docs/guider/docs'),
-            link('group()', '/docs/guider/docs'),
-            link('seperator()', '/docs/guider/docs'),
-            link('component()', '/docs/guider/docs'),
+            link('defineTheme()', gdApi('/theme/define-theme')),
+            link('site()', gdApi('/theme/site')),
+            link('directory()', gdApi('/theme/directory')),
+            link('link()', gdApi('/theme/link')),
+            link('group()', gdApi('/theme/group')),
+            link('seperator()', gdApi('/theme/seperator')),
+            link('component()', gdApi('/theme/component')),
           ]),
 
           group('_meta.json', [
-            link('Structure of _meta.json', '/docs/guider/docs'),
+            link('Structure of _meta.json', gdApi('/meta/structure')),
           ]),
 
           group('Client functions', [
-            link('createRedirect()', '/docs/guider/docs'),
-            link('createNotFoundPage()', '/docs/guider/docs'),
-            link('useGuider()', '/docs/guider/docs'),
-            link('useGuiderPage()', '/docs/guider/docs'),
+            link('createRedirect()', gdApi('/functions/create-redirect')),
+            link(
+              'createNotFoundPage()',
+              gdApi('/functions/create-not-found-page'),
+            ),
+            link('useGuider()', gdApi('/functions/use-guider')),
+            link('useGuiderPage()', gdApi('/functions/use-guider-page')),
           ]),
 
           group('Theme components', [
-            link('<GuiderHeader/>', '/docs/guider/docs'),
-            link('<GuiderLayout/>', '/docs/guider/docs'),
-            link('<GuiderSidebar/>', '/docs/guider/docs'),
-            link('<GuiderToc/>', '/docs/guider/docs'),
+            link('<GuiderHeader/>', gdApi('/components/guider-header')),
+            link('<GuiderLayout/>', gdApi('/components/guider-layout')),
+            link('<GuiderSidebar/>', gdApi('/components/guider-sidebar')),
+            link('<GuiderToc/>', gdApi('/components/guider-toc')),
           ]),
         ],
       }),
@@ -137,6 +243,7 @@ export default defineTheme([
     directories: [
       directory('main', {
         sidebar: [
+          ...starLinks,
           group('Guide', [
             link('Why use @neato/config', '/docs/config/guide/why-neat-config'),
             link('Installation', '/docs/config/guide/installation'),

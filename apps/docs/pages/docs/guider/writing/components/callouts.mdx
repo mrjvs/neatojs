@@ -1,0 +1,63 @@
+# Callouts
+
+Need to make the reader aware of something in context to your documentation? Callouts are a nice looking way to do so.
+
+
+## General usage
+
+Callouts are usually contain a sentence or two, but they aren't that limited.
+You can put any content in callouts: headings, multiple paragraphs, bold text and even custom components.
+
+
+## A note
+
+<Note>Notes are good for adding extra information that may not fit in a sentence.</Note>
+
+```jsx
+<Note>Notes are good for adding extra information that may not fit in a sentence.</Note>
+```
+
+
+## An important callout
+
+<Important>Important callouts are great for conveying an important extra step</Important>
+
+```jsx
+<Important>Important callouts are great for conveying an important extra step</Important>
+```
+
+
+## A tip
+
+<Tip>Tips are amazing for giving helpful shortcuts</Tip>
+
+```jsx
+<Tip>Tips are amazing for giving helpful shortcuts</Tip>
+```
+
+
+## A warning
+
+<Warning>Warnings are splendid to convey edgecases or unexpected behaviour</Warning>
+
+```jsx
+<Warning>Warnings are splendid to convey edgecases or unexpected behaviour</Warning>
+```
+
+
+## A caution
+
+<Caution>Cautions are superb to get the readers attention to something critical</Caution>
+
+```jsx
+<Caution>Cautions are superb to get the readers attention to something critical</Caution>
+```
+
+
+## General component
+
+In case you need to dynamically change the type of the callout, you can use the `<Callout>{:tsx}` component. You can specify the `type` prop to set the style.
+
+```jsx
+<Callout type="tip">I am a callout</Callout>
+```

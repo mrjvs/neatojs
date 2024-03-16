@@ -16,6 +16,25 @@ export type LayoutSettings = {
     text: string;
     textLighter: string;
     textHighlight: string;
+    backgroundDarker: string;
+    line: string;
+
+    codeWarning: string;
+    codeError: string;
+    codeGreen: string;
+    codeHighlight: string;
+    codeWordHighlight: string;
+
+    semanticTip: string;
+    semanticTipLighter: string;
+    semanticNote: string;
+    semanticNoteLighter: string;
+    semanticImportant: string;
+    semanticImportantLighter: string;
+    semanticWarning: string;
+    semanticWarningLighter: string;
+    semanticCaution: string;
+    semanticCautionLighter: string;
   };
   toc: ToggleablePartial;
   sidebar: ToggleablePartial;
@@ -38,6 +57,25 @@ export type PopulatedLayoutSettings = {
     text: string;
     textLighter: string;
     textHighlight: string;
+    backgroundDarker: string;
+    line: string;
+
+    codeWarning: string;
+    codeError: string;
+    codeGreen: string;
+    codeHighlight: string;
+    codeWordHighlight: string;
+
+    semanticTip: string;
+    semanticTipLighter: string;
+    semanticNote: string;
+    semanticNoteLighter: string;
+    semanticImportant: string;
+    semanticImportantLighter: string;
+    semanticWarning: string;
+    semanticWarningLighter: string;
+    semanticCaution: string;
+    semanticCautionLighter: string;
   };
   backgroundPatternState: ToggleSetting;
   tocState: ToggleSetting;

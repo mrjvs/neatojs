@@ -5,9 +5,15 @@ declare module '@neato/guider' {
     config: Record<string, any>;
   };
 
+  type PageMapItem = {
+    sitePath: string;
+    filePath: string;
+  };
+
   type VirtualCache = {
     items: CollectorItem[];
     themeFile: string;
+    pageMap: PageMapItem[];
   };
 
   export function getGuiderPluginCache(): VirtualCache;

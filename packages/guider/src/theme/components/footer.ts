@@ -1,5 +1,7 @@
+import type { SocialComponent } from './social';
+
 export type ContentFooterOptions = {
-  socials?: any[]; // TODO
+  socials?: SocialComponent[];
   text?: string;
   editRepositoryBase?: string;
 };
@@ -9,7 +11,7 @@ export type PageFooterOptions = {
 };
 
 export type ContentFooterComponent = {
-  socials: any[]; // TODO
+  socials?: SocialComponent[];
   text?: string;
   editRepositoryBase?: string;
 };

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useContext, useMemo } from 'react';
 import { GuiderLayoutContext, type MdxHeadings } from '../../page/context';
-import { useToc } from '../../hooks/use-toc';
+import { useToc, useVisibleIds } from '../../hooks/use-toc';
 import { ScrollPageHeight } from '../../components/utils/scrollpageheight';
 
 function TocLink(props: {
@@ -38,20 +38,24 @@ export function TocInternal() {
     [ctx?.headings],
   );
   const ids = useMemo(() => headings.map((v) => v.data.id), [headings]);
-  const { activeId, scrollTo } = useToc(ids);
+  const visibleIds = useVisibleIds('guider-content', ids);
+  const { activeId, scrollTo } = useToc(visibleIds);
 
   return (
     <ScrollPageHeight>
       <div className="gd-flex gd-flex-col">
         <div className="gd-space-y-2.5">
-          {headings.map((heading, i) => (
-            <TocLink
-              key={i}
-              active={heading.data.id === activeId}
-              heading={heading}
-              onClick={() => scrollTo(heading.data.id)}
-            />
-          ))}
+          {headings.map((heading, i) => {
+            if (!visibleIds.includes(heading.data.id)) return null;
+            return (
+              <TocLink
+                key={i}
+                active={heading.data.id === activeId}
+                heading={heading}
+                onClick={() => scrollTo(heading.data.id)}
+              />
+            );
+          })}
         </div>
       </div>
     </ScrollPageHeight>

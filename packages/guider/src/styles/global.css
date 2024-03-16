@@ -1,5 +1,5 @@
 body {
-	@apply gd-bg-bg gd-text-text;
+	@apply gd-bg-bg gd-text-text gd-relative;
 }
 
 #__next {
@@ -10,6 +10,10 @@ body[data-header-dropdown-open] {
   .neato-guider-overlay {
     @apply !gd-opacity-100
   }
+}
+
+body[data-stop-overflow="true"] {
+  @apply gd-overflow-hidden;
 }
 
 ::-webkit-scrollbar-track {

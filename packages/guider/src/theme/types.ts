@@ -1,6 +1,6 @@
-import type { SiteComponent } from './components/site';
+import type { SiteComponent, SiteOptions } from './components/site';
 
-export type GuiderConfig = SiteComponent | SiteComponent[];
+export type GuiderConfig = SiteOptions | SiteComponent[];
 
 export type MetaConf = {
   site?: string;
@@ -8,8 +8,13 @@ export type MetaConf = {
   layout?: string;
 };
 
-export type PageMapItem = {
+export type MetaMapItem = {
   sitePath: string;
   fileContents: Record<string, any>;
   config: MetaConf;
+};
+
+export type PageMapItem = {
+  sitePath: string;
+  filePath: string;
 };

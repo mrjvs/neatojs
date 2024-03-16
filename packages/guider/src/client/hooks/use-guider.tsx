@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import type { MetaConf, PageMapItem } from '../../theme';
+import type { MetaConf, MetaMapItem } from '../../theme';
 import { mergeLayoutSettings } from '../../theme/components/layout';
-import { sites, pageMap } from '../virtuals';
+import { sites, metaMap } from '../virtuals';
 
 export function getPage(pageUrl: string) {
-  const matches = pageMap
+  const matches = metaMap
     .filter((v) => pageUrl.startsWith(v.sitePath))
     .sort((a, b) => b.sitePath.length - a.sitePath.length);
-  const match: PageMapItem | undefined = matches[0];
+  const match: MetaMapItem | undefined = matches[0];
   return match ?? null;
 }
 
@@ -30,7 +30,7 @@ export function getGuiderContext(pageUrl: string, pageMeta: MetaConf = {}) {
   const settings = mergeLayoutSettings(layout.settings, dir.settings);
 
   return {
-    pageMap,
+    metaMap,
     settings,
     directory: dir,
     layout,

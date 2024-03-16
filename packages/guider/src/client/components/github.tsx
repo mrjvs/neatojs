@@ -25,13 +25,13 @@ export function GithubDisplay(props: GithubDisplayProps) {
         <p className="gd-text-textHeading -gd-mb-1">{name}</p>
         <p className="gd-flex gd-items-center gd-gap-3">
           <span className="gd-space-x-1 gd-flex gd-items-center">
-            <Icon icon="mingcute:star-line" />
+            <Icon inline icon="mingcute:star-line" />
             <span className="gd-pt-0.5">
               {stats ? approx(stats.stars) : '-'}
             </span>
           </span>
           <span className="gd-space-x-1 gd-inline-flex gd-items-center">
-            <Icon icon="fe:fork" />
+            <Icon inline icon="fe:fork" />
             <span className="gd-pt-0.5">
               {stats ? approx(stats.forks) : '-'}
             </span>

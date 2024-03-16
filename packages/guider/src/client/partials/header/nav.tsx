@@ -9,9 +9,17 @@ import ActiveLink from '../../components/utils/activelink';
 
 function NavLink(props: { link: LinkComponent }) {
   return (
-    <ActiveLink activeClassName="gd-text-textHeading" href={props.link.to}>
+    <ActiveLink
+      activeClassName="gd-text-textHeading"
+      href={props.link.to}
+      exact={props.link.exact}
+    >
       {props.link.icon ? (
-        <Icon className="gd-inline-block gd-mr-2" icon={props.link.icon} />
+        <Icon
+          inline
+          className="gd-inline-block gd-mr-2"
+          icon={props.link.icon}
+        />
       ) : null}
       {props.link.title}
     </ActiveLink>

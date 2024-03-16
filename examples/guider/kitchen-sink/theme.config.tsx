@@ -16,6 +16,8 @@ const siteTemplate = site('docs', {
   navigation: [
     link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
     link('API reference', '/api-ref'),
+    link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
+    link('API reference', '/api-ref'),
     seperator(),
   ],
   github: 'movie-web/movie-web',
@@ -28,8 +30,7 @@ export default defineTheme([
     contentFooter: {
       socials: [],
       text: 'Copyright (c) 2023',
-      editRepositoryBase:
-        'https://github.com/mrjvs/neatojs/examples/guider/kitchen-sink',
+      editRepositoryBase: 'https://github.com/mrjvs/neatojs',
     },
     pageFooter: {
       text: 'Made with love <3',

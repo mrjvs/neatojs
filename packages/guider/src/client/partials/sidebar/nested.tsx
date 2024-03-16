@@ -14,9 +14,13 @@ function MaybeLink(props: {
   onClick?: () => void;
 }) {
   const contents = (
-    <span className="gd-flex gd-items-center">
+    <span className="gd-flex gd-flex-1 gd-items-center">
       {props.link.icon ? (
-        <Icon className="gd-inline-block gd-mr-2" icon={props.link.icon} />
+        <Icon
+          inline
+          className="gd-inline-block gd-mr-2"
+          icon={props.link.icon}
+        />
       ) : null}
       <span className="gd-flex-1">{props.link.title}</span>
       <Icon
@@ -32,7 +36,7 @@ function MaybeLink(props: {
   if (props.link.to)
     return (
       <ActiveLink
-        className="gd-block gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg"
+        className="gd-flex gd-items-center gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg"
         activeClassName="gd-bg-bgLightest gd-text-primary"
         exact
         inactiveClassName="hover:gd-text-textLight hover:gd-bg-bgLight"
@@ -44,7 +48,7 @@ function MaybeLink(props: {
     );
   return (
     <div
-      className="gd-block gd-cursor-pointer gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg hover:gd-text-textLight hover:gd-bg-bgLight gd-select-none"
+      className="gd-flex gd-items-center gd-cursor-pointer gd-w-full gd-py-1.5 gd-text-sm gd-px-4 gd-rounded-lg hover:gd-text-textLight hover:gd-bg-bgLight gd-select-none"
       onClick={props.onClick}
     >
       {contents}

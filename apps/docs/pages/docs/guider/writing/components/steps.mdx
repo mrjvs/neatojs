@@ -1,0 +1,34 @@
+# Steps
+
+If you have a number of steps for a reader to follow, the steps component is a great choice.
+
+
+## General usage
+
+You can make steps by making a container `<Steps>{:tsx}` component with any number of `<Steps.Step>{:tsx}` inside them.
+
+You can put any content inside of a step, so don't feel restricted to just text. Steps work great with a level 3 heading as the first element.
+
+````tsx
+<Steps>
+  <Steps.Step>
+    ### Step one
+    Step content goes here
+  </Steps.Step>
+  <Steps.Step>
+    ### Step two
+    Step content goes here
+  </Steps.Step>
+</Steps>
+````
+
+<Steps>
+  <Steps.Step>
+    ### Step one
+    Step content goes here
+  </Steps.Step>
+  <Steps.Step>
+    ### Step two
+    Step content goes here
+  </Steps.Step>
+</Steps>

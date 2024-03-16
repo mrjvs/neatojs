@@ -18,6 +18,7 @@ export async function runScanner(config: GuiderInitConfig) {
   }
 
   const result = await collectMetaFiles({ dir: directories.pagesDir });
+  virtualCache.setPageMap(result.pageMap);
   virtualCache.setItems(result.items);
   virtualCache.setThemeFile(themeFileResolver(config.themeConfig));
 }

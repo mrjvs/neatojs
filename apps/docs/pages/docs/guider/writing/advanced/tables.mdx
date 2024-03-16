@@ -1,0 +1,72 @@
+# Tables
+
+Tables are useful to display structured data.
+
+
+## Basic table
+
+Tables in Guider use the standard [markdown syntax](https://www.markdownguide.org/extended-syntax/#tables). You can use any inline styling
+inside of tables such as inline code, bolding and italics.
+
+| Name     | Hobby                                   |
+| -------- | --------------------------------------- |
+| John     | Ultimate Frisbee                        |
+| Jane     | Building Guitars                        |
+| Mark     | Experimenting with very wet bread dough |
+
+```md
+| Name     | Hobby                                   |
+| -------- | --------------------------------------- |
+| John     | Ultimate Frisbee                        |
+| Jane     | Building Guitars                        |
+| Mark     | Experimenting with very wet bread dough |
+```
+
+You can make cell widths different sizes, the output will be the same:
+
+```md
+| Name | Hobby |
+| --- | --- |
+| John | Ultimate Frisbee |
+| Jane | Building Guitars |
+| Mark | Experimenting with very wet bread dough |
+```
+
+<Tip>
+Need to use the pipe symbol (`|`) inside your table? Prefix it with a backslash (`\`) to make it count as cell content instead of a divider.
+</Tip>
+
+## Empty headers
+
+Table headers in markdown are required, but if you leave them completely empty (only spaces). Guider will hide the header row for you.
+
+|          |                                    |
+| -------- | ---------------------------------- |
+| John     | Ultimate Frisbee                   |
+| Jane     | Building Guitars                   |
+| Mark     | Experimenting very wet bread dough |
+
+```md
+|          |                                    |
+| -------- | ---------------------------------- |
+| John     | Ultimate Frisbee                   |
+| Jane     | Building Guitars                   |
+| Mark     | Experimenting very wet bread dough |
+```
+
+
+## Alignment
+
+You can align the contents of a column in a specific direction by adding a colon (`:`) to the left, right or both sides of the hyphens in the header row.
+
+| Left  | Center | Right |
+| :---- | :----: | ----: |
+| Lorem | Ipsum  | Dolor |
+| Sit   | Samet  | Elit  |
+
+```md
+| Left  | Center | Right |
+| :---- | :----: | ----: |
+| Lorem | Ipsum  | Dolor |
+| Sit   | Samet  | Elit  |
+```

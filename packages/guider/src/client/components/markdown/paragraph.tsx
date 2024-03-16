@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import type { ElementProps, MarkdownProps } from './types';
 
 export type MarkdownParagraphProps = {
@@ -16,11 +17,12 @@ export function MarkdownParagraph(props: MarkdownParagraphProps) {
 
 export function MarkdownLink(props: MarkdownProps) {
   return (
-    <a
+    <Link
       {...props.attrs}
+      href={props.attrs.href ?? '#'}
       className="gd-text-primary gd-underline gd-font-bold hover:gd-text-primaryDark gd-transition-colors gd-duration-100"
     >
       {props.children}
-    </a>
+    </Link>
   );
 }

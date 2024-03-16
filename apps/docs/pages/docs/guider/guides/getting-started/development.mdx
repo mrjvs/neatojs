@@ -1,0 +1,33 @@
+# Development
+
+This guide goes over some tips to get the optimal developer experience for writing your documentation.
+
+
+## Running the development server
+
+After you've gone through the installation process, all you need to do get up and running is
+run the dev script with your favourite package manager. For an example with NPM:
+
+```sh
+npm run dev
+```
+
+<Note>
+The Next.JS development server is infamous for being slow. The final build of the site will be **much** faster.
+</Note>
+
+
+## Building for production
+
+To build your production build, you can run `npm run build{:sh}` (or use your favourite package manager).
+
+This will create a folder called `out` that holds the final build that's ready for deployment.
+
+If you want to preview it, you can run `npx run serve out` to spin up a temporary HTTP server that serves the `out` folder.
+
+
+## Autocomplete and syntax highlighting for MDX files
+
+By default, most code editors will not support MDX files. To add support, you can install the MDX extensions:
+  - For JetBrains editors, you can use the JetBrains maintained [MDX plugin](https://plugins.jetbrains.com/plugin/14944-mdx).
+  - For VSCode, you can install the [MDX extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) maintained by the MDX team.

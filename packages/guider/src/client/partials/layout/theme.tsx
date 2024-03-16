@@ -26,6 +26,29 @@ export function ThemeProvider() {
       '--colors-bg': convertColor(colors.background),
       '--colors-bgLight': convertColor(colors.backgroundLighter),
       '--colors-bgLightest': convertColor(colors.backgroundLightest),
+      '--colors-bgDark': convertColor(colors.backgroundDarker),
+      '--colors-line': convertColor(colors.line),
+      '--colors-codeWarning': convertColor(colors.codeWarning),
+      '--colors-codeError': convertColor(colors.codeError),
+      '--colors-codeGreen': convertColor(colors.codeGreen),
+      '--colors-codeHighlight': convertColor(colors.codeHighlight),
+      '--colors-codeWordHighlight': convertColor(colors.codeWordHighlight),
+      '--colors-semanticTip': convertColor(colors.semanticTip),
+      '--colors-semanticTipLighter': convertColor(colors.semanticTipLighter),
+      '--colors-semanticNote': convertColor(colors.semanticNote),
+      '--colors-semanticNoteLighter': convertColor(colors.semanticNoteLighter),
+      '--colors-semanticImportant': convertColor(colors.semanticImportant),
+      '--colors-semanticImportantLighter': convertColor(
+        colors.semanticImportantLighter,
+      ),
+      '--colors-semanticWarning': convertColor(colors.semanticWarning),
+      '--colors-semanticWarningLighter': convertColor(
+        colors.semanticWarningLighter,
+      ),
+      '--colors-semanticCaution': convertColor(colors.semanticCaution),
+      '--colors-semanticCautionLighter': convertColor(
+        colors.semanticCautionLighter,
+      ),
     };
   }, [serializedSettings]);
   return (

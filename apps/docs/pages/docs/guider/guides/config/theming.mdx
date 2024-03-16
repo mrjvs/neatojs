@@ -1,0 +1,122 @@
+# Colors & theme
+
+Guider has been designed fit almost any use case for documentation.
+Naturally, this means that there are lots of configuration options to provide the flexibility Guider offers.
+
+Usually, the first thing to change is the branding.
+
+## Introduction to layout settings
+
+Layout settings can be modified on three layers, each one overriding settings from a previous layer. The layers are as follows:
+- **Site layout settings:** The base layer of layout settings is simply on `Site.settings`.
+- **Layout settings:** The second layer that counts is on a layout itself at `Layout.settings`.
+- **Directory layout settings:** The last layer is on a directory at `Directory.settings`.
+
+All of these layers are resolved in order. So if you have something specified on the directory layer, it will overwrite all other layers.
+If you specify something on the layout layer, it will overwrite the site layer but not the directory layer.
+
+```ts title="Layer examples"
+site('main', {
+  settings: {
+    toc: false,
+    sidebar: false,
+  }
+  directories: [
+    directory("main", {
+      layout: "test-layout"
+      sidebar: [
+        link("Home", "/")
+      ],
+      settings: {
+        toc: false,
+      }
+    })
+  ],
+  layouts: [
+    layout('test-layout', {
+      settings: {
+        toc: true,
+        sidebar: true,
+      }
+    })
+  ]
+})
+```
+
+In this example, the final result will be `toc == false{:ts}` because the directory settings have the highest priority and `sidebar == true{:ts}` because the settings in layouts are a higher priority than the site settings.
+
+## Changing colors
+
+Now that you know how layout settings are resolved. We can start customising the colors and other layout settings:
+
+```ts
+settings: {
+  colors: {
+    // Main theme colors
+    primary: '#50A0EA', // Primary color of the site
+    primaryDarker: '#1B65A9', // A darker variant of primary color
+    primaryLighter: '#89C6FF', // A lighter variant of the primary color
+    text: '#668896', // Normal text color
+    textLighter: '#9AB3BD', // Slightly lighter text color
+    textHighlight: '#FFFFFF', // Heading and highlight text color.
+    background: '#050F13', // Main page background color
+    backgroundLighter: '#07171C', // Lighter background color for code blocks and such
+    backgroundLightest: '#081E24', // Lightest background color for hover effects
+    backgroundDark: '#040C0F' // Darker variant of the background color
+    line: '#0F2B33', // Color of all lines
+
+    // Colors in code blocks
+    codeWarning: '#222D20', // Codeblock background for a warning annotation
+    codeError: '#2B1B1F', // Codeblock background for a error annotation and diff remove
+    codeGreen: '#0B2823', // Codeblock background for a diff add
+    codeHighlight: '#0E2429', // Codeblock background for a highlighted line
+    codeWordHighlight: '#365C68', // Background of a highlighted word in a codeblock
+
+    // Semantic colors - Primarily used in callouts
+    // The lighter variants are used for text colors in callouts
+    semanticTip: '#39B864',
+    semanticTipLighter: '#75F2B6',
+    semanticNote: '#817EF3',
+    semanticNoteLighter: '#B9B8FC',
+    semanticImportant: '#A958E8',
+    semanticImportantLighter: '#D3A2F9',
+    semanticWarning: '#C0BC43',
+    semanticWarningLighter: '#ECE873',
+    semanticCaution: '#FC6359',
+    semanticCautionLighter: '#FFA59F',
+  }
+}
+```
+
+## Changing the logo
+
+If just want to modify the site name and homepage link, you can simple change it in site configuration:
+```ts
+site('site-id', {
+  logo: {
+    to: '/',
+    name: 'My docs'
+  },
+  // ... other settings
+})
+```
+
+If you want to fully customize how your logo looks (For example, using an image as your logo), you can overwrite the full partial in **any settings layer**:
+```tsx
+settings: {
+  logo: <p>My logo</p>
+}
+```
+
+
+## Enabling the background pattern
+
+You can optionally enable a fancy looking background pattern. It uses your configured primary colors.
+
+```tsx
+settings: {
+  backgroundPattern: 'flare'
+}
+```
+
+There are currently no other options other than `flare` and just having it disabled.

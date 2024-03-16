@@ -1,0 +1,36 @@
+# Docker
+
+A Dockerfile to build a Guider documentation site container.
+
+
+## The code
+
+Add the following code to a file called `Dockerfile`. **It has to be in the same location as your package.json.**
+
+If you're running a monorepo or using private packages, this file won't help. You'll be on your own to figure it out.
+Also if you're using a different package manager, you'll have to change the file to use your specific manager.
+
+```dockerfile title="Dockerfile"
+FROM node:20-alpine as build
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . ./
+RUN npm run build
+
+FROM nginx:1.25-alpine as run
+EXPOSE 80
+RUN cat > /etc/nginx/nginx.conf << EOF
+server {
+  listen 80;
+
+  location / {
+    root /usr/share/nginx/html;
+    try_files $uri /404.html;
+  }
+}
+EOF
+COPY --from=build /app/out /usr/share/nginx/html
+```

@@ -13,6 +13,7 @@ export type SiteLayoutOptions = {
 export type SiteLayoutComponent = {
   id: string;
   settings: PopulatedLayoutSettings;
+  settingsOverrides: PartialDeep<PopulatedLayoutSettings>;
 };
 
 const baseLayoutConfig: PopulatedLayoutSettings = {
@@ -26,6 +27,25 @@ const baseLayoutConfig: PopulatedLayoutSettings = {
     background: '#050F13',
     backgroundLighter: '#07171C',
     backgroundLightest: '#081E24',
+    backgroundDarker: '#040C0F',
+    line: '#0F2B33',
+
+    codeWarning: '#222D20',
+    codeError: '#2B1B1F',
+    codeGreen: '#0B2823',
+    codeHighlight: '#0E2429',
+    codeWordHighlight: '#365C68',
+
+    semanticTip: '#39B864',
+    semanticTipLighter: '#75F2B6',
+    semanticNote: '#817EF3',
+    semanticNoteLighter: '#B9B8FC',
+    semanticImportant: '#A958E8',
+    semanticImportantLighter: '#D3A2F9',
+    semanticWarning: '#C0BC43',
+    semanticWarningLighter: '#ECE873',
+    semanticCaution: '#FC6359',
+    semanticCautionLighter: '#FFA59F',
   },
   sidebarState: true,
   tocState: true,
@@ -118,11 +138,10 @@ export function populateLayout(
   rootSettings: PopulatedLayoutSettings,
   layout: SiteLayoutOptions,
 ): SiteLayoutComponent {
+  const layoutSettings = makeLayoutSettings(layout.settings ?? {});
   return {
     id: layout.id,
-    settings: mergeLayoutSettings(
-      rootSettings,
-      makeLayoutSettings(layout.settings ?? {}),
-    ),
+    settings: mergeLayoutSettings(rootSettings, layoutSettings),
+    settingsOverrides: layoutSettings,
   };
 }

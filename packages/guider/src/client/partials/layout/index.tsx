@@ -28,7 +28,9 @@ export function GuiderLayout(props: InternalGuiderLayoutProps) {
       <LayoutHead />
       <LayoutBackground />
       <ThemeProvider />
-      <Comp>{props.children}</Comp>
+      <Comp>
+        <div id="guider-content">{props.children}</div>
+      </Comp>
     </GuiderLayoutContext.Provider>
   );
 }

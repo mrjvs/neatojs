@@ -2,7 +2,7 @@ import type { PartialDeep } from 'type-fest';
 import type { LinkComponent, NestableLinkComponent } from './link';
 import type { SeperatorComponent } from './seperator';
 import type { CustomComponentComponent } from './component';
-import type { GroupComponent } from './group';
+import type { GroupComponent, GroupComponentChildren } from './group';
 import type { LayoutSettings } from './settings';
 import { makeLayoutSettings } from './layout';
 
@@ -11,12 +11,12 @@ type DirectoryComponentChildren =
   | LinkComponent
   | SeperatorComponent
   | CustomComponentComponent
-  | GroupComponent;
+  | GroupComponent<GroupComponentChildren>;
 
 interface DirectoryOptions {
   layout?: string;
   settings?: PartialDeep<LayoutSettings>;
-  sidebar: DirectoryComponentChildren[];
+  sidebar?: DirectoryComponentChildren[];
 }
 
 export interface DirectoryComponent {
@@ -35,7 +35,7 @@ export const directory: DirectoryBuilder = function (id, ops) {
   return {
     id,
     layout: 'default',
-    ...ops,
+    sidebar: ops.sidebar ?? [],
     settings: makeLayoutSettings(ops.settings ?? {}),
   };
 };

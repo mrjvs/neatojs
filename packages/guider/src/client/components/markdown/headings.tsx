@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import type { ElementProps, MarkdownProps } from './types';
 
-const headingClasses = 'gd-relative gd-group';
+const headingClasses = 'gd-relative gd-group gd-scroll-m-48';
 
 function HeadingAnchor(props: { attrs: ElementProps }) {
   if (!props.attrs.id) return null;
   return (
     <a
       href={`#${props.attrs.id}`}
-      className="neato-guider-heading-anchor group-hover:gd-opacity-50 gd-hidden md:gd-inline gd-text-textLight gd-transition-opacity gd-duration-100 gd-select-none gd-absolute gd-left-0 gd-opacity-0 gd-pr-[.3em] -gd-ml-[1em] hover:!gd-opacity-75 gd-font-normal"
+      className="neato-guider-heading-anchor gd-top-0 group-hover:gd-opacity-50 gd-hidden md:gd-inline gd-text-textLight gd-transition-opacity gd-duration-100 gd-select-none gd-absolute gd-left-0 gd-opacity-0 gd-pr-[.3em] -gd-ml-[1em] hover:!gd-opacity-75 gd-font-normal"
     >
       #
     </a>

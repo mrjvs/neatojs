@@ -18,6 +18,7 @@ export function MarkdownFootnoteLink(props: MarkdownProps) {
       className="gd-text-primary gd-translate-y-1 gd-inline-block gd-no-underline gd-font-bold hover:gd-text-primaryDark gd-transition-colors gd-duration-100"
     >
       <Icon
+        inline
         icon="fluent:arrow-hook-down-left-16-filled"
         className=" gd-text-lg"
       />

@@ -1,0 +1,37 @@
+# Frames
+
+Frames are a good way to showcase UI components, images or basically anything that needs to be framed.
+
+
+## General usage
+
+Frames are super simple to use, simply wrap your content in a `<Frame>{:tsx}` component. See the example below:
+
+````tsx
+<Frame>
+  <Button>Hello world</Button>
+</Frame>
+````
+
+<Frame>
+  <Button>Hello world</Button>
+</Frame>
+
+
+## Prevent centering
+
+If you don't want something to be centered. You can wrap your content in `<div style={{ width: '100%'}}>{:tsx}` before putting it in a frame:
+
+````tsx
+<Frame>
+  <div style={{ width: '100%'}}>
+    <Button>Hello world</Button>
+  </div>
+</Frame>
+````
+
+<Frame>
+  <div style={{ width: '100%'}}>
+    <Button>Hello world</Button>
+  </div>
+</Frame>

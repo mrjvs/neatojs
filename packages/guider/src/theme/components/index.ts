@@ -7,3 +7,4 @@ export * from './site';
 export * from './footer';
 export * from './layout';
 export * from './settings';
+export * from './social';

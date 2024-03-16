@@ -1,0 +1,58 @@
+import { useState, useCallback } from "react";
+import { Button } from "@neato/guider/client";
+
+# Custom components
+
+Custom components are a way to taylor your documentation to your product.
+
+
+## Making a custom component
+
+Since Guider uses [MDX](https://mdxjs.com/), you can use any React components in your pages.
+
+Here is an example of a simple custom component:
+
+<CodeGroup>
+  <CodeGroup.Code title="components/counter.tsx">
+    ```ts
+    import { useState, useCallback } from "react";
+    import { Button } from "@neato/guider/client";
+
+    export function Counter() {
+      const [num, setNum] = useState(1);
+      const increase = useCallback(() => {
+        setNum(v => v + 1);
+      }, [])
+
+      return <Button onClick={increase}>Clicked {num} times</Button>;
+    }
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="pages/index.mdx">
+    ```tsx
+    import { Counter } from "../components/counter.tsx";
+
+    # My counter
+
+    Look at my counter:
+    <Counter />
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+export function Counter() {
+  const [num, setNum] = useState(1);
+  const increase = useCallback(() => {
+    setNum(v => v + 1);
+  }, [])
+
+  return <Button onClick={increase}>Clicked {num} times</Button>;
+}
+
+<Frame>
+  <Counter />
+</Frame>
+
+<Tip>
+  Learn how to make React components with this [official React guide](https://react.dev/learn#components)
+</Tip>

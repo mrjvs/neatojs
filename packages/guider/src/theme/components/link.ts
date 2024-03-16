@@ -5,12 +5,14 @@ export type NestedLinkComponentChildren = LinkComponent | SeperatorComponent;
 export interface ExtraLinkOptions {
   icon?: string;
   newTab?: boolean;
+  exact?: boolean;
   style?: 'star' | 'default';
 }
 
 export interface LinkOptions {
   title: string;
   to: string;
+  exact?: boolean;
   icon?: string;
   newTab?: boolean;
 }
@@ -18,6 +20,7 @@ export interface LinkOptions {
 export interface NestedLinkOptions {
   title: string;
   to?: string;
+  exact?: boolean;
   icon?: string;
   newTab?: boolean;
   items: LinkComponent[];
@@ -28,6 +31,7 @@ export interface LinkComponent {
   title: string;
   to: string;
   newTab: boolean;
+  exact?: boolean;
   icon?: string;
   style: 'star' | 'default';
 }
@@ -36,6 +40,7 @@ export interface NestableLinkComponent {
   type: 'nested-link';
   title: string;
   to?: string;
+  exact?: boolean;
   newTab: boolean;
   icon?: string;
   items: NestedLinkComponentChildren[];
@@ -120,6 +125,7 @@ const linkFunc: LinkFunctions = function (
     type: 'link',
     style: ops?.style ?? 'default',
     to: url,
+    exact: ops?.exact,
     icon: ops?.icon,
     newTab: ops?.newTab ?? false,
   };

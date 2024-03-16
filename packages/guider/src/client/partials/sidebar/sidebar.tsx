@@ -14,7 +14,7 @@ export function SidebarInternal() {
 
   return (
     <div className="gd-flex gd-flex-col">
-      <div className="gd-space-y-1 neato-guider-sidebar gd-pr-4 -gd-mx-4">
+      <div className="gd-space-y-1 neato-guider-sidebar -gd-mx-4">
         {directory.sidebar.map((link, i) => {
           const key = `--${i}`;
           if (link.type === 'link' && link.style === 'star')
