@@ -57,22 +57,24 @@ const CodeGroupContainer = (props: CodeGroupProps) => {
   return (
     <div className="gd-rounded-lg gd-overflow-hidden gd-mb-8">
       <Tab.Group>
-        <Tab.List className="gd-bg-bgDark gd-px-3 gd-py-2 gd-space-x-2">
-          {tabs.map((v) => (
-            <Tab key={v} className="focus:gd-outline-none">
-              {({ selected }) => (
-                <div
-                  className={classNames({
-                    'gd-text-textLight gd-py-1 gd-px-3 gd-text-sm gd-rounded-md hover:gd-bg-bgLightest gd-transition-colors gd-duration-100':
-                      true,
-                    '!gd-text-textHeading !gd-bg-bgLightest': selected,
-                  })}
-                >
-                  {v}
-                </div>
-              )}
-            </Tab>
-          ))}
+        <Tab.List className="gd-bg-bgDark gd-grid gd-grid-cols-1 gd-whitespace-nowrap gd-text-nowrap gd-overflow-x-auto">
+          <div className="gd-flex gd-flex-items-end gd-py-2">
+            {tabs.map((v) => (
+              <Tab key={v} className="focus:gd-outline-none">
+                {({ selected }) => (
+                  <div
+                    className={classNames({
+                      'gd-text-textLight gd-py-1 gd-mx-2 gd-px-3 gd-text-sm gd-rounded-md hover:gd-bg-bgLightest gd-transition-colors gd-duration-100':
+                        true,
+                      '!gd-text-textHeading !gd-bg-bgLightest': selected,
+                    })}
+                  >
+                    {v}
+                  </div>
+                )}
+              </Tab>
+            ))}
+          </div>
         </Tab.List>
         <Tab.Panels className="neato-guider-codegroup" ref={panelsRef}>
           {props.children}
