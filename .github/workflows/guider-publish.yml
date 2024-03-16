@@ -42,9 +42,11 @@ jobs:
       run: pnpm install
 
     - name: Build
-      run: cd packages/guider && pnpm run build
+      run: pnpm run build
+      workdir: 'packages/guider'
 
     - name: Publish
-      run: cd packages/guider && npm publish --access public
+      run: pnpm publish --access public
+      workdir: 'packages/guider'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
