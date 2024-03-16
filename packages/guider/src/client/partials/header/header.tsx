@@ -35,8 +35,8 @@ export function HeaderInternal() {
     >
       <header
         className={classNames(
-          'gd-w-11/12 gd-max-w-[1480px] gd-mx-auto',
-          'gd-p-6 gd-pb-0 -gd-mx-6 gd-box-content gd-border-b gd-border-line',
+          'gd-max-w-[1480px] gd-mx-auto',
+          'gd-p-6 gd-pb-0 gd-border-b gd-border-line',
           isScrolledFromTop ? 'gd-bg-opacity-100' : 'gd-bg-opacity-0',
         )}
       >

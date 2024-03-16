@@ -18,7 +18,7 @@ export function LayoutInternal(props: GuiderLayoutProps) {
     <div className="gd-flex gd-flex-col gd-min-h-screen">
       <GuiderHeader />
 
-      <div className="gd-w-11/12 gd-max-w-[1480px] gd-flex-1 gd-flex gd-flex-col gd-mx-auto">
+      <div className="gd-w-full gd-px-6 gd-max-w-[1480px] gd-flex-1 gd-flex gd-flex-col gd-mx-auto">
         <div
           className={classNames({
             'gd-grid gd-flex-1 gd-gap-16': true,

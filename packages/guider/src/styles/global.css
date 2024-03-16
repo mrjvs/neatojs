@@ -1,5 +1,5 @@
 body {
-	@apply gd-bg-bg gd-text-text;
+	@apply gd-bg-bg gd-text-text gd-relative;
 }
 
 #__next {
