@@ -45,6 +45,6 @@ jobs:
       run: cd packages/guider && pnpm run build
 
     - name: Publish
-      run: pnpm publish --access public
+      run: cd packages/guider && pnpm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
