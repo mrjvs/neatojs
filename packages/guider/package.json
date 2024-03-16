@@ -11,7 +11,12 @@
   "engines": {
     "node": ">=20"
   },
-  "keywords": ["mdx", "documentation", "nextjs", "markdown"],
+  "keywords": [
+    "mdx",
+    "documentation",
+    "nextjs",
+    "markdown"
+  ],
   "license": "MIT",
   "files": [
     "dist/**",
@@ -79,6 +84,7 @@
     "@repo/typescript-config": "workspace:*",
     "@types/color": "^3.0.6",
     "@types/extra-watch-webpack-plugin": "^1.0.6",
+    "@types/git-url-parse": "^9.0.3",
     "@types/react": "18.2.56",
     "@types/webpack": "^5.28.5",
     "autoprefixer": "^10.4.17",
@@ -103,6 +109,7 @@
     "classnames": "^2.5.1",
     "color": "^4.2.3",
     "extra-watch-webpack-plugin": "^1.0.3",
+    "git-url-parse": "^14.0.0",
     "glob": "^10.3.10",
     "gray-matter": "^4.0.3",
     "next-seo": "^6.5.0",

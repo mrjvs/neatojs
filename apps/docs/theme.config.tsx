@@ -16,6 +16,14 @@ const template = siteTemplate({
     backgroundPattern: 'flare',
     logo: () => <Logo />,
   },
+  contentFooter: {
+    editRepositoryBase: 'https://github.com/mrjvs/neatojs/tree/dev/apps/docs',
+    socials: [
+      social.discord('https://google.com'),
+      social.twitter('https://google.com'),
+      social.github('https://google.com'),
+    ],
+  },
   meta: {
     titleTemplate: '%s - NeatoJS',
     additionalLinkTags: [
@@ -71,15 +79,6 @@ export default defineTheme([
         primaryLighter: '#D0BAFF',
       },
       logo: () => <Logo />,
-    },
-    contentFooter: {
-      text: 'hello-world',
-      editRepositoryBase: 'https://google.com',
-      socials: [
-        social.discord('https://google.com'),
-        social.twitter('https://google.com'),
-        social.github('https://google.com'),
-      ],
     },
     tabs: [
       link('Guides', '/docs/guider/guides'),

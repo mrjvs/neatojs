@@ -8,8 +8,13 @@ export type MetaConf = {
   layout?: string;
 };
 
-export type PageMapItem = {
+export type MetaMapItem = {
   sitePath: string;
   fileContents: Record<string, any>;
   config: MetaConf;
+};
+
+export type PageMapItem = {
+  sitePath: string;
+  filePath: string;
 };

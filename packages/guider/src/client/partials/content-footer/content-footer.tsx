@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { Icon } from '../../components/icon';
 import { useGuiderPage } from '../../hooks/use-guider-page';
 import type { SocialTypes } from '../../../theme/components/social';
+import { GithubEditLink, useEditLink } from './github-edit-link';
 
 const iconMap: Record<SocialTypes, string> = {
   discord: 'ic:twotone-discord',
@@ -25,24 +25,10 @@ function FooterSocial(props: { icon: string; url: string }) {
   );
 }
 
-function GithubEditLink(props: { baseUrl: string; pageUrl: string }) {
-  // TODO actually implement edit link
-  return (
-    <Link
-      href={props.baseUrl + props.pageUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:gd-opacity-50"
-    >
-      Edit this page on GitHub
-    </Link>
-  );
-}
-
 export function ContentFooterInternal() {
   const year = new Date().getFullYear();
   const { site } = useGuiderPage();
-  const { pathname } = useRouter();
+  const editUrl = useEditLink(site?.contentFooter?.editRepositoryBase);
   const copyright = <>Copyright &copy; {year}</>;
   const socials = site.contentFooter?.socials ?? [];
 
@@ -61,12 +47,9 @@ export function ContentFooterInternal() {
           <span className="gd-text-line gd-mx-1">—</span> Powered by Guider
         </div>
       </div>
-      {site.contentFooter?.editRepositoryBase ? (
+      {editUrl ? (
         <div className="gd-w-40 gd-text-right">
-          <GithubEditLink
-            baseUrl={site.contentFooter.editRepositoryBase}
-            pageUrl={pathname}
-          />
+          <GithubEditLink href={editUrl} />
         </div>
       ) : null}
     </footer>
