@@ -65,12 +65,10 @@ Get started with `@neato/guider` project in under 5 minutes.
         <CodeGroup>
           <CodeGroup.Code title="pages/_app.tsx">
             ```tsx
-            import type { AppProps } from 'next/app';
             import '@neato/guider/style.css';
+            import { createGuiderApp } from '@neato/guider/client';
 
-            export default function MyApp({ Component, pageProps }: AppProps) {
-              return <Component {...pageProps} />;
-            }
+            export default createGuiderApp();
             ```
           </CodeGroup.Code>
           <CodeGroup.Code title="pages/404.tsx">
@@ -166,12 +164,10 @@ Get started with `@neato/guider` project in under 5 minutes.
         <CodeGroup>
           <CodeGroup.Code title="pages/_app.tsx">
             ```tsx
-            import type { AppProps } from 'next/app';
             import '@neato/guider/style.css';
+            import { createGuiderApp } from '@neato/guider/client';
 
-            export default function MyApp({ Component, pageProps }: AppProps) {
-              return <Component {...pageProps} />;
-            }
+            export default createGuiderApp();
             ```
           </CodeGroup.Code>
           <CodeGroup.Code title="pages/404.tsx">
