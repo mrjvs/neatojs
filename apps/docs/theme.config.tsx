@@ -17,11 +17,10 @@ const template = siteTemplate({
     logo: () => <Logo />,
   },
   contentFooter: {
-    editRepositoryBase: 'https://github.com/mrjvs/neatojs/tree/dev/apps/docs',
+    editRepositoryBase: 'https://gitub.com/mrjvs/neatojs/tree/dev/apps/docs',
     socials: [
-      social.discord('https://google.com'),
-      social.twitter('https://google.com'),
-      social.github('https://google.com'),
+      social.discord('https://discord.gg/cGd5pKxWyK'),
+      social.github('https://github.com/mrjvs/neatojs'),
     ],
   },
   meta: {
