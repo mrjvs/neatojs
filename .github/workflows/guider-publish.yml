@@ -29,7 +29,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: pnpm/action-setup@v2
+    - uses: pnpm/action-setup@v3
       with:
         version: 8
 
@@ -45,6 +45,6 @@ jobs:
       run: cd packages/guider && pnpm run build
 
     - name: Publish
-      run: cd packages/guider && pnpm publish --access public
+      run: cd packages/guider && npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
