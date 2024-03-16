@@ -24,6 +24,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: [check]
+    # if: needs.check.outputs.checked == 'true'
     environment:
       name: npm
     steps:
@@ -37,6 +38,7 @@ jobs:
       with:
         node-version: 20
         cache: 'pnpm'
+        registry-url: 'https://registry.npmjs.org'
 
     - name: Install pnpm packages
       run: pnpm install
