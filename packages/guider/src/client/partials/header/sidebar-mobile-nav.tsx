@@ -11,10 +11,10 @@ function CustomComponentTab(props: { component: CustomComponentComponent }) {
   return <Fragment>{props.component.component?.()}</Fragment>;
 }
 
-export function MobileNav(props: { tabs: TabsChildren[] }) {
+export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
   const [navOpen, setNavOpen] = useState(false);
 
-  const ToggleButton = (
+  const toggleButton = (
     <Button
       type="secondary"
       className="gd-flex gd-items-center"
@@ -38,7 +38,7 @@ export function MobileNav(props: { tabs: TabsChildren[] }) {
 
   return (
     <div className="gd-py-4">
-      {ToggleButton}
+      {toggleButton}
       <div
         className={classNames(
           'gd-fixed gd-top-0 gd-left-0 gd-w-full gd-h-full gd-bg-black gd-bg-opacity-50',
@@ -54,7 +54,7 @@ export function MobileNav(props: { tabs: TabsChildren[] }) {
           navOpen ? 'gd-translate-x-0' : '-gd-translate-x-full',
         )}
       >
-        {ToggleButton}
+        {toggleButton}
         <div className="-gd-mx-4">
           {props.tabs.map((v, i) => {
             const key = `--${i}`;

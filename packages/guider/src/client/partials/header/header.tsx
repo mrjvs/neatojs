@@ -7,7 +7,8 @@ import { GuiderLogo } from '../logo';
 import { HeaderTabs } from './tabs';
 import { HeaderNav } from './nav';
 import { HeaderDropdown } from './dropdown';
-import { MobileNav } from './mobilenav';
+import { SidebarMobileNav } from './sidebar-mobile-nav';
+import { TopMobileNav } from './top-mobile-nav';
 
 export function HeaderInternal() {
   const ctx = useContext(GuiderLayoutContext);
@@ -51,7 +52,7 @@ export function HeaderInternal() {
               </>
             ) : null}
           </div>
-          <div className="gd-flex gd-items-center gd-space-x-6">
+          <div className="gd-hidden md:gd-flex gd-items-center gd-space-x-6">
             <HeaderNav items={site.navigation} />
             {site.github ? (
               <GithubDisplay
@@ -60,12 +61,21 @@ export function HeaderInternal() {
               />
             ) : null}
           </div>
+          <div className="gd-flex md:gd-hidden gd-items-center">
+            <TopMobileNav
+              items={site.navigation}
+              github={{
+                org: site.github?.split('/')[0],
+                repo: site.github?.split('/', 2)[1],
+              }}
+            />
+          </div>
         </div>
         <div className="gd-hidden md:gd-block">
           {site.tabs.length > 0 ? <HeaderTabs tabs={site.tabs} /> : null}
         </div>
         <div className="gd-block md:gd-hidden gd-border-t gd-border-line gd-px-6 -gd-mx-6">
-          <MobileNav tabs={site.tabs} />
+          <SidebarMobileNav tabs={site.tabs} />
         </div>
       </header>
     </div>
