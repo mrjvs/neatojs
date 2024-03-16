@@ -24,7 +24,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: [check]
-    # if: needs.check.outputs.checked == 'true'
+    if: needs.check.outputs.checked == 'true'
     environment:
       name: npm
     steps:
