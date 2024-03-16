@@ -14,6 +14,7 @@ function TabLink(props: { link: LinkComponent }) {
       activeClassName="gd-text-textHeading gd-border-primary"
       inactiveClassName="gd-border-transparent hover:gd-text-textLight"
       href={props.link.to}
+      exact={props.link.exact}
     >
       {props.link.icon ? (
         <Icon

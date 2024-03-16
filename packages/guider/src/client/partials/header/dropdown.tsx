@@ -30,7 +30,7 @@ function DropdownLink(props: { link: LinkComponent }) {
   return (
     <Menu.Item>
       <span>
-        <ActiveLink href={props.link.to}>
+        <ActiveLink href={props.link.to} exact={props.link.exact}>
           {({ isActive }) => (
             <DropdownItem link={props.link} active={isActive} />
           )}
@@ -70,7 +70,9 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
   const links = props.dropdown
     .map((v) => (v.type === 'group' ? v.items : [v]))
     .flat();
-  const actives = useAreRoutesActive(links.map((v) => ({ href: v.to })));
+  const actives = useAreRoutesActive(
+    links.map((v) => ({ href: v.to, exact: v.exact })),
+  );
 
   const activeItem = useMemo(() => {
     const activeIndex = actives.indexOf(true);

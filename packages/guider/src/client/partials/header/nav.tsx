@@ -9,7 +9,11 @@ import ActiveLink from '../../components/utils/activelink';
 
 function NavLink(props: { link: LinkComponent }) {
   return (
-    <ActiveLink activeClassName="gd-text-textHeading" href={props.link.to}>
+    <ActiveLink
+      activeClassName="gd-text-textHeading"
+      href={props.link.to}
+      exact={props.link.exact}
+    >
       {props.link.icon ? (
         <Icon
           inline
