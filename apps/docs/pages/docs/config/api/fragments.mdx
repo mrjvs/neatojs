@@ -1,0 +1,128 @@
+# Fragments
+
+Fragments are great way to add partial presets for configuration.
+Some usecases include:
+ - Local development preset.
+ - Quick start configuration.
+ - Composable snippets of config.
+
+To start using it, add a few fragments and choose a fragment key.
+See below for more details.
+
+
+## `.addConfigFragment(name, fragment)`
+
+This option adds a fragment, using the first parameter as its identifier.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader } from '@neato/config';
+    import { z } from 'zod';
+
+    process.env = {
+      USE_PRESETS: "my-name"
+    }
+
+    const nameFragment = {
+      name: "john doe"
+    }
+
+    export const config = createConfigLoader()
+      .addFromEnvironment()
+      .addConfigFragment("my-name", nameFragment)
+      .setFragmentKey("USE_PRESETS")
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      name: "john doe"
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+## `.addConfigFragments(fragments)`
+
+This option adds multiple fragments. For every entry, the key is used as the fragment name and the value being the fragment itself.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader } from '@neato/config';
+    import { z } from 'zod';
+
+    process.env = {
+      USE_PRESETS: "myName"
+    }
+
+    const fragments = {
+      myName: {
+        name: "John doe"
+      },
+      devServer: {
+        port: 8080
+      }
+    }
+
+    export const config = createConfigLoader()
+      .addFromEnvironment()
+      .addConfigFragments(fragments)
+      .setFragmentKey("USE_PRESETS")
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      name: "john doe"
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+## `.setFragmentKey(key)`
+
+This option sets the key that defines which fragments get loaded into the configuration. The key can come from any loaders.
+
+The value associated with key is a comma seperated list of fragments to load.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader } from '@neato/config';
+    import { z } from 'zod';
+
+    process.env = {
+      USE_PRESETS: "myName,devServer"
+    }
+
+    const fragments = {
+      myName: {
+        name: "John doe"
+      },
+      devServer: {
+        port: 8080
+      }
+    }
+
+    export const config = createConfigLoader()
+      .addFromEnvironment()
+      .addConfigFragments(fragments)
+      .setFragmentKey("USE_PRESETS")
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      name: "john doe",
+      port: 8080,
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>

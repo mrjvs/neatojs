@@ -1,0 +1,4 @@
+/* hide empty <th>, so heading will dissappear if nothing is contained */
+.neato-guider-table th:empty {
+  display: none;
+}

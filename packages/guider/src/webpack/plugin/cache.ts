@@ -1,19 +1,30 @@
+import type { CollectorItem, PageMapItem } from './collector';
+
+export type VirtualCache = {
+  items: CollectorItem[];
+  themeFile: string;
+  pageMap: PageMapItem[];
+};
+
 function makeVirtualCache() {
-  let items: string[] = [];
-  let themeFile = '';
+  const cache: VirtualCache = {
+    items: [],
+    themeFile: '',
+    pageMap: [],
+  };
 
   return {
-    setItems(newItems: string[]) {
-      items = newItems;
+    setItems(newItems: CollectorItem[]) {
+      cache.items = newItems;
+    },
+    setPageMap(pageMap: PageMapItem[]) {
+      cache.pageMap = pageMap;
     },
     setThemeFile(newThemeFile: string) {
-      themeFile = newThemeFile;
+      cache.themeFile = newThemeFile;
     },
     get() {
-      return {
-        items,
-        themeFile,
-      };
+      return cache;
     },
   };
 }

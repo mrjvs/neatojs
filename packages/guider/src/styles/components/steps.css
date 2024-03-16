@@ -1,0 +1,25 @@
+.neato-guider-steps {
+  counter-reset: steppers;
+
+  .neato-guider-steps-step {
+    counter-increment: steppers 1;
+    @apply gd-relative;
+  }
+
+  .neato-guider-steps-step-bubble::before {
+    content: counter(steppers)
+  }
+
+  .neato-guider-steps-step-content > p:first-child {
+    @apply !gd-mt-1;
+  }
+
+  .neato-guider-steps-step:not(:last-child)::after {
+    content: "";
+    @apply gd-w-px gd-inset-y-0 gd-left-4 gd-bg-bgLight gd-absolute;
+  }
+
+  .neato-guider-steps-step .neato-guider-heading-anchor {
+    @apply gd-hidden;
+  }
+}

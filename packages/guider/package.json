@@ -1,11 +1,27 @@
 {
   "name": "@neato/guider",
-  "version": "0.0.1",
-  "description": "Documentation site generator framework based on Next.js",
+  "version": "0.1.0",
+  "description": "Beautiful documentation sites, without all the hassle",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "homepage": "https://neatojs.com/docs/guider",
+  "repository": "https://github.com/mrjvs/neatojs",
+  "bugs": {
+    "url": "https://github.com/mrjvs/neatojs/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mdx",
+    "documentation",
+    "nextjs",
+    "markdown"
+  ],
+  "license": "MIT",
   "files": [
-    "dist/**"
+    "dist/**",
+    "style.css",
+    "loader.js"
   ],
   "exports": {
     "./client": {
@@ -18,18 +34,29 @@
         "default": "./dist/client.js"
       }
     },
+    "./theme": {
+      "import": {
+        "types": "./dist/theme.d.mts",
+        "default": "./dist/theme.mjs"
+      },
+      "require": {
+        "types": "./dist/theme.d.ts",
+        "default": "./dist/theme.js"
+      }
+    },
     ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
     },
-    "./loader": {
-      "require": {
-        "types": "./dist/loader.d.ts",
-        "default": "./dist/loader.js"
-      }
-    }
+    "./loader": "./loader.js",
+    "./shim.guider.virtual": "./shim.guider.virtual",
+    "./style.css": "./style.css"
   },
   "eslintConfig": {
     "extends": [
@@ -38,24 +65,64 @@
   },
   "prettier": "@repo/prettier-config",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsup && pnpm tailwind:build",
+    "dev": "concurrently \"pnpm build:dev\" \"pnpm tailwind:dev\"",
+    "build:dev": "tsup --watch",
+    "tailwind:dev": "tailwindcss --postcss -i ./src/styles/tailwind.css -o ./style.css --watch",
+    "tailwind:build": "tailwindcss --postcss -i ./src/styles/tailwind.css -o ./style.css --verbose",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
   "peerDependencies": {
-    "next": ">=14.1.0"
+    "next": ">=14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/color": "^3.0.6",
+    "@types/extra-watch-webpack-plugin": "^1.0.6",
+    "@types/git-url-parse": "^9.0.3",
+    "@types/react": "18.2.56",
     "@types/webpack": "^5.28.5",
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
     "next": "^14.1.0",
-    "tsup": "7.2.0",
-    "webpack-virtual-modules": "^0.6.1"
+    "postcss-import": "^16.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rehype": "^13.0.1",
+    "tailwindcss": "^3.4.1",
+    "tsup": "7.2.0"
   },
   "dependencies": {
-    "@mdx-js/loader": "^3.0.1"
+    "@headlessui/react": "^1.7.18",
+    "@iconify-icon/react": "^2.0.1",
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/mdx": "^3.0.1",
+    "@shikijs/transformers": "^1.1.7",
+    "@theguild/remark-npm2yarn": "^0.3.0",
+    "@vcarl/remark-headings": "^0.1.0",
+    "approximate-number": "^2.1.1",
+    "classnames": "^2.5.1",
+    "color": "^4.2.3",
+    "extra-watch-webpack-plugin": "^1.0.3",
+    "git-url-parse": "^14.0.0",
+    "glob": "^10.3.10",
+    "gray-matter": "^4.0.3",
+    "next-seo": "^6.5.0",
+    "react-helmet-async": "^2.0.4",
+    "rehype-extract-excerpt": "^0.3.1",
+    "rehype-pretty-code": "^0.13.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-heading-id": "^1.0.1",
+    "remark-link-rewrite": "^1.0.7",
+    "shiki": "^1.1.7",
+    "tailwindcss-themer": "^4.0.0",
+    "type-fest": "^4.10.3",
+    "webpack-virtual-modules": "^0.6.1"
   }
 }

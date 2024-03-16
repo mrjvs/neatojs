@@ -1,8 +1,12 @@
-import { getGuiderPluginCache } from '@neato/guider';
+import type { VirtualCache } from '@neato/guider';
 
-export function virtualLoader(): string {
-  const cacheData = getGuiderPluginCache();
-  const stringified = JSON.stringify(cacheData);
-  const stringifiedString = JSON.stringify(stringified);
-  return `export default ${stringifiedString};`;
+export function virtualLoader(cacheData: VirtualCache): string {
+  const stringifiedTheme = JSON.stringify(cacheData.themeFile);
+  const stringifiedMetaMap = JSON.stringify(cacheData.items);
+  const stringifiedPageMap = JSON.stringify(cacheData.pageMap);
+  return `
+    export { default as sites } from ${stringifiedTheme};
+    export const metaMap = ${stringifiedMetaMap};
+    export const pageMap = ${stringifiedPageMap};
+  `;
 }

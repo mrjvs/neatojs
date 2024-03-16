@@ -1,0 +1,21 @@
+# Redirects
+
+Sometimes, you want to redirect from a link to a page. For example, redirecting from `/docs` to an actual page like `/docs/getting-started`.
+
+Next.JS does not provide an easy way if you render as a static site. So Guider has a simple tool to orchestrate redirects.
+
+## Creating a redirect
+
+The `createRedirect` function can make a page that simply redirects to another page.
+So for example above, you would make a `docs/index.mdx` file with the following:
+
+```ts title="docs/index.mdx"
+import { createRedirect } from '@neato/guider/client'
+
+export default createRedirect({ to: '/docs/getting-started' });
+```
+
+<Tip>
+Some hosting platforms like Netlify or Cloudflare Pages can give you more control over redirects with a `_redirects` file.<br/>
+This is preferable over `createRedirect` since it uses HTTP redirection instead of Javascript.
+</Tip>

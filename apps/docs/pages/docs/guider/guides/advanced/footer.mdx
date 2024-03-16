@@ -1,0 +1,76 @@
+# Footer
+
+Learn about configuring the two kinds of footers.
+
+
+## The two footers
+
+Let's get the confusion out of the way first. There are two kinds of footers:
+1. **Content footer:** This is the footer that is placed right below your content and doesn't go below the sidebar or table of contents.
+2. **Page footer:** This footer is placed below everything, even under the content footer if you have both enabled.
+
+
+## Configuring the content footer
+
+The content footer can hold 3 things:
+- An "Edit this page on GitHub" link.
+- Social links. Supported types: `slack`, `discord`, `x`, `mastodon`, `github`.
+- Some text, by default it's a copyright notice.
+
+Here is an example of how to configure all of these, keep in mind that all fields are optional.
+
+```tsx title="theme.config.tsx"
+import { site, social } from "@neato/guider/theme"
+
+site('site-a', {
+  contentFooter: {
+    socials: [
+      social.x("https://x.com/"),
+      social.discord("https://discord.gg/"),
+    ],
+    text: "Made with <3",
+
+    // edit repository base must point to the folder that the guider project is in. (same folder as the package.json)
+    // If it's in the root of the repository, make sure the url ends with /tree/BRANCHNAME
+    editRepositoryBase: "https://github.com/mrjvs/neatojs/tree/dev/apps/docs"
+  }
+})
+```
+
+Content footer is enabled by default, but in case you've customized it. It can be disabled/enabled even if you have the settings configured.
+This can be done on any settings layout. Read more about [layout settings](/docs/guider/guides/config/theming#introduction-to-layout-settings) if you want.
+
+```tsx title="theme.config.tsx"
+site('main', {
+  settings: {
+    contentFooter: true,
+  }
+})
+```
+
+
+## Configuring the page footer
+
+The page footer can only hold text. However it is very easy to replace the footer with something custom. Read more about [customizing layout](/docs/guider/guides/advanced/customizing-layout).
+
+Here is an example of how to configure the text:
+
+```tsx title="theme.config.tsx"
+import { site } from "@neato/guider/theme"
+
+site('site-a', {
+  pageFooter: {
+    text: 'Made with <3',
+  }
+})
+```
+
+**Page footer is disabled by default.** It will be disabled until explicitly enabled in the layout settings. Read more about [layout settings](/docs/guider/guides/config/theming#introduction-to-layout-settings) if you want.
+
+```tsx title="theme.config.tsx"
+site('site-a', {
+  settings: {
+    pageFooter: true,
+  }
+})
+```

@@ -1,0 +1,169 @@
+# Loaders
+Discover all the ways you can load from a configuration source.
+
+## `.addFromEnvironment(prefix?)`
+
+This loader takes from `process.env` and parses all keys into a complex object.
+
+Optionally, a prefix argument can be given to filter out keys that aren't relevant. For example, when you give it a prefix of `NEATCONFIG_` then it will ignore keys like `TERM=xterm-256color`. And it will detect keys like `NEATCONFIG_HELLO=world` **and strip the prefix before parsing**. So that the key will become `{ hello: "world" }`.
+
+<Warning>
+Prefixes will be stripped, they are not included in the final result.
+</Warning>
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader } from '@neato/config';
+
+    export const config = createConfigLoader()
+      .addFromEnvironment()
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="environment">
+    ```env
+    HELLO_WORLD=foo
+    FOO__BAR__BAZ=hello
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      helloWorld: "foo",
+      foo: {
+        bar: {
+          baz: "hello"
+        }
+      }
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+
+## `.addFromFile(path, options?)`
+```ts
+interface Options {
+  prefix?: string;
+  type?: ParserTypes;
+}
+```
+
+This loader can load any of the supported file types (`.env`, `.json`).
+It will try to use the file extension to determine how to parse the file, you can manually choose the parser by using the `type` key in the options. In the options you can also specify a prefix, which works the same as in `addFromEnvironment()`.
+
+Some details on implementation:
+ - The path is relative to your current working directory.
+ - The .`env` file loader supports comments with `#`.
+ - The `.json` file loader does not support prefix stripping.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader, ParserTypes } from '@neato/config';
+
+    export const config = createConfigLoader()
+      .addFromFile(".env", { prefix: "CONF_" })
+      .addFromFile("fileName", { type: ParserTypes.JSON })
+      .addFromFile("config.json")
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title=".env">
+    ```env
+    CONF_HELLO_WORLD_ENV=foo
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="fileName">
+    ```json
+    {
+      "helloJson": "world"
+    }
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="config.json">
+    ```json
+    {
+      "evenMoreJson": "yes"
+    }
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      helloWorldEnv: "foo",
+      helloJson: "world",
+      evenMoreJson: "yes"
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+## `.addFromDirectory(path, options?)`
+```ts
+interface Options {
+  prefix?: string
+}
+```
+
+This loader loads in data from a directory structure, the filename is used as the key and the contents of the file is the value. In the options you can specify a prefix, which works the same as in `addFromEnvironment()`.
+
+The path is relative to your current working directory.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader, ParserTypes } from '@neato/config';
+
+    export const config = createConfigLoader()
+      .addFromDirectory("./loadme")
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="./loadme/FOO_BAR">
+    ```text
+    Hello world!
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      fooBar: "Hello world!"
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+## `.addFromCLI(prefix?)`
+
+This loader can load in configuration keys from CLI arguments. In `prefix` parameter works the same as in `addFromEnvironment()`.
+
+The loader supports both `--KEY=VALUE` and the `--KEY VALUE` syntax for arguments.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader, ParserTypes } from '@neato/config';
+
+    export const config = createConfigLoader()
+      .addFromCLI()
+      .load();
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="startup script">
+    ```bash
+    ts-node config.ts --foo-bar hello --baz=world
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```js
+    {
+      fooBar: "hello",
+      baz: "world"
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>

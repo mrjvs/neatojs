@@ -1,0 +1,8 @@
+.neato-guider-frame-grid {
+  background-size: 30px 30px;
+  background-position: -15px -15px;
+  opacity: .3;
+  background-image:
+    linear-gradient(to right, theme("colors.line") 1px, transparent 1px),
+    linear-gradient(to bottom, theme("colors.line") 1px, transparent 1px);
+}

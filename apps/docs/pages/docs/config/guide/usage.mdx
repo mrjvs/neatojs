@@ -1,0 +1,67 @@
+# Usage
+
+Loading basic configuration is very simple.
+Simply make a file in your project with any name, for this example we use `config.ts`.
+
+Then just import `createConfigLoader` and call it. You can call any option on the builder at that point. The moment you call `load()` on your builder. it will return your configuration that has been loaded.
+
+See the following example to load from environment variables.
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfigLoader } from '@neato/config';
+
+    export const config = createConfigLoader()
+      .addFromEnvironment()
+      .load();
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+## About variable naming
+
+The loaders are naming convention agnostic. It will normalize all variable names (keys) before loading them into an object.
+
+To illustrate, here is an example how names are converted, the following keys are loaded in with default settings:
+ - `HELLO_WORLD` -> `helloWorld`
+ - `HelloWorld` -> `helloWorld`
+ - `HELLO-WORLD` -> `helloWorld`
+ - `hello_world` -> `helloWorld`
+ - `Hello_World` -> `helloWorld`
+ - `hello-world` -> `helloWorld`
+ - `Helloworld` -> `helloworld`
+
+## Nested values inside key-value environments
+
+In some cases, you cannot represent complex objects in the format. For example, environment variables.
+For those cases you can use double underscores (`__`) to specify a nesting level.
+
+For example:
+
+<CodeGroup>
+  <CodeGroup.Code title="environment">
+    ```env
+    FOO__BAR__BAZ=1
+    FOO__BAR__BAZ_TWO=2
+    HELLO_WORLD=3
+    HELLO__WORLD=4
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="result">
+    ```ts
+    {
+      foo: {
+        bar: {
+          baz: "1",
+          bazTwo: "2"
+        }
+      },
+      helloWorld: "3",
+      hello: {
+        world: "4"
+      }
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>

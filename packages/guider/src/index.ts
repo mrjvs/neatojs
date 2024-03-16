@@ -1,29 +1,20 @@
 import type { NextConfig } from 'next';
+import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import { GuiderPlugin } from './webpack/plugin/plugin';
+import type { GuiderInitConfig } from './types';
 
 export { getGuiderPluginCache } from './webpack/plugin/plugin';
 
-export interface GuiderInitConfig {
-  themeConfig: string | string[];
-}
-
-const guiderDefaultConfig: GuiderInitConfig = {
-  themeConfig: [
-    './guider.config.jsx',
-    './guider.config.js',
-    './guider.config.tsx',
-    './guider.config.ts',
-  ],
-};
-
-export function guider(initConfig: Partial<GuiderInitConfig>) {
-  const _guiderConfig: GuiderInitConfig = {
-    ...guiderDefaultConfig,
+export function guider(initConfig: GuiderInitConfig) {
+  const guiderConfig: GuiderInitConfig = {
     ...initConfig,
   };
+  const guiderPlugin = new GuiderPlugin(guiderConfig);
 
   function withGuider(nextConfig: NextConfig = {}): NextConfig {
-    const guiderPlugin = new GuiderPlugin();
+    const extraWatchers = new ExtraWatchWebpackPlugin({
+      files: ['pages/**/_meta.json'],
+    });
     return {
       ...nextConfig,
       pageExtensions: [
@@ -33,34 +24,34 @@ export function guider(initConfig: Partial<GuiderInitConfig>) {
       webpack(config, options) {
         if (!config.plugins) config.plugins = [];
         config.plugins.push(guiderPlugin);
+        config.plugins.push(extraWatchers);
 
-        config.module.rules.push(
-          {
-            test: /\.mdx?$/,
-            use: [
-              options.defaultLoaders.babel,
-              {
-                loader: '@neato/guider/loader',
-                options: {
-                  type: 'mdx',
-                },
+        config.module.rules.push({
+          test: /\.mdx?$/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@neato/guider/loader',
+              options: {
+                type: 'mdx',
+                guiderConfig,
               },
-            ],
-          },
-          {
-            test: /_meta.json$/,
-            issuer: (request: any) => !request,
-            use: [
-              options.defaultLoaders.babel,
-              {
-                loader: '@neato/guider/loader',
-                options: {
-                  type: 'meta',
-                },
+            },
+          ],
+        });
+        config.module.rules.push({
+          test: /\.guider.virtual$/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: '@neato/guider/loader',
+              options: {
+                type: 'virtual',
+                guiderConfig,
               },
-            ],
-          },
-        );
+            },
+          ],
+        });
 
         return nextConfig.webpack?.(config, options) ?? config;
       },

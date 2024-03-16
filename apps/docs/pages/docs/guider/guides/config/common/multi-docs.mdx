@@ -1,0 +1,38 @@
+# Multiple documentation sites
+
+Unlike a lot of traditional documentation tools where you have to create multiple instances of the documentation for different sites (Whether that be versions, products, etc), in Guider you can create multiple "sites" within the same documentation. This means you do not have to maintain multiple documentation instances, and updating styling and common elements like headers and footers is much easier.
+
+There are many use cases when you might want to create multiple sites within the same documentation. For example, you might want to create a separate site for each product, or you might want to create a separate site for each version of a product. The NeatoJS documentation is a good example of this, where we have a separate site for each library (Take a look at the dropdown at the top left!).
+
+<Tip>
+Although sites can be good for lots of use cases, they are not suited for everything! Sites should only be used when you want to have a completely separate documentation.
+
+For example, if you would like a "Guide" and "API Reference", using directories and [tabs](/docs/guider/guides/config/navigation#adding-tabs) would be a better option.
+</Tip>
+
+
+## Adding multiple sites to a project
+
+Sites are defined in Guider by adding a site to the `defineTheme` array in the `theme.config.tsx` file. Each site can have its own configuration including name, tabs, layouts and content.
+
+```tsx title="theme.config.tsx" showLineNumbers
+import { site, defineTheme } from "@neato/guider/theme"
+
+export default defineTheme([
+  site('site-a', {...}), // [!code focus]
+  site('site-b', {...}), // [!code focus]
+])
+```
+
+
+## Making pages and folders use a specific site
+
+Once you have a set of pages made for a site, you will have to make sure that Guider knows which site to assign to your pages.
+You can do this by making a `_meta.json` for your directory with your pages. Inside it, you can specify the site:
+```json title="pages/my-site-b/_meta.json"
+{
+  "site": "site-b"
+}
+```
+
+With this new file, all pages in the folder with the meta file (in this case it's `/pages/my-site-b`) and it's nested pages will belong to the site specified.

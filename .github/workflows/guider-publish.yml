@@ -1,0 +1,50 @@
+name: Guider - publish version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    outputs:
+      checked: ${{ steps.changed-files.outputs.any_modified }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        with:
+          files: |
+            packages/guider/**
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [check]
+    environment:
+      name: npm
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'pnpm'
+
+    - name: Install pnpm packages
+      run: pnpm install
+
+    - name: Build
+      run: cd packages/guider && pnpm run build
+
+    - name: Publish
+      run: pnpm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

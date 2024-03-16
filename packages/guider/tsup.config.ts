@@ -3,16 +3,18 @@ import { defineConfig } from 'tsup';
 export default defineConfig([
   {
     name: 'guider',
-    entry: ['src/index.ts', 'src/loader.ts'],
-    external: ['@neato/guider'], // the loader imports the standard entry for the cache
-    format: 'cjs',
+    entry: ['src/index.ts', 'src/loader.ts', 'src/theme.ts'],
+    format: ['cjs', 'esm'],
     dts: true,
+
+    // the loader imports the standard entrypoint for the cache
+    external: ['@neato/guider', '@neato/guider/shim.guider.virtual'],
   },
   {
     name: 'guider-client',
     entry: ['src/client.ts'],
     format: ['cjs', 'esm'],
     dts: true,
-    external: ['@neato/guider/loader!?virtual'],
+    external: ['@neato/guider/shim.guider.virtual'],
   },
 ]);

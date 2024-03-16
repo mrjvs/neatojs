@@ -1,0 +1,33 @@
+body {
+	@apply gd-bg-bg gd-text-text gd-relative;
+}
+
+#__next {
+  @apply gd-min-h-screen;
+}
+
+body[data-header-dropdown-open] {
+  .neato-guider-overlay {
+    @apply !gd-opacity-100
+  }
+}
+
+body[data-stop-overflow="true"] {
+  @apply gd-overflow-hidden;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: theme("colors.line");
+  border: 5px solid transparent;
+  border-left: 0;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar {
+  /* For some reason the styles don't get applied without the width */
+  width: 13px;
+}

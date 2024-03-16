@@ -5,3 +5,6 @@ dist
 .idea
 .DS_Store
 .next
+out
+/test.js
+/test.ts
