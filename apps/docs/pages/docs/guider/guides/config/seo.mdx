@@ -36,19 +36,22 @@ site('my-site', {
 })
 ```
 
-In the case that you need more flexibility in meta tags or need to add [JSON-LD](https://github.com/garmeeh/next-seo?tab=readme-ov-file#json-ld). You can provide a function that returns a component, which can make use of the `useGuiderPage()` hook.
+In the case that you need more flexibility in meta tags or need to add [JSON-LD](https://github.com/garmeeh/next-seo?tab=readme-ov-file#json-ld), you can provide a function that returns a component, which can make use of the `useGuiderPage()` hook.
 You will need to install `next-seo` into your project to use this method.
+
+As the only parameter, default meta tags are passed into your function.
 
 ```tsx
 import { BreadcrumbJsonLd, NextSeo } from 'next-seo';
 import { useGuiderPage } from '@neato/guider/client';
 
 site('my-site', {
-  meta() {
+  meta(pageMeta) {
     const { site } = useGuiderPage();
     return (
       <>
         <NextSeo
+          {...pageMeta} // Add default guider meta tags
           titleTemplate={`%s - ${site.id}`}
         />
         <BreadcrumbJsonLd
@@ -65,3 +68,7 @@ site('my-site', {
   }
 });
 ```
+
+<Warning>
+When you're using a function to render the meta tags, the default meta tags aren't added. You will need to add them yourself as shown in the example.
+</Warning>
