@@ -43,10 +43,10 @@ jobs:
 
     - name: Build
       run: pnpm run build
-      workdir: 'packages/guider'
+      working-directory: 'packages/guider'
 
     - name: Publish
       run: pnpm publish --access public
-      workdir: 'packages/guider'
+      working-directory: 'packages/guider'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
