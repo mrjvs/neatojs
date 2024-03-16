@@ -13,6 +13,11 @@ const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
   settings: {
+    colors: {
+      primary: '#A880FF',
+      primaryDarker: '#6C3DD0',
+      primaryLighter: '#D0BAFF',
+    },
     backgroundPattern: 'flare',
     logo: () => <Logo />,
   },
@@ -71,14 +76,6 @@ export default defineTheme([
   }),
   site('guider', {
     extends: [template],
-    settings: {
-      colors: {
-        primary: '#A880FF',
-        primaryDarker: '#6C3DD0',
-        primaryLighter: '#D0BAFF',
-      },
-      logo: () => <Logo />,
-    },
     tabs: [
       link('Guides', '/docs/guider/guides'),
       link('Writing', '/docs/guider/writing'),
@@ -246,6 +243,7 @@ export default defineTheme([
     directories: [
       directory('main', {
         sidebar: [
+          ...starLinks,
           group('Guide', [
             link('Why use @neato/config', '/docs/config/guide/why-neat-config'),
             link('Installation', '/docs/config/guide/installation'),

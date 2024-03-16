@@ -46,7 +46,7 @@ export function HeaderInternal() {
             <GuiderLogo />
             {site.dropdown.length > 0 ? (
               <>
-                <div className="gd-w-px gd-h-full gd-bg-line gd-rotate-12 gd-mx-6" />
+                <div className="gd-w-px gd-h-6 gd-bg-line gd-rotate-12 gd-mx-4" />
                 <HeaderDropdown dropdown={site.dropdown} />
               </>
             ) : null}
