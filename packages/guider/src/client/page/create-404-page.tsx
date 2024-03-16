@@ -8,7 +8,7 @@ export type CreateNotFoundPage = {
 
 export function createNotFoundPage(opts?: CreateNotFoundPage) {
   const content = (
-    <div className="gd-flex gd-h-full gd-flex-col gd-items-center gd-justify-center">
+    <div className="gd-flex gd-min-h-[70vh] gd-flex-col gd-items-center gd-justify-center">
       <div className="gd-flex gd-flex-col gd-items-center gd-justify-center gd-text-center gd-relative">
         <div className="gd-absolute -gd-top-48 -gd-z-10 gd-overflow-hidden">
           <p className="gd-font-bold gd-text-[15rem] gd-text-bgLightest gd-tracking-tighter">
