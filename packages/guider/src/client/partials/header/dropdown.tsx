@@ -76,7 +76,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
 
   const activeItem = useMemo(() => {
     const activeIndex = actives.indexOf(true);
-    if (activeIndex === -1) return links[0];
+    if (activeIndex === -1) return undefined;
     return links[activeIndex];
   }, [actives, links]);
 
@@ -91,7 +91,9 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
               '!gd-border-opacity-100 gd-text-textHeading': open,
             })}
           >
-            <span className="gd-mr-2">{activeItem.title}</span>
+            <span className="gd-mr-2">
+              {activeItem?.title ?? 'Select site...'}
+            </span>
             <Icon icon="flowbite:chevron-sort-solid" className="gd-text-text" />
             <UpdateHead active={open} />
           </div>
