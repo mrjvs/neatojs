@@ -30,8 +30,7 @@ export default defineTheme([
     contentFooter: {
       socials: [],
       text: 'Copyright (c) 2023',
-      editRepositoryBase:
-        'https://github.com/mrjvs/neatojs/examples/guider/kitchen-sink',
+      editRepositoryBase: 'https://github.com/mrjvs/neatojs',
     },
     pageFooter: {
       text: 'Made with love <3',

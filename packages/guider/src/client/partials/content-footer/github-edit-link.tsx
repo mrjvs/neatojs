@@ -7,9 +7,12 @@ export function useEditLink(baseUrl: string | null | undefined): string | null {
   if (!baseUrl) return null;
   if (!file) return null;
   const parsed = gitUrlParse(baseUrl);
-  return `${stringify(
-    parsed,
-  )}/blob/${parsed.ref}/${parsed.filepath}/${file.filePath}`;
+  parsed.filepath = '';
+  let filePath = parsed.filepath;
+  filePath += filePath.length > 0 ? '/' : '';
+  filePath += file.filePath;
+  const ref = parsed.ref.length > 0 ? parsed.ref : 'main';
+  return `${stringify(parsed)}/blob/${ref}/${filePath}`;
 }
 
 export function GithubEditLink(props: { href: string }) {
