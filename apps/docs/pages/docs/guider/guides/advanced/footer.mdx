@@ -26,11 +26,12 @@ site('site-a', {
   contentFooter: {
     socials: [
       social.x("https://x.com/"),
-      social.discord("https://discord.gg/abc"),
+      social.discord("https://discord.gg/"),
     ],
     text: "Made with <3",
 
-    // edit repository base must point to the folder that the guider project is in. (same as package.json)
+    // edit repository base must point to the folder that the guider project is in. (same folder as the package.json)
+    // If it's in the root of the repository, make sure the url ends with /tree/BRANCHNAME
     editRepositoryBase: "https://github.com/mrjvs/neatojs/tree/dev/apps/docs"
   }
 })
