@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link.js';
 import { Icon } from '../../components/icon';
 import { useGuiderPage } from '../../hooks/use-guider-page';
 import type { SocialTypes } from '../../../theme/components/social';

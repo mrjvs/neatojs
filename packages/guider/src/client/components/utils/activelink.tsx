@@ -1,9 +1,9 @@
-import type { LinkProps } from 'next/link';
-import Link from 'next/link';
+import type { LinkProps } from 'next/link.js';
+import Link from 'next/link.js';
 import type { ReactNode } from 'react';
 import { useMemo, useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation.js';
 
 export function useAreRoutesActive(
   ops: {

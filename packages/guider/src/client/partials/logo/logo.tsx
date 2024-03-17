@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link.js';
 import { useGuiderPage } from '../../hooks/use-guider-page';
 
 export function LogoInternal() {

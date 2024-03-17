@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import Link from 'next/link.js';
 import type { ElementProps, MarkdownProps } from './types';
 
 export type MarkdownParagraphProps = {

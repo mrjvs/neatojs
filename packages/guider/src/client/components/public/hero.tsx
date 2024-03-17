@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link.js';
 import type { ReactNode } from 'react';
 import classNames from 'classnames';
 import { Icon } from '../icon';

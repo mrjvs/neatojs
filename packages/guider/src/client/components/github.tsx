@@ -1,5 +1,5 @@
 import approx from 'approximate-number';
-import Link from 'next/link';
+import Link from 'next/link.js';
 import { useGithubRepoStats } from '../hooks/use-github-repo-stats';
 import { Icon } from './icon';
 

@@ -1,5 +1,5 @@
 import type { NextComponentType } from 'next';
-import type { AppProps } from 'next/app';
+import type { AppProps } from 'next/app.js';
 import type { ReactElement, ReactNode } from 'react';
 
 export type GuiderPageWithLayout = NextComponentType & {
