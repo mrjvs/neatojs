@@ -45,10 +45,7 @@
       }
     },
     "./loader.cjs": "./loader.cjs",
-    "./shim.guider.virtual.js": {
-      "import": "./shim.guider.virtual.js",
-      "require": "./shim.guider.virtual.js"
-    },
+    "./shim.guider.virtual.js": "./shim.guider.virtual.js",
     "./style.css": "./style.css"
   },
   "eslintConfig": {
