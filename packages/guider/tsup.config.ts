@@ -7,6 +7,7 @@ export default defineConfig([
     format: ['esm'],
     outExtension: () => ({ js: '.js', dts: '.d.ts' }),
     dts: true,
+    bundle: true,
     external: ['@neato/guider', '@neato/guider/shim.guider.virtual'],
   },
   {
@@ -14,6 +15,7 @@ export default defineConfig([
     entry: ['src/loader.ts'],
     format: ['esm'],
     outExtension: () => ({ js: '.js', dts: '.d.ts' }),
+    bundle: true,
     dts: true,
     external: ['@neato/guider', '@neato/guider/shim.guider.virtual'],
   },
@@ -22,6 +24,7 @@ export default defineConfig([
     entry: ['src/client.ts', 'src/theme.ts'],
     format: ['esm'],
     outExtension: () => ({ js: '.js', dts: '.d.ts' }),
+    bundle: true,
     dts: true,
     external: ['@neato/guider', '@neato/guider/shim.guider.virtual'],
   },

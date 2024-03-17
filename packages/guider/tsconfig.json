@@ -6,5 +6,6 @@
     "jsx": "react-jsx",
     "module": "ES2022",
     "moduleResolution": "Bundler",
+    "baseUrl": "."
   }
 }
