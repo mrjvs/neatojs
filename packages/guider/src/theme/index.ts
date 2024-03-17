@@ -1,6 +1,8 @@
 import { site, type SiteComponent } from './components/site';
 import type { GuiderConfig } from './types';
 
+export { type SiteComponent } from './components/site';
+
 export function defineTheme(obj: GuiderConfig): SiteComponent[] {
   let sites: SiteComponent[] = [];
   if (!Array.isArray(obj)) sites = [site('main', obj)];

@@ -6,6 +6,7 @@ import {
   link,
   seperator,
   site,
+  type SiteComponent,
 } from '@neato/guider/theme';
 
 const siteTemplate = site('docs', {
@@ -112,4 +113,4 @@ export default defineTheme([
       }),
     ],
   }),
-]);
+]) satisfies SiteComponent[];

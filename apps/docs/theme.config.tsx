@@ -6,6 +6,7 @@ import {
   site,
   siteTemplate,
   social,
+  type SiteComponent,
 } from '@neato/guider/theme';
 import { Logo } from 'components/logo';
 
@@ -266,4 +267,4 @@ export default defineTheme([
       }),
     ],
   }),
-]);
+]) satisfies SiteComponent[];
