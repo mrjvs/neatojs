@@ -17,6 +17,10 @@ export function guider(initConfig: GuiderInitConfig) {
     });
     return {
       ...nextConfig,
+      transpilePackages: [
+        '@neato/guider',
+        ...(nextConfig.transpilePackages ?? []),
+      ],
       pageExtensions: [
         ...(nextConfig.pageExtensions ?? ['js', 'jsx', 'ts', 'tsx']),
         ...['md', 'mdx'],
