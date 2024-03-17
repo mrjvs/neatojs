@@ -28,19 +28,19 @@
   "exports": {
     "./client": {
       "import": {
-        "types": "./dist/client.d.mts",
+        "types": "./dist/client.d.ts",
         "default": "./dist/client.js"
       }
     },
     "./theme": {
       "import": {
-        "types": "./dist/theme.d.mts",
+        "types": "./dist/theme.d.ts",
         "default": "./dist/theme.js"
       }
     },
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
     },
