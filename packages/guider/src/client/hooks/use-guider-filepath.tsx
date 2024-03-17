@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router.js';
 import { useMemo } from 'react';
 import type { PageMapItem } from '../../theme';
 import { pageMap } from '../virtuals';

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Icon } from '@neato/guider/client';
-import Link from 'next/link';
+import Link from 'next/link.js';
 import styles from './home-card.module.css';
 
 function Card(props: {

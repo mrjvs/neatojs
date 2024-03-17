@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from 'next/head.js';
 import { GuiderMeta } from '../../components/head';
 
 export function LayoutHead() {
