@@ -1,0 +1,18 @@
+name: Help or Miscellaneous
+description: Need help or some other inquiries
+labels: ["type:other"]
+body:
+  - type: textarea
+    attributes:
+      label: Your inquiry
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Which package/app is this targeted at (leave empty if unsure)
+      multiple: true
+      options:
+        - "@neato/guider"
+        - "@neato/config"
+        - "docs"
+        - "examples"

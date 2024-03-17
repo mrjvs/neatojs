@@ -1,0 +1,33 @@
+name: Feature request
+description: Request a feature
+labels: ["type:feature"]
+body:
+  - type: textarea
+    attributes:
+      label: What feature do you want?
+      description: A clear description of the new feature.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Which package/app is this targeted at (leave empty if unsure)
+      multiple: true
+      options:
+        - "@neato/guider"
+        - "@neato/config"
+        - "docs"
+        - "examples"
+  - type: textarea
+    attributes:
+      label: Goals
+      description: Short list of goals what the feature request aims to address.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Extra details
+      description: If you have extra information or a proposal on how to implement it, this is the place.
