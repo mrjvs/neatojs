@@ -55,9 +55,8 @@ Follow the steps below to make a new Guider project.
 
     export default defineTheme({
       directories: [
-        directory({
-          id: "main", // ID of your directory (unique per site), used for referencing in your page files
-          sidebarItems: [
+        directory("main", { // ID of your directory (unique per site), used for referencing in your page files
+          sidebar: [
             // Creates a link in your sidebar, add more below it
             link("Home", "/")
           ]
