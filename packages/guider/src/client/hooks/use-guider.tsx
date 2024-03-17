@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router.js';
 import type { MetaConf, MetaMapItem } from '../../theme';
 import { mergeLayoutSettings } from '../../theme/components/layout';
 import { sites, metaMap } from '../virtuals';

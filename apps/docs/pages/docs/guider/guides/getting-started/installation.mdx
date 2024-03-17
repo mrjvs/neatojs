@@ -5,195 +5,103 @@ it as part of a normal React app built with Next.JS.
 
 Get started with `@neato/guider` project in under 5 minutes.
 
+
 ## Installation
 
-<Tabs items={["Automatic Install", "Manual install"]}>
-  <Tabs.Tab>
-    The fastest way to setup a new Next.JS project is with the create-next-app tool [provided by Next.JS](https://nextjs.org/docs/getting-started/installation).
+Follow the steps below to make a new Guider project.
 
-    <Steps>
-      <Steps.Step>
-        ### Create a Next.JS project
-        Since Guider is essentially a plugin of Next.JS, You will need to install Next.JS normally.
-        To automatically create a new Next.JS app, run:
-        ```sh
-        npx create-next-app@latest
+<Steps>
+  <Steps.Step>
+    ### Create a Next.JS project and install Guider
+    To install a Next.JS project with guider, install the following dependencies:
+    ```sh npm2yarn
+    npm install next@latest react@latest react-dom@latest @neato/guider@latest
+    ```
+    then add the following scripts to your `package.json`:
+    ```json title="package.json" showLineNumbers
+    {
+      "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+      }
+    }
+    ```
+  </Steps.Step>
+  <Steps.Step>
+    ### Add a Next.JS config
+    Create or replace the following `next.config.mjs` file in your project's root directory.
+    ```js title="next.config.mjs" showLineNumbers
+    import { guider } from "@neato/guider";
+
+    const withGuider = guider({
+      // The location of your theme file, created in the next step
+      themeConfig: './theme.config.tsx',
+    });
+
+    export default withGuider({
+      // These are the normal Next.JS settings.
+      // Check out Next.JS docs: https://nextjs.org/docs/app/api-reference/next-config-js
+      output: 'export',
+    });
+    ```
+  </Steps.Step>
+  <Steps.Step>
+    ### Create a theme config
+    Next, create a `theme.config.tsx`. This will be the home for all of your configuration and customization of Guider:
+    ```ts title="theme.config.tsx" showLineNumbers
+    import { defineTheme, directory, link } from '@neato/guider/theme';
+
+    export default defineTheme({
+      directories: [
+        directory({
+          id: "main", // ID of your directory (unique per site), used for referencing in your page files
+          sidebarItems: [
+            // Creates a link in your sidebar, add more below it
+            link("Home", "/")
+          ]
+        })
+      ],
+    });
+    ```
+  </Steps.Step>
+  <Steps.Step>
+    ### Create entrypoint files
+    Finally, create two files `pages/_app.tsx` and `pages/404.tsx`. They should be in your pages directory.
+    The app file is to setup the layout system and styled for Guider. The 404 file holds a preset "page not found" view, feel free to customize it.
+    <CodeGroup>
+      <CodeGroup.Code title="pages/_app.tsx">
+        ```tsx
+        import '@neato/guider/style.css';
+        import { createGuiderApp } from '@neato/guider/client';
+
+        export default createGuiderApp();
         ```
-      </Steps.Step>
-      <Steps.Step>
-        ### Add a Next.JS config
-        Create or replace the following `next.config.js` file in your project's root directory.
-        ```js title="next.config.js" showLineNumbers
-        const { guider } = require('@neato/guider');
+      </CodeGroup.Code>
+      <CodeGroup.Code title="pages/404.tsx">
+        ```tsx
+        import { createNotFoundPage } from '@neato/guider/client';
 
-        const withGuider = guider({
-          // The location of your theme file, created in the next step
-          themeConfig: './theme.config.tsx',
-        });
-
-        module.exports = withGuider({
-          // These are the normal Next.JS settings.
-          // Check out Next.JS docs: https://nextjs.org/docs/app/api-reference/next-config-js
-          output: 'export',
-        });
+        export default createNotFoundPage();
         ```
-      </Steps.Step>
-      <Steps.Step>
-        ### Create a theme config
-        Finally, create a `theme.config.tsx`. This will be the home for all of your configuration and customization of Guider:
-        ```ts title="theme.config.tsx" showLineNumbers
-        import { defineTheme, directory, link } from '@neato/guider/theme';
+      </CodeGroup.Code>
+    </CodeGroup>
+  </Steps.Step>
+  <Steps.Step>
+    ### Ready to write documentation!
+    Your project has been fully setup, all that's left is to fill it with content. Try it out by making a file in your pages directory:
+    ```md title="pages/index.mdx"
+    # Hello world
+    This is my first `@neato/guider` page!
+    ```
+    And run with `npm run dev{:sh}` and see your first page by visiting the link shown in the console.
+    <Note>
+      The Next.JS development server is infamous for being slow. The final build of the site will be **much** faster.
+    </Note>
+  </Steps.Step>
+</Steps>
 
-        export default defineTheme(
-          site('main', { // ID of your site, used for referencing in other files
-            directories: [
-              directory("main", {// ID of your directory (unique per site), used for referencing in other files
-                sidebar: [
-                  // Creates a link in your sidebar, add more below it
-                  link("Home", "/")
-                ]
-              })
-            ],
-          })
-        );
-        ```
-      </Steps.Step>
-      <Steps.Step>
-        ### Create entrypoint files
-        Next, create two files `pages/_app.tsx` and `pages/404.tsx`. They should be in your pages directory.
-        The app file is used to import the global styles for Guider. The 404 file holds a preset "page not found" view, feel free to customize it.
-        <CodeGroup>
-          <CodeGroup.Code title="pages/_app.tsx">
-            ```tsx
-            import '@neato/guider/style.css';
-            import { createGuiderApp } from '@neato/guider/client';
-
-            export default createGuiderApp();
-            ```
-          </CodeGroup.Code>
-          <CodeGroup.Code title="pages/404.tsx">
-            ```tsx
-            import { createNotFoundPage } from '@neato/guider/client';
-
-            export default createNotFoundPage();
-            ```
-          </CodeGroup.Code>
-        </CodeGroup>
-      </Steps.Step>
-      <Steps.Step>
-        ### Ready to write documentation!
-        Your project has been fully setup, all that's left is to fill it with content. Try it out by making a file in your pages directory:
-        ```md title="pages/index.mdx"
-        # Hello world
-        This is my first `@neato/guider` page!
-        ```
-        And run with `npm run dev{:sh}` and see your first page by visiting the link shown in the console.
-        <Note>
-          The Next.JS development server is infamous for being slow. The final build of the site will be **much** faster.
-        </Note>
-      </Steps.Step>
-    </Steps>
-  </Tabs.Tab>
-
-
-  <Tabs.Tab>
-    If you want to integrate the Next.JS project into an existing folder or want<br/>
-    to be more aware of what is happening under the hood. The manual install will be a better fit.
-
-    <Steps>
-      <Steps.Step>
-        ### Create a Next.JS project
-        To install a Next.JS project manually, install the following dependencies:
-        ```sh npm2yarn
-        npm install next@latest react@latest react-dom@latest
-        ```
-        then add the following scripts to your `package.json`:
-        ```json title="package.json" showLineNumbers
-        {
-          "scripts": {
-            "dev": "next dev",
-            "build": "next build",
-            "start": "next start",
-            "lint": "next lint"
-          }
-        }
-        ```
-      </Steps.Step>
-      <Steps.Step>
-        ### Add a Next.JS config
-        Create or replace the following `next.config.js` file in your project's root directory.
-        ```js title="next.config.js" showLineNumbers
-        const { guider } = require('@neato/guider');
-
-        const withGuider = guider({
-          // The location of your theme file, created in the next step
-          themeConfig: './theme.config.tsx',
-        });
-
-        module.exports = withGuider({
-          // These are the normal Next.JS settings.
-          // Check out Next.JS docs: https://nextjs.org/docs/app/api-reference/next-config-js
-          output: 'export',
-        });
-        ```
-      </Steps.Step>
-      <Steps.Step>
-        ### Create a theme config
-        Next, create a `theme.config.tsx`. This will be the home for all of your configuration and customization of Guider:
-        ```ts title="theme.config.tsx" showLineNumbers
-        import { defineTheme, directory, link } from '@neato/guider/theme';
-
-        export default defineTheme({
-          id: "main", // ID of your site, used for referencing in other files
-          directories: [
-            directory({
-              id: "main", // ID of your directory (unique per site), used for referencing in other files
-              sidebarItems: [
-                // Creates a link in your sidebar, add more below it
-                link("Home", "/")
-              ]
-            })
-          ],
-        });
-        ```
-      </Steps.Step>
-      <Steps.Step>
-        ### Create entrypoint files
-        Finally, create two files `pages/_app.tsx` and `pages/404.tsx`. They should be in your pages directory.
-        The app file is used to import the global styles for Guider. The 404 file holds a preset "page not found" view, feel free to customize it.
-        <CodeGroup>
-          <CodeGroup.Code title="pages/_app.tsx">
-            ```tsx
-            import '@neato/guider/style.css';
-            import { createGuiderApp } from '@neato/guider/client';
-
-            export default createGuiderApp();
-            ```
-          </CodeGroup.Code>
-          <CodeGroup.Code title="pages/404.tsx">
-            ```tsx
-            import { createNotFoundPage } from '@neato/guider/client';
-
-            export default createNotFoundPage();
-            ```
-          </CodeGroup.Code>
-        </CodeGroup>
-      </Steps.Step>
-      <Steps.Step>
-        ### Ready to write documentation!
-        Your project has been fully setup, all that's left is to fill it with content. Try it out by making a file in your pages directory:
-        ```md title="pages/index.mdx"
-        # Hello world
-        This is my first `@neato/guider` page!
-        ```
-        And run with `npm run dev{:sh}` and see your first page by visiting the link shown in the console.
-        <Note>
-          The Next.JS development server is infamous for being slow. The final build of the site will be **much** faster.
-        </Note>
-      </Steps.Step>
-    </Steps>
-  </Tabs.Tab>
-</Tabs>
 
 ## What's next?
 

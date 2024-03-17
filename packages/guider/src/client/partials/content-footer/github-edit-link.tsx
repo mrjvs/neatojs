@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link.js';
 import gitUrlParse, { stringify } from 'git-url-parse';
 import { useGuiderFilePath } from '../../hooks/use-guider-filepath';
 

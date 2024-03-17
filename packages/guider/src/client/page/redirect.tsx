@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation.js';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 
