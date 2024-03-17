@@ -2,7 +2,7 @@ import {
   sites as untypedSites,
   metaMap as untypedMetaMap,
   pageMap as untypedPageMap,
-} from '@neato/guider/shim.guider.virtual';
+} from '@neato/guider/shim.guider.virtual.mjs';
 import type { PageMapItem, SiteComponent, MetaMapItem } from '../theme';
 
 export const sites = untypedSites as SiteComponent[];

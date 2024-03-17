@@ -40,7 +40,7 @@ export function guider(initConfig: GuiderInitConfig) {
           ],
         });
         config.module.rules.push({
-          test: /\.guider.virtual$/,
+          test: /\.guider\.virtual\.mjs$/,
           use: [
             options.defaultLoaders.babel,
             {
