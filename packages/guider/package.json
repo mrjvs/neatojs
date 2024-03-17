@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Beautiful documentation sites, without all the hassle",
   "main": "./dist/index.js",
+  "type": "module",
   "homepage": "https://neatojs.com/docs/guider",
   "repository": "https://github.com/mrjvs/neatojs",
   "bugs": {
@@ -21,32 +22,32 @@
   "files": [
     "dist/**",
     "style.css",
-    "loader.js",
-    "shim.guider.virtual.mjs"
+    "loader.cjs",
+    "shim.guider.virtual.js"
   ],
   "exports": {
     "./client": {
       "import": {
         "types": "./dist/client.d.mts",
-        "default": "./dist/client.mjs"
+        "default": "./dist/client.js"
       }
     },
     "./theme": {
       "import": {
         "types": "./dist/theme.d.mts",
-        "default": "./dist/theme.mjs"
+        "default": "./dist/theme.js"
       }
     },
     ".": {
       "import": {
         "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/index.js"
       }
     },
-    "./loader": "./loader.js",
-    "./shim.guider.virtual.mjs": {
-      "import": "./shim.guider.virtual.mjs",
-      "require": "./shim.guider.virtual.mjs"
+    "./loader.cjs": "./loader.cjs",
+    "./shim.guider.virtual.js": {
+      "import": "./shim.guider.virtual.js",
+      "require": "./shim.guider.virtual.js"
     },
     "./style.css": "./style.css"
   },

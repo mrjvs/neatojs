@@ -1,4 +1,4 @@
-declare module '*.guider.virtual.mjs' {
+declare module '*.guider.virtual.js' {
   export const sites: any[];
   export const pageMap: any[];
   export const metaMap: any[];

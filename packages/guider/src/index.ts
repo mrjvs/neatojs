@@ -31,7 +31,7 @@ export function guider(initConfig: GuiderInitConfig) {
           use: [
             options.defaultLoaders.babel,
             {
-              loader: '@neato/guider/loader',
+              loader: '@neato/guider/loader.cjs',
               options: {
                 type: 'mdx',
                 guiderConfig,
@@ -40,11 +40,11 @@ export function guider(initConfig: GuiderInitConfig) {
           ],
         });
         config.module.rules.push({
-          test: /\.guider\.virtual\.mjs$/,
+          test: /\.guider\.virtual\.js$/,
           use: [
             options.defaultLoaders.babel,
             {
-              loader: '@neato/guider/loader',
+              loader: '@neato/guider/loader.cjs',
               options: {
                 type: 'virtual',
                 guiderConfig,
