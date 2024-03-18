@@ -2,7 +2,9 @@
 .neato-guider-steps-step-content,
 .neato-guider-callout-child,
 .neato-guider-blockquote,
-.neato-guider-list {
+.neato-guider-list,
+.neato-guider-field-props-children,
+.neato-guider-field {
   > *:first-child {
     margin-top: 0 !important;
   }

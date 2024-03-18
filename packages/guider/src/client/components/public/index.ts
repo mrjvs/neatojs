@@ -6,3 +6,4 @@ export * from './frame';
 export * from './code-group';
 export * from './hero';
 export * from './card';
+export * from './field';

@@ -12,6 +12,7 @@
 @import "./components/footnotes.css";
 @import "./components/frame.css";
 @import "./components/codegroup.css";
+@import "./components/fields.css";
 
 @tailwind base;
 @tailwind components;
