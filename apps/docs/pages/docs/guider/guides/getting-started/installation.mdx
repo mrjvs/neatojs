@@ -88,6 +88,20 @@ Follow the steps below to make a new Guider project.
     </CodeGroup>
   </Steps.Step>
   <Steps.Step>
+    ### Setup typescript
+    To make Guider work, you will need to slightly modify your tsconfig.json. If you don't have a tsconfig.json file yet, just make one at the root of your project.
+
+    If you do already have typescript, you can just change the single option in your existing config.
+
+    ```json title="tsconfig.json"
+    {
+      "compilerOptions": {
+        "moduleResolution": "Bundler", // [!code focus]
+      }
+    }
+    ```
+  </Steps.Step>
+  <Steps.Step>
     ### Ready to write documentation!
     Your project has been fully setup, all that's left is to fill it with content. Try it out by making a file in your pages directory:
     ```md title="pages/index.mdx"

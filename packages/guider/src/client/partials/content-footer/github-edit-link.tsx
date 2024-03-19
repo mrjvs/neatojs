@@ -7,10 +7,12 @@ export function useEditLink(baseUrl: string | null | undefined): string | null {
   if (!baseUrl) return null;
   if (!file) return null;
   const parsed = gitUrlParse(baseUrl);
-  parsed.filepath = '';
   let filePath = parsed.filepath;
   filePath += filePath.length > 0 ? '/' : '';
   filePath += file.filePath;
+
+  // Resets the filepath as we want to manually construct it
+  parsed.filepath = '';
   const ref = parsed.ref.length > 0 ? parsed.ref : 'main';
   return `${stringify(parsed)}/blob/${ref}/${filePath}`;
 }

@@ -55,7 +55,7 @@ const CodeGroupContainer = (props: CodeGroupProps) => {
     };
   }, [panelsRef, collectTabs]);
   return (
-    <div className="gd-rounded-lg gd-overflow-hidden gd-mb-8">
+    <div className="gd-rounded-lg gd-overflow-hidden gd-mt-4 gd-mb-8">
       <Tab.Group>
         <Tab.List className="gd-bg-bgDark gd-grid gd-grid-cols-1 gd-whitespace-nowrap gd-text-nowrap gd-overflow-x-auto">
           <div className="gd-flex gd-flex-items-end gd-py-2">

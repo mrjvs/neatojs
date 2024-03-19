@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import type { ElementProps, MarkdownProps } from './types';
 
-const headingClasses = 'gd-relative gd-group gd-scroll-m-48';
+const headingClasses =
+  'gd-relative neato-guider-heading gd-group gd-scroll-m-48';
 
 function HeadingAnchor(props: { attrs: ElementProps }) {
   if (!props.attrs.id) return null;
@@ -20,7 +21,7 @@ export function MarkdownH1(props: MarkdownProps) {
     <h1
       {...props.attrs}
       className={classNames(
-        'gd-font-bold gd-text-textHeading gd-text-2xl gd-mb-3',
+        'gd-font-bold gd-text-textHeading gd-mt-12 gd-text-2xl gd-mb-3',
         props.attrs.class,
         headingClasses,
       )}

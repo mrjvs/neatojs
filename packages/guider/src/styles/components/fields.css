@@ -1,0 +1,19 @@
+.neato-guider-field + .neato-guider-field {
+  @apply !gd-border-t-0;
+}
+
+.neato-guider-field {
+  @apply gd-border-t gd-border-b gd-border-line;
+}
+
+.neato-guider-field-props-children > .neato-guider-field:last-child {
+  @apply !gd-border-b-0;
+}
+
+.neato-guider-field-props-children > .neato-guider-field:first-child {
+  @apply !gd-border-t-0;
+}
+
+.neato-guider-field-props-children > .neato-guider-field {
+  @apply -gd-mx-4 gd-px-4;
+}
