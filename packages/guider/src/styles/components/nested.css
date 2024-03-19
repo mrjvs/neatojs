@@ -14,6 +14,7 @@
   }
 }
 
-#guider-content > *:first-child {
+/* First heading of a page shouldnt have any top margin */
+#guider-content > .neato-guider-heading:first-child {
   @apply !gd-mt-0;
 }

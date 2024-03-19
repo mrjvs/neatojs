@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import type { ElementProps, MarkdownProps } from './types';
 
-const headingClasses = 'gd-relative gd-group gd-scroll-m-48';
+const headingClasses =
+  'gd-relative neato-guider-heading gd-group gd-scroll-m-48';
 
 function HeadingAnchor(props: { attrs: ElementProps }) {
   if (!props.attrs.id) return null;
