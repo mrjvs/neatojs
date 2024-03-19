@@ -20,7 +20,7 @@ export function MarkdownH1(props: MarkdownProps) {
     <h1
       {...props.attrs}
       className={classNames(
-        'gd-font-bold gd-text-textHeading gd-text-2xl gd-mb-3',
+        'gd-font-bold gd-text-textHeading gd-mt-12 gd-text-2xl gd-mb-3',
         props.attrs.class,
         headingClasses,
       )}

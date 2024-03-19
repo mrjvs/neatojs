@@ -13,3 +13,7 @@
     margin-bottom: 0 !important;
   }
 }
+
+#guider-content > *:first-child {
+  @apply !gd-mt-0;
+}

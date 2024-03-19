@@ -47,7 +47,7 @@ export function Callout(props: CalloutProps) {
     <div
       className={classNames(
         classes,
-        'gd-p-4 gd-rounded-md gd-mb-2 gd-text-sm gd-bg-opacity-[7%] gd-border gd-border-opacity-50',
+        'gd-p-4 gd-rounded-md gd-my-6 gd-text-sm gd-bg-opacity-[7%] gd-border gd-border-opacity-50',
         'gd-flex',
       )}
     >

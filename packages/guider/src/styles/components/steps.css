@@ -14,6 +14,10 @@
     @apply !gd-mt-1;
   }
 
+  .neato-guider-steps-step:last-child .neato-guider-steps-step-content {
+    @apply !gd-mb-0;
+  }
+
   .neato-guider-steps-step:not(:last-child)::after {
     content: "";
     @apply gd-w-px gd-inset-y-0 gd-left-4 gd-bg-bgLight gd-absolute;

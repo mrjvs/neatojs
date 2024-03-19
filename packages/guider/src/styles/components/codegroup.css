@@ -1,7 +1,7 @@
 .neato-guider-codegroup {
   .neato-guider-codegroup-child {
     > *:last-child {
-      @apply !gd-mb-0;
+      @apply !gd-mb-0 !gd-mt-0;
     }
 
     .neato-guider-codeblock {
