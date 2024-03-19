@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { Button } from '../../components/public';
 import { Icon } from '../../components/icon';
 import type { TopNavChildren } from '../../../theme';
 import { GithubDisplay } from '../../components/github';
@@ -13,15 +12,25 @@ export function TopMobileNav(props: {
   const [navOpen, setNavOpen] = useState(false);
 
   const toggleButton = (
-    <Button
-      type="secondary"
-      className="gd-flex gd-items-center"
+    <button
+      className="gd-flex gd-items-center gd-p-2 hover:gd-text-textHeading"
       onClick={() => {
         setNavOpen(!navOpen);
       }}
     >
-      <Icon icon="mingcute:menu-fill" />
-    </Button>
+      <Icon icon="mingcute:more-2-fill" />
+    </button>
+  );
+
+  const closeButton = (
+    <button
+      className="gd-flex gd-items-center gd-p-2 hover:gd-text-textHeading"
+      onClick={() => {
+        setNavOpen(!navOpen);
+      }}
+    >
+      <Icon icon="mingcute:close-fill" />
+    </button>
   );
 
   useEffect(() => {
@@ -35,7 +44,7 @@ export function TopMobileNav(props: {
   }, [navOpen]);
 
   return (
-    <div className="gd-py-4">
+    <div>
       {toggleButton}
       <div
         className={classNames(
@@ -49,11 +58,11 @@ export function TopMobileNav(props: {
       <div className="gd-fixed gd-inset-x-0 gd-top-0 gd-z-[100]">
         <div
           className={classNames(
-            'gd-absolute gd-inset-x-0 gd-top-0 gd-bg-bg gd-z-[100] gd-px-6 gd-py-10 gd-transition-transform gd-duration-150 gd-border-r gd-border-line gd-overflow-y-auto gd-space-y-4',
+            'gd-absolute gd-inset-x-0 gd-top-0 gd-bg-bg gd-z-[100] gd-px-6 gd-pb-8 gd-pt-4 gd-transition-transform gd-duration-150 gd-border-r gd-border-line gd-overflow-y-auto gd-space-y-4',
             navOpen ? 'gd-translate-y-0' : '-gd-translate-y-full',
           )}
         >
-          {toggleButton}
+          <div className="gd-flex gd-justify-end">{closeButton}</div>
           <HeaderNav items={props.items} />
           {props.github.org && props.github.repo ? (
             <GithubDisplay org={props.github.org} repo={props.github.repo} />

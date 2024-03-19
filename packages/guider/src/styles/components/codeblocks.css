@@ -3,7 +3,7 @@
   /*
    * basic styling of the block
    */
-  @apply gd-bg-bgLight gd-text-textLight gd-relative gd-rounded-lg gd-overflow-hidden gd-mb-4 gd-text-sm;
+  @apply gd-bg-bgLight gd-text-textLight gd-relative gd-rounded-lg gd-overflow-hidden gd-mt-4 gd-mb-8 gd-text-sm;
 
   figcaption {
     @apply gd-text-textLight gd-px-4 gd-py-2 gd-border-b gd-border-text gd-border-opacity-25;
@@ -128,13 +128,20 @@
   /*
    * focused code
    */
-  code:has(.focused) [data-line]:not(.focused) {
+  code:has(.focused) [data-line]:not(.focused) > * {
     opacity: .25;
     transition: opacity 200ms ease-in-out;
   }
+  code:has(.focused) [data-line]:not(.focused)::before {
+    opacity: .125;
+    transition: opacity 200ms ease-in-out;
+  }
 
-  &:hover code:has(.focused) [data-line]:not(.focused) {
+  &:hover code:has(.focused) [data-line]:not(.focused) > * {
     opacity: 1 !important;
+  }
+  &:hover code:has(.focused) [data-line]:not(.focused)::before {
+    opacity: 0.5 !important;
   }
 
 
