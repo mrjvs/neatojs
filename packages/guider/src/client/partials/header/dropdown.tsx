@@ -81,7 +81,10 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
   }, [actives, links]);
 
   return (
-    <Menu as="div" className="gd-relative -gd-ml-2 gd-inline-block gd-z-[70]">
+    <Menu
+      as="div"
+      className="sm:gd-relative -gd-ml-2 gd-inline-block gd-z-[70]"
+    >
       <Menu.Button>
         {({ open }) => (
           <div
@@ -109,7 +112,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
         leaveFrom="gd-transform gd-opacity-100 gd-scale-100"
         leaveTo="gd-transform gd-opacity-0 gd-scale-95"
       >
-        <Menu.Items className="gd-absolute gd-p-2 gd-left-0 gd-mt-2 gd-w-72 gd-origin-top-left gd-rounded-md gd-bg-bg gd-border gd-border-bgLightest">
+        <Menu.Items className="gd-absolute gd-p-2 gd-left-5 gd-right-5 sm:gd-left-0 sm:gd-right-auto gd-mt-2 sm:gd-w-72 gd-origin-top-left gd-rounded-md gd-bg-bg gd-border gd-border-bgLightest">
           {props.dropdown.map((item, i) => {
             const key = `--${i}`;
             if (item.type === 'group')
