@@ -13,7 +13,7 @@ export function TopMobileNav(props: {
 
   const toggleButton = (
     <button
-      className="gd-flex gd-items-center hover:gd-text-textHeading"
+      className="gd-flex gd-items-center gd-p-2 hover:gd-text-textHeading"
       onClick={() => {
         setNavOpen(!navOpen);
       }}
@@ -24,7 +24,7 @@ export function TopMobileNav(props: {
 
   const closeButton = (
     <button
-      className="gd-flex gd-items-center hover:gd-text-textHeading"
+      className="gd-flex gd-items-center gd-p-2 hover:gd-text-textHeading"
       onClick={() => {
         setNavOpen(!navOpen);
       }}
@@ -58,7 +58,7 @@ export function TopMobileNav(props: {
       <div className="gd-fixed gd-inset-x-0 gd-top-0 gd-z-[100]">
         <div
           className={classNames(
-            'gd-absolute gd-inset-x-0 gd-top-0 gd-bg-bg gd-z-[100] gd-px-6 gd-py-10 gd-transition-transform gd-duration-150 gd-border-r gd-border-line gd-overflow-y-auto gd-space-y-4',
+            'gd-absolute gd-inset-x-0 gd-top-0 gd-bg-bg gd-z-[100] gd-px-6 gd-pb-8 gd-pt-4 gd-transition-transform gd-duration-150 gd-border-r gd-border-line gd-overflow-y-auto gd-space-y-4',
             navOpen ? 'gd-translate-y-0' : '-gd-translate-y-full',
           )}
         >

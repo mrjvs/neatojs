@@ -16,7 +16,7 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
 
   const toggleButton = (
     <button
-      className="gd-flex gd-items-center hover:gd-text-textHeading gd-transition-colors"
+      className="gd-flex gd-items-center gd-p-4 -gd-ml-4 hover:gd-text-textHeading gd-transition-colors"
       onClick={() => {
         setNavOpen(!navOpen);
       }}
@@ -36,7 +36,7 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
   }, [navOpen]);
 
   return (
-    <div className="gd-py-4">
+    <div className="gd-py-1">
       {toggleButton}
       <div
         className={classNames(
