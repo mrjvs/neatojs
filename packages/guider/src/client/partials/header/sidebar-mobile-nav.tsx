@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react';
 import { GuiderSidebarContent } from '../sidebar';
-import { Button } from '../../components/public';
 import { Icon } from '../../components/icon';
 import type { TabsChildren } from '../../../theme/components/site';
 import type { CustomComponentComponent } from '../../../theme/components/component';
@@ -16,15 +15,14 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
   const [navOpen, setNavOpen] = useState(false);
 
   const toggleButton = (
-    <Button
-      type="secondary"
-      className="gd-flex gd-items-center"
+    <button
+      className="gd-flex gd-items-center hover:gd-text-textHeading gd-transition-colors"
       onClick={() => {
         setNavOpen(!navOpen);
       }}
     >
-      <Icon icon="mingcute:menu-fill" />
-    </Button>
+      <Icon icon="mingcute:menu-fill" className="gd-mr-2" /> Menu
+    </button>
   );
 
   useEffect(() => {
@@ -55,7 +53,6 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
           navOpen ? 'gd-translate-x-0' : '-gd-translate-x-full',
         )}
       >
-        {toggleButton}
         <div className="-gd-mx-4">
           {props.tabs.map((v, i) => {
             const key = `--${i}`;

@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { Button } from '../../components/public';
 import { Icon } from '../../components/icon';
 import type { TopNavChildren } from '../../../theme';
 import { GithubDisplay } from '../../components/github';
@@ -13,15 +12,25 @@ export function TopMobileNav(props: {
   const [navOpen, setNavOpen] = useState(false);
 
   const toggleButton = (
-    <Button
-      type="secondary"
-      className="gd-flex gd-items-center"
+    <button
+      className="gd-flex gd-items-center hover:gd-text-textHeading"
       onClick={() => {
         setNavOpen(!navOpen);
       }}
     >
-      <Icon icon="mingcute:menu-fill" />
-    </Button>
+      <Icon icon="mingcute:more-2-fill" />
+    </button>
+  );
+
+  const closeButton = (
+    <button
+      className="gd-flex gd-items-center hover:gd-text-textHeading"
+      onClick={() => {
+        setNavOpen(!navOpen);
+      }}
+    >
+      <Icon icon="mingcute:close-fill" />
+    </button>
   );
 
   useEffect(() => {
@@ -35,7 +44,7 @@ export function TopMobileNav(props: {
   }, [navOpen]);
 
   return (
-    <div className="gd-py-4">
+    <div>
       {toggleButton}
       <div
         className={classNames(
@@ -53,7 +62,7 @@ export function TopMobileNav(props: {
             navOpen ? 'gd-translate-y-0' : '-gd-translate-y-full',
           )}
         >
-          {toggleButton}
+          <div className="gd-flex gd-justify-end">{closeButton}</div>
           <HeaderNav items={props.items} />
           {props.github.org && props.github.repo ? (
             <GithubDisplay org={props.github.org} repo={props.github.repo} />
