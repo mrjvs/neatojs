@@ -113,6 +113,7 @@
     "shiki": "^1.1.7",
     "tailwindcss-themer": "^4.0.0",
     "type-fest": "^4.10.3",
-    "webpack-virtual-modules": "^0.6.1"
+    "webpack-virtual-modules": "^0.6.1",
+    "zustand": "^4.5.2"
   }
 }

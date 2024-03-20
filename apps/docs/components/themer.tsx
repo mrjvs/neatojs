@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import React, { useState, useCallback } from 'react';
 import type { HsbColor } from 'hooks/color-select';
 import { hsbToColorToString, useColorSelect } from 'hooks/color-select';
+import { useGuideThemePicker } from 'hooks/use-guider-theme-picker';
 import styles from './themer.module.css';
 
 function ThemeColor(props: {
@@ -133,10 +134,7 @@ export function ThemeColorPicker(props: {
 }
 
 export function Themer() {
-  const [colors, setColors] = useState<[HsbColor, HsbColor]>([
-    [259, 0.5, 1],
-    [197, 0.74, 0.07],
-  ]);
+  const [colors, setColors] = useGuideThemePicker();
 
   return <ThemeColorPicker colors={colors} setColors={setColors} />;
 }

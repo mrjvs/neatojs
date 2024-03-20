@@ -1,6 +1,7 @@
 import Color from 'color';
 import { useContext, useMemo } from 'react';
 import { Helmet, HelmetData } from 'react-helmet-async';
+import { useThemeColorsStore } from 'src/client/stores/colors';
 import { GuiderLayoutContext } from '../../page/context';
 import { useGuider } from '../../hooks/use-guider';
 
@@ -14,8 +15,9 @@ export function ThemeProvider() {
   const ctx = useContext(GuiderLayoutContext);
   const { settings } = useGuider(ctx?.meta);
   const serializedSettings = JSON.stringify(settings.colors);
+  const overwrittenColors = useThemeColorsStore((s) => s.colors);
   const style = useMemo(() => {
-    const colors = settings.colors;
+    const colors = { ...settings.colors, ...overwrittenColors };
     return {
       '--colors-primary': convertColor(colors.primary),
       '--colors-primaryDark': convertColor(colors.primaryDarker),
@@ -50,7 +52,7 @@ export function ThemeProvider() {
         colors.semanticCautionLighter,
       ),
     };
-  }, [serializedSettings]);
+  }, [serializedSettings, overwrittenColors]);
   return (
     <Helmet helmetData={helmetData}>
       <body
