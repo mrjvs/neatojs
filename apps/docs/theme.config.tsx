@@ -39,10 +39,6 @@ const template = siteTemplate({
       },
     ],
   },
-  logo: {
-    name: 'NeatoJS',
-    to: '/',
-  },
 });
 
 const gdGuides = (url: string) => `/docs/guider/guides${url}`;
