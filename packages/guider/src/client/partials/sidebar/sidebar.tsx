@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { makeKey } from 'src/client/utils/make-key';
 import { useGuider } from '../../hooks/use-guider';
 import { GuiderLayoutContext } from '../../page/context';
 import { SidebarLink } from './link';
@@ -16,7 +17,7 @@ export function SidebarInternal() {
     <div className="gd-flex gd-flex-col">
       <div className="gd-space-y-1 neato-guider-sidebar -gd-mx-4">
         {directory.sidebar.map((link, i) => {
-          const key = `--${i}`;
+          const key = makeKey(i, link);
           if (link.type === 'link' && link.style === 'star')
             return <SidebarStarLink key={key} link={link} />;
           if (link.type === 'link')

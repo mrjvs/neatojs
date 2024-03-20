@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { makeKey } from 'src/client/utils/make-key';
 import type {
   CustomComponentComponent,
   LinkComponent,
@@ -38,7 +39,7 @@ export function HeaderNav(props: { items: TopNavChildren[] }) {
   return (
     <>
       {props.items.map((v, i) => {
-        const key = `--${i}`;
+        const key = makeKey(i, v);
         if (v.type === 'component')
           return <NavCustomComponent key={key} component={v} />;
         if (v.type === 'link') return <NavLink key={key} link={v} />;

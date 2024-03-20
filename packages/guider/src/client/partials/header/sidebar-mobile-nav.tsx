@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react';
+import { makeKey } from 'src/client/utils/make-key';
 import { GuiderSidebarContent } from '../sidebar';
 import { Icon } from '../../components/icon';
 import type { TabsChildren } from '../../../theme/components/site';
@@ -55,7 +56,7 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
       >
         <div className="-gd-mx-4">
           {props.tabs.map((v, i) => {
-            const key = `--${i}`;
+            const key = makeKey(i, v);
             if (v.type === 'component')
               return <CustomComponentTab key={key} component={v} />;
             if (v.type === 'link')
