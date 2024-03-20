@@ -84,23 +84,21 @@ function ColorPicker(props: {
   );
 }
 
-export function Themer() {
-  const [colors, setColors] = useState<HsbColor[]>([
-    [259, 0.5, 1],
-    [197, 0.74, 0.07],
-  ]);
+export function ThemeColorPicker(props: {
+  colors: [HsbColor, HsbColor];
+  setColors: (n: [HsbColor, HsbColor]) => void;
+}) {
+  const { colors, setColors } = props;
   const [selectedColor, setSelectedColor] = useState(0);
   const currentColor = colors[selectedColor];
 
   const setColor = useCallback(
     (color: HsbColor) => {
-      setColors((oldColors) => {
-        const newColors = [...oldColors];
-        newColors[selectedColor] = color;
-        return newColors;
-      });
+      const newColors: [HsbColor, HsbColor] = [...colors];
+      newColors[selectedColor] = color;
+      setColors(newColors);
     },
-    [selectedColor],
+    [selectedColor, colors],
   );
 
   return (
@@ -132,6 +130,15 @@ export function Themer() {
       </div>
     </div>
   );
+}
+
+export function Themer() {
+  const [colors, setColors] = useState<[HsbColor, HsbColor]>([
+    [259, 0.5, 1],
+    [197, 0.74, 0.07],
+  ]);
+
+  return <ThemeColorPicker colors={colors} setColors={setColors} />;
 }
 
 export function ThemerContainer(props: { children?: ReactNode }) {
