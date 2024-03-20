@@ -48,13 +48,14 @@ function ColorPicker(props: {
     <div className="space-y-2">
       <div className="h-[10rem] relative" onMouseDown={valueMouseDown}>
         <div
-          className="absolute inset-0 rounded-lg overflow-hidden"
-          style={{
-            backgroundColor: `hsl(${props.color[0]} 100% 50%)`,
-          }}
+          style={{ '--picked-color': `hsl(${props.color[0]} 100% 50%)` } as any}
         >
-          <div className={styles['value-overlay-one']} />
-          <div className={styles['value-overlay-two']} />
+          <div
+            className={classNames(
+              styles.value,
+              'h-[10rem] border-2 border-bgLight rounded-lg',
+            )}
+          />
         </div>
         <div
           className="outline-white -translate-x-1/2 -translate-y-1/2 outline outline-[3px] z-10 absolute rounded-full h-2.5 w-2.5 pointer-events-none"
