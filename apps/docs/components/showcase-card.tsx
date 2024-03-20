@@ -43,7 +43,7 @@ export function ShowcaseCardContainer(props: {
 
   return (
     <div>
-      <div className="flex border-b py-4 mb-8 space-x-2 border-line">
+      <div className="hidden sm:flex border-b py-4 mb-8 space-x-2 border-line">
         <h1 className="text-xl font-bold flex-1 text-textHeading">Showcases</h1>
         {tags.map((t) => (
           <ShowcasePill
