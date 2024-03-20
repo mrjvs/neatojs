@@ -1,18 +1,10 @@
 import { GuiderLayout } from '@neato/guider/client';
+import { useMemo, useState } from 'react';
 import { Showcase } from 'components/showcase-layout';
+import type { ShowcaseTag, ShowcaseType } from 'components/showcase-card';
 import { ShowcaseCard, ShowcaseCardContainer } from 'components/showcase-card';
 
-type Tags = 'guider' | 'config';
-
-interface Showcase {
-  imageUrl: string;
-  href: string;
-  title: string;
-  description: string;
-  tags: Tags[];
-}
-
-const showcases: Showcase[] = [
+const showcases: ShowcaseType[] = [
   {
     title: 'Pretendo',
     description: 'Uses Guider for protocol documentation.',
@@ -37,6 +29,12 @@ const showcases: Showcase[] = [
 ];
 
 export default function ShowcasePage() {
+  const [filter, setFilter] = useState<null | ShowcaseTag>(null);
+  const filtered = useMemo(() => {
+    if (filter === null) return showcases;
+    return showcases.filter((v) => v.tags.includes(filter));
+  }, [filter]);
+
   return (
     <GuiderLayout meta={{ layout: 'page' }}>
       <Showcase.Container>
@@ -48,8 +46,8 @@ export default function ShowcasePage() {
           Below you can find out who uses NeatoJS, inspire yourself and figure
           out how we can best be of service.
         </Showcase.Subtitle>
-        <ShowcaseCardContainer>
-          {showcases.map((v) => (
+        <ShowcaseCardContainer selected={filter} onSelect={setFilter}>
+          {filtered.map((v) => (
             <ShowcaseCard key={v.href} showcase={v} />
           ))}
         </ShowcaseCardContainer>
