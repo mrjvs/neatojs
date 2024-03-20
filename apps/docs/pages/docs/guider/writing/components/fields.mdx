@@ -1,0 +1,89 @@
+# Fields
+
+Fields are great for when you have to display any type structure.
+They can work for API reference, API fields, query paramaters, component props, and much more.
+
+
+## General usage
+
+Make a field by just making a `<Field />{:tsx}` component. You will need to specify its type and it's name, and optionally also if it's a required field.
+
+You can also use the `<Field.Properties />{:tsx}` component to group properties on a nested field. See the example below:
+
+````tsx
+<Field title="example.field" type="string" required>
+  This is an example field.
+</Field>
+<Field title="example.nestedField" type="object">
+  This is an example field with nested properties
+  <Field.Properties>
+    <Field title="example.nestedField.field" type="string" required>
+      This is an example nested field.
+    </Field>
+    <Field title="example.nestedField.second" type="number">
+      This is a second example nested field.
+    </Field>
+  </Field.Properties>
+</Field>
+````
+
+<Field title="example.field" type="string" required>
+  This is an example field.
+</Field>
+<Field title="example.nestedField" type="object">
+  This is an example field with nested properties
+  <Field.Properties>
+    <Field title="example.nestedField.field" type="string" required>
+      This is an example nested field.
+    </Field>
+    <Field title="example.nestedField.second" type="number">
+      This is a second example nested field.
+    </Field>
+  </Field.Properties>
+</Field>
+
+
+## Component API - `<Field />`
+
+A field with a type display, great for documenting types or structures.
+
+<Field title
+="title" type="string">
+  The title of the field
+</Field>
+<Field title="type" type="string">
+  The type of the field
+</Field>
+<Field title="required" type="boolean">
+  Mark this field as required.
+</Field>
+<Field title="children" type="any">
+  The description of the field, you can use markdown freely in here.
+</Field>
+
+
+## Component API - `<Field.Properties />`
+
+A collapsable group of fields, good for showcasing nested objects.
+
+<Field title="children" type="any">
+  The contents of the collapsable section, it's recommended to only put field components in here.
+</Field>
+<Field title="defaultOpen" type="boolean">
+  Boolean indicating if it should be opened by default.
+</Field>
+<Field title="text" type="string | { show: string, hide: string }">
+  The text that shows when you need to show or hide the contents of the collapsable section.
+
+  ```tsx title="example"
+  {/* will show up with "Toggle properties" for both when it needs to be hidden or when it needs to be shown */}
+  <Field.Properties text="Toggle properties">
+    Contents
+  </Field.Properties>
+
+  {/* will show up with "Show object" for when it needs to be shown, and "Hide object" when it needs to be hidden */}
+  <Field.Properties text={{ show: "Show object", hide: "Hide object" }}>
+    Contents
+  </Field.Properties>
+  ```
+</Field>

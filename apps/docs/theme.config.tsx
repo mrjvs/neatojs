@@ -190,6 +190,9 @@ export default defineTheme([
             link('Tabs', gdWriting('/components/tabs'), {
               icon: 'fa6-solid:window-restore',
             }),
+            link('Fields', gdWriting('/components/fields'), {
+              icon: 'fa6-solid:rectangle-list',
+            }),
             link('Steps', gdWriting('/components/steps'), {
               icon: 'fa6-solid:list-ol',
             }),
