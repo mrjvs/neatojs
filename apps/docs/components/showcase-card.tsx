@@ -24,7 +24,7 @@ export function ShowcaseCard(props: { showcase: Showcase }) {
     <article className="border-line border p-4 rounded-2xl">
       <Link
         href={props.showcase.href}
-        className="block hover:opacity-75 aspect-video w-full bg-bgLightest mb-4 rounded-xl overflow-hidden"
+        className="block hover:opacity-75 aspect-video w-full bg-bgLightest mb-6 rounded-xl overflow-hidden"
       >
         <img
           src={props.showcase.imageUrl}
@@ -33,7 +33,7 @@ export function ShowcaseCard(props: { showcase: Showcase }) {
         />
       </Link>
       <Link href={props.showcase.href}>
-        <h1 className="text-lg hover:text-primary font-bold mb-2 text-textHeading">
+        <h1 className="text-lg hover:text-primary font-bold mb-1 text-textHeading">
           {props.showcase.title}
         </h1>
       </Link>
