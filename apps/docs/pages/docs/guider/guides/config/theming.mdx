@@ -104,7 +104,7 @@ site('site-id', {
 If you want to fully customize how your logo looks (For example, using an image as your logo), you can overwrite the full partial in **any settings layer**:
 ```tsx
 settings: {
-  logo: <p>My logo</p>
+  logo: () => <p>My logo</p>
 }
 ```
 

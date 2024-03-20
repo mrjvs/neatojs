@@ -13,6 +13,7 @@ import { Logo } from 'components/logo';
 const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
+  navigation: [link('Showcase', '/showcase')],
   settings: {
     colors: {
       primary: '#A880FF',
