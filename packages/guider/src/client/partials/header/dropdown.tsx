@@ -89,7 +89,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
         {({ open }) => (
           <div
             className={classNames({
-              'gd-bg-bg gd-border gd-flex gd-items-center gd-transition-colors gd-duration-100 gd-border-bgLightest gd-py-1 gd-rounded-md gd-px-4 hover:gd-bg-bgLight gd-border-opacity-0':
+              'gd-bg-bg gd-border gd-text-left gd-flex gd-items-center gd-transition-colors gd-duration-100 gd-border-bgLightest gd-py-1 gd-rounded-md gd-px-4 hover:gd-bg-bgLight gd-border-opacity-0':
                 true,
               '!gd-border-opacity-100 gd-text-textHeading': open,
             })}
