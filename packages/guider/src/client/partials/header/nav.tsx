@@ -11,6 +11,7 @@ import ActiveLink from '../../components/utils/activelink';
 function NavLink(props: { link: LinkComponent }) {
   return (
     <ActiveLink
+      className="hover:gd-text-textHeading gd-p-2 gd-transition-colors gd-duration-100"
       activeClassName="gd-text-textHeading"
       href={props.link.to}
       exact={props.link.exact}
@@ -32,7 +33,9 @@ function NavCustomComponent(props: { component: CustomComponentComponent }) {
 }
 
 function NavSeperator() {
-  return <hr className="gd-w-px gd-h-full gd-border-0 gd-bg-line" />;
+  return (
+    <hr className="gd-w-full gd-h-px md:gd-w-px md:gd-h-full gd-border-0 gd-bg-line" />
+  );
 }
 
 export function HeaderNav(props: { items: TopNavChildren[] }) {

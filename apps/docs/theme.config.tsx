@@ -7,13 +7,18 @@ import {
   siteTemplate,
   social,
   type SiteComponent,
+  seperator,
 } from '@neato/guider/theme';
 import { Logo } from 'components/logo';
 
 const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
-  navigation: [link('Showcase', '/showcase')],
+  navigation: [
+    link('Showcase', '/showcase'),
+    link('Showcase', '/showcase'),
+    seperator(),
+  ],
   settings: {
     colors: {
       primary: '#A880FF',

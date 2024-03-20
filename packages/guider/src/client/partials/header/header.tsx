@@ -52,7 +52,7 @@ export function HeaderInternal() {
               </>
             ) : null}
           </div>
-          <div className="gd-hidden md:gd-flex gd-items-center gd-space-x-6">
+          <div className="gd-hidden md:gd-flex gd-items-center gd-space-x-3">
             <HeaderNav items={site.navigation} />
             {site.github ? (
               <GithubDisplay
