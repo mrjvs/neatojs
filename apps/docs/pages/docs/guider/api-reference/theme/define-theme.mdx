@@ -1,5 +1,36 @@
 # `defineTheme()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+The only purpose `defineTheme()` is to make a theme configuration. Its return value needs to be
+the default export of the theme file.
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default definetheme({
+  directories: [],
+})
+
+// or a list of sites
+export default definetheme([
+  site('site-a', {
+    directories: [],
+  }),
+  site('site-b', {
+    directories: [],
+  })
+])
+```
+
+
+## Reference
+
+```tsx
+function defineTheme(options);
+```
+
+<Field title="options" type="SiteOptions | SiteComponent[]" required>
+  To make a theme, you can either provide a site object or a list of `SiteComponent`.
+  They can be made by using [the site function](./site.mdx), the same page also lists site options.
+
+  If you use a site object, the site id will be set to `main`.
+</Field>
