@@ -1,3 +1,5 @@
+import { ThemerContainer } from "components/themer"
+
 # Colors & theme
 
 Guider has been designed fit almost any use case for documentation.
@@ -104,7 +106,7 @@ site('site-id', {
 If you want to fully customize how your logo looks (For example, using an image as your logo), you can overwrite the full partial in **any settings layer**:
 ```tsx
 settings: {
-  logo: <p>My logo</p>
+  logo: () => <p>My logo</p>
 }
 ```
 
@@ -120,3 +122,12 @@ settings: {
 ```
 
 There are currently no other options other than `flare` and just having it disabled.
+
+
+<ThemerContainer>
+  ## Want to build a theme?
+
+  Give the color wheel a spin and generate a theme for your documentation.
+
+  If you want more freedom, you can also use this as a base for you main theme and just customize where neccesary.
+</ThemerContainer>

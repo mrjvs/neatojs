@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import { makeKey } from 'src/client/utils/make-key';
 import { Icon } from '../../components/icon';
 import type { NestableLinkComponent } from '../../../theme';
 import ActiveLink, {
@@ -110,7 +111,7 @@ export function SidebarNested(props: { link: NestableLinkComponent }) {
         })}
       >
         {props.link.items.map((link, i) => {
-          const key = `--${i}`;
+          const key = makeKey(i, link);
           if (link.type === 'link')
             return <SidebarLink key={key} link={link} indent />;
           if (link.type === 'seperator') return <SidebarSeperator key={key} />;

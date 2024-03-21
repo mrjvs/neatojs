@@ -7,6 +7,7 @@ export * from './page/redirect';
 export * from './hooks/use-guider-page';
 export * from './hooks/use-guider';
 export * from './hooks/use-toc';
+export * from './hooks/use-guider-theme';
 
 export * from './partials/index';
 export * from './components/public';

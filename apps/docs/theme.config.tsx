@@ -7,12 +7,18 @@ import {
   siteTemplate,
   social,
   type SiteComponent,
+  seperator,
 } from '@neato/guider/theme';
 import { Logo } from 'components/logo';
 
 const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
+  navigation: [
+    link('Showcase', '/showcase'),
+    link('Showcase', '/showcase'),
+    seperator(),
+  ],
   settings: {
     colors: {
       primary: '#A880FF',
@@ -37,10 +43,6 @@ const template = siteTemplate({
         href: '/favicon.png',
       },
     ],
-  },
-  logo: {
-    name: 'NeatoJS',
-    to: '/',
   },
 });
 
@@ -189,6 +191,9 @@ export default defineTheme([
             }),
             link('Tabs', gdWriting('/components/tabs'), {
               icon: 'fa6-solid:window-restore',
+            }),
+            link('Fields', gdWriting('/components/fields'), {
+              icon: 'fa6-solid:rectangle-list',
             }),
             link('Steps', gdWriting('/components/steps'), {
               icon: 'fa6-solid:list-ol',

@@ -45,11 +45,11 @@ export function TocInternal() {
     <ScrollPageHeight>
       <div className="gd-flex gd-flex-col">
         <div className="gd-space-y-2.5">
-          {headings.map((heading, i) => {
+          {headings.map((heading) => {
             if (!visibleIds.includes(heading.data.id)) return null;
             return (
               <TocLink
-                key={i}
+                key={heading.data.id}
                 active={heading.data.id === activeId}
                 heading={heading}
                 onClick={() => scrollTo(heading.data.id)}

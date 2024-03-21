@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
+import { makeKey } from 'src/client/utils/make-key';
 import ActiveLink, {
   useAreRoutesActive,
 } from '../../components/utils/activelink';
@@ -47,8 +48,8 @@ function DropdownGroup(props: { group: GroupComponent<LinkComponent> }) {
         {props.group.title}
       </p>
       {props.group.items.map((item, i) => {
-        const key = `--${i}-${item.to}`;
-        if (item.type === 'link') return <DropdownLink key={key} link={item} />;
+        if (item.type === 'link')
+          return <DropdownLink key={makeKey(i, item)} link={item} />;
         return null;
       })}
     </div>
@@ -89,7 +90,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
         {({ open }) => (
           <div
             className={classNames({
-              'gd-bg-bg gd-border gd-flex gd-items-center gd-transition-colors gd-duration-100 gd-border-bgLightest gd-py-1 gd-rounded-md gd-px-4 hover:gd-bg-bgLight gd-border-opacity-0':
+              'gd-bg-bg gd-border gd-text-left gd-flex gd-items-center gd-transition-colors gd-duration-100 gd-border-bgLightest gd-py-1 gd-rounded-md gd-px-4 hover:gd-bg-bgLight gd-border-opacity-0':
                 true,
               '!gd-border-opacity-100 gd-text-textHeading': open,
             })}
@@ -114,11 +115,10 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
       >
         <Menu.Items className="gd-absolute gd-p-2 gd-left-5 gd-right-5 sm:gd-left-0 sm:gd-right-auto gd-mt-2 sm:gd-w-72 gd-origin-top-left gd-rounded-md gd-bg-bg gd-border gd-border-bgLightest">
           {props.dropdown.map((item, i) => {
-            const key = `--${i}`;
             if (item.type === 'group')
-              return <DropdownGroup key={key} group={item} />;
+              return <DropdownGroup key={makeKey(i, item)} group={item} />;
             if (item.type === 'link')
-              return <DropdownLink key={key} link={item} />;
+              return <DropdownLink key={makeKey(i, item)} link={item} />;
             return null;
           })}
         </Menu.Items>
