@@ -102,7 +102,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
             })}
           >
             <span className="gd-mr-2">
-              {activeItem?.title ?? 'Select site...'}
+              {activeItem?.title ?? 'Select site'}
             </span>
             <Icon icon="flowbite:chevron-sort-solid" className="gd-text-text" />
             <UpdateHead active={open} />

@@ -38,7 +38,7 @@ export default function LandingPage() {
         <HomeCardContainer>
           {projects.map((v) => (
             <HomeCard.Card
-              key={v.icon}
+              key={v.href}
               icon={v.icon}
               right={
                 <Button to={v.href} type="secondary">
