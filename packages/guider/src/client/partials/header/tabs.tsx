@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { makeKey } from 'src/client/utils/make-key';
 import ActiveLink from '../../components/utils/activelink';
 import type {
   CustomComponentComponent,
@@ -36,7 +37,7 @@ export function HeaderTabs(props: { tabs: TabsChildren[] }) {
   return (
     <div className="gd-border-t gd-border-line gd-px-6 gd-pb-0 -gd-mx-6 gd-space-x-6">
       {props.tabs.map((v, i) => {
-        const key = `--${i}`;
+        const key = makeKey(i, v);
         if (v.type === 'component')
           return <CustomComponentTab key={key} component={v} />;
         if (v.type === 'link') return <TabLink key={key} link={v} />;

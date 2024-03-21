@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { makeKey } from 'src/client/utils/make-key';
 import type {
   CustomComponentComponent,
   LinkComponent,
@@ -10,6 +11,7 @@ import ActiveLink from '../../components/utils/activelink';
 function NavLink(props: { link: LinkComponent }) {
   return (
     <ActiveLink
+      className="hover:gd-text-textHeading gd-p-2 gd-transition-colors gd-duration-100"
       activeClassName="gd-text-textHeading"
       href={props.link.to}
       exact={props.link.exact}
@@ -31,14 +33,16 @@ function NavCustomComponent(props: { component: CustomComponentComponent }) {
 }
 
 function NavSeperator() {
-  return <hr className="gd-w-px gd-h-full gd-border-0 gd-bg-line" />;
+  return (
+    <hr className="gd-w-full gd-h-px md:gd-w-px md:gd-h-full gd-border-0 gd-bg-line" />
+  );
 }
 
 export function HeaderNav(props: { items: TopNavChildren[] }) {
   return (
     <>
       {props.items.map((v, i) => {
-        const key = `--${i}`;
+        const key = makeKey(i, v);
         if (v.type === 'component')
           return <NavCustomComponent key={key} component={v} />;
         if (v.type === 'link') return <NavLink key={key} link={v} />;

@@ -9,7 +9,7 @@ export type CreateRedirectOptions = {
 function Redirect(props: { to: string; children?: ReactNode }) {
   const router = useRouter();
   useEffect(() => {
-    router.push(props.to);
+    router.replace(props.to);
   }, []);
 
   return props.children;

@@ -52,7 +52,7 @@ export function HeaderInternal() {
               </>
             ) : null}
           </div>
-          <div className="gd-hidden md:gd-flex gd-items-center gd-space-x-6">
+          <div className="gd-hidden md:gd-flex gd-items-center gd-space-x-3">
             <HeaderNav items={site.navigation} />
             {site.github ? (
               <GithubDisplay
@@ -62,13 +62,15 @@ export function HeaderInternal() {
             ) : null}
           </div>
           <div className="gd-flex md:gd-hidden gd-items-center">
-            <TopMobileNav
-              items={site.navigation}
-              github={{
-                org: site.github?.split('/')[0],
-                repo: site.github?.split('/', 2)[1],
-              }}
-            />
+            {site.navigation.length > 0 || site.github ? (
+              <TopMobileNav
+                items={site.navigation}
+                github={{
+                  org: site.github?.split('/')[0],
+                  repo: site.github?.split('/', 2)[1],
+                }}
+              />
+            ) : null}
           </div>
         </div>
         <div className="gd-hidden md:gd-block">
