@@ -1,10 +1,11 @@
+import type { ThemeColorStoreColors } from '@neato/guider/client';
 import { Button } from '@neato/guider/client';
 import classNames from 'classnames';
 import type { ReactNode } from 'react';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import type { HsbColor } from 'hooks/color-select';
 import { hsbToColorToString, useColorSelect } from 'hooks/color-select';
-import { useGuideThemePicker } from 'hooks/use-guider-theme-picker';
+import { makeColors, useGuideThemePicker } from 'hooks/use-guider-theme-picker';
 import styles from './themer.module.css';
 
 function ThemeColor(props: {
@@ -89,6 +90,7 @@ function ColorPicker(props: {
 export function ThemeColorPicker(props: {
   colors: [HsbColor, HsbColor];
   setColors: (n: [HsbColor, HsbColor]) => void;
+  onGetCode?: (colors: [HsbColor, HsbColor]) => void;
 }) {
   const { colors, setColors } = props;
   const [selectedColor, setSelectedColor] = useState(0);
@@ -128,27 +130,72 @@ export function ThemeColorPicker(props: {
         />
       </div>
       <div className="p-4">
-        <Button className="w-full">Get the code</Button>
+        <Button className="w-full" onClick={() => props.onGetCode?.(colors)}>
+          Get the code
+        </Button>
       </div>
     </div>
   );
 }
 
-export function Themer() {
+export function Themer(props: {
+  onGetCode?: (colors: ThemeColorStoreColors) => void;
+}) {
   const [colors, setColors] = useGuideThemePicker();
+  const onGetCode = useCallback(
+    (c: [HsbColor, HsbColor]) => {
+      props.onGetCode?.(makeColors(c));
+    },
+    [props.onGetCode],
+  );
 
-  return <ThemeColorPicker colors={colors} setColors={setColors} />;
+  return (
+    <ThemeColorPicker
+      colors={colors}
+      setColors={setColors}
+      onGetCode={onGetCode}
+    />
+  );
 }
 
 export function ThemerContainer(props: { children?: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const tokenRef = useRef<HTMLSpanElement | null>(null);
+  const [hasCode, setHasCode] = useState(false);
+  const onGetCode = useCallback((c: ThemeColorStoreColors) => {
+    if (tokenRef.current) {
+      tokenRef.current.innerText = JSON.stringify(c, null, 2);
+      return;
+    }
+    if (ref.current) {
+      setHasCode(true);
+      const token = [
+        ...ref.current.querySelectorAll('code [data-line] span'),
+      ].find(
+        (el) => (el as HTMLSpanElement).innerText === 'CODE',
+      ) as HTMLSpanElement | null;
+      if (token) {
+        tokenRef.current = token;
+        token.innerText = JSON.stringify(c, null, 2);
+      }
+    }
+  }, []);
+
   return (
-    <div className="p-8 mt-28 flex border border-line rounded-xl">
-      <div className="flex-1 py-12 mr-8 [&>*:first-child]:mt-0">
-        {props.children}
-      </div>
-      <div className="w-[17rem] relative">
-        <div className="absolute inset-x-0 bottom-0">
-          <Themer />
+    <div
+      className={hasCode ? 'relative mb-[24rem]' : 'relative [&_figure]:hidden'}
+    >
+      <div className="p-8 mt-28 flex border border-line rounded-xl">
+        <div
+          ref={ref}
+          className="flex-1 py-12 mr-8 [&>*:first-child]:mt-0 [&>figure]:absolute [&>figure]:inset-x-0 [&>figure]:-bottom-12 [&>figure]:translate-y-full"
+        >
+          {props.children}
+        </div>
+        <div className="w-[17rem] relative">
+          <div className="absolute inset-x-0 bottom-0">
+            <Themer onGetCode={onGetCode} />
+          </div>
         </div>
       </div>
     </div>
