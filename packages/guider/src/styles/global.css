@@ -21,6 +21,11 @@ body[data-stop-overflow="true"] {
   scrollbar-gutter: stable;
 }
 
+body[data-mobile-stop-overflow="true"] {
+  @apply gd-overflow-hidden md:gd-overflow-auto;
+  scrollbar-gutter: stable;
+}
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
