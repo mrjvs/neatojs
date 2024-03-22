@@ -3,27 +3,22 @@ import { useMemo, useState } from 'react';
 import { Showcase } from 'components/showcase-layout';
 import type { ShowcaseTag, ShowcaseType } from 'components/showcase-card';
 import { ShowcaseCard, ShowcaseCardContainer } from 'components/showcase-card';
+import pretendoImg from 'public/showcases/pretendo.png';
+import mwAccountImg from 'public/showcases/movie-web-account.png';
 
 const showcases: ShowcaseType[] = [
   {
     title: 'Pretendo',
     description: 'Uses Guider for protocol documentation.',
     href: 'https://developer.pretendo.network/',
-    imageUrl: 'https://placehold.co/600x400',
-    tags: ['guider'],
-  },
-  {
-    title: 'movie-web docs',
-    description: 'Uses Guider for self-hosting documentation.',
-    href: 'https://movie-web.github.io/docs/',
-    imageUrl: 'https://placehold.co/600x400',
+    imageUrl: pretendoImg.src,
     tags: ['guider'],
   },
   {
     title: 'movie-web account',
     description: 'Uses Config for their account service.',
     href: 'https://github.com/movie-web/movie-web/',
-    imageUrl: 'https://placehold.co/600x400',
+    imageUrl: mwAccountImg.src,
     tags: ['config'],
   },
 ];

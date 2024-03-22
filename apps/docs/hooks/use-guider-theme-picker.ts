@@ -49,7 +49,6 @@ export function makeColors(c: [HsbColor, HsbColor]): ThemeColorStoreColors {
   const bg = Color(hsbToColorToString(c[1]));
   const text = moveRatioColorToContrastPoint(bg, bg, 0.7);
 
-  // TODO add semantic colors (just make a light version and a dark version)
   return {
     primary: primary.hex(),
     primaryLighter: moveColorToContrastPoint(primary, primary, -30).hex(),
