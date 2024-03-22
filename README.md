@@ -10,7 +10,7 @@
 - @neato/guider - beautiful documentation generator framework based on nextjs (ALPHA)
 
 ## Upcoming packages
-- @neato/router - http router based on fastify ()
-- @neato/orm - mini ORM, it's just migrations, mapper and a query builder
-- @neato/email - JSX based email template engine
+- @neato/router - http router based on fastify
 - @neato/auth - fully fledged authentication system, including permissions
+- @neato/jobs - persistent job queue
+- @neato/log - simple logger with good pretty defaults
