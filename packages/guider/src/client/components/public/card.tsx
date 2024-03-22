@@ -23,7 +23,7 @@ export function Card(props: CardProps) {
 
 export function CardGrid(props: { children?: ReactNode }) {
   return (
-    <div className="gd-grid gd-grid-cols-1 lg:gd-grid-cols-3 gd-mx-16 gd-my-6 gd-gap-6">
+    <div className="gd-grid gd-grid-cols-1 lg:gd-grid-cols-3 md:gd-mx-16 gd-my-6 gd-gap-6">
       {props.children}
     </div>
   );

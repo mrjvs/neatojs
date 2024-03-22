@@ -2,7 +2,7 @@ import type { ThemeColorStoreColors } from '@neato/guider/client';
 import { Button } from '@neato/guider/client';
 import classNames from 'classnames';
 import type { ReactNode } from 'react';
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import type { HsbColor } from 'hooks/color-select';
 import { hsbToColorToString, useColorSelect } from 'hooks/color-select';
 import { makeColors, useGuideThemePicker } from 'hooks/use-guider-theme-picker';
@@ -185,15 +185,15 @@ export function ThemerContainer(props: { children?: ReactNode }) {
     <div
       className={hasCode ? 'relative mb-[24rem]' : 'relative [&_figure]:hidden'}
     >
-      <div className="p-8 mt-28 flex border border-line rounded-xl">
+      <div className="sm:p-8 mt-28 flex flex-col lg:flex-row sm:border sm:border-line rounded-xl">
         <div
           ref={ref}
           className="flex-1 py-12 mr-8 [&>*:first-child]:mt-0 [&>figure]:absolute [&>figure]:inset-x-0 [&>figure]:-bottom-12 [&>figure]:translate-y-full"
         >
           {props.children}
         </div>
-        <div className="w-[17rem] relative">
-          <div className="absolute inset-x-0 bottom-0">
+        <div className="lg:w-[17rem] relative">
+          <div className="lg:absolute inset-x-0 bottom-0">
             <Themer onGetCode={onGetCode} />
           </div>
         </div>
