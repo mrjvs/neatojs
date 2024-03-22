@@ -69,14 +69,13 @@ export function ShowcaseCard(props: { showcase: ShowcaseType }) {
     <article className="border-line border p-4 rounded-2xl">
       <Link
         href={props.showcase.href}
-        className="block hover:opacity-75 aspect-video w-full bg-bgLightest mb-6 rounded-xl overflow-hidden"
-      >
-        <img
-          src={props.showcase.imageUrl}
-          alt={props.showcase.title}
-          className="object-cover object-center"
-        />
-      </Link>
+        className="block hover:opacity-75 border-line border aspect-video w-full bg-bgLightest mb-6 rounded-xl overflow-hidden"
+        style={{
+          backgroundImage: `url(${props.showcase.imageUrl})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+      />
       <Link href={props.showcase.href}>
         <h1 className="text-lg hover:text-primary font-bold mb-1 text-textHeading">
           {props.showcase.title}

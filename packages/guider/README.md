@@ -13,7 +13,6 @@ Beautiful documentation sites, without all the hassle. Check out the documentati
 
 ## 🍄Installation / usage
 
-> [TIP]
 > **Visit the [documentation](https://neatojs.com/docs/guider/guides/installation) on how to install.
 
 

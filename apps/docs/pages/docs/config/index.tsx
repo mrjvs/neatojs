@@ -18,7 +18,7 @@ export default function LandingPage() {
         <Hero.Actions>
           <Button to="/docs/config/guide/why-neat-config">Get started</Button>
           <Button to="https://github.com/mrjvs/neatojs" type="secondary">
-            View on github
+            View on GitHub
           </Button>
         </Hero.Actions>
       </Hero>
