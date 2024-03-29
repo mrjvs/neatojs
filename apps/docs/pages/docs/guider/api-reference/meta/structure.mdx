@@ -1,5 +1,27 @@
 # Structure of `_meta.json`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Find out the structure of the `_meta.json` file.
+
+
+## The file
+
+The `_meta.json` file can created and placed in any folder in the `/pages` directory.
+
+The meta file will be applied to all routes and child routes of the folder.
+
+<Tip>
+  All fields inside the meta file can also be specified in the Frontmatter of a page, so you don't need to make a meta file for a single page.
+</Tip>
+
+
+## Reference
+
+<Field title="site" type="string">
+  Which site the page(s) belong to, defaults to the first (or only) site.
+</Field>
+<Field title="directory" type="string">
+  Which directory the page(s) is in, defaults to the first directory of the selected site.
+</Field>
+<Field title="layout" type="string">
+  Which layout the page(s) should be displayed with, defaults to the layout with id `default`.
+</Field>
