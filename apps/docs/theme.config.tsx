@@ -212,7 +212,7 @@ export default defineTheme([
             link('directory()', gdApi('/theme/directory')),
             link('link()', gdApi('/theme/link')),
             link('group()', gdApi('/theme/group')),
-            link('seperator()', gdApi('/theme/seperator')),
+            link('separator()', gdApi('/theme/separator')),
             link('component()', gdApi('/theme/component')),
             link('social()', gdApi('/theme/social')),
             link('Layout settings', gdApi('/theme/settings')),

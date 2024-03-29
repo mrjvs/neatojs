@@ -21,7 +21,7 @@ export default defineTheme({
 ```
 
 
-## Reference - link parameters
+## Reference - Link parameters
 
 ```tsx
 function link(title, to, options);
@@ -46,7 +46,7 @@ function link(title, to, options);
       If clicking the link should open a new tab or not.
     </Field>
     <Field title="exact" type="boolean">
-      If the active page check should check the exact page and not it's child routes. Useful in the case where you have a homepage in navigation.
+      If the active page check should check the exact page and not its child routes. Useful in the case where you have a homepage in navigation.
     </Field>
     <Field title="style" type="string">
       The display style of the link, can be `default` or `star`.
@@ -101,7 +101,7 @@ function link.nested(title, to, items);
   Where the link goes to. For example: `/docs/guides/guide-a`.
 </Field>
 
-<Field title="items" type="Array<LinkComponent | SeperatorComponent>" required>
+<Field title="items" type="Array<LinkComponent | SeparatorComponent>" required>
   The child items of the nested link.
 </Field>
 
@@ -116,7 +116,7 @@ function link.nested(title, items);
   The title of the link.
 </Field>
 
-<Field title="items" type="Array<LinkComponent | SeperatorComponent>" required>
+<Field title="items" type="Array<LinkComponent | SeparatorComponent>" required>
   The child items of the nested link.
 </Field>
 
@@ -137,7 +137,7 @@ function link.nested(options);
     <Field title="to" type="string">
       Where the link goes to. For example: `/docs/guides/guide-a`.
     </Field>
-    <Field title="items" type="Array<LinkComponent | SeperatorComponent>" required>
+    <Field title="items" type="Array<LinkComponent | SeparatorComponent>" required>
       The child items of the nested link.
     </Field>
     <Field title="icon" type="string">

@@ -1,7 +1,6 @@
 # `component()`
 
-A custom component for a navigation item,
-for if you want to add custom functionality to your sidebars (or other navigation structures).
+Allows using a custom component for a navigation item. Useful if you want to add custom functionality to your sidebars (or other navigation structures).
 
 
 ## Example
@@ -38,31 +37,8 @@ function component(comp);
   A function that returns JSX. You can run React hooks in here.
 </Field>
 
-<Field title="to" type="string" required>
-  temp.
-</Field>
 
-<Field title="options" type="ExtraLinkOptions">
-  Extra options for this link. All fields are optional.
-
-  <Field.Properties>
-    <Field title="icon" type="string">
-      temp.
-    </Field>
-    <Field title="newTab" type="boolean">
-      temp.
-    </Field>
-    <Field title="exact" type="boolean">
-      temp.
-    </Field>
-    <Field title="style" type="string">
-      temp.
-    </Field>
-  </Field.Properties>
-</Field>
-
-
-## Reference - options
+## Reference - Options
 
 ```tsx
 function component(options);

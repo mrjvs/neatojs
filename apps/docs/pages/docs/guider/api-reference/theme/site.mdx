@@ -1,6 +1,6 @@
 # `site()`
 
-A site is an instance of root level configuration, if you need to modify navigation items, footers and alike, you'll be modifying a site.
+A site is an instance of root level configuration. If you need to modify navigation items, footers and alike, you'll be modifying a site.
 
 You can find more information on how to use sites effectively in [this guide](../../guides/advanced/multi-site.mdx).
 
@@ -41,8 +41,8 @@ function site(id, options);
 
       Read more about how to use templates in [this guide](../../guides/advanced/multi-site.mdx#site-templates).
     </Field>
-    <Field title="navigation" type="Array<LinkComponent | SeperatorComponent | CustomComponentComponent>">
-      List of items shown in the top navigation bar. You can only specify `seperator()`, `link()` and `component()`.
+    <Field title="navigation" type="Array<LinkComponent | SeparatorComponent | SeparatorComponent>">
+      List of items shown in the top navigation bar. You can only specify `separator()`, `link()` and `component()`.
       Read more about those on their respective documentation pages.
     </Field>
     <Field title="tabs" type="Array<LinkComponent | CustomComponentComponent>">
@@ -62,12 +62,12 @@ function site(id, options);
 
       You can either specify an object for your meta data, which will follow the structure [defined here](https://github.com/garmeeh/next-seo?tab=readme-ov-file#nextseo-options).
 
-      Or you can pass in a function to render your own meta tags. Note that you do **have** to use [NextSeo](https://github.com/garmeeh/next-seo) to use this method.
+      Or you can pass in a function to render your own meta tags. Note that you do **must** use [NextSeo](https://github.com/garmeeh/next-seo) when using this method.
 
       Read more about how to use this on [this page](../../guides/config/seo.mdx).
     </Field>
     <Field title="github" type="string">
-      A repository identifier, if specified an github widget with the star count and fork count is displayed on the right side of the header.
+      A repository identifier, if specified a GitHub widget with the star count and fork count is displayed on the right side of the header.
 
       The identifier needs to be either `{ORG_NAME}/{REPO_NAME}` or `{USER_NAME}/{REPO_NAME}`. For example: `mrjvs/neatojs`.
     </Field>
@@ -78,20 +78,20 @@ function site(id, options);
 
       <Field.Properties>
         <Field title="name" type="string">
-          Text to display in the logo
+          Text to display in the logo.
         </Field>
         <Field title="to" type="string">
-          Link to make the logo redirect towards of clicked. If not specified, the logo is not clickable
+          Link to make the logo redirect to when clicked. If not specified, the logo is not clickable.
         </Field>
       </Field.Properties>
     </Field>
     <Field title="layout" type="string">
-      The default layout to show for all pages associated with this site. Defaults to the layout with ID `default`.
+      The default layout to show for all pages associated with this site. Defaults to the layout with the ID `default`.
     </Field>
     <Field title="layouts" type="object[]">
       List of layouts to add to the site. Pages and directories can specify which layout they want to use.
 
-      The default included layouts are still added even if you add items to this list. You can change the default layouts by making a layout yourself with the same id as the defaults.
+      The default included layouts are still added even if you add items to this list. You can change the default layouts by making a layout yourself with the same ID as the defaults.
 
       Read more about layouts in [this guide](../../guides/advanced/customizing-layout.mdx#using-layouts).
 
@@ -107,7 +107,7 @@ function site(id, options);
     <Field title="settings" type="LayoutSettings">
       The layout settings for this site, read more [about layout settings](./settings.mdx).
 
-      The settings in this settings layer are applied as a base. Followed by the settings on the chosen layout, then finally the directory.
+      The settings in this settings layer act as defaults for following layers. The settings are overriden by the layout settings and directory settings in that order if they exist.
     </Field>
     <Field title="directories" type="DirectoryComponent[]">
       List of directories for this site, read more [about directories here](./directory.mdx).
@@ -116,7 +116,8 @@ function site(id, options);
     </Field>
     <Field title="contentFooter" type="object">
       Options for the content footer (the footer placed right below the content).
-      Specifying options here or not will not influence if it is shown, check [the footer page](../../guides/advanced/footer.mdx) for more info.
+
+      The visibility of the content footer is not controlled by the settings. To control the visibility of the footer, check [the footer page](../../guides/advanced/footer.mdx) for more info.
 
       <Field.Properties>
         <Field title="text" type="string">
@@ -126,7 +127,7 @@ function site(id, options);
           List of social media links shown in the content footer. Check [the social() page](./social.mdx) for usage.
         </Field>
         <Field title="editRepositoryBase" type="string">
-          Base URL of your git repository, it will be used to show a "edit on github" link. Leave undefined if you don't want such a link.
+          Base URL of your Git repository, it will be used to show a "Edit on GitHub" link. Leave undefined if you don't want such a link.
 
           Check [this page](../../guides/advanced/footer.mdx#configuring-the-content-footer) for information on how to configure it.
         </Field>
@@ -134,7 +135,8 @@ function site(id, options);
     </Field>
     <Field title="pageFooter" type="object">
       Options for the page footer (the footer placed at the very bottom of the page).
-      Specifying options here or not will not influence if it is shown, check [the footer page](../../guides/advanced/footer.mdx) for more info.
+
+      The visibility of the page footer is not controlled by the settings. To control the visibility of the footer, check [the footer page](../../guides/advanced/footer.mdx) for more info.
 
       <Field.Properties>
         <Field title="text" type="string">

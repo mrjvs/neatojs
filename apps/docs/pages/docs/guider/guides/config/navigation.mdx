@@ -12,11 +12,11 @@ You can use the following components, all of which are imported from `@neato/gui
 - `link(){:ts}`: A standard sidebar link with optional icon.
 - `link.nested(){:ts}`: A nested link, it's collapsable by the user.
 - `group(){:ts}`: A group or section, used for visual hierarchy.
-- `seperator(){:ts}`: A plain & simple line.
+- `separator(){:ts}`: A plain & simple line.
 - `component(){:ts}`: A custom component, you can render any React component in here.
 
 <Note>
-  Groups can contain any other components except another group. Nested links can only contain normal links and seperators.
+  Groups can contain any other components except another group. Nested links can only contain normal links and separators.
 </Note>
 
 Here is an example that uses every component. This sidebar configuration will
@@ -40,7 +40,7 @@ sidebar: [
   group("Group A", [
     link("Link E", "/link/e"),
   ])
-  seperator(),
+  separator(),
   component(() => <p>Custom component</p>),
 ]
 ```
@@ -52,7 +52,7 @@ Adding links to the navigation bar is quite easy.
 
 You can use the following components, all of which are imported from `@neato/guider/theme`.
 - `link(){:ts}`: A standard link with optional icon.
-- `seperator(){:ts}`: A plain & simple line.
+- `separator(){:ts}`: A plain & simple line.
 
 You can configure the top navigation per site. Here is an example that uses every component:
 
@@ -61,7 +61,7 @@ site("my-site", {
   navigation: [
     link("Link A", "/link/a"),
     link("Link B with icon", "/link/b", { icon: 'fa6-solid:b' }),
-    seperator(),
+    separator(),
     link("Link C", "/link/c"),
   ]
 })
