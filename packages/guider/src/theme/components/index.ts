@@ -2,7 +2,7 @@ export * from './component';
 export * from './directory';
 export * from './group';
 export * from './link';
-export * from './seperator';
+export * from './separator';
 export * from './site';
 export * from './footer';
 export * from './layout';

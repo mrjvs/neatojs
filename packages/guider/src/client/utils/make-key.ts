@@ -1,7 +1,7 @@
 import type {
   LinkComponent,
   NestableLinkComponent,
-  SeperatorComponent,
+  SeparatorComponent,
   GroupComponent,
   CustomComponentComponent,
 } from 'src/theme';
@@ -9,7 +9,7 @@ import type {
 export type KeyableComponets =
   | LinkComponent
   | NestableLinkComponent
-  | SeperatorComponent
+  | SeparatorComponent
   | CustomComponentComponent
   | GroupComponent<any>;
 

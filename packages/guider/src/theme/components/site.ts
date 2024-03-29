@@ -4,7 +4,7 @@ import type { NextSeoProps } from 'next-seo';
 import type { DirectoryComponent } from './directory';
 import type { LinkComponent } from './link';
 import type { CustomComponentComponent } from './component';
-import type { SeperatorComponent } from './seperator';
+import type { SeparatorComponent } from './separator';
 import type { LayoutSettings, PopulatedLayoutSettings } from './settings';
 import {
   makeLayoutSettings,
@@ -24,7 +24,7 @@ import type { GroupComponent } from './group';
 
 export type TopNavChildren =
   | LinkComponent
-  | SeperatorComponent
+  | SeparatorComponent
   | CustomComponentComponent;
 
 export type TabsChildren = LinkComponent | CustomComponentComponent;

@@ -2,7 +2,7 @@ import { makeKey } from 'src/client/utils/make-key';
 import type { GroupComponent, GroupComponentChildren } from '../../../theme';
 import { SidebarLink } from './link';
 import { SidebarCustomComponent } from './component';
-import { SidebarSeperator } from './seperator';
+import { SidebarSeparator } from './separator';
 import { SidebarNested } from './nested';
 
 export function SidebarGroup(props: {
@@ -20,7 +20,7 @@ export function SidebarGroup(props: {
           return <SidebarNested key={key} link={link} />;
         if (link.type === 'component')
           return <SidebarCustomComponent key={key} component={link} />;
-        if (link.type === 'seperator') return <SidebarSeperator key={key} />;
+        if (link.type === 'separator') return <SidebarSeparator key={key} />;
         return null;
       })}
     </>
