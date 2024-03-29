@@ -1,5 +1,57 @@
 # `group()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A navigation group, can be used to categorize or group links.
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default defineTheme({
+  directories: [
+    directory("dir-a", {
+      sidebar: [
+        group("Guides", [
+          link("Guide A", "/guides/a"),
+          link("Guide B", "/guides/b"),
+        ]),
+      ]
+    })
+  ],
+})
+```
+
+
+## Reference
+
+```tsx
+function group(title, items);
+```
+
+<Field title="title" type="string" required>
+  The title of the group.
+</Field>
+
+<Field title="items" type="Array<T>" required>
+  The navigation items inside of this group, the acceptable item types depends on what the the group is in.
+</Field>
+
+
+## Reference - options
+
+```tsx
+function group(options);
+```
+
+<Field title="options" type="GroupOptions">
+  The options for this group.
+
+  <Field.Properties>
+    <Field title="title" type="string" required>
+      The title of the group.
+    </Field>
+
+    <Field title="items" type="Array<T>" required>
+      The navigation items inside of this group, the acceptable item types depends on what the the group is in.
+    </Field>
+  </Field.Properties>
+</Field>

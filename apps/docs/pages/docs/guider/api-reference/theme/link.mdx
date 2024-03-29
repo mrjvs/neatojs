@@ -1,5 +1,156 @@
 # `link()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A standard link for your navigation items. You can also nest links.
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default defineTheme({
+  directories: [
+    directory("dir-a", {
+      sidebar: [
+        link("Home", "/home"),
+        link.nested("Guides", [
+          link("Guide A", "/guides/a"),
+          link("Guide B", "/guides/b"),
+        ]),
+      ]
+    })
+  ],
+})
+```
+
+
+## Reference - link parameters
+
+```tsx
+function link(title, to, options);
+```
+
+<Field title="title" type="string" required>
+  The title of the link.
+</Field>
+
+<Field title="to" type="string" required>
+  Where the link goes to. For example: `/docs/guides/guide-a`.
+</Field>
+
+<Field title="options" type="ExtraLinkOptions">
+  Extra options for this link. All fields are optional.
+
+  <Field.Properties>
+    <Field title="icon" type="string">
+      The icon to display in the navigation item, choose from [icones](https://icones.js.org/).
+    </Field>
+    <Field title="newTab" type="boolean">
+      If clicking the link should open a new tab or not.
+    </Field>
+    <Field title="exact" type="boolean">
+      If the active page check should check the exact page and not it's child routes. Useful in the case where you have a homepage in navigation.
+    </Field>
+    <Field title="style" type="string">
+      The display style of the link, can be `default` or `star`.
+    </Field>
+  </Field.Properties>
+</Field>
+
+
+## Reference - link options
+
+```tsx
+function link(options);
+```
+
+<Field title="options" type="ExtraLinkOptions">
+  The options for this link.
+
+  <Field.Properties>
+    <Field title="title" type="string" required>
+      The title of the link.
+    </Field>
+    <Field title="to" type="string" required>
+      Where the link goes to. For example: `/docs/guides/guide-a`.
+    </Field>
+    <Field title="icon" type="string">
+      The icon to display in the navigation item, choose from [icones](https://icones.js.org/).
+    </Field>
+    <Field title="newTab" type="boolean">
+      If clicking the link should open a new tab or not.
+    </Field>
+    <Field title="exact" type="boolean">
+      If the active page check should check the exact page and not it's child routes. Useful in the case where you have a homepage in navigation.
+    </Field>
+    <Field title="style" type="string">
+      The display style of the link, can be `default` or `star`.
+    </Field>
+  </Field.Properties>
+</Field>
+
+
+## Reference - nested link parameters
+
+```tsx
+function link.nested(title, to, items);
+```
+
+<Field title="title" type="string" required>
+  The title of the link.
+</Field>
+
+<Field title="to" type="string" required>
+  Where the link goes to. For example: `/docs/guides/guide-a`.
+</Field>
+
+<Field title="items" type="Array<LinkComponent | SeperatorComponent>" required>
+  The child items of the nested link.
+</Field>
+
+
+## Reference - nested link parameters without link
+
+```tsx
+function link.nested(title, items);
+```
+
+<Field title="title" type="string" required>
+  The title of the link.
+</Field>
+
+<Field title="items" type="Array<LinkComponent | SeperatorComponent>" required>
+  The child items of the nested link.
+</Field>
+
+
+## Reference - nested link options
+
+```tsx
+function link.nested(options);
+```
+
+<Field title="options" type="NestedLinkOptions">
+  The options for this nested link.
+
+  <Field.Properties>
+    <Field title="title" type="string" required>
+      The title of the link.
+    </Field>
+    <Field title="to" type="string">
+      Where the link goes to. For example: `/docs/guides/guide-a`.
+    </Field>
+    <Field title="items" type="Array<LinkComponent | SeperatorComponent>" required>
+      The child items of the nested link.
+    </Field>
+    <Field title="icon" type="string">
+      The icon to display in the navigation item, choose from [icones](https://icones.js.org/).
+    </Field>
+    <Field title="newTab" type="boolean">
+      If clicking the link should open a new tab or not.
+    </Field>
+    <Field title="exact" type="boolean">
+      If the active page check should check the exact page and not it's child routes. Useful in the case where you have a homepage in navigation.
+    </Field>
+    <Field title="style" type="string">
+      The display style of the link, can be `default` or `star`.
+    </Field>
+  </Field.Properties>
+</Field>

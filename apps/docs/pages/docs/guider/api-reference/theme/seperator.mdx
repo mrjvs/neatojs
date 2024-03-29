@@ -1,5 +1,27 @@
 # `seperator()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A seperator, simply draws a line inbetween navigation items.
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default defineTheme({
+  directories: [
+    directory("dir-a", {
+      sidebar: [
+        link("Guide A", "/guides/a"),
+        seperator(),
+        link("Guide B", "/guides/b"),
+      ]
+    })
+  ],
+})
+```
+
+
+## Reference
+
+```tsx
+function seperator();
+```

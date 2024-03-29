@@ -1,5 +1,79 @@
 # `component()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A custom component for a navigation item,
+for if you want to add custom functionality to your sidebars (or other navigation structures).
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+function DonateButton() {
+  return (
+    <div>
+      <Button>Donate</Button>
+    </div>
+  )
+}
+
+export default defineTheme({
+  directories: [
+    directory("dir-a", {
+      sidebar: [
+        link("Home", "/home"),
+        component(() => <DonateButton />)
+      ]
+    })
+  ],
+})
+```
+
+
+## Reference
+
+```tsx
+function component(comp);
+```
+
+<Field title="comp" type="() => ReactNode" required>
+  A function that returns JSX. You can run React hooks in here.
+</Field>
+
+<Field title="to" type="string" required>
+  temp.
+</Field>
+
+<Field title="options" type="ExtraLinkOptions">
+  Extra options for this link. All fields are optional.
+
+  <Field.Properties>
+    <Field title="icon" type="string">
+      temp.
+    </Field>
+    <Field title="newTab" type="boolean">
+      temp.
+    </Field>
+    <Field title="exact" type="boolean">
+      temp.
+    </Field>
+    <Field title="style" type="string">
+      temp.
+    </Field>
+  </Field.Properties>
+</Field>
+
+
+## Reference - options
+
+```tsx
+function component(options);
+```
+
+<Field title="options" type="CustomComponentComponent">
+  Options for this custom component item.
+
+  <Field.Properties>
+    <Field title="component" type="() => ReactNode" required>
+      A function that returns JSX. You can run React hooks in here.
+    </Field>
+  </Field.Properties>
+</Field>
