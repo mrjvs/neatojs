@@ -1,5 +1,105 @@
 # `useGuiderPage()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+This React hook is the way to hook into Guider internals for the current page.
+
+
+## Example
+
+```tsx
+function useIsTocEnabled() {
+  const guider = useGuiderPage();
+  const tocState = guider.settings.tocState;
+  return tocState;
+}
+```
+
+
+## Reference
+
+```tsx
+function useGuiderPage(): GuiderPageContext;
+```
+<Field title="returnValue" type="GuiderPageContext">
+  The context for a Guider page, including the page meta data.
+
+  <Field.Properties defaultOpen>
+    <Field title="site" type="SiteComponent">
+      The currently active site.
+
+      See [the `useGuider()` page](./use-guider.mdx) for more info.
+    </Field>
+    <Field title="directory" type="DirectoryComponent">
+      The currently active directory.
+
+      See [the `useGuider()` page](./use-guider.mdx) for more info.
+    </Field>
+    <Field title="layout" type="SiteLayoutComponent">
+      The currently active layout.
+
+      See [the `useGuider()` page](./use-guider.mdx) for more info.
+    </Field>
+    <Field title="settings" type="PopulatedLayoutSettings">
+      The fully populated layout settings, all defaults are merged into it (so no optional properties).
+
+      Read more [about layout settings](../theme/settings.mdx).
+
+      See [the `useGuider()` page](./use-guider.mdx) for more info.
+    </Field>
+    <Field title="metaMap" type="MetaMapItem[]">
+      A list of the contents of your `_meta.json` files.
+
+      See [the `useGuider()` page](./use-guider.mdx) for more info.
+    </Field>
+    <Field title="page" type="PageContext">
+      Data for the current page content.
+
+      <Field.Properties>
+        <Field title="meta" type="PageMeta" required>
+          The metadata for this page.
+
+          <Field.Properties>
+            <Field title="site" type="string">
+              The site field in the Frontmatter
+            </Field>
+            <Field title="directory" type="string">
+              The directory field in the Frontmatter
+            </Field>
+            <Field title="layout" type="string">
+              The layout field in the Frontmatter
+            </Field>
+            <Field title="title" type="string">
+              The title field in the Frontmatter
+            </Field>
+            <Field title="description" type="string">
+              The description field in the Frontmatter
+            </Field>
+          </Field.Properties>
+        </Field>
+        <Field title="headings" type="MdxHeadings[]" required>
+          The headings in the page content in order of appearance.
+
+          <Field.Properties>
+            <Field title="depth" type="number" required>
+              The depth of the heading. Equals to the amount of hashtags of the heading.
+            </Field>
+            <Field title="value" type="string" required>
+              Text content of the heading.
+            </Field>
+            <Field title="data" type="object" required>
+              Extra data associated with the heading.
+
+              <Field.Properties>
+                <Field title="id" type="string" required>
+                  The ID of the heading.
+                </Field>
+              </Field.Properties>
+            </Field>
+          </Field.Properties>
+        </Field>
+        <Field title="excerpt" type="string">
+          An first paragraph of the page content.
+        </Field>
+      </Field.Properties>
+    </Field>
+  </Field.Properties>
+</Field>

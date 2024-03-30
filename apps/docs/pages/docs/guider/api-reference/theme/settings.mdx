@@ -1,5 +1,69 @@
 # Layout settings
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Layout settings are the interface on which you modify your layout.
+
+All of these settings can be changed in any settings layer, [read more about settings layers](../../guides/advanced/customizing-layout.mdx).
+
+
+## Example
+
+```tsx
+settings: {
+  toc: false,
+  colors: {
+    primary: '#f76957',
+  }
+}
+```
+
+
+## About partials
+
+Partial settings work slightly differently than other settings:
+- To overwrite a partial, pass in a function (e.g. `toc: () => <p>hello</p>{:tsx}`). This will also **show** the partial.
+- Set a partial to `true{:tsx}` to **show** the partial, but not change its contents (e.g. `toc: true{:tsx}`).
+- Set a partial to `false{:tsx}` to **hide** the partial, but not change its contents (e.g. `toc: false{:tsx}`).
+- To use the settings from the upper layer. Just don't set the settings (or set it to undefined).
+
+You can read more about layout partials in the [layout settings guide](../../guides/advanced/customizing-layout.mdx).
+
+When you overwrite a partial, you can use `useGuiderPage()` to get the current page information. ([Read more here](../functions/use-guider-page.mdx)).
+
+
+## Reference
+
+<Field title="toc" type="boolean | () => ReactNode">
+  The table of contents partial. Check [this section](#about-partials) for information on how to use partials.
+</Field>
+<Field title="sidebar" type="boolean | () => ReactNode">
+  The sidebar partial. Check [this section](#about-partials) for information on how to use partials.
+</Field>
+<Field title="navigation" type="boolean | () => ReactNode">
+  The navigation/header partial. Check [this section](#about-partials) for information on how to use partials.
+</Field>
+<Field title="contentFooter" type="boolean | () => ReactNode">
+  The content footer partial. Check [this section](#about-partials) for information on how to use partials.
+</Field>
+<Field title="pageFooter" type="boolean | () => ReactNode">
+  The page footer partial. Check [this section](#about-partials) for information on how to use partials.
+</Field>
+<Field title="logo" type="boolean | () => ReactNode">
+  The logo partial. Check [this section](#about-partials) for information on how to use partials.
+</Field>
+<Field title="pageLayout" type="() => ReactNode">
+  The page layout partial. Check [this section](#about-partials) for information on how to use partials.
+
+  <Note>
+    This partial cannot be hidden, the layout wraps the entire site.
+  </Note>
+</Field>
+<Field title="backgroundPattern" type="boolean | string">
+  the background pattern settings, set it `flare` to have a nice shard of light on your page background.
+
+  Just like partials, you can use `true` and `false` to show or hide the partial.
+</Field>
+<Field title="colors" type="object">
+  The layout colors, this is how you customize the theme colors.
+
+  Discover the theme colors [in this guide](../../guides/config/theming.mdx#changing-colors).
+</Field>

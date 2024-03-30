@@ -237,6 +237,15 @@ export default defineTheme([
             link('<GuiderLayout/>', gdApi('/components/guider-layout')),
             link('<GuiderSidebar/>', gdApi('/components/guider-sidebar')),
             link('<GuiderToc/>', gdApi('/components/guider-toc')),
+            link('<GuiderLogo/>', gdApi('/components/guider-logo')),
+            link(
+              '<GuiderContentFooter/>',
+              gdApi('/components/guider-content-footer'),
+            ),
+            link(
+              '<GuiderPageFooter/>',
+              gdApi('/components/guider-page-footer'),
+            ),
           ]),
         ],
       }),
