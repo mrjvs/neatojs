@@ -86,3 +86,27 @@ If you would like the user's choice to be stored, you can give a `storageKey` pr
     Tab C
   </Tabs.Tab>
 </Tabs>
+
+
+## Component API - `<Tabs />`
+
+The Tabs component
+
+<Field title="items" type="string[]" required>
+  The tab items, must have the same number of items as there are tabs.
+</Field>
+<Field title="storageKey" type="string">
+  The storage key, to store the preferences against. See [this section](#storing-the-tab-choice) for usage.
+</Field>
+<Field title="children" type="any">
+  The tabs to display.
+</Field>
+
+
+## Component API - `<Tabs.Tabs />`
+
+A Tabs item can only be a child of a `<Tabs />{:tsx}`.
+
+<Field title="children" type="any">
+  The contents of this Tab.
+</Field>
