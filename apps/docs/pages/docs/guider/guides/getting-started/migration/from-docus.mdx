@@ -1,5 +1,48 @@
 # Migrating from Docus
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Migrating can be a long journey, this guide aims to create a clear set of steps to move to Guider.
+
+
+## Compatability table
+
+| Feature | Docus | Guider |
+|---|:---:|:---:|
+| Markdown based pages | **✓** | **✓** |
+| Search bar | **✓** | 𐄂 |
+| Dark mode | **✓** | **✓** |
+| Light mode | **✓** | 𐄂 |
+| SEO & custom meta tags | **✓** | **✓** |
+| Redirects | **✓** | **✓** |
+| Layouts | **✓** | **✓** |
+| Component: Alert | **✓** | **✓** (called callouts) |
+| Component: Badge | **✓** | 𐄂 |
+| Component: BlockHero | **✓** | **✓** (Looks different) |
+| Component: ButtonLink | **✓** | **✓** (called Button) |
+| Component: Callouts | **✓** | 𐄂 (despite similar name, not supported) |
+| Component: Card | **✓** | **✓** (part of the landing page) |
+| Component: CardGrid | **✓** | **✓** (part of the landing page) |
+| Component: CodeGroup | **✓** | **✓** |
+| Component: CodeBlock | **✓** | **✓** (called Frame) |
+| Component: CopyButton | **✓** | 𐄂 |
+| Component: Icon | **✓** | 𐄂 |
+| Component: List | **✓** | 𐄂 |
+| Component: Sandbox | **✓** | 𐄂 |
+| Component: Terminal | **✓** | 𐄂 |
+| Component: VideoPlayer | **✓** | 𐄂 |
+
+
+## Migration steps
+
+1. **Make a guider project:** Make a new guider project by following [this guide](../installation.mdx).
+2. **Copy your markdown files over:** Copy over all Markdown files into the pages directory of the new project.
+  - Remove the numbers prefixed on front of your files and folders. The order is now in the theme config.
+  - Replace the component directives with MDX React components.
+  - Update frontmatter to set the layout ID instead of modifying the layout settings directly. See [this page](../../advanced/customizing-layout.mdx).
+  - Replace title in the frontmatter to a link in the theme config.
+3. **Migrate _dir.yml files:** dir files don't exist in Guider. Check these steps:
+  - title goes in a `group()` in the theme config.
+  - replace `navigation.redirect` with a `createRedirect()` in a index.tsx
+  - title template can be set globally, not a per directory basis.
+4. **Migrate app.config.ts:** The settings in Guider go into the theme config, along with your sidebar contents.
+5. **Migrate vue components to react:** Guider is based in react, so to have custom components work you will need to port them.
+6. **Finished:** That should be everything to migrate to Guider, congratulations!
