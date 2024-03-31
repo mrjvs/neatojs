@@ -5,7 +5,7 @@ export function MarkdownTable(props: MarkdownProps) {
   return (
     <div
       className={classNames(
-        'gd-rounded-xl gd-border gd-border-line gd-overflow-hidden gd-my-8',
+        'gd-rounded-xl gd-border gd-border-line gd-overflow-x-auto gd-grid gd-grid-cols-1 gd-my-8',
         props.attrs.class,
       )}
     >
