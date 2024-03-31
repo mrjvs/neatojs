@@ -1,4 +1,3 @@
-import { parse, format } from 'node:path';
 import { compile } from '@mdx-js/mdx';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkHeadings from '@vcarl/remark-headings';
@@ -46,13 +45,24 @@ export async function mdLoader(source: string): Promise<string> {
             const hasProtocol = Boolean(url.match(/[a-zA-Z]+:/g));
             if (hasProtocol) return url;
 
-            // must be relative url
             const [path, hash] = url.split('#', 2);
-            const parsedPath = parse(path);
-            parsedPath.ext = '';
-            parsedPath.base = '';
+
+            const pathSections = path.split('/');
+            const lastSectionIndex = pathSections.length - 1;
+
+            // We get the last section so that only the last extension is removed
+            // e.g. bar.ts.mdx -> bar.ts
+            const lastDot = pathSections[lastSectionIndex].lastIndexOf('.');
+
+            // If there is no dot, there is no extension to remove so we can return the url as is
+            if (lastDot === -1) return url;
+
+            pathSections[lastSectionIndex] = pathSections[
+              lastSectionIndex
+            ].slice(0, lastDot);
+
             const hashPath = hash && hash.length > 0 ? `#${hash}` : '';
-            return `${format(parsedPath)}${hashPath}`;
+            return `${pathSections.join('/')}${hashPath}`;
           },
         },
       ],
