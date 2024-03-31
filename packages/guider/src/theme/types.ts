@@ -17,4 +17,5 @@ export type MetaMapItem = {
 export type PageMapItem = {
   sitePath: string;
   filePath: string;
+  urlSafeFilePath: string;
 };
