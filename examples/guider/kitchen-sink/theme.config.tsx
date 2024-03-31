@@ -4,7 +4,7 @@ import {
   directory,
   group,
   link,
-  seperator,
+  separator,
   site,
   type SiteComponent,
 } from '@neato/guider/theme';
@@ -19,7 +19,7 @@ const siteTemplate = site('docs', {
     link('API reference', '/api-ref'),
     link('Documentation', '/docs/guides', { icon: 'fa6-solid:house' }),
     link('API reference', '/api-ref'),
-    seperator(),
+    separator(),
   ],
   github: 'movie-web/movie-web',
 });
@@ -57,7 +57,7 @@ export default defineTheme([
             link('Guides', '/docs/guides/'),
             link('How to?', '/docs/guides/how-to'),
           ]),
-          seperator(),
+          separator(),
           link.nested('Troubleshooting', '/docs/guides/troubleshooting', [
             link('Guides', '/docs/guides/'),
             link('How to?', '/docs/guides/how-to'),

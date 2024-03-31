@@ -1,5 +1,49 @@
 # `directory()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Directories hold a site's sidebar navigation items.
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default defineTheme({
+  directories: [
+    directory("dir-a", {
+      sidebar: [
+        link("Home", "/home"),
+      ]
+    })
+  ],
+})
+```
+
+
+## Reference
+
+```tsx
+function directory(id, options);
+```
+
+<Field title="id" type="string" required>
+  The ID of the directory - Can be anything and is only used for referencing in meta files or similar.
+</Field>
+
+<Field title="options" type="DirectoryOptions" required>
+  All options of the directory.
+
+  <Field.Properties defaultOpen>
+    <Field title="layout" type="string">
+      The default layout to show for all pages associated with this directory. Defaults to the layout for the site.
+    </Field>
+    <Field title="settings" type="LayoutSettings">
+      The layout settings for this directory, read more [about layout settings](./settings.mdx).
+
+      The settings in this settings layer are applied last - overriding settings defined in sites and layouts.
+    </Field>
+    <Field title="sidebar" type="Array<LinkComponent | NestableLinkComponent | SeparatorComponent | CustomComponentComponent | GroupComponent<GroupComponentChildren>>">
+      List of links to show in the sidebar. You can specify `link()`, `link.nested()`, `separator()`, `component()`, `group()` (groups can hold all other types except for more groups).
+
+      Read more about those on their respective documentation pages.
+    </Field>
+  </Field.Properties>
+</Field>

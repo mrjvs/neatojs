@@ -1,5 +1,34 @@
 # Migrating from Mintlify
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Migrating can be a long journey, this guide aims to create a clear set of steps to move to Guider.
+
+
+## Compatability table
+
+| Feature | Mintlify | Guider |
+|---|:---:|:---:|
+| MDX based pages | **✓** | **✓** |
+| Custom CSS/JS | **✓** | **✓** |
+| Search bar | **✓** | 𐄂 |
+| Dark mode | **✓** | **✓** |
+| Light mode | **✓** | 𐄂 |
+| Banners | **✓** | 𐄂 |
+| Versions | **✓** | **✓** (through dropdown) |
+| Groups/Tabs | **✓** | **✓** |
+| Redirects | **✓** | **✓** |
+| SEO & custom meta tags | **✓** | **✓** |
+| Sitemaps | **✓** | 𐄂 |
+| Custom domain | **✓** | **✓** (you host it yourself) |
+| API playground / openAPI | **✓** | 𐄂 |
+| Snippets | **✓** | 𐄂 (use custom components instead) |
+| integrations | **✓** | 𐄂 (you can use NextJS libraries) |
+
+
+## Migration steps
+
+1. **Make a guider project:** Make a new guider project by following [this guide](../installation.mdx).
+2. **Copy your MDX files over:** Copy over all MDX files into the pages directory of the new project.
+3. **Remove or replace unsupported components:** Not all components are supported by Guider. Check the compatibility table above.
+4. **Migrate `mint.json` file:** In Mintlify, the json file is used for all configuration. In Guider this is done in the theme config. [Check out this guide](../../config/navigation.mdx).
+5. **Update frontmatter:** Mintlify has some configuration in the frontmatter. Remove the unsupported properties or move them to the theme config.
+6. **Finished:** That should be everything to migrate to Guider, congratulations!

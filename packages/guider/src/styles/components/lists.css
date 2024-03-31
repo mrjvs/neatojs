@@ -24,11 +24,11 @@
 /*
  * numbered lists
  */
-ol.neato-guider-list > li .neato-guider-list-line {
+ol.neato-guider-list > li > .neato-guider-list-line {
   @apply gd-bg-transparent gd-mt-0 gd-text-text;
 }
 
-ol.neato-guider-list > li .neato-guider-list-line::before {
+ol.neato-guider-list > li > .neato-guider-list-line::before {
   counter-increment: listitem;
   content: counter(listitem) ".";
 }

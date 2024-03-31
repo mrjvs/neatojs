@@ -1,5 +1,42 @@
 # Cloudflare Pages
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A guide to deploy a Guider project to Cloudflare Pages.
+
+
+## The guide
+
+Follow the steps below to deploy a Guider project to Cloudflare Pages.
+
+<Steps>
+  <Steps.Step>
+    ### Make a new Application
+
+    Go to [the cloudflare dashboard](https://dash.cloudflare.com) on under "Workers & Pages" click "Create application".
+  </Steps.Step>
+  <Steps.Step>
+    ### Select your repository
+
+    On the "Create application" page, select the "Pages" tab.
+
+    Choose a repository by pressing "Connect to Git" and then selecting it from the repository list.
+  </Steps.Step>
+  <Steps.Step>
+    ### Configure your project
+
+    Configure the following fields:
+    - **Project name:** Choose a fitting name.
+    - **Production branch:** Select your release branch.
+    - **Framework preset:** Select "Next.js (Static HTML Export)"
+    - **Build command:** Set to `npm run build` (or your favourite package manager)
+    - **Root directory (advanced):** If you have your project in a subdirectory, set it here. otherwise leave empty.
+  </Steps.Step>
+  <Steps.Step>
+    ### Deploy
+
+    Click the `Save and Deploy` button and wait until your site has been deployed.
+
+    <Note>
+      Cloudflare has linked this deploy with your branch, meaning that once new changes are pushed. Cloudflare will automatically update your site.
+    </Note>
+  </Steps.Step>
+</Steps>

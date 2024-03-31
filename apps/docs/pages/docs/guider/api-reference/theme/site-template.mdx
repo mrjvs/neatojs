@@ -1,0 +1,29 @@
+# `siteTemplate()`
+
+Site templates can be used to make a reusuable instance of a site. You can use `Site.extends{:ts}` to utilize site templates.
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+const baseTemplate = siteTemplate({
+  // All sites that extend this template will have the "github" property set
+  github: "mrjvs/neatojs",
+})
+
+export default defineTheme({
+  extends: [baseTemplate],
+  directories: [],
+})
+```
+
+
+## Reference
+
+```tsx
+function siteTemplate(options);
+```
+
+<Field title="options" type="SiteOptions" required>
+  This accepts the same options as a normal site would, see [the site function](./site.mdx) for the reference for those options.
+</Field>

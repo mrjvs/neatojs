@@ -1,6 +1,6 @@
 import type { PartialDeep } from 'type-fest';
 import type { LinkComponent, NestableLinkComponent } from './link';
-import type { SeperatorComponent } from './seperator';
+import type { SeparatorComponent } from './separator';
 import type { CustomComponentComponent } from './component';
 import type { GroupComponent, GroupComponentChildren } from './group';
 import type { LayoutSettings } from './settings';
@@ -9,7 +9,7 @@ import { makeLayoutSettings } from './layout';
 type DirectoryComponentChildren =
   | NestableLinkComponent
   | LinkComponent
-  | SeperatorComponent
+  | SeparatorComponent
   | CustomComponentComponent
   | GroupComponent<GroupComponentChildren>;
 

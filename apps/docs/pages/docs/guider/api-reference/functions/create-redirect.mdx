@@ -1,5 +1,27 @@
 # `createRedirect()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+This utility function is an easy way to make redirects work in static site generation mode.
+
+
+## Example
+
+```tsx title="/pages/index.tsx"
+export default createRedirect({ to: '/docs/guides' });
+```
+
+
+## Reference
+
+```tsx
+function createRedirect(options);
+```
+
+<Field title="options" type="DirectoryOptions" required>
+  Options for the redirect.
+
+  <Field.Properties defaultOpen>
+    <Field title="to" type="string" required>
+      Where the user gets redirected to when it renders this page.
+    </Field>
+  </Field.Properties>
+</Field>

@@ -4,7 +4,7 @@ import { useGuider } from '../../hooks/use-guider';
 import { GuiderLayoutContext } from '../../page/context';
 import { SidebarLink } from './link';
 import { SidebarCustomComponent } from './component';
-import { SidebarSeperator } from './seperator';
+import { SidebarSeparator } from './separator';
 import { SidebarGroup } from './group';
 import { SidebarNested } from './nested';
 import { SidebarStarLink } from './star-link';
@@ -26,7 +26,7 @@ export function SidebarInternal() {
             return <SidebarNested key={key} link={link} />;
           if (link.type === 'component')
             return <SidebarCustomComponent key={key} component={link} />;
-          if (link.type === 'seperator') return <SidebarSeperator key={key} />;
+          if (link.type === 'separator') return <SidebarSeparator key={key} />;
           if (link.type === 'group')
             return <SidebarGroup key={key} group={link} />;
           return null;

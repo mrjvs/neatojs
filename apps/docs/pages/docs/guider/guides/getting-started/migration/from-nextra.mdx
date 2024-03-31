@@ -1,5 +1,37 @@
 # Migrating from Nextra
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Migrating can be a long journey, this guide aims to create a clear set of steps to move to Guider.
+
+
+## Compatability table
+
+| Feature | Nextra | Guider |
+|---|:---:|:---:|
+| MDX based pages | **✓** | **✓** |
+| I18N support | **✓** | 𐄂 |
+| Search bar | **✓** | 𐄂 |
+| Dark mode | **✓** | **✓** |
+| Light mode | **✓** | 𐄂 |
+| Banners | **✓** | 𐄂 |
+| SEO & custom meta tags | **✓** | **✓** |
+| Customizable layouts | **✓** | **✓** |
+| Custom navigation links | **✓** | **✓** |
+| Component: Callout | **✓** | **✓** |
+| Component: Tabs | **✓** | **✓** |
+| Component: Cards | **✓** | 𐄂 |
+| Component: Steps | **✓** | **✓** |
+| Component: FileTree | **✓** | 𐄂 |
+| Component: Bleed | **✓** | 𐄂 |
+| Npm2Yarn integration | **✓** | **✓** |
+| Edit on GitHub link | **✓** | **✓** |
+| Collapsable sidebar | **✓** | 𐄂 |
+
+
+## Migration steps
+
+1. **Make a guider project:** Make a new guider project by following [this guide](../installation.mdx).
+2. **Copy your MDX files over:** Copy over all MDX files into the pages directory of the new project.
+3. **Remove or replace unsupported components:** Not all components are supported by Guider. Check the compatibility table above.
+4. **Migrate `_meta.json` files:** In Nextra, meta files are for storing navigation structures. In Guider this is done in the theme config. [Check out this guide](../../config/navigation.mdx).
+5. **Migrate the theme config:** Many Nextra theme configuration options are also possible in Guider. Check out the compatibility table above.
+6. **Finished:** That should be everything to migrate to Guider, congratulations!

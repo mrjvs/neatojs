@@ -1,5 +1,148 @@
 # `site()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A site is an instance of root level configuration. If you need to modify navigation items, footers and alike, you'll be modifying a site.
+
+You can find more information on how to use sites effectively in [this guide](../../guides/advanced/multi-site.mdx).
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default defineTheme([
+  site('site-a', {
+    directories: [],
+  }),
+  site('site-b', {
+    directories: [],
+  })
+])
+```
+
+
+## Reference
+
+```tsx
+function site(id, options);
+```
+
+<Field title="id" type="string" required>
+  The ID of the site, this is used for referencing the site in other parts of your configuration, for example in `_meta.json` files.
+</Field>
+
+<Field title="options" type="SiteOptions" required>
+  All options of the site.
+
+  <Field.Properties defaultOpen>
+    <Field title="extends" type="SiteTemplate[]">
+      Extending of site templates, specified site templates get merged in the order they are passed in.
+      Meaning that the last specified site will have priority over the sites earlier in the array.
+
+      Site templates can be made with `siteTemplate()`, more info [found here](./site-template.mdx).
+
+      Read more about how to use templates in [this guide](../../guides/advanced/multi-site.mdx#site-templates).
+    </Field>
+    <Field title="navigation" type="Array<LinkComponent | SeparatorComponent | SeparatorComponent>">
+      List of items shown in the top navigation bar. You can only specify `separator()`, `link()` and `component()`.
+      Read more about those on their respective documentation pages.
+    </Field>
+    <Field title="tabs" type="Array<LinkComponent | CustomComponentComponent>">
+      List of links to show in the tabs section of the header. You can only specify `link()` and `component()`.
+      Read more about those on their respective documentation pages.
+
+      The tabs section of the header only shows up if there are items in the array.
+    </Field>
+    <Field title="dropdown" type="Array<LinkComponent | GroupComponent<LinkComponent>>">
+      List of links to show in the dropdown section of the header. You can only specify `link()` and `group()` (groups can only hold other links).
+      Read more about those on their respective documentation pages.
+
+      The dropdown section of the header only shows up if there are items in the array.
+    </Field>
+    <Field title="meta" type="NextSeoProps | ((pageMeta: MetaTagPageMeta) => ReactNode)">
+      The meta data shown for all pages associated with the site.
+
+      You can either specify an object for your meta data, which will follow the structure [defined here](https://github.com/garmeeh/next-seo?tab=readme-ov-file#nextseo-options).
+
+      Or you can pass in a function to render your own meta tags. Note that you do **must** use [NextSeo](https://github.com/garmeeh/next-seo) when using this method.
+
+      Read more about how to use this on [this page](../../guides/config/seo.mdx).
+    </Field>
+    <Field title="github" type="string">
+      A repository identifier, if specified a GitHub widget with the star count and fork count is displayed on the right side of the header.
+
+      The identifier needs to be either `{ORG_NAME}/{REPO_NAME}` or `{USER_NAME}/{REPO_NAME}`. For example: `mrjvs/neatojs`.
+    </Field>
+    <Field title="logo" type="object">
+      A text based logo to show top left of the header. If not specified, a placeholder is shown.
+
+      You can also overwrite the logo, for example to show an image. Read more [about overwriting the logo](../../guides/config/theming.mdx#changing-the-logo).
+
+      <Field.Properties>
+        <Field title="name" type="string">
+          Text to display in the logo.
+        </Field>
+        <Field title="to" type="string">
+          Link to make the logo redirect to when clicked. If not specified, the logo is not clickable.
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="layout" type="string">
+      The default layout to show for all pages associated with this site. Defaults to the layout with the ID `default`.
+    </Field>
+    <Field title="layouts" type="object[]">
+      List of layouts to add to the site. Pages and directories can specify which layout they want to use.
+
+      The default included layouts are still added even if you add items to this list. You can change the default layouts by making a layout yourself with the same ID as the defaults.
+
+      Read more about layouts in [this guide](../../guides/advanced/customizing-layout.mdx#using-layouts).
+
+      <Field.Properties>
+        <Field title="id" type="string" required>
+          The ID of the layout
+        </Field>
+        <Field title="settings" type="LayoutSettings">
+          The layout settings for this layout, read more [about layout settings](./settings.mdx).
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="settings" type="LayoutSettings">
+      The layout settings for this site, read more [about layout settings](./settings.mdx).
+
+      The settings in this settings layer act as defaults for following layers. The settings are overriden by the layout settings and directory settings in that order if they exist.
+    </Field>
+    <Field title="directories" type="DirectoryComponent[]">
+      List of directories for this site, read more [about directories here](./directory.mdx).
+
+      To have a sidebar, you will need at least one directory.
+    </Field>
+    <Field title="contentFooter" type="object">
+      Options for the content footer (the footer placed right below the content).
+
+      The visibility of the content footer is not controlled by the settings. To control the visibility of the footer, check [the footer page](../../guides/advanced/footer.mdx) for more info.
+
+      <Field.Properties>
+        <Field title="text" type="string">
+          Text shown in the content footer, by default it will be a copyright notice.
+        </Field>
+        <Field title="socials" type="SocialComponent[]">
+          List of social media links shown in the content footer. Check [the social() page](./social.mdx) for usage.
+        </Field>
+        <Field title="editRepositoryBase" type="string">
+          Base URL of your Git repository, it will be used to show a "Edit on GitHub" link. Leave undefined if you don't want such a link.
+
+          Check [this page](../../guides/advanced/footer.mdx#configuring-the-content-footer) for information on how to configure it.
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="pageFooter" type="object">
+      Options for the page footer (the footer placed at the very bottom of the page).
+
+      The visibility of the page footer is not controlled by the settings. To control the visibility of the footer, check [the footer page](../../guides/advanced/footer.mdx) for more info.
+
+      <Field.Properties>
+        <Field title="text" type="string">
+          Text shown in the page footer, it will be blank by default.
+        </Field>
+      </Field.Properties>
+    </Field>
+  </Field.Properties>
+</Field>

@@ -32,7 +32,7 @@ function NavCustomComponent(props: { component: CustomComponentComponent }) {
   return <Fragment>{props.component.component?.()}</Fragment>;
 }
 
-function NavSeperator() {
+function NavSeparator() {
   return (
     <hr className="gd-w-full gd-h-px md:gd-w-px md:gd-h-full gd-border-0 gd-bg-line" />
   );
@@ -46,7 +46,7 @@ export function HeaderNav(props: { items: TopNavChildren[] }) {
         if (v.type === 'component')
           return <NavCustomComponent key={key} component={v} />;
         if (v.type === 'link') return <NavLink key={key} link={v} />;
-        if (v.type === 'seperator') return <NavSeperator key={key} />;
+        if (v.type === 'separator') return <NavSeparator key={key} />;
         return null;
       })}
     </>

@@ -30,13 +30,19 @@ function DropdownItem(props: { link: LinkComponent; active?: boolean }) {
 function DropdownLink(props: { link: LinkComponent }) {
   return (
     <Menu.Item>
-      <span>
-        <ActiveLink href={props.link.to} exact={props.link.exact}>
-          {({ isActive }) => (
-            <DropdownItem link={props.link} active={isActive} />
-          )}
-        </ActiveLink>
-      </span>
+      {({ close }) => (
+        <span>
+          <ActiveLink
+            href={props.link.to}
+            exact={props.link.exact}
+            onClick={close}
+          >
+            {({ isActive }) => (
+              <DropdownItem link={props.link} active={isActive} />
+            )}
+          </ActiveLink>
+        </span>
+      )}
     </Menu.Item>
   );
 }
@@ -96,7 +102,7 @@ export function HeaderDropdown(props: { dropdown: DropdownChildren[] }) {
             })}
           >
             <span className="gd-mr-2">
-              {activeItem?.title ?? 'Select site...'}
+              {activeItem?.title ?? 'Select site'}
             </span>
             <Icon icon="flowbite:chevron-sort-solid" className="gd-text-text" />
             <UpdateHead active={open} />

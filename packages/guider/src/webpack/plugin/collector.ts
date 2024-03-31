@@ -22,6 +22,7 @@ export type CollectorItem = {
 export type PageMapItem = {
   sitePath: string;
   filePath: string; // path relative to project root
+  urlSafeFilePath: string; // filePath with / as separator
 };
 
 export interface MetaCollectorResult {
@@ -29,12 +30,20 @@ export interface MetaCollectorResult {
   pageMap: PageMapItem[];
 }
 
+const pathSeparatorRegex = RegExp(`\\${sep}`, 'g');
+function normalizePathSeparator(path: string): string {
+  return path.replace(pathSeparatorRegex, '/');
+}
+
 async function filePathToSitePath(
   filePath: string,
 ): Promise<CollectorItem | null> {
-  const strippedPath = dirname(relative('./pages', filePath));
+  let strippedPath = dirname(relative('./pages', filePath));
   const fileContents = await readFile(filePath, 'utf-8');
   const parsedContents = JSON.parse(fileContents);
+
+  strippedPath = normalizePathSeparator(strippedPath);
+
   return {
     sitePath: `/${strippedPath}`,
     fileContents: parsedContents,
@@ -49,12 +58,16 @@ async function pagePathToSitePath(
   let dir = dirname(relative('./pages', filePath));
   if (dir === '.') dir = '';
 
+  dir = normalizePathSeparator(dir);
+  const urlSafeFilePath = normalizePathSeparator(filePath);
+
   if (file.startsWith('_')) return null;
 
   const strippedPath = file === 'index' ? dir : `${dir}/${file}`;
   return {
     sitePath: strippedPath.startsWith('/') ? strippedPath : `/${strippedPath}`,
     filePath,
+    urlSafeFilePath,
   };
 }
 
