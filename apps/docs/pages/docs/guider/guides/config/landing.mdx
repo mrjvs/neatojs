@@ -10,7 +10,7 @@ To make a landing page (or any page that isn't MDX for that matter), you will fi
 
 If you want the layout to belong to a specific layout or site, you can specify it the `meta` prop - this is completely optional. It accepts the same data as the Frontmatter from a page.
 
-```tsx title="index.mdx" showLineNumbers
+```tsx title="index.tsx" showLineNumbers
 import { GuiderLayout } from '@neato/guider/client';
 
 export default function LandingPage() {
@@ -29,7 +29,7 @@ You can add any content you need inside of the `<GuiderLayout />{:tsx}` componen
 
 In the case that you don't want to put in extra effort into making a landing page, you can opt for using our premade landing page:
 
-```tsx title="index.mdx" showLineNumbers {12-38}
+```tsx title="index.tsx" showLineNumbers {12-38}
 import {
   Button,
   Card,
@@ -72,3 +72,7 @@ export default function LandingPage() {
   );
 }
 ```
+
+<Important>
+  when making non-MDX pages, make sure you put it in a `.tsx` file instead of a `.mdx` file.
+</Important>
