@@ -1,5 +1,202 @@
 # `useGuider()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+This React hook is the way to hook into Guider internals. It can give you information about the entire Guider instance.
+
+
+## Example
+
+```tsx
+function useIsTocEnabled() {
+  const guider = useGuider();
+  const tocState = guider.settings.tocState;
+  return tocState;
+}
+```
+
+
+## Reference
+
+```tsx
+function useGuider(metaConf): GuiderContext;
+```
+
+<Field title="metaConf" type="MetaConf">
+  Optional meta config overwrite, it will fall back on what is configured in `_meta.json` files.
+
+  This does **not** account for FrontMatter config. Use `useGuiderPage()` ([Check here](../functions/use-guider-page.mdx)) if you need Frontmatter accounted for.
+</Field>
+
+<Field title="returnValue" type="GuiderContext">
+  The context for a Guider page.
+
+  <Field.Properties defaultOpen>
+    <Field title="site" type="SiteComponent">
+      The currently active site.
+
+      <Field.Properties>
+        <Field title="id" type="string" required>
+          The ID of the site, this is used for referencing the site in other parts of your configuration, for example in `_meta.json` files.
+        </Field>
+        <Field title="navigation" type="Array<LinkComponent | SeparatorComponent | SeparatorComponent>" required>
+          List of items shown in the top navigation bar.
+        </Field>
+        <Field title="tabs" type="Array<LinkComponent | CustomComponentComponent>" required>
+          List of links to show in the tabs section of the header.
+        </Field>
+        <Field title="dropdown" type="Array<LinkComponent | GroupComponent<LinkComponent>>" required>
+          List of links to show in the dropdown section of the header. You can only specify `link()` and `group()` (groups can only hold other links).
+        </Field>
+        <Field title="meta" type="NextSeoProps | ((pageMeta: MetaTagPageMeta) => ReactNode)">
+          The meta data shown for all pages associated with the site.
+        </Field>
+        <Field title="github" type="string">
+          A repository identifier, if specified a GitHub widget with the star count and fork count is displayed on the right side of the header.
+
+          The identifier needs to be either `{ORG_NAME}/{REPO_NAME}` or `{USER_NAME}/{REPO_NAME}`. For example: `mrjvs/neatojs`.
+        </Field>
+        <Field title="logo" type="object" required>
+          A text based logo to show top left of the header. If not specified, a placeholder is shown.
+
+          You can also overwrite the logo, for example to show an image. Read more [about overwriting the logo](../../guides/config/theming.mdx#changing-the-logo).
+
+          <Field.Properties>
+            <Field title="name" type="string">
+              Text to display in the logo.
+            </Field>
+            <Field title="to" type="string">
+              Link to make the logo redirect to when clicked. If not specified, the logo is not clickable.
+            </Field>
+          </Field.Properties>
+        </Field>
+        <Field title="layout" type="string">
+          The default layout to show for all pages associated with this site.
+        </Field>
+        <Field title="layouts" type="object[]" required>
+          List of layouts for this site.
+
+          <Field.Properties>
+            <Field title="id" type="string" required>
+              The ID of the layout
+            </Field>
+            <Field title="settings" type="PopulatedLayoutSettings">
+              The populated layout settings for this layout, read more [about layout settings](../theme/settings.mdx).
+
+              This is preresolved, but you shouldn't use it directly. Use the returned settings on `GuiderContext.settings` instead.
+            </Field>
+          </Field.Properties>
+        </Field>
+        <Field title="settings" type="PopulatedLayoutSettings" required>
+          The layout settings for this site, read more [about layout settings](../theme/settings.mdx).
+
+          This is preresolved, but you shouldn't use it directly. Use the returned settings on `GuiderContext.settings` instead.
+        </Field>
+        <Field title="directories" type="DirectoryComponent[]" required>
+          List of directories for this site, read more [about directories here](../theme/directory.mdx).
+
+          <Field.Properties>
+            <Field title="id" type="string" required>
+              The ID of the directory
+            </Field>
+            <Field title="layout" type="string" required>
+              The ID of the layout that needs to be shown for pages in this directory.
+            </Field>
+            <Field title="settings" type="PopulatedLayoutSettings">
+              The populated layout settings for this directory, read more [about layout settings](../theme/settings.mdx).
+
+              This is preresolved, but you shouldn't use it directly. Use the returned settings on `GuiderContext.settings` instead.
+            </Field>
+            <Field title="sidebar" type="Array<LinkComponent | NestableLinkComponent | SeparatorComponent | CustomComponentComponent | GroupComponent<GroupComponentChildren>>">
+              List of links to show in the sidebar.
+            </Field>
+          </Field.Properties>
+        </Field>
+        <Field title="contentFooter" type="object">
+          Options for the content footer (the footer placed right below the content).
+
+          The visibility of the content footer is not controlled by the settings. To control the visibility of the footer, check [the footer page](../../guides/advanced/footer.mdx) for more info.
+
+          <Field.Properties>
+            <Field title="text" type="string">
+              Text shown in the content footer, by default it will be a copyright notice.
+            </Field>
+            <Field title="socials" type="SocialComponent[]">
+              List of social media links shown in the content footer. Check [the social() page](../theme/social.mdx) for usage.
+            </Field>
+            <Field title="editRepositoryBase" type="string">
+              Base URL of your Git repository, it will be used to show a "Edit on GitHub" link. Leave undefined if you don't want such a link.
+
+              Check [this page](../../guides/advanced/footer.mdx#configuring-the-content-footer) for information on how to configure it.
+            </Field>
+          </Field.Properties>
+        </Field>
+        <Field title="pageFooter" type="object">
+          Options for the page footer (the footer placed at the very bottom of the page).
+
+          The visibility of the page footer is not controlled by the settings. To control the visibility of the footer, check [the footer page](../../guides/advanced/footer.mdx) for more info.
+
+          <Field.Properties>
+            <Field title="text" type="string">
+              Text shown in the page footer, it will be blank by default.
+            </Field>
+          </Field.Properties>
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="directory" type="DirectoryComponent">
+      The currently active directory.
+
+      <Field.Properties>
+        <Field title="id" type="string" required>
+          The ID of the directory
+        </Field>
+        <Field title="layout" type="string" required>
+          The ID of the layout that needs to be shown for pages in this directory.
+        </Field>
+        <Field title="settings" type="PopulatedLayoutSettings">
+          The populated layout settings for this directory, read more [about layout settings](../theme/settings.mdx).
+
+          This is preresolved, but you shouldn't use it directly. Use the returned settings on `GuiderContext.settings` instead.
+        </Field>
+        <Field title="sidebar" type="Array<LinkComponent | NestableLinkComponent | SeparatorComponent | CustomComponentComponent | GroupComponent<GroupComponentChildren>>">
+          List of links to show in the sidebar.
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="layout" type="SiteLayoutComponent">
+      The currently active layout.
+
+      <Field.Properties>
+        <Field title="id" type="string" required>
+          The ID of the layout
+        </Field>
+        <Field title="settings" type="PopulatedLayoutSettings">
+          The populated layout settings for this layout, read more [about layout settings](../theme/settings.mdx).
+
+          This is preresolved, but you shouldn't use it directly. Use the returned settings on `GuiderContext.settings` instead.
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="settings" type="PopulatedLayoutSettings">
+      The fully populated layout settings, all defaults are merged into it (so no optional properties).
+
+      Read more [about layout settings](../theme/settings.mdx).
+    </Field>
+    <Field title="metaMap" type="MetaMapItem[]">
+      A list of the contents of your `_meta.json` files.
+
+      <Field.Properties>
+        <Field title="sitePath" type="string" required>
+          The site path that this `_meta.json` file belongs to.
+        </Field>
+        <Field title="config" type="MetaConf" required>
+          The resolved meta file configuration, it accounts for all meta files that are above it. So you can use this if it's the most specific path.
+
+          Read more [about meta files](../meta/structure.mdx).
+        </Field>
+        <Field title="fileContents" type="object" required>
+          The raw contents of the `_meta.json` file. Can be used for custom properties.
+        </Field>
+      </Field.Properties>
+    </Field>
+  </Field.Properties>
+</Field>

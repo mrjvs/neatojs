@@ -78,3 +78,24 @@ Codegroup children can also contain `<Frame>` components. See the example below.
     </Frame>
   </CodeGroup.Code>
 </CodeGroup>
+
+
+## Component API - `<CodeGroup />`
+
+The base component, has no props other than children
+
+<Field title="children" type="any">
+  The items of the CodeGroup.
+</Field>
+
+
+## Component API - `<CodeGroup.Code />`
+
+The CodeGroup item, can only be a child of a `<CodeGroup />{:tsx}`.
+
+<Field title="title" type="string">
+  The title of this CodeGroup item, will be displayed as the tab name.
+</Field>
+<Field title="children" type="any">
+  The contents of this CodeGroup item. Must be a codeblock or a `<Frame />{:tsx}`
+</Field>

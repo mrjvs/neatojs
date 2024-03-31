@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import { usePageSwitch } from 'src/client/hooks/use-page-switch';
 import { Icon } from '../../components/icon';
 import type { TopNavChildren } from '../../../theme';
 import { GithubDisplay } from '../../components/github';
@@ -10,6 +11,9 @@ export function TopMobileNav(props: {
   github: { org?: string; repo?: string };
 }) {
   const [navOpen, setNavOpen] = useState(false);
+  usePageSwitch(() => {
+    setNavOpen(false);
+  }, []);
 
   const toggleButton = (
     <button
@@ -35,11 +39,11 @@ export function TopMobileNav(props: {
 
   useEffect(() => {
     document.body.setAttribute(
-      'data-stop-overflow',
+      'data-mobile-stop-overflow',
       navOpen ? 'true' : 'false',
     );
     return () => {
-      document.body.removeAttribute('data-stop-overflow');
+      document.body.removeAttribute('data-mobile-stop-overflow');
     };
   }, [navOpen]);
 

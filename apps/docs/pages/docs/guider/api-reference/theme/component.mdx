@@ -1,5 +1,55 @@
 # `component()`
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+Allows using a custom component for a navigation item. Useful if you want to add custom functionality to your sidebars (or other navigation structures).
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+function DonateButton() {
+  return (
+    <div>
+      <Button>Donate</Button>
+    </div>
+  )
+}
+
+export default defineTheme({
+  directories: [
+    directory("dir-a", {
+      sidebar: [
+        link("Home", "/home"),
+        component(() => <DonateButton />)
+      ]
+    })
+  ],
+})
+```
+
+
+## Reference
+
+```tsx
+function component(comp);
+```
+
+<Field title="comp" type="() => ReactNode" required>
+  A function that returns JSX. You can run React hooks in here.
+</Field>
+
+
+## Reference - Options
+
+```tsx
+function component(options);
+```
+
+<Field title="options" type="CustomComponentComponent">
+  Options for this custom component item.
+
+  <Field.Properties>
+    <Field title="component" type="() => ReactNode" required>
+      A function that returns JSX. You can run React hooks in here.
+    </Field>
+  </Field.Properties>
+</Field>

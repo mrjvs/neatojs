@@ -9,7 +9,7 @@ export function useEditLink(baseUrl: string | null | undefined): string | null {
   const parsed = gitUrlParse(baseUrl);
   let filePath = parsed.filepath;
   filePath += filePath.length > 0 ? '/' : '';
-  filePath += file.filePath;
+  filePath += file.urlSafeFilePath;
 
   // Resets the filepath as we want to manually construct it
   parsed.filepath = '';

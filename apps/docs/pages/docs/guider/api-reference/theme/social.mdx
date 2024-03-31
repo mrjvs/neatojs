@@ -1,0 +1,58 @@
+# `social()`
+
+Social links, currently only usable in the content footer.
+
+
+## Example
+
+```tsx title="theme.config.tsx"
+export default defineTheme({
+  contentFooter: {
+    socials: [
+      social.twitter("https://x.com"), // Twitter and X both show the X logo
+      social.x("https://x.com"),
+      social.discord("https://discord.gg"),
+      social.github("https://github.com"),
+      social.slack("https://slack.com"),
+      social.mastodon("https://joinmastodon.org/"),
+    ],
+  },
+})
+```
+
+
+## Reference
+
+```tsx
+function social.twitter(link); // Twitter and X both show the X logo
+function social.x(link);
+function social.discord(link);
+function social.github(link);
+function social.slack(link);
+function social.mastodon(link);
+```
+
+<Field title="link" type="string" required>
+  The link of the social media account.
+</Field>
+
+
+## Reference - Options
+
+```tsx
+function social(options);
+```
+
+<Field title="options" type="SocialOptions">
+  The options for this group.
+
+  <Field.Properties>
+    <Field title="type" type="string" required>
+      The type of the social media. Can be any of these: `slack`, `mastodon`, `twitter`, `discord`, `github`.
+    </Field>
+
+    <Field title="url" type="string" required>
+      The link of the social media account.
+    </Field>
+  </Field.Properties>
+</Field>

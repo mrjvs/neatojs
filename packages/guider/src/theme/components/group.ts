@@ -1,11 +1,11 @@
 import type { CustomComponentComponent } from './component';
 import type { LinkComponent, NestableLinkComponent } from './link';
-import type { SeperatorComponent } from './seperator';
+import type { SeparatorComponent } from './separator';
 
 export type GroupComponentChildren =
   | NestableLinkComponent
   | LinkComponent
-  | SeperatorComponent
+  | SeparatorComponent
   | CustomComponentComponent;
 
 export interface GroupOptions<T> {

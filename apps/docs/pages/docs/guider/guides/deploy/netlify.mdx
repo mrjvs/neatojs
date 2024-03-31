@@ -1,5 +1,35 @@
-# Netlify
+# Vercel
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A guide to deploy a Guider project to Netlify.
+
+
+## The guide
+
+Follow the steps below to deploy a Guider project to Netlify.
+
+<Steps>
+  <Steps.Step>
+    ### Make a new Netlify project
+
+    Go to [New site](https://app.netlify.com/start) on Netlify, and select your repository.
+  </Steps.Step>
+  <Steps.Step>
+    ### Configure your project
+
+    Configure the following fields:
+    - **Site name:** Choose a fitting name.
+    - **Site to deploy:** Set to `Other (configure manually)`.
+    - **Base directory:** Set to the project directory, set to `/` if unsure.
+    - **Build command:** Set to `npm run build` (or your favourite package manager).
+    - **Publish directory:** Set to `/out` (prefix it with your project directory if it's not root).
+  </Steps.Step>
+  <Steps.Step>
+    ### Deploy
+
+    Click the `deploy` button and wait until your site has been deployed.
+
+    <Note>
+      Netlify has linked this deploy with your branch, meaning that once new changes are pushed. Netlify will automatically update your site.
+    </Note>
+  </Steps.Step>
+</Steps>

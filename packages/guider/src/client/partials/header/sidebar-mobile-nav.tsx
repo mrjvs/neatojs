@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react';
 import { makeKey } from 'src/client/utils/make-key';
+import { usePageSwitch } from 'src/client/hooks/use-page-switch';
 import { GuiderSidebarContent } from '../sidebar';
 import { Icon } from '../../components/icon';
 import type { TabsChildren } from '../../../theme/components/site';
 import type { CustomComponentComponent } from '../../../theme/components/component';
 import { SidebarStarLink } from '../sidebar/star-link';
-import { SidebarSeperator } from '../sidebar/seperator';
+import { SidebarSeparator } from '../sidebar/separator';
 
 function CustomComponentTab(props: { component: CustomComponentComponent }) {
   return <Fragment>{props.component.component?.()}</Fragment>;
@@ -14,6 +15,9 @@ function CustomComponentTab(props: { component: CustomComponentComponent }) {
 
 export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
   const [navOpen, setNavOpen] = useState(false);
+  usePageSwitch(() => {
+    setNavOpen(false);
+  }, []);
 
   const toggleButton = (
     <button
@@ -28,11 +32,11 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
 
   useEffect(() => {
     document.body.setAttribute(
-      'data-stop-overflow',
+      'data-mobile-stop-overflow',
       navOpen ? 'true' : 'false',
     );
     return () => {
-      document.body.removeAttribute('data-stop-overflow');
+      document.body.removeAttribute('data-mobile-stop-overflow');
     };
   }, [navOpen]);
 
@@ -72,7 +76,7 @@ export function SidebarMobileNav(props: { tabs: TabsChildren[] }) {
               );
             return null;
           })}
-          {props.tabs.length > 0 ? <SidebarSeperator /> : null}
+          {props.tabs.length > 0 ? <SidebarSeparator /> : null}
         </div>
         <div>
           <GuiderSidebarContent />

@@ -1,6 +1,6 @@
-import type { SeperatorComponent } from './seperator';
+import type { SeparatorComponent } from './separator';
 
-export type NestedLinkComponentChildren = LinkComponent | SeperatorComponent;
+export type NestedLinkComponentChildren = LinkComponent | SeparatorComponent;
 
 export interface ExtraLinkOptions {
   icon?: string;

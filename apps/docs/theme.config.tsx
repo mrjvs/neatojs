@@ -7,18 +7,13 @@ import {
   siteTemplate,
   social,
   type SiteComponent,
-  seperator,
 } from '@neato/guider/theme';
 import { Logo } from 'components/logo';
 
 const template = siteTemplate({
   github: 'mrjvs/neatojs',
   dropdown: [link('Guider', '/docs/guider'), link('Config', '/docs/config')],
-  navigation: [
-    link('Showcase', '/showcase'),
-    link('Showcase', '/showcase'),
-    seperator(),
-  ],
+  navigation: [link('Showcase', '/showcase')],
   settings: {
     colors: {
       primary: '#A880FF',
@@ -128,7 +123,6 @@ export default defineTheme([
               link('API reference + docs', gdGuides('/config/common/api-ref')),
               link('Blog posts + docs', gdGuides('/config/common/blog')),
             ]),
-            link('Examples', gdGuides('/config/examples')),
           ]),
           group('Advanced', [
             link('Running multiple sites', gdGuides('/advanced/multi-site')),
@@ -213,11 +207,14 @@ export default defineTheme([
           group('Theme configuration', [
             link('defineTheme()', gdApi('/theme/define-theme')),
             link('site()', gdApi('/theme/site')),
+            link('siteTemplate()', gdApi('/theme/site-template')),
             link('directory()', gdApi('/theme/directory')),
             link('link()', gdApi('/theme/link')),
             link('group()', gdApi('/theme/group')),
-            link('seperator()', gdApi('/theme/seperator')),
+            link('separator()', gdApi('/theme/separator')),
             link('component()', gdApi('/theme/component')),
+            link('social()', gdApi('/theme/social')),
+            link('Layout settings', gdApi('/theme/settings')),
           ]),
 
           group('_meta.json', [
@@ -239,6 +236,15 @@ export default defineTheme([
             link('<GuiderLayout/>', gdApi('/components/guider-layout')),
             link('<GuiderSidebar/>', gdApi('/components/guider-sidebar')),
             link('<GuiderToc/>', gdApi('/components/guider-toc')),
+            link('<GuiderLogo/>', gdApi('/components/guider-logo')),
+            link(
+              '<GuiderContentFooter/>',
+              gdApi('/components/guider-content-footer'),
+            ),
+            link(
+              '<GuiderPageFooter/>',
+              gdApi('/components/guider-page-footer'),
+            ),
           ]),
         ],
       }),

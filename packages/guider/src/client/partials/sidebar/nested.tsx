@@ -7,7 +7,7 @@ import ActiveLink, {
   useIsRouteActive,
 } from '../../components/utils/activelink';
 import { SidebarLink } from './link';
-import { SidebarSeperator } from './seperator';
+import { SidebarSeparator } from './separator';
 
 function MaybeLink(props: {
   link: NestableLinkComponent;
@@ -114,7 +114,7 @@ export function SidebarNested(props: { link: NestableLinkComponent }) {
           const key = makeKey(i, link);
           if (link.type === 'link')
             return <SidebarLink key={key} link={link} indent />;
-          if (link.type === 'seperator') return <SidebarSeperator key={key} />;
+          if (link.type === 'separator') return <SidebarSeparator key={key} />;
           return null;
         })}
       </div>
