@@ -2,9 +2,13 @@
 
 React component that will show the currently configured layout partial.
 
-It respects configured `layout` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
+It respects the configured `layout` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
 
 The primary use of this component is to make a non-MDX page look like an MDX page. Don't use it if you're already in an MDX File.
+
+Will show one of:
+ - The default layout with the configured settings.
+ - The custom component if the layout has been overriden in the partials.
 
 ## Example
 
@@ -55,7 +59,7 @@ function GuiderLayout(props);
       </Field.Properties>
     </Field>
     <Field title="children" type="ReactNode">
-      The children of the react component, it will be displayed as the page contents.
+      The children of the React component, it will be displayed as the page contents.
     </Field>
   </Field.Properties>
 </Field>
