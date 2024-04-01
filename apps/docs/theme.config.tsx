@@ -138,7 +138,7 @@ export default defineTheme([
             link('GitHub Pages', gdGuides('/deploy/github-pages')),
             link('Netlify', gdGuides('/deploy/netlify')),
             link('Vercel', gdGuides('/deploy/vercel')),
-            link('Cloudflare pages', gdGuides('/deploy/cloudflare')),
+            link('Cloudflare Pages', gdGuides('/deploy/cloudflare')),
             link('Docker', gdGuides('/deploy/docker')),
           ]),
         ],
