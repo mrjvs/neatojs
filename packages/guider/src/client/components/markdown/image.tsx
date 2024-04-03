@@ -1,14 +1,17 @@
 import classNames from 'classnames';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 import type { MarkdownProps } from './types';
 
 export function MarkdownImage(props: MarkdownProps) {
+  const router = useRouter();
+  const srcInput = props.attrs.src;
+  const src = srcInput?.startsWith('/') ? router.basePath + srcInput : srcInput;
+
   return (
-    <Image
+    <img
       {...props.attrs}
-      src={props.attrs.src}
-      alt={props.attrs.alt}
-      className={classNames('gd-rounded-sm', props.attrs.className)}
+      src={src}
+      className={classNames('gd-rounded-lg', props.attrs.className)}
     />
   );
 }
