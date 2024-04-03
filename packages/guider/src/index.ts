@@ -17,6 +17,10 @@ export function guider(initConfig: GuiderInitConfig) {
     });
     return {
       ...nextConfig,
+      images: {
+        ...(nextConfig.images ?? {}),
+        unoptimized: nextConfig?.images?.unoptimized ?? true,
+      },
       transpilePackages: [
         '@neato/guider',
         ...(nextConfig.transpilePackages ?? []),
