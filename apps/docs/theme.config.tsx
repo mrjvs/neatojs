@@ -121,7 +121,6 @@ export default defineTheme([
                 gdGuides('/config/common/multi-docs'),
               ),
               link('API reference + docs', gdGuides('/config/common/api-ref')),
-              link('Blog posts + docs', gdGuides('/config/common/blog')),
             ]),
           ]),
           group('Advanced', [
