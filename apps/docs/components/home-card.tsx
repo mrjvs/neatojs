@@ -8,8 +8,8 @@ function Card(props: {
   icon: string;
 }) {
   return (
-    <div className="flex flex-col md:flex-row gap-2 border p-6 border-line hover:border-text hover:border-opacity-50 rounded-xl transition-colors duration-100">
-      <Icon icon={props.icon} className="text-2xl text-primary" />
+    <div className="flex flex-col md:flex-row gap-3 border p-6 border-line hover:border-text hover:border-opacity-50 rounded-xl transition-colors duration-100">
+      <Icon icon={props.icon} className="text-2xl -mt-1 text-primary" />
       <div className="flex-1">{props.children}</div>
       <div className="items-center flex md:mt-0 mt-8">{props.right}</div>
     </div>
