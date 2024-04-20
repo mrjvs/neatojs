@@ -39,7 +39,7 @@ export function LayoutInternal(props: GuiderLayoutProps) {
           >
             <GuiderSidebar />
           </div>
-          <article className="gd-mb-16">
+          <article className="gd-mb-16 gd-break-words">
             {props.children}
             <GuiderContentFooter />
           </article>
