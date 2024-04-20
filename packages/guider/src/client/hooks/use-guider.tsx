@@ -3,6 +3,7 @@ import { useRouter } from 'next/router.js';
 import type { MetaConf, MetaMapItem } from '../../theme';
 import { mergeLayoutSettings } from '../../theme/components/layout';
 import { sites, metaMap } from '../virtuals';
+import { getCurrentPageContext } from '../utils/navigational-buttons';
 
 export function getPage(pageUrl: string) {
   const matches = metaMap
@@ -28,6 +29,7 @@ export function getGuiderContext(pageUrl: string, pageMeta: MetaConf = {}) {
   if (!layout) throw new Error('No layout found');
 
   const settings = mergeLayoutSettings(layout.settings, dir.settings);
+  const navContext = getCurrentPageContext(pageUrl, dir);
 
   return {
     metaMap,
@@ -35,6 +37,7 @@ export function getGuiderContext(pageUrl: string, pageMeta: MetaConf = {}) {
     directory: dir,
     layout,
     site,
+    navContext,
   };
 }
 

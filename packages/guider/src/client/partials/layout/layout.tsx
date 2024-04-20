@@ -6,6 +6,8 @@ import { GuiderToc } from '../toc';
 import { GuiderContentFooter } from '../content-footer';
 import { GuiderpageFooter } from '../page-footer';
 import { useGuiderPage } from '../../hooks/use-guider-page';
+import { GuiderPageEnd } from '../page-end';
+import { Breadcrumb } from './breadcrumb';
 
 export type GuiderLayoutProps = {
   children?: ReactNode;
@@ -40,7 +42,9 @@ export function LayoutInternal(props: GuiderLayoutProps) {
             <GuiderSidebar />
           </div>
           <article className="gd-mb-16 gd-break-words">
+            <Breadcrumb />
             {props.children}
+            <GuiderPageEnd />
             <GuiderContentFooter />
           </article>
           <div
