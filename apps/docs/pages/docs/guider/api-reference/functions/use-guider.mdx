@@ -198,5 +198,20 @@ function useGuider(metaConf): GuiderContext;
         </Field>
       </Field.Properties>
     </Field>
+    <Field title="navContext" type="object">
+      The navigational context of the page, use it to get the current links in the sidebar.
+
+      <Field.Properties>
+        <Field title="prev" type="{ group?: string, item: LinkComponent }">
+          The previous page link, according to the order of the sidebar links. It can be null
+        </Field>
+        <Field title="current" type="{ group?: string, item: LinkComponent }">
+          The current page link. It can be null if it isn't present in the sidebar.
+        </Field>
+        <Field title="next" type="{ group?: string, item: LinkComponent }">
+          The next page link, according to the order of the sidebar links. It can be null.
+        </Field>
+      </Field.Properties>
+    </Field>
   </Field.Properties>
 </Field>

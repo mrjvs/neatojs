@@ -244,6 +244,7 @@ export default defineTheme([
               '<GuiderPageFooter/>',
               gdApi('/components/guider-page-footer'),
             ),
+            link('<GuiderPageEnd/>', gdApi('/components/guider-page-end')),
           ]),
         ],
       }),
