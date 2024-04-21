@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import { GuiderPlugin } from './webpack/plugin/plugin';
 import type { GuiderInitConfig } from './types';
+import { GuiderSearchPlugin } from './webpack/search';
 
 export { getGuiderPluginCache } from './webpack/plugin/plugin';
 
@@ -10,6 +11,7 @@ export function guider(initConfig: GuiderInitConfig) {
     ...initConfig,
   };
   const guiderPlugin = new GuiderPlugin(guiderConfig);
+  const searchPlugin = new GuiderSearchPlugin();
 
   function withGuider(nextConfig: NextConfig = {}): NextConfig {
     const extraWatchers = new ExtraWatchWebpackPlugin({
@@ -32,6 +34,7 @@ export function guider(initConfig: GuiderInitConfig) {
       webpack(config, options) {
         if (!config.plugins) config.plugins = [];
         config.plugins.push(guiderPlugin);
+        config.plugins.push(searchPlugin);
         config.plugins.push(extraWatchers);
 
         config.module.rules.push({

@@ -99,6 +99,7 @@
     "classnames": "^2.5.1",
     "color": "^4.2.3",
     "extra-watch-webpack-plugin": "^1.0.3",
+    "flexsearch": "^0.7.43",
     "git-url-parse": "^14.0.0",
     "glob": "^10.3.10",
     "gray-matter": "^4.0.3",

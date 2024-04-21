@@ -18,7 +18,7 @@ import {
 
 const EXPORT_FOOTER = 'export default ';
 
-export async function mdLoader(source: string): Promise<string> {
+export async function mdLoader(source: string) {
   const meta = grayMatter(source);
   const file = await compile(source, {
     jsx: true,
@@ -98,7 +98,7 @@ export async function mdLoader(source: string): Promise<string> {
     excerpt: file.data.excerpt,
   };
 
-  return `
+  const script = `
     import { createMdxPage } from "@neato/guider/client";
 
     ${finalMdxCode}
@@ -110,4 +110,11 @@ export async function mdLoader(source: string): Promise<string> {
 
     export default createMdxPage(__guiderPageOptions);
   `;
+
+  return {
+    script,
+    searchData: {
+      excerpt: file.data.excerpt,
+    },
+  };
 }
