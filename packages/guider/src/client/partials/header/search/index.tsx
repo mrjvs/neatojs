@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { SearchButton } from './button';
 import { SearchModal } from './modal';
+import { usePreloadSearch } from './content';
 
 function UpdateHead(props: { active?: boolean }) {
   useEffect(() => {
@@ -16,6 +17,8 @@ function UpdateHead(props: { active?: boolean }) {
 export function HeaderSearch() {
   const [open, setOpen] = useState(false);
   const openRef = useRef(open);
+  const searchKey = 'default';
+  usePreloadSearch(searchKey);
 
   useEffect(() => {
     openRef.current = open;
@@ -49,6 +52,7 @@ export function HeaderSearch() {
       <UpdateHead active={open} />
       {open ? (
         <SearchModal
+          searchKey={searchKey}
           onClose={() => {
             setOpen(false);
           }}

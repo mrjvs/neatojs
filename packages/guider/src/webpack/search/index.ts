@@ -26,7 +26,7 @@ async function filePathToPageData(filePath: string) {
   };
 }
 
-function generateChecksum(str) {
+function generateChecksum(str: string) {
   return createHash('md5').update(str, 'utf8').digest('hex');
 }
 
@@ -62,7 +62,6 @@ export class GuiderSearchPlugin {
 
             for (const page of pageData) {
               const key = defaultKey;
-              console.log(page.sitePath);
               dataBuckets[key] ??= {};
               dataBuckets[key][page.sitePath] = page.searchData;
             }
