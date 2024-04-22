@@ -1,0 +1,23 @@
+# `<GuiderPageEnd />`
+
+React component that will show the currently configured page end.
+
+It respects the configured `pageEnd` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
+
+Will show one of:
+ - Nothing if the page end is set to be hidden.
+ - The default page end with the configured settings.
+ - The custom component if the page end has been overriden in the partials.
+
+## Example
+
+```tsx
+<GuiderPageEnd />
+```
+
+
+## Reference
+
+```tsx
+function GuiderPageEnd(): ReactNode;
+```

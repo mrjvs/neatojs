@@ -2,8 +2,12 @@
 
 React component that will show the currently configured sidebar partial.
 
-It respects configured `sidebar` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
+It respects the configured `sidebar` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
 
+Will show one of:
+ - Nothing if the sidebar is set to be hidden.
+ - The default sidebar with the configured settings.
+ - The custom component if the sidebar has been overriden in the partials.
 
 ## Example
 

@@ -2,8 +2,12 @@
 
 React component that will show the currently configured navigation partial.
 
-It respects configured `navigation` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
+It respects the configured `navigation` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
 
+Will show one of:
+ - Nothing if the navigation bar is set to be hidden.
+ - The default navigation bar with the configured settings.
+ - The custom component if the navigation bar has been overriden in the partials.
 
 ## Example
 

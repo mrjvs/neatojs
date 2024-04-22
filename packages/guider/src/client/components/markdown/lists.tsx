@@ -19,7 +19,7 @@ export function MarkdownUl(props: MarkdownProps) {
 export function MarkdownLi(props: MarkdownProps) {
   return (
     <li {...props.attrs} className={classNames('gd-mb-3', props.attrs.class)}>
-      <span className="gd-absolute neato-guider-list-line gd-opacity-75 gd-inline-block gd-left-0 gd-mt-3 gd-h-px gd-w-3 gd-bg-text" />
+      <span className="gd-absolute neato-guider-list-line gd-opacity-75 gd-whitespace-nowrap gd-inline-block gd-left-0 gd-mt-3 gd-h-px gd-w-3 gd-bg-text" />
       <span className="gd-absolute gd-text-[.7rem] neato-guider-task gd-hidden gd-border gd-border-line gd-left-0 gd-mt-1 gd-size-4 gd-rounded-[5px] gd-text-textHeading gd-items-center gd-justify-center">
         <Icon
           icon="ph:check-bold"

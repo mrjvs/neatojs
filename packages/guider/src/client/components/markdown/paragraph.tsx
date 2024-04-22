@@ -20,7 +20,7 @@ export function MarkdownLink(props: MarkdownProps) {
     <Link
       {...props.attrs}
       href={props.attrs.href ?? '#'}
-      className="gd-text-primary gd-underline gd-font-bold hover:gd-text-primaryDark gd-transition-colors gd-duration-100"
+      className="gd-text-textHeading gd-text-opacity-90 gd-border-b gd-border-primary gd-font-semibold hover:gd-text-opacity-100 hover:gd-border-b-2 gd-transition-colors gd-duration-100"
     >
       {props.children}
     </Link>

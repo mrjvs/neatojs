@@ -76,7 +76,7 @@ function useGuider(metaConf): GuiderContext;
 
           <Field.Properties>
             <Field title="id" type="string" required>
-              The ID of the layout
+              The ID of the layout.
             </Field>
             <Field title="settings" type="PopulatedLayoutSettings">
               The populated layout settings for this layout, read more [about layout settings](../theme/settings.mdx).
@@ -95,7 +95,7 @@ function useGuider(metaConf): GuiderContext;
 
           <Field.Properties>
             <Field title="id" type="string" required>
-              The ID of the directory
+              The ID of the directory.
             </Field>
             <Field title="layout" type="string" required>
               The ID of the layout that needs to be shown for pages in this directory.
@@ -195,6 +195,21 @@ function useGuider(metaConf): GuiderContext;
         </Field>
         <Field title="fileContents" type="object" required>
           The raw contents of the `_meta.json` file. Can be used for custom properties.
+        </Field>
+      </Field.Properties>
+    </Field>
+    <Field title="navContext" type="object">
+      The navigational context of the page, use it to get the current links in the sidebar.
+
+      <Field.Properties>
+        <Field title="prev" type="{ group?: string, item: LinkComponent }">
+          The previous page link, according to the order of the sidebar links. It can be null
+        </Field>
+        <Field title="current" type="{ group?: string, item: LinkComponent }">
+          The current page link. It can be null if it isn't present in the sidebar.
+        </Field>
+        <Field title="next" type="{ group?: string, item: LinkComponent }">
+          The next page link, according to the order of the sidebar links. It can be null.
         </Field>
       </Field.Properties>
     </Field>

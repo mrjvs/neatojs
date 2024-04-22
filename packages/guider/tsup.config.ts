@@ -8,7 +8,7 @@ export default defineConfig([
     outExtension: () => ({ js: '.js', dts: '.d.ts' }),
     dts: true,
     bundle: true,
-    external: ['@neato/guider', '@neato/guider/shim.guider.virtual'],
+    external: ['@neato/guider', '@neato/guider/shim.guider.virtual', 'webpack'],
   },
   {
     name: 'guider-loader',

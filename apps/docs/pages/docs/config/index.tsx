@@ -8,12 +8,12 @@ import {
 
 export default function LandingPage() {
   return (
-    <GuiderLayout meta={{ layout: 'page' }}>
+    <GuiderLayout meta={{ layout: 'page', site: 'config' }}>
       <Hero>
         <Hero.Title>Simple type-safe configuration</Hero.Title>
         <Hero.Subtitle>
-          Configure with json files or environment variables, without losing
-          type-safety
+          Configure your app with JSON files or environment variables without
+          losing type-safety
         </Hero.Subtitle>
         <Hero.Actions>
           <Button to="/docs/config/guide/why-neat-config">Get started</Button>
@@ -23,14 +23,17 @@ export default function LandingPage() {
         </Hero.Actions>
       </Hero>
       <CardGrid>
-        <Card icon="mdi:cube-outline" title="Focus on writing">
-          Effortlessly create beautiful documentation sites with just markdown.
+        <Card icon="material-symbols:lock" title="Schema-first config">
+          Define your config structure using strictly typed and validated
+          schemas.
         </Card>
-        <Card icon="mdi:cube-outline" title="Focus on writing">
-          Effortlessly create beautiful documentation sites with just markdown.
+        <Card icon="material-symbols:cloud" title="Cloud-native">
+          Easily configure applications in the cloud using multiple environment
+          agnostic sources.
         </Card>
-        <Card icon="mdi:cube-outline" title="Focus on writing">
-          Effortlessly create beautiful documentation sites with just markdown.
+        <Card icon="eos-icons:configuration-file" title="Multiple formats">
+          Supports a wide range of configuration sources including JSON files,
+          environment variables and CLI arguments.
         </Card>
       </CardGrid>
     </GuiderLayout>

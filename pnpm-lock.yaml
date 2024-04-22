@@ -173,6 +173,9 @@ importers:
       '@theguild/remark-npm2yarn':
         specifier: ^0.3.0
         version: 0.3.0
+      '@types/unist':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@vcarl/remark-headings':
         specifier: ^0.1.0
         version: 0.1.0
@@ -188,6 +191,9 @@ importers:
       extra-watch-webpack-plugin:
         specifier: ^1.0.3
         version: 1.0.3
+      flexsearch:
+        specifier: ^0.7.43
+        version: 0.7.43
       git-url-parse:
         specifier: ^14.0.0
         version: 14.0.0
@@ -197,6 +203,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      mdast-util-phrasing:
+        specifier: ^4.1.0
+        version: 4.1.0
       next-seo:
         specifier: ^6.5.0
         version: 6.5.0(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
@@ -230,6 +239,12 @@ importers:
       type-fest:
         specifier: ^4.10.3
         version: 4.10.3
+      unified:
+        specifier: ^11.0.4
+        version: 11.0.4
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
       webpack-virtual-modules:
         specifier: ^0.6.1
         version: 0.6.1
@@ -255,6 +270,9 @@ importers:
       '@types/git-url-parse':
         specifier: ^9.0.3
         version: 9.0.3
+      '@types/mdast':
+        specifier: ^4.0.3
+        version: 4.0.3
       '@types/react':
         specifier: 18.2.56
         version: 18.2.56
@@ -3101,6 +3119,10 @@ packages:
   /flatted@3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
     dev: true
+
+  /flexsearch@0.7.43:
+    resolution: {integrity: sha512-c5o/+Um8aqCSOXGcZoqZOm+NqtVwNsvVpWv6lfmSclU954O3wvQKxxK8zj74fPaSJbXpSLTs4PRhh+wnoCXnKg==}
+    dev: false
 
   /for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}

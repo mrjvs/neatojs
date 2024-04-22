@@ -23,7 +23,7 @@ async function loader(
   if (directories.pagesDir) context.addContextDependency(directories.pagesDir);
 
   if (type === 'virtual') return virtualLoader(getGuiderPluginCache());
-  if (type === 'mdx') return mdLoader(source);
+  if (type === 'mdx') return (await mdLoader(source)).script;
 
   throw new Error(`Loader used with incorrect type (${type})`);
 }

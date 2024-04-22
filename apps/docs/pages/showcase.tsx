@@ -5,21 +5,29 @@ import type { ShowcaseTag, ShowcaseType } from 'components/showcase-card';
 import { ShowcaseCard, ShowcaseCardContainer } from 'components/showcase-card';
 import pretendoImg from 'public/showcases/pretendo.png';
 import mwAccountImg from 'public/showcases/movie-web-account.png';
+import mwDocsImg from 'public/showcases/movie-web-docs.png';
 
 const showcases: ShowcaseType[] = [
   {
     title: 'Pretendo',
-    description: 'Uses Guider for protocol documentation.',
+    description: 'Uses Guider to document their protocols and libaries.',
     href: 'https://developer.pretendo.network/',
     imageUrl: pretendoImg.src,
     tags: ['guider'],
   },
   {
-    title: 'movie-web account',
+    title: 'movie-web backend',
     description: 'Uses Config for their account service.',
     href: 'https://github.com/movie-web/backend/',
     imageUrl: mwAccountImg.src,
     tags: ['config'],
+  },
+  {
+    title: 'movie-web docs',
+    description: 'Uses Guider for their documentation',
+    href: 'https://github.com/movie-web/docs/',
+    imageUrl: mwDocsImg.src,
+    tags: ['guider'],
   },
 ];
 

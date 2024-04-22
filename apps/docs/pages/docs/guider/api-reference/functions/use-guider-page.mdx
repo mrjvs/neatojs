@@ -50,6 +50,11 @@ function useGuiderPage(): GuiderPageContext;
 
       See [the `useGuider()` page](./use-guider.mdx) for more info.
     </Field>
+    <Field title="navContext" type="object">
+      The navigational context of the page, use it to get the current links in the sidebar.
+
+      See [the `useGuider()` page](./use-guider.mdx) for more info.
+    </Field>
     <Field title="page" type="PageContext">
       Data for the current page content.
 
@@ -59,19 +64,19 @@ function useGuiderPage(): GuiderPageContext;
 
           <Field.Properties>
             <Field title="site" type="string">
-              The site field in the Frontmatter
+              The site field in the Frontmatter.
             </Field>
             <Field title="directory" type="string">
-              The directory field in the Frontmatter
+              The directory field in the Frontmatter.
             </Field>
             <Field title="layout" type="string">
-              The layout field in the Frontmatter
+              The layout field in the Frontmatter.
             </Field>
             <Field title="title" type="string">
-              The title field in the Frontmatter
+              The title field in the Frontmatter.
             </Field>
             <Field title="description" type="string">
-              The description field in the Frontmatter
+              The description field in the Frontmatter.
             </Field>
           </Field.Properties>
         </Field>

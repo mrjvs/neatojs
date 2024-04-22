@@ -1,5 +1,68 @@
 # API reference + Docs
 
-<Caution>
-This article is a stub, please help by contributing to the docs.
-</Caution>
+A common requirement for expansive documentation sites is having both guides and an API reference.
+
+API reference is a lot more technical and usually isn't very helpful for beginners, but massively helpful if you know the library already and want to fact check something.
+
+The guides is almost the opposite: It's very friendly for beginners, but lacks the completeness of an API reference.
+
+
+## Adding the two sections to your project
+
+The recommended way to add an API reference next to your guides is to use tabs.
+
+Tabs is a configuration option for a Guider site that allows for easy switching between two contexts.
+
+<Steps>
+  <Steps.Step>
+    ### Adding the pages to sub-directories
+
+    First, you have to make sure that your pages are divided in sub-directories. Like so:
+    - `/pages/guides` All your MDX files or pages for your guides
+    - `/pages/api` All your MDX files or pages for your API reference
+  </Steps.Step>
+  <Steps.Step>
+    ### Configuring your tabs
+
+    Your site configuration needs to be split into two `directory()` instances and need to have the configured tabs. Like so:
+
+    ```tsx title="theme.config.tsx" showLineNumbers
+    import { directories, link, defineTheme } from "@neato/guider/theme"
+
+    export default defineTheme({
+      tabs: [
+        link("Guides", "/guides"),
+        link("API reference", "/api"),
+      ]
+      directories: [
+        directory('guides', {
+          sidebar: [
+            // your sidebar items
+          ],
+        }),
+        directory('api', {
+          sidebar: [
+            // your sidebar items
+          ],
+        })
+      ]
+    })
+    ```
+  </Steps.Step>
+  <Steps.Step>
+    ### Creating meta files
+
+    To make your pages tied to your `directory()` instances (and tabs), you'll need to make two meta files for each folder.
+
+    ```json title="/pages/guides/_meta.json"
+    {
+      "directory": "guides"
+    }
+    ```
+    ```json title="/pages/api/_meta.json"
+    {
+      "directory": "api"
+    }
+    ```
+  </Steps.Step>
+</Steps>

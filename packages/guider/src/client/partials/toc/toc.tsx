@@ -10,7 +10,11 @@ function TocLink(props: {
   onClick?: () => void;
 }) {
   return (
-    <p>
+    <p
+      style={{
+        paddingLeft: `${Math.max(0, (props.heading.depth - 2) * 8)}px`,
+      }}
+    >
       <a
         onClick={(e) => {
           e.preventDefault();
@@ -34,7 +38,7 @@ function TocLink(props: {
 export function TocInternal() {
   const ctx = useContext(GuiderLayoutContext);
   const headings = useMemo(
-    () => [...(ctx?.headings ?? [])].slice(1).filter((v) => v.depth <= 2),
+    () => [...(ctx?.headings ?? [])].slice(1).filter((v) => v.depth <= 3),
     [ctx?.headings],
   );
   const ids = useMemo(() => headings.map((v) => v.data.id), [headings]);
