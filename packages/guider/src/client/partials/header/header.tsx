@@ -9,6 +9,7 @@ import { HeaderNav } from './nav';
 import { HeaderDropdown } from './dropdown';
 import { SidebarMobileNav } from './sidebar-mobile-nav';
 import { TopMobileNav } from './top-mobile-nav';
+import { HeaderSearch } from './search';
 
 export function HeaderInternal() {
   const ctx = useContext(GuiderLayoutContext);
@@ -51,6 +52,7 @@ export function HeaderInternal() {
                 <HeaderDropdown dropdown={site.dropdown} />
               </>
             ) : null}
+            <HeaderSearch />
           </div>
           <div className="gd-hidden md:gd-flex gd-items-center gd-space-x-3">
             <HeaderNav items={site.navigation} />

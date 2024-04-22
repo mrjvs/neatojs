@@ -51,7 +51,11 @@ function Badge(props: {
 }
 
 function Actions(props: { children: React.ReactNode }) {
-  return <div className="gd-mt-12 gd-space-x-5">{props.children}</div>;
+  return (
+    <div className="gd-mt-12 gd-w-full gd-gap-5 gd-flex gd-flex-col sm:gd-justify-center sm:gd-flex-row">
+      {props.children}
+    </div>
+  );
 }
 
 function HeroFunc(props: { children: React.ReactNode }) {

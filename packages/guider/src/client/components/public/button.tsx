@@ -20,9 +20,9 @@ const buttonStyles = {
 export function Button(props: ButtonProps) {
   const classes = classNames(
     buttonStyles[props.type ?? 'primary'],
-    'gd-bg-gradient-to-b gd-text-opacity-90 gd-px-4 gd-py-2 gd-rounded-md gd-border',
-    'gd-transition-[background,transform]',
-    'active:gd-scale-105',
+    'gd-bg-gradient-to-b gd-text-opacity-80 gd-px-7 gd-py-2.5 gd-rounded-xl gd-border',
+    'gd-transition-[background-image,transform]',
+    'active:gd-scale-105 gd-inline-block gd-text-center',
     props.className,
   );
 

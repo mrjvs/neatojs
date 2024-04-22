@@ -15,21 +15,21 @@ export default function LandingPage() {
       title: '@neato/guider',
       description: 'Flexible documentation that looks good out of the box.',
       href: '/docs/guider',
-      icon: 'mdi:cube-outline',
+      icon: 'ic:round-menu-book',
     },
     {
       title: '@neato/config',
       description:
         'NodeJS configuration loader with strict typing and autocomplete.',
       href: '/docs/config',
-      icon: 'mdi:cube-outline',
+      icon: 'material-symbols:settings-heart-rounded',
     },
   ];
   return (
     <GuiderLayout meta={{ layout: 'page' }}>
       <Home.Container>
         <Home.Title>
-          NeatoJS — A collection of JS tools that you will want.
+          NeatoJS — A collection of libraries made to simplify
         </Home.Title>
         <Home.Subtitle>
           Tools that follow the philosophy of doing only one thing, and doing it

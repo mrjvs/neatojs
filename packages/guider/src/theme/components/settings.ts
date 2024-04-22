@@ -41,6 +41,7 @@ export type LayoutSettings = {
   navigation: ToggleablePartial;
   contentFooter: ToggleablePartial;
   pageFooter: ToggleablePartial;
+  pageEnd: ToggleablePartial;
   logo: ToggleablePartial;
   pageLayout?: Partial;
   backgroundPattern: ToggleSetting | BackgroundPatterns;
@@ -83,6 +84,7 @@ export type PopulatedLayoutSettings = {
   navigationState: ToggleSetting;
   contentFooterState: ToggleSetting;
   pageFooterState: ToggleSetting;
+  pageEndState: ToggleSetting;
   logoState: ToggleSetting;
 
   pageLayoutComponent?: Partial;
@@ -93,4 +95,5 @@ export type PopulatedLayoutSettings = {
   contentFooterComponent?: Partial;
   pageFooterComponent?: Partial;
   logoComponent?: Partial;
+  pageEndComponent?: Partial;
 };

@@ -13,6 +13,7 @@ import {
   MarkdownH6,
 } from './headings';
 import { MarkdownHr } from './hr';
+import { MarkdownImage } from './image';
 import { MarkdownItalic, MarkdownStrike, MarkdownStrong } from './inline';
 import { MarkdownLi, MarkdownOl, MarkdownUl } from './lists';
 import { MarkdownLink, MarkdownParagraph } from './paragraph';
@@ -125,6 +126,9 @@ export function useMDXComponents() {
           <MarkdownFootnotes attrs={props}>{props.children}</MarkdownFootnotes>
         );
       return <section {...props}>{props.children}</section>;
+    },
+    img(props: ElementProps) {
+      return <MarkdownImage attrs={props} />;
     },
   };
 }

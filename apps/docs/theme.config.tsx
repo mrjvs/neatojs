@@ -46,7 +46,7 @@ const gdWriting = (url: string) => `/docs/guider/writing${url}`;
 const gdApi = (url: string) => `/docs/guider/api-reference${url}`;
 
 const starLinks = [
-  link('Github', 'https://github.com/mrjvs/neatojs', {
+  link('GitHub', 'https://github.com/mrjvs/neatojs', {
     style: 'star',
     newTab: true,
     icon: 'akar-icons:github-fill',
@@ -121,7 +121,6 @@ export default defineTheme([
                 gdGuides('/config/common/multi-docs'),
               ),
               link('API reference + docs', gdGuides('/config/common/api-ref')),
-              link('Blog posts + docs', gdGuides('/config/common/blog')),
             ]),
           ]),
           group('Advanced', [
@@ -135,10 +134,10 @@ export default defineTheme([
             link('Deep-dive concepts', gdGuides('/advanced/deep-dive')),
           ]),
           group('Deploying', [
-            link('Github Pages', gdGuides('/deploy/github-pages')),
+            link('GitHub Pages', gdGuides('/deploy/github-pages')),
             link('Netlify', gdGuides('/deploy/netlify')),
             link('Vercel', gdGuides('/deploy/vercel')),
-            link('Cloudflare pages', gdGuides('/deploy/cloudflare')),
+            link('Cloudflare Pages', gdGuides('/deploy/cloudflare')),
             link('Docker', gdGuides('/deploy/docker')),
           ]),
         ],
@@ -245,6 +244,7 @@ export default defineTheme([
               '<GuiderPageFooter/>',
               gdApi('/components/guider-page-footer'),
             ),
+            link('<GuiderPageEnd/>', gdApi('/components/guider-page-end')),
           ]),
         ],
       }),

@@ -2,8 +2,12 @@
 
 React component that will show the currently configured page footer.
 
-It respects configured `pageFooter` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
+It respects the configured `pageFooter` in the layout settings. Read more [about partials](../theme/settings.mdx#about-partials).
 
+Will show one of:
+ - Nothing if the page footer is set to be hidden.
+ - The default page footer with the configured settings.
+ - The custom component if the page footer has been overriden in the partials.
 
 ## Example
 

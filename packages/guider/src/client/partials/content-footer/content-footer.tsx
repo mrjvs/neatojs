@@ -4,6 +4,8 @@ import { useGuiderPage } from '../../hooks/use-guider-page';
 import type { SocialTypes } from '../../../theme/components/social';
 import { GithubEditLink, useEditLink } from './github-edit-link';
 
+const guiderDocumentationLink = 'https://neatojs.com/docs/guider';
+
 const iconMap: Record<SocialTypes, string> = {
   discord: 'ic:twotone-discord',
   github: 'mdi:github',
@@ -44,7 +46,15 @@ export function ContentFooterInternal() {
         ) : null}
         <div>
           {site.contentFooter?.text ?? copyright}{' '}
-          <span className="gd-text-line gd-mx-1">—</span> Powered by Guider
+          <span className="gd-text-line gd-mx-1">—</span>{' '}
+          <Link
+            href={guiderDocumentationLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:gd-opacity-50"
+          >
+            Powered by Guider
+          </Link>
         </div>
       </div>
       {editUrl ? (

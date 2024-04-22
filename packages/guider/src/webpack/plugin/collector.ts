@@ -35,9 +35,7 @@ function normalizePathSeparator(path: string): string {
   return path.replace(pathSeparatorRegex, '/');
 }
 
-async function filePathToSitePath(
-  filePath: string,
-): Promise<CollectorItem | null> {
+async function filePathToSitePath(filePath: string): Promise<CollectorItem> {
   let strippedPath = dirname(relative('./pages', filePath));
   const fileContents = await readFile(filePath, 'utf-8');
   const parsedContents = JSON.parse(fileContents);

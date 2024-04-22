@@ -5,6 +5,33 @@ import { useMemo, useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { usePathname } from 'next/navigation.js';
 
+export function isRouteAtive(
+  link: string,
+  currentPathname: string,
+  exact?: boolean,
+): boolean {
+  const linkPathname = new URL(link, 'https://example.com').pathname;
+  const activePathname = new URL(currentPathname, 'https://example.com')
+    .pathname;
+
+  const linkPathArr = linkPathname.split('/').filter(Boolean);
+  const activePathArr = activePathname.split('/').filter(Boolean);
+
+  if (exact) {
+    const exactMatch = linkPathArr.join('/') === activePathArr.join('/');
+    return exactMatch;
+  }
+
+  let matches = true;
+  for (let i = 0; i < linkPathArr.length; i++) {
+    if (linkPathArr[i] !== activePathArr[i]) {
+      matches = false;
+    }
+  }
+
+  return matches;
+}
+
 export function useAreRoutesActive(
   ops: {
     as?: string;
@@ -16,25 +43,7 @@ export function useAreRoutesActive(
 
   const isActiveCheck = useCallback(
     (href: string, exact?: boolean) => {
-      const linkPathname = new URL(href, location.href).pathname;
-      const activePathname = new URL(pathName, location.href).pathname;
-
-      const linkPathArr = linkPathname.split('/').filter(Boolean);
-      const activePathArr = activePathname.split('/').filter(Boolean);
-
-      if (exact) {
-        const exactMatch = linkPathArr.join('/') === activePathArr.join('/');
-        return exactMatch;
-      }
-
-      let matches = true;
-      for (let i = 0; i < linkPathArr.length; i++) {
-        if (linkPathArr[i] !== activePathArr[i]) {
-          matches = false;
-        }
-      }
-
-      return matches;
+      return isRouteAtive(href, pathName, exact);
     },
     [pathName],
   );

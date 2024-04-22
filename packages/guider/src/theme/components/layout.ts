@@ -54,6 +54,7 @@ const baseLayoutConfig: PopulatedLayoutSettings = {
   navigationState: true,
   backgroundPatternState: false,
   logoState: true,
+  pageEndState: true,
 };
 
 function extractState<T>(
