@@ -7,7 +7,8 @@ type ContentDocument = {
     {
       id: number;
       url: string;
-      excerpt: string;
+      title: string;
+      content: string;
     },
     never[]
   >;
@@ -16,13 +17,16 @@ type ContentDocument = {
 type SearchData = Record<
   string,
   {
-    excerpt: string;
+    sections: {
+      heading?: { id: string; depth: number; text: string };
+      content: string;
+    }[];
   }
 >;
 
 export type SearchResult = {
   id: string;
-  type: 'page' | 'section';
+  type: 'section';
   title: string;
   content: string;
   url: string;
@@ -48,8 +52,8 @@ async function fetchDocument(basePath: string, key: string) {
     tokenize: 'full',
     document: {
       id: 'id',
-      index: 'excerpt',
-      store: ['excerpt', 'url'],
+      index: ['title', 'content'],
+      store: ['content', 'url', 'title'],
     },
     context: {
       resolution: 9,
@@ -60,12 +64,15 @@ async function fetchDocument(basePath: string, key: string) {
 
   let pageId = 0;
   for (const [url, data] of Object.entries(searchData)) {
-    pageId++;
-    searchDocument.add({
-      id: pageId,
-      url,
-      excerpt: data.excerpt,
-    });
+    for (const section of data.sections) {
+      pageId++;
+      searchDocument.add({
+        id: pageId,
+        title: section.heading?.text ?? '',
+        url: url + (section.heading ? `#${section.heading.id}` : ''),
+        content: section.content,
+      });
+    }
   }
 
   contentDocument = {
@@ -103,10 +110,10 @@ export function useSearch(key: string) {
         setResults(
           docResults.map((res): SearchResult => {
             return {
-              type: 'page',
+              type: 'section',
               id: res.id.toString(),
-              title: res.doc.excerpt,
-              content: res.doc.excerpt,
+              title: res.doc.title,
+              content: res.doc.content,
               url: res.doc.url,
             };
           }),

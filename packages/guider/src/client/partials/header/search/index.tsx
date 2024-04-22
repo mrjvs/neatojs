@@ -43,7 +43,7 @@ export function HeaderSearch() {
   }, []);
 
   return (
-    <div>
+    <div className="gd-ml-2">
       <SearchButton
         onClick={() => {
           setOpen(true);
