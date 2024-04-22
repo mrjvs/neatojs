@@ -28,7 +28,7 @@ function SearchMessage(props: { title: string; text: string; icon: string }) {
 
 function SearchResults(props: { results: SearchResult[] }) {
   return (
-    <div className="gd-p-2 gd-space-y-2 gd-border-t gd-border-bgLightest gd-max-h-[20rem] gd-overflow-y-auto">
+    <div className="gd-p-2 gd-space-y-2 gd-border-t gd-border-bgLightest gd-max-h-[22rem] gd-overflow-y-auto">
       {props.results.map((v) => {
         return (
           <Combobox.Option key={v.id} value={v} as="article">

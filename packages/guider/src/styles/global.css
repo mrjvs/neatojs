@@ -16,7 +16,7 @@ body[data-header-dropdown-open] {
   }
 }
 
-body[data-stop-overflow="true"] {
+body[data-stop-overflow="true"], body[data-header-search-open="true"] {
   @apply gd-overflow-hidden;
   scrollbar-gutter: stable;
 }

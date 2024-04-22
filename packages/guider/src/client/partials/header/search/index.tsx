@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { Transition } from '@headlessui/react';
 import { SearchButton } from './button';
 import { SearchModal } from './modal';
 import { usePreloadSearch } from './content';
@@ -50,14 +51,16 @@ export function HeaderSearch() {
         }}
       />
       <UpdateHead active={open} />
-      {open ? (
-        <SearchModal
-          searchKey={searchKey}
-          onClose={() => {
-            setOpen(false);
-          }}
-        />
-      ) : null}
+      <Transition as={Fragment} show={open}>
+        <div>
+          <SearchModal
+            searchKey={searchKey}
+            onClose={() => {
+              setOpen(false);
+            }}
+          />
+        </div>
+      </Transition>
     </div>
   );
 }
