@@ -1,6 +1,6 @@
 {
   "name": "@neato/guider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Beautiful documentation sites, without all the hassle",
   "main": "./dist/index.js",
   "type": "module",
@@ -119,6 +119,7 @@
     "type-fest": "^4.10.3",
     "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0",
+    "webpack": "^5.91.0",
     "webpack-virtual-modules": "^0.6.1",
     "zustand": "^4.5.2"
   }
