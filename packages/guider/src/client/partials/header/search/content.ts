@@ -8,6 +8,7 @@ type ContentDocument = {
       id: number;
       url: string;
       title: string;
+      pageTitle?: string;
       content: string;
     },
     never[]
@@ -21,6 +22,7 @@ type SearchData = Record<
       heading?: { id: string; depth: number; text: string };
       content: string;
     }[];
+    pageTitle: string;
   }
 >;
 
@@ -28,6 +30,7 @@ export type SearchResult = {
   id: string;
   type: 'section';
   title: string;
+  pageTitle?: string;
   content: string;
   url: string;
 };
@@ -53,7 +56,7 @@ async function fetchDocument(basePath: string, key: string) {
     document: {
       id: 'id',
       index: ['title', 'content'],
-      store: ['content', 'url', 'title'],
+      store: ['content', 'url', 'title', 'pageTitle'],
     },
     context: {
       resolution: 9,
@@ -69,6 +72,7 @@ async function fetchDocument(basePath: string, key: string) {
       searchDocument.add({
         id: pageId,
         title: section.heading?.text ?? '',
+        pageTitle: data.pageTitle,
         url: url + (section.heading ? `#${section.heading.id}` : ''),
         content: section.content,
       });
@@ -113,6 +117,7 @@ export function useSearch(key: string) {
               type: 'section',
               id: res.id.toString(),
               title: res.doc.title,
+              pageTitle: res.doc.pageTitle,
               content: res.doc.content,
               url: res.doc.url,
             };

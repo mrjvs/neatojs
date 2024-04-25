@@ -26,16 +26,22 @@ function SearchMessage(props: { title: string; text: string; icon: string }) {
   );
 }
 
-function SearchResults(props: { results: SearchResult[] }) {
+function SearchResults(props: {
+  results: SearchResult[];
+  onClose?: () => void;
+}) {
   return (
     <div className="gd-p-2 gd-space-y-2 gd-border-t gd-border-bgLightest gd-max-h-[22rem] gd-overflow-y-auto">
       {props.results.map((v) => {
+        let title = v.pageTitle ? `${v.pageTitle} / ${v.title}` : v.title;
+        if (v.pageTitle === v.title) title = v.title;
         return (
           <Combobox.Option key={v.id} value={v} as="article">
             {({ active }) => (
               <Link
                 href={v.url}
                 key={v.id}
+                onClick={props.onClose}
                 className={classNames(
                   'gd-p-3 hover:gd-bg-primaryDark gd-group gd-duration-100 gd-transition-colors gd-rounded-lg gd-flex gd-gap-4 gd-items-center gd-relative',
                   {
@@ -55,7 +61,7 @@ function SearchResults(props: { results: SearchResult[] }) {
                 </div>
                 <div className="gd-pr-4">
                   <h2 className="gd-text-white gd-line-clamp-1 gd-text-sm gd-font-bold">
-                    {v.title}
+                    {title}
                   </h2>
                   <p
                     className={classNames(
@@ -145,7 +151,7 @@ export function SearchScreen(props: {
               text="Try some different keywords"
             />
           ) : query.length > 0 && results ? (
-            <SearchResults results={results} />
+            <SearchResults results={results} onClose={props.onClose} />
           ) : null}
         </Combobox.Options>
       </div>
