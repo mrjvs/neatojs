@@ -1,6 +1,6 @@
 {
   "name": "@neato/create-guider",
-  "version": "1.0.9",
+  "version": "0.0.1",
   "description": "Beautiful documentation sites, without all the hassle",
   "main": "./dist/index.js",
   "type": "module",
@@ -25,7 +25,7 @@
   ],
   "exports": "./dist/index.js",
   "bin": {
-    "create-guider": "./dist/index.js"
+    "@neato/create-guider": "./dist/index.js"
   },
   "eslintConfig": {
     "extends": [
