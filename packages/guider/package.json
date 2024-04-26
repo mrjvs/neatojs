@@ -1,6 +1,6 @@
 {
   "name": "@neato/guider",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Beautiful documentation sites, without all the hassle",
   "main": "./dist/index.js",
   "type": "module",

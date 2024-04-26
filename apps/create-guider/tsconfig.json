@@ -1,0 +1,11 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "baseUrl": "."
+  }
+}
