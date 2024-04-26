@@ -29,6 +29,7 @@ if (await exists(projectDir)) {
 
 s.start('Creating files');
 await fs.copy(mainTemplateDir, projectDir);
+await fs.rename(path.join(projectDir, "_gitignore"), path.join(projectDir, ".gitignore"));
 s.stop('Created files')
 
 outro(`Enjoy your new documentation!`);
