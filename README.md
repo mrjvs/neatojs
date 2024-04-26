@@ -6,8 +6,8 @@
 - no abstraction, you're using well-known libraries, almost no need for neato-specific google searches
 
 ## Packages
+- @neato/guider - beautiful documentation generator framework based on nextjs
 - @neato/config - load configurations from various sources with type-safety and validation (BETA)
-- @neato/guider - beautiful documentation generator framework based on nextjs (ALPHA)
 
 ## Upcoming packages
 - @neato/router - http router based on fastify
