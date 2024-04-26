@@ -1,0 +1,55 @@
+{
+  "name": "@neato/create-guider",
+  "version": "1.0.9",
+  "description": "Beautiful documentation sites, without all the hassle",
+  "main": "./dist/index.js",
+  "type": "module",
+  "homepage": "https://neatojs.com/docs/guider",
+  "repository": "https://github.com/mrjvs/neatojs",
+  "bugs": {
+    "url": "https://github.com/mrjvs/neatojs/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mdx",
+    "documentation",
+    "nextjs",
+    "markdown"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist/**",
+    "templates/**"
+  ],
+  "exports": "./dist/index.js",
+  "bin": {
+    "create-guider": "./dist/index.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ]
+  },
+  "prettier": "@repo/prettier-config",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --onSuccess 'node dist/index.js'",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.19",
+    "concurrently": "^8.2.2",
+    "tsup": "7.2.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "@types/fs-extra": "^11.0.4",
+    "fs-extra": "^11.2.0"
+  }
+}
