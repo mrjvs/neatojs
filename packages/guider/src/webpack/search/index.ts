@@ -19,6 +19,9 @@ async function filePathToPageData(filePath: string) {
   const fileContents = await readFile(filePath, 'utf-8');
 
   strippedPath = normalizePathSeparator(strippedPath);
+  strippedPath = strippedPath.replace(/index$/g, '');
+
+  if (strippedPath.endsWith('/')) strippedPath = strippedPath.slice(0, -1);
 
   return {
     sitePath: `/${strippedPath}`,
