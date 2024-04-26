@@ -1,8 +1,8 @@
 {
   "name": "@neato/create-guider",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Beautiful documentation sites, without all the hassle",
-  "main": "./dist/index.js",
+  "main": "./entry.js",
   "type": "module",
   "homepage": "https://neatojs.com/docs/guider",
   "repository": "https://github.com/mrjvs/neatojs",
@@ -21,11 +21,12 @@
   "license": "MIT",
   "files": [
     "dist/**",
-    "templates/**"
+    "templates/**",
+    "entry.js"
   ],
-  "exports": "./dist/index.js",
+  "exports": "./entry.js",
   "bin": {
-    "@neato/create-guider": "./dist/index.js"
+    "@neato/create-guider": "./entry.js"
   },
   "eslintConfig": {
     "extends": [
