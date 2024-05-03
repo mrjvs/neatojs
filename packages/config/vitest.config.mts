@@ -4,6 +4,5 @@ export default defineConfig({
   test: {
     root: './src',
     globals: true,
-    isolate: false,
   },
 });
