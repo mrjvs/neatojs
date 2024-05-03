@@ -26,6 +26,10 @@
   "eslintConfig": {
     "extends": [
       "@repo/eslint-config"
+    ],
+    "ignorePatterns": [
+      "examples",
+      "dist"
     ]
   },
   "prettier": "@repo/prettier-config",
@@ -33,13 +37,17 @@
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20.11.19"
+    "@types/node": "^20.11.19",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "chalk": "^4.1.2",

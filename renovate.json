@@ -1,0 +1,28 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "timezone": "Europe/Amsterdam",
+    "extends": [
+      "config:recommended",
+      "schedule:daily",
+      ":dependencyDashboard",
+      ":approveMajorUpdates",
+      "npm:unpublishSafe"
+    ],
+    "patch": {
+        "enabled": false
+    },
+    "packageRules": [
+      {
+        "matchDatasources": [
+          "npm"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest"
+        ],
+        "groupName": "npm (minor updates)"
+      }
+    ]
+  }

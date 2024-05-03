@@ -1,4 +1,4 @@
-name: create-guider - publish version
+name: config - publish version
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         uses: tj-actions/changed-files@v42
         with:
           files: |
-            apps/create-guider/**
+            packages/config/**
 
   publish:
     runs-on: ubuntu-latest
@@ -45,10 +45,10 @@ jobs:
 
     - name: Build
       run: pnpm run build
-      working-directory: 'apps/create-guider'
+      working-directory: 'packages/config'
 
     - name: Publish
       run: pnpm publish --access public
-      working-directory: 'apps/create-guider'
+      working-directory: 'packages/config'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

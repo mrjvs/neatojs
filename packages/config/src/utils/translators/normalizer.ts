@@ -13,7 +13,7 @@ import type { ConfigKeys } from 'loaders/base';
 function normalizeKeySegment(segment: string): string {
   return segment
     .replace(/([a-z])([A-Z])/g, (_, a, b) => `${a}-${b.toLowerCase()}`)
-    .replace(/[\-\_]+/g, '_')
+    .replace(/[-_]+/g, '_')
     .toUpperCase();
 }
 

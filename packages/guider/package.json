@@ -61,7 +61,8 @@
     "tailwind:dev": "tailwindcss --postcss -i ./src/styles/tailwind.css -o ./style.css --watch",
     "tailwind:build": "tailwindcss --postcss -i ./src/styles/tailwind.css -o ./style.css --verbose",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "next": ">=14.1.0",
@@ -86,7 +87,8 @@
     "react-dom": "^18.2.0",
     "rehype": "^13.0.1",
     "tailwindcss": "^3.4.1",
-    "tsup": "7.2.0"
+    "tsup": "7.2.0",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",

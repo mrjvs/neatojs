@@ -2,17 +2,19 @@ import { getKeysFromCLI } from '../../loaders/cli';
 
 describe('cli loader', () => {
   function setupArgv() {
-    process.argv = [
-      'node',
-      'test.js',
-      '--test',
-      'value',
-      '--conf-test1=abc',
-      '--conf-test2=def',
-      '--conf-test3',
-      'ghi',
-      'another-arg',
-    ];
+    vi.stubGlobal('process', {
+      argv: [
+        'node',
+        'test.js',
+        '--test',
+        'value',
+        '--conf-test1=abc',
+        '--conf-test2=def',
+        '--conf-test3',
+        'ghi',
+        'another-arg',
+      ],
+    });
   }
 
   function checkIfArrayHas(test: any, value: any) {

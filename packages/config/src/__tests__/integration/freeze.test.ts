@@ -1,11 +1,12 @@
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
 describe('integration tests - freezing', () => {
   test('without freeze', () => {
-    process.env = {
+    setEnv({
       L1__L2__L3: 'test',
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .unfreeze()
@@ -25,9 +26,9 @@ describe('integration tests - freezing', () => {
   });
 
   test('with freeze - basic', () => {
-    process.env = {
+    setEnv({
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .load();
@@ -38,7 +39,7 @@ describe('integration tests - freezing', () => {
     // testing freeze
     expect(Object.isFrozen(config)).toBe(true);
     expect(() => {
-      config.hi = 'HELLO WORLD';
+      (config as any).hi = 'HELLO WORLD';
     }).toThrowError(); // in strict mode readonly objects throw typeError when assigned
     expect(config).toStrictEqual({
       hi: 'test2',
@@ -46,10 +47,10 @@ describe('integration tests - freezing', () => {
   });
 
   test('with freeze - deep', () => {
-    process.env = {
+    setEnv({
       L1__L2__L3: 'test',
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .load();
@@ -63,8 +64,8 @@ describe('integration tests - freezing', () => {
     expect(Object.isFrozen(config.l1)).toBe(true);
     expect(Object.isFrozen(config.l1.l2)).toBe(true);
     expect(() => {
-      config.hi = 'HELLO WORLD';
-      config.l1.l2.l3 = 'more tests';
+      (config as any).hi = 'HELLO WORLD';
+      (config as any).l1.l2.l3 = 'more tests';
     }).toThrowError(); // in strict mode readonly objects throw typeError when assigned
     expect(config).toStrictEqual({
       l1: { l2: { l3: 'test' } },

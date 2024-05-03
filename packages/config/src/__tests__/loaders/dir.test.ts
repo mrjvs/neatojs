@@ -2,8 +2,7 @@ import * as PathMod from 'node:path';
 import * as fs from 'node:fs';
 import { getKeysFromDir } from '../../loaders/dir';
 
-jest.mock('fs', () => {
-  const originalModule = jest.requireActual('fs');
+vi.mock('fs', (originalModule) => {
   let files: [string, string][] = [];
   let path: any;
 

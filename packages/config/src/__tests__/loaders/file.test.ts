@@ -6,7 +6,7 @@ import {
   ParserTypes,
 } from '../../loaders/file';
 
-jest.mock('fs');
+vi.mock('fs');
 
 function checkIfArrayHas(test: any, value: any) {
   expect(test).toBeInstanceOf(Array);
@@ -152,7 +152,7 @@ describe('file loader - env', () => {
       `# test comments
       TEST=abc
       TEST2=2 # more comments
-      
+
       TEST3=3#another comment
     `,
     );
