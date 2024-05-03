@@ -4,5 +4,6 @@ export default defineConfig({
   test: {
     root: './src',
     globals: true,
+    pool: 'forks',
   },
 });
