@@ -10,7 +10,7 @@ export interface ConfigZodSchema {
 export function validateZodSchemaDefintion(schemaData: ConfigZodSchema) {
   const def = schemaData.schema._def;
   if (!def) throw new LoaderInputError('Schema not a valid Zod schema');
-  if (def.typeName !== 'ZodObject')
+  if ((def as any).typeName !== 'ZodObject')
     throw new LoaderInputError('Base of schema not an object');
 }
 

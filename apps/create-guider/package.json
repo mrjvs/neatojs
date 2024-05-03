@@ -38,7 +38,8 @@
     "build": "tsup",
     "dev": "tsup --watch --onSuccess 'node dist/index.js'",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -46,7 +47,8 @@
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20.11.19",
     "concurrently": "^8.2.2",
-    "tsup": "7.2.0"
+    "tsup": "7.2.0",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",

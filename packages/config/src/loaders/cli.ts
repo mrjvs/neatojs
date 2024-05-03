@@ -1,4 +1,3 @@
-import { argv } from 'node:process';
 import type { ConfigLoader } from 'builder/base';
 import type { ConfigKeys } from 'loaders/base';
 import { LoaderInputError } from 'utils/errors';
@@ -17,7 +16,7 @@ export function getKeysFromCLI(loaders: CLILoader[]): ConfigKeys {
   const prefixes: string[] = loaders.map((v) => v.prefix);
   const keys: ConfigKeys = [];
   let findNext: { key: string }[] = [];
-  argv.forEach((v) => {
+  process.argv.forEach((v) => {
     // if its waiting for next argument, parse that argument
     if (findNext.length > 0) {
       findNext.forEach((awaiting) => {

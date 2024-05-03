@@ -34,7 +34,7 @@ function recursiveSearchForKeys(
   path: string[] = [],
 ): string[] {
   const out: string[] = [];
-  Object.entries(desc.keys || {}).forEach(([k, v]) => {
+  Object.entries(desc.keys || {}).forEach(([k, v]: [string, any]) => {
     const keyArray = [...path, k];
     if (v.type === 'object') {
       out.push(...recursiveSearchForKeys(v, keyArray));

@@ -27,7 +27,7 @@ describe('zodCoercedBoolean()', () => {
   });
 
   test('Unexpected values', () => {
-    check(() => {}).toBe(false);
+    check(() => 'Hello').toBe(false);
     check(BigInt('123')).toBe(false);
     check(1251254).toBe(false);
     check(-126).toBe(false);

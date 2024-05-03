@@ -1,11 +1,12 @@
 import * as Joi from 'joi';
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
 describe('integration tests - joi schema', () => {
   test('normal usage, valid', () => {
-    process.env = {
+    setEnv({
       CONF_HI: 'test2',
-    };
+    });
     const schema = Joi.object({
       HI: Joi.string(),
     });
@@ -19,9 +20,9 @@ describe('integration tests - joi schema', () => {
   });
 
   test('normal usage, invalid', () => {
-    process.env = {
+    setEnv({
       CONF_HI: 'test2',
-    };
+    });
     const schema = Joi.object({
       HI: Joi.number(),
     });
@@ -54,10 +55,10 @@ describe('integration tests - joi schema', () => {
       }),
     });
 
-    process.env = {
+    setEnv({
       CONF_HI: 'abc',
       CONF_L1__L2__L3: 'def',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment('CONF_')
       .addJOISchema(schema)
@@ -76,12 +77,12 @@ describe('integration tests - joi schema', () => {
       HelloWorld: Joi.string(),
       HI_AGAIN: Joi.string(),
     });
-    process.env = {
+    setEnv({
       CONF_HI: 'a',
       CONF_HELLO: 'a',
       CONF_HELLO_WORLD: 'a',
       'CONF_hi-again': 'a',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment('CONF_')
       .addJOISchema(schema)
@@ -100,9 +101,9 @@ describe('integration tests - joi schema', () => {
       hi: Joi.string().lowercase(),
       hoi: Joi.string().default('yike'),
     });
-    process.env = {
+    setEnv({
       CONF_HI: 'AAAA',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment('CONF_')
       .addJOISchema(schema)

@@ -1,7 +1,7 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
+  "exclude": ["dist", "build", "node_modules", "templates"],
   "compilerOptions": {
     "jsx": "react-jsx",
     "module": "ES2022",

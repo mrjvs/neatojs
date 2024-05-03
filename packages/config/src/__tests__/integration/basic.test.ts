@@ -1,11 +1,12 @@
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
 describe('integration tests - basic', () => {
   test('load standard config', () => {
-    process.env = {
+    setEnv({
       L1__L2__L3: 'test',
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .load();

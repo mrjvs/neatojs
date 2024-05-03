@@ -8,7 +8,7 @@ import { getKeysFromDir } from 'loaders/dir';
 import type { EnvironmentLoader } from 'loaders/environment';
 import { getKeysFromEnvironment } from 'loaders/environment';
 import type { FileLoader, FileOptions } from 'loaders/file';
-import { getKeysFromFiles, ParserTypesType } from 'loaders/file';
+import { getKeysFromFiles } from 'loaders/file';
 import type { FragmentLoader } from 'loaders/fragment';
 import type { DeepReadonly } from 'utils/freeze';
 import type { NamingConventionFunc } from 'utils/translators/conventions';
@@ -22,10 +22,9 @@ export interface ConfigLoader {
   freeze: boolean;
 }
 
-type ModifyFreeze<
-  Ret extends any,
-  TFreeze extends true | false,
-> = TFreeze extends true ? DeepReadonly<Ret> : Ret;
+type ModifyFreeze<Ret, TFreeze extends true | false> = TFreeze extends true
+  ? DeepReadonly<Ret>
+  : Ret;
 
 export interface ConfigBuilder<Ret = any, TFreeze extends true | false = true> {
   // loaders
