@@ -1,4 +1,5 @@
 export function setEnv(env: Record<string, string>) {
+  if (!process.env) process.env = {};
   Object.keys(process.env).forEach((key) => {
     vi.stubEnv(key, '');
   });
