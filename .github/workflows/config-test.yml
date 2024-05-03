@@ -1,0 +1,45 @@
+name: config - test
+
+on:
+  pull_request: {}
+
+jobs:
+  check:
+    name: Check if files modified
+    runs-on: ubuntu-latest
+    outputs:
+      checked: ${{ steps.changed-files.outputs.any_modified }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        with:
+          files: |
+            packages/config/**
+
+  lint:
+    name: Testing
+    runs-on: ubuntu-latest
+    needs: [check]
+    if: needs.check.outputs.checked == 'true'
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'pnpm'
+
+    - name: Install pnpm packages
+      working-directory: packages/config
+      run: pnpm install --frozen-lockfile
+
+    - name: Test
+      working-directory: packages/config
+      run: pnpm test
