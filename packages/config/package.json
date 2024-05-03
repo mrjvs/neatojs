@@ -26,6 +26,10 @@
   "eslintConfig": {
     "extends": [
       "@repo/eslint-config"
+    ],
+    "ignorePatterns": [
+      "examples",
+      "dist"
     ]
   },
   "prettier": "@repo/prettier-config",

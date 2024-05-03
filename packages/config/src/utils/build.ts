@@ -6,7 +6,7 @@ export function buildObjectFromKeys(keys: ConfigKeys): Record<string, any> {
   keys.forEach((v) => {
     let current = output;
     const parts = v.key.split('__');
-    const last = parts.pop()!;
+    const last = parts.pop() ?? '';
     parts.forEach((path) => {
       if (current[path] !== undefined && current[path].constructor !== Object)
         throw new FileLoadError(

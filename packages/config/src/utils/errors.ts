@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-base-to-string -- toString is overwritten */
+/* eslint-disable no-console -- this file is litterally a logger */
 import chalk from 'chalk';
 
 export class NeatConfigError extends Error {
@@ -31,7 +33,7 @@ interface FancyErrorOptions {
 
 function makeFancyError(ops: FancyErrorOptions) {
   let out = chalk.gray('┌  ') + chalk.bgRed.white(` ${ops.badge ?? 'failed'} `);
-  ops.errors.forEach((err, i) => {
+  ops.errors.forEach((err) => {
     out += `\n${chalk.gray('│')}`;
     out += `\n${chalk.redBright('●  ')}${chalk.bold.white(err.title)}`;
     if (err.details) out += `\n${chalk.gray('│  ')}${chalk.gray(err.details)}`;

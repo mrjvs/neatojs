@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
