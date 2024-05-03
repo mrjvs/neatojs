@@ -23,7 +23,7 @@ jobs:
         cache: 'pnpm'
 
     - name: Install pnpm packages
-      run: pnpm install
+      run: pnpm install --frozen-lockfile
 
     - name: Build @neato/guider
       run: cd packages/guider && pnpm run build

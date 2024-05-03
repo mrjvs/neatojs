@@ -41,7 +41,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
 
     - name: Install pnpm packages
-      run: pnpm install
+      run: pnpm install --frozen-lockfile
 
     - name: Build
       run: pnpm run build
