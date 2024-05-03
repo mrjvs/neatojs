@@ -1,4 +1,4 @@
-name: config - lint and typecheck
+name: docs - lint and typecheck
 
 on:
   pull_request: {}
@@ -17,7 +17,7 @@ jobs:
         uses: tj-actions/changed-files@v42
         with:
           files: |
-            packages/config/**
+            apps/docs/**
 
   lint:
     name: Linting and Typecheck
@@ -37,13 +37,13 @@ jobs:
         cache: 'pnpm'
 
     - name: Install pnpm packages
-      working-directory: packages/config
+      working-directory: apps/docs
       run: pnpm install --frozen-lockfile
 
     - name: Lint
-      working-directory: packages/config
+      working-directory: apps/docs
       run: pnpm lint
 
     - name: Typecheck
-      working-directory: packages/config
+      working-directory: apps/docs
       run: pnpm typecheck
