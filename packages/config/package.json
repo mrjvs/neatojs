@@ -35,13 +35,15 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20.11.19"
+    "@types/node": "^20.11.19",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "chalk": "^4.1.2",

@@ -1,4 +1,4 @@
-import type { fragmentLoader } from '../../loaders/fragment';
+import type { FragmentLoader } from '../../loaders/fragment';
 import {
   expandFragments,
   extractFragmentDefinitionFromKeys,
@@ -6,7 +6,7 @@ import {
 
 describe('fragment loader', () => {
   test('no fragments', () => {
-    const loader: fragmentLoader = {
+    const loader: FragmentLoader = {
       fragments: {},
       key: '',
     };
@@ -24,7 +24,7 @@ describe('fragment loader', () => {
   });
 
   test('no used fragments', () => {
-    const loader: fragmentLoader = {
+    const loader: FragmentLoader = {
       fragments: {
         FRAG_TEST: { hi: 'hi' },
         FRAG_TEST2: { hi2: 'hi2' },
@@ -48,7 +48,7 @@ describe('fragment loader', () => {
   });
 
   test('use one fragment', () => {
-    const loader: fragmentLoader = {
+    const loader: FragmentLoader = {
       fragments: {
         FRAG_TEST: { hi: 'hi' },
         FRAG_TEST2: { hi2: 'hi2' },
@@ -72,7 +72,7 @@ describe('fragment loader', () => {
   });
 
   test('use multiple fragments', () => {
-    const loader: fragmentLoader = {
+    const loader: FragmentLoader = {
       fragments: {
         FRAG_TEST: { hi: 'hi' },
         FRAG_TEST2: { hi2: 'hi2' },
@@ -100,7 +100,7 @@ describe('fragment loader', () => {
   });
 
   test('fragmentloading order', () => {
-    const loader: fragmentLoader = {
+    const loader: FragmentLoader = {
       fragments: {
         FRAG_TEST2: { hi: 'hi2' },
         FRAG_TEST: { hi: 'hi', yoink: 'yoink' },
@@ -132,7 +132,7 @@ describe('fragment loader', () => {
   });
 
   test('error handling', () => {
-    const loader: fragmentLoader = {
+    const loader: FragmentLoader = {
       fragments: {
         FRAG_TEST2: { hi: 'hi2' },
         FRAG_TEST: { hi: 'hi', yoink: 'yoink' },
