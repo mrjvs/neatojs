@@ -1,11 +1,12 @@
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
 describe('integration tests - freezing', () => {
   test('without freeze', () => {
-    process.env = {
+    setEnv({
       L1__L2__L3: 'test',
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .unfreeze()
@@ -25,9 +26,9 @@ describe('integration tests - freezing', () => {
   });
 
   test('with freeze - basic', () => {
-    process.env = {
+    setEnv({
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .load();
@@ -46,10 +47,10 @@ describe('integration tests - freezing', () => {
   });
 
   test('with freeze - deep', () => {
-    process.env = {
+    setEnv({
       L1__L2__L3: 'test',
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .load();

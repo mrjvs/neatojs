@@ -1,11 +1,12 @@
 import z from 'zod';
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
 describe('integration tests - zod schema', () => {
   test('normal usage, valid', () => {
-    process.env = {
+    setEnv({
       CONF_HI: 'test2',
-    };
+    });
     const schema = z.object({
       HI: z.string(),
     });
@@ -18,9 +19,9 @@ describe('integration tests - zod schema', () => {
     });
   });
   test('normal usage, invalid', () => {
-    process.env = {
+    setEnv({
       CONF_HI: 'test2',
-    };
+    });
     const schema = z.object({
       HI: z.number(),
     });
@@ -49,10 +50,10 @@ describe('integration tests - zod schema', () => {
         }),
       }),
     });
-    process.env = {
+    setEnv({
       CONF_HI: 'abc',
       CONF_L1__L2__L3: 'def',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment('CONF_')
       .addZodSchema(schema)
@@ -69,12 +70,12 @@ describe('integration tests - zod schema', () => {
       HelloWorld: z.string(),
       HI_AGAIN: z.string(),
     });
-    process.env = {
+    setEnv({
       CONF_HI: 'a',
       CONF_HELLO: 'a',
       CONF_HELLO_WORLD: 'a',
       'CONF_hi-again': 'a',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment('CONF_')
       .addZodSchema(schema)
@@ -91,9 +92,9 @@ describe('integration tests - zod schema', () => {
       hi: z.string().transform((v) => v.toLowerCase()),
       hoi: z.string().default('yike'),
     });
-    process.env = {
+    setEnv({
       CONF_HI: 'AAAA',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment('CONF_')
       .addZodSchema(schema)

@@ -1,3 +1,4 @@
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 import {
   camelCaseNaming,
@@ -6,10 +7,10 @@ import {
 
 describe('integration tests - basic', () => {
   test('load standard config', () => {
-    process.env = {
+    setEnv({
       HELLO_WORLD__HI_AGAIN__L3: 'test',
       HI: 'test2',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .setNamingConvention(camelCaseNaming)

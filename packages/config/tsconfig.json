@@ -4,5 +4,6 @@
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "baseUrl": "./src",
+    "types": ["vitest/globals"],
   }
 }

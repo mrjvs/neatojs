@@ -1,11 +1,12 @@
+import { setEnv } from '__tests__/test';
 import { createConfigLoader } from '../..';
 
 describe('integration tests - fragments', () => {
   test('load normal fragments in config', () => {
-    process.env = {
+    setEnv({
       HI: 'test2',
       USE_FRAGMENTS: 'A,B,c',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .setFragmentKey('use_fragments')
@@ -21,9 +22,9 @@ describe('integration tests - fragments', () => {
   });
 
   test('overwriting of each other', () => {
-    process.env = {
+    setEnv({
       USE_FRAGMENTS: 'A,B',
-    };
+    });
     const config = createConfigLoader({ assert: 'throw' })
       .addFromEnvironment()
       .setFragmentKey('use_fragments')
@@ -36,9 +37,9 @@ describe('integration tests - fragments', () => {
   });
 
   test('error handling', () => {
-    process.env = {
+    setEnv({
       USE_FRAGMENTS: 'A,F',
-    };
+    });
     const config = () =>
       createConfigLoader({ assert: 'throw' })
         .addFromEnvironment()

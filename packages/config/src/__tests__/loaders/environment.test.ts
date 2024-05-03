@@ -1,12 +1,13 @@
+import { setEnv } from '__tests__/test';
 import { getKeysFromEnvironment } from '../../loaders/environment';
 
 describe('Environment loader', () => {
   beforeAll(() => {
-    process.env = {
+    setEnv({
       test1: 'abc',
       test2: 'def',
       test3: 'ghi',
-    };
+    });
   });
 
   function checkIfArrayHas(test: any, value: any) {
