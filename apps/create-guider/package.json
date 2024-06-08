@@ -37,7 +37,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --onSuccess 'node dist/index.js'",
-    "lint": "eslint .",
+    "lint": "eslint src",
     "lint:fix": "eslint --fix .",
     "typecheck": "tsc --noEmit"
   },
