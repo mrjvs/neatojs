@@ -11,7 +11,7 @@ export function guider(initConfig: GuiderInitConfig) {
     ...initConfig,
   };
   const guiderPlugin = new GuiderPlugin(guiderConfig);
-  const searchPlugin = new GuiderSearchPlugin();
+  const searchPlugin = new GuiderSearchPlugin(guiderConfig);
 
   function withGuider(nextConfig: NextConfig = {}): NextConfig {
     const extraWatchers = new ExtraWatchWebpackPlugin({
