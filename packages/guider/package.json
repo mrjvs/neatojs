@@ -1,6 +1,6 @@
 {
   "name": "@neato/guider",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Beautiful documentation sites, without all the hassle",
   "main": "./dist/index.js",
   "type": "module",
@@ -51,7 +51,12 @@
   "eslintConfig": {
     "extends": [
       "@repo/eslint-config"
-    ]
+    ],
+    "ignorePatterns": ["dist/**/*", "style.css"],
+    "rules": {
+      "import/no-named-as-default": "off",
+      "import/no-named-as-default-member": "off"
+    }
   },
   "prettier": "@repo/prettier-config",
   "scripts": {
