@@ -216,6 +216,8 @@ export default defineTheme([
             link('Layout settings', gdApi('/theme/settings')),
           ]),
 
+          group('Setup', [link('guider()', gdApi('/setup/guider'))]),
+
           group('_meta.json', [
             link('Structure of _meta.json', gdApi('/meta/structure')),
           ]),
