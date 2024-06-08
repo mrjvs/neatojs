@@ -17,7 +17,6 @@ See the code snippet below for a usual setup in projects
       .addFromFile(".env") // loads PORT=8080 from file
       .addFromFile(".json") // loads { "port": 8080 } from file
       .addZodSchema(schema) // validates the loaded data to make sure it follow the schema
-      .freeze() // freezes the object so no changes can be made at runtime
       .load(); // this returns the fully type configuration (type infered from schema)
     ```
   </CodeGroup.Code>

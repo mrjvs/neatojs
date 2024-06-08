@@ -23,7 +23,11 @@ async function loader(
   if (directories.pagesDir) context.addContextDependency(directories.pagesDir);
 
   if (type === 'virtual') return virtualLoader(getGuiderPluginCache());
-  if (type === 'mdx') return (await mdLoader(source)).script;
+  if (type === 'mdx') {
+    if (!guiderConfig)
+      throw new Error('Could not read config for markdown loader');
+    return (await mdLoader(source, guiderConfig)).script;
+  }
 
   throw new Error(`Loader used with incorrect type (${type})`);
 }

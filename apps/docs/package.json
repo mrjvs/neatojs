@@ -6,7 +6,8 @@
   "eslintConfig": {
     "extends": [
       "@repo/eslint-config"
-    ]
+    ],
+    "ignorePatterns": ["out/**/*", ".next/**/*"]
   },
   "prettier": "@repo/prettier-config",
   "scripts": {

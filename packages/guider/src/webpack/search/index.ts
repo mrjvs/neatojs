@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import webpack from 'webpack';
 import type { Compiler } from 'webpack';
 import { glob } from 'glob';
+import type { GuiderInitConfig } from 'src/types';
 import { mdLoader } from '../loader/md-loader';
 
 const pluginName = 'GuiderSearchPlugin';
@@ -36,6 +37,12 @@ function generateChecksum(str: string) {
 const cache: Record<string, any> = {};
 
 export class GuiderSearchPlugin {
+  #config: GuiderInitConfig;
+
+  constructor(config: GuiderInitConfig) {
+    this.#config = config;
+  }
+
   apply(compiler: Compiler) {
     compiler.hooks.make.tap(pluginName, (compilation) => {
       compilation.hooks.processAssets.tapAsync(
@@ -54,7 +61,8 @@ export class GuiderSearchPlugin {
                 const hash = generateChecksum(sitePathData.fileContents);
                 const key = `${filePath}-${hash}`;
                 const compiled =
-                  cache[key] ?? (await mdLoader(sitePathData.fileContents));
+                  cache[key] ??
+                  (await mdLoader(sitePathData.fileContents, this.#config));
                 cache[key] = compiled;
                 return {
                   searchData: compiled.searchData,

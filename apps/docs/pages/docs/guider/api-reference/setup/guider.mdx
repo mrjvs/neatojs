@@ -1,0 +1,56 @@
+# `guider()`
+
+This function is the way you inject Guider into NextJS. You can use its options
+to change how Guider behaves in the compile step.
+
+
+## Example
+
+```tsx title="/next.config.mjs"
+import { guider } from "@neato/guider";
+
+const withGuider = guider({
+  themeConfig: './theme.config.tsx',
+});
+
+export default withGuider({
+  output: 'export',
+});
+```
+
+
+## Reference
+
+```tsx
+function guider(options);
+```
+
+<Field title="options" type="DirectoryOptions" required>
+  Options for the redirect.
+
+  <Field.Properties defaultOpen>
+    <Field title="themeConfig" type="string" required>
+      The location of the theme file, the theme file is used to configure almost everything about guider.
+    </Field>
+    <Field title="extraRemarkPlugins" type="RemarkPlugin[]">
+      A list where you can specify [remark plugins](https://github.com/remarkjs/remark/blob/main/doc/plugins.md) to use on top of the default list of plugins.
+
+      Use it to add new features to your markdown files.
+    </Field>
+    <Field title="remarkPlugins" type="RemarkPlugin[]">
+      A list where you can specify [remark plugins](https://github.com/remarkjs/remark/blob/main/doc/plugins.md) to use **instead of the default Guider plugins**.
+
+      Use it to overwrite how markdown parsing works. **Be aware that this will disable a lot of the default features of Guider, use at your own risk.** Use `extraRemarkPlugins` instead if you want to add extra plugins without breaking existing functionality.
+    </Field>
+    <Field title="extraShikiTransformers" type="ShikiTransformer[]">
+      A list where you can specify [Shiki transformers](https://shiki.style/guide/transformers) to use on top of the default transformers.
+
+      Use it to add new features to syntax highlighting in codeblocks.
+    </Field>
+    <Field title="shikiTransformers" type="ShikiTransformer[]">
+      A list where you can specify [Shiki transformers](https://shiki.style/guide/transformers) to use **instead of the default Guider transformers**.
+
+      Use it to overwrite how syntax highlighting works in Guider. **Be aware that this will disable a lot of the default features of Guider, use at your own risk.** Use `extraShikiTransformers` instead if you want to add extra transformers without breaking existing functionality.
+    </Field>
+  </Field.Properties>
+</Field>

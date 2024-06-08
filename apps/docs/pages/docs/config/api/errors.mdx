@@ -1,7 +1,7 @@
 # Error handling
 
 Configuration loading has some potentionally confusing error handling.
-By default, it will use the "pretty" assertion mode. This mode **will call process.exit(1)** instead of throwing errors. That means that you aren't able to catch it with a try-catch block.
+By default, it will use the "pretty" assertion mode. **This "pretty" mode will call process.exit(1)** instead of throwing errors. That means that you aren't able to catch it with a try-catch block.
 
 ## The modes
  - `pretty` Log the errors in pretty formatting and colors, then exit the process.
