@@ -108,7 +108,7 @@ export async function mdLoader(source: string, config: GuiderInitConfig) {
     excerpt: file.data.excerpt ?? '',
   };
 
-  const firstHeading = (file.data.headings as Heading[]).find(
+  const firstHeading = ((file.data.headings ?? []) as Heading[]).find(
     (h) => h.depth === 1,
   );
 
@@ -128,7 +128,7 @@ export async function mdLoader(source: string, config: GuiderInitConfig) {
   return {
     script,
     searchData: {
-      sections: file.data.sections,
+      sections: file.data.sections ?? [],
       pageTitle: meta.data?.title ?? firstHeading?.value ?? undefined,
     },
   };
