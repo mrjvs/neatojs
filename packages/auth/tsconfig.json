@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules", "examples"],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "types": ["vitest/globals"],
+  }
+}

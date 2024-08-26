@@ -1,0 +1,65 @@
+{
+  "name": "@neato/auth",
+  "version": "0.1.0",
+  "description": "Making authentication simple",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "type": "module",
+  "homepage": "https://neatojs.com/docs/auth",
+  "repository": "https://github.com/mrjvs/neatojs",
+  "bugs": {
+    "url": "https://github.com/mrjvs/neatojs/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "authentication"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config"
+    ],
+    "ignorePatterns": ["dist"]
+  },
+  "prettier": "@repo/prettier-config",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "next": ">=14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.19",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {}
+}
