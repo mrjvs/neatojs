@@ -1,3 +1,1 @@
-
-
-export function createNeatoAuth()
+export function createNeatoAuth();

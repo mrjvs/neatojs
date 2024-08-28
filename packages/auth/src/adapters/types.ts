@@ -1,15 +1,17 @@
 export interface SessionAdapterComponent {
-  getPopulatedSession(id: string): Promise<{ user: any, session: any }>;
-  getPopulatedSessionAndBump(id: string): Promise<{ user: any, session: any }>;
-  createSession(session: any): Promise<{ user: any, session: any }>;
-  updateSession(id: string, newSession: any): Promise<void>;
-  removeSession(id: string): Promise<void>;
-  removeUserSessions(userId: string): Promise<void>;
-  cleanExpiredSessions(): Promise<void>;
+  getPopulatedSession: (id: string) => Promise<{ user: any; session: any }>;
+  getPopulatedSessionAndBump: (
+    id: string,
+  ) => Promise<{ user: any; session: any }>;
+  createSession: (session: any) => Promise<{ user: any; session: any }>;
+  updateSession: (id: string, newSession: any) => Promise<void>;
+  removeSession: (id: string) => Promise<void>;
+  removeUserSessions: (userId: string) => Promise<void>;
+  cleanExpiredSessions: () => Promise<void>;
 }
 
 export interface CoreAdapterComponent {
-  getUserById(id: string): Promise<{ user: any }>;
+  getUserById: (id: string) => Promise<{ user: any }>;
 }
 
 /*
@@ -39,5 +41,5 @@ export interface AuthAdapter {
   components: {
     core: CoreAdapterComponent;
     session?: SessionAdapterComponent;
-  }
+  };
 }
