@@ -2,6 +2,7 @@ import type { SessionDriverTrait } from 'features/sessionTicket.js';
 import type {
   DriverBase,
   DriverOptions,
+  DriverTraits,
   MaybeTrait,
   TraitDisabledValue,
 } from './types.js';
@@ -125,15 +126,14 @@ type TestDriverOps = {
   sessionTable?: string;
 };
 
-// type TestDriverMapping = {
-//   sessionTable: SessionDriverTrait;
-// };
+type TestDriverMapping = {
+  sessionTable: SessionDriverTrait;
+};
 
-type TestDriverTraits<T extends TestDriverOps> = DriverBase &
-  MaybeTrait<T['sessionTable'], SessionDriverTrait>;
-
-type TestDriver<T extends TestDriverOps> = TestDriverTraits<
-  DriverOptions<T, TestDriverOps>
+type TestDriver<T extends TestDriverOps> = DriverTraits<
+  TestDriverMapping,
+  T,
+  TestDriverOps
 >;
 
 function testDriver<T extends TestDriverOps>(_ops: T): TestDriver<T> {

@@ -19,13 +19,25 @@ export type DriverOptions<T extends TOptions, TOptions> = DefaultedKeys<
   TOptions
 >;
 
-export type Values<T extends Record<any, any>> = T[keyof T];
+export type EnabledKeys<T> = Values<{
+  [Key in keyof T]: T[Key] extends TraitDisabledValue ? never : Key;
+}>;
+
+export type Values<T> = T extends never ? Record<never, never> : T[keyof T];
+
+export type DriverTraitNoBase<
+  TMapping extends Partial<Record<keyof TOptions, any>>,
+  TInput extends TOptions,
+  TOptions extends Record<string, any>,
+> = Values<{
+  [Key in Extract<EnabledKeys<TInput>, keyof TMapping>]: TMapping[Key];
+}>;
 
 export type DriverTraits<
-  TMapping extends Record<keyof TOptions, any>,
+  TMapping extends Partial<Record<keyof TOptions, any>>,
   TInput extends TOptions,
-  TOptions,
-> = DriverBase &
-  Values<{
-    [Key in Exclude<keyof TMapping, keyof TInput>]: TMapping[Key];
-  }>;
+  TOptions extends Record<string, any>,
+> =
+  DriverTraitNoBase<TMapping, TInput, TOptions> extends never
+    ? DriverBase
+    : DriverTraitNoBase<TMapping, TInput, TOptions> & DriverBase;
