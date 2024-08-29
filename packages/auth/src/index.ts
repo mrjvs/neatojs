@@ -61,8 +61,14 @@ export type {
 export { passwordLogin } from './features/passwordLogin.js';
 
 /* drivers */
-export type { DriverBase } from './drivers/types.js';
+export type {
+  DriverBase,
+  TraitDisabledValue,
+  DriverTraits,
+  DriverTraitNoBase,
+  MaybeTrait,
+} from './drivers/types.js';
 export { extendDriver } from './drivers/extending.js';
 
-export type { SqliteDriverOptions } from './drivers/sqlite.js';
+export type { SqliteDriverOptions, SqliteDriver } from './drivers/sqlite.js';
 export { sqliteDriver } from './drivers/sqlite.js';

@@ -1,7 +1,7 @@
 import type { SessionDriverTrait } from 'features/sessionTicket.js';
 import type { DriverBase, DriverTraits } from './types.js';
 
-type SqliteDriverOptions = {
+export type SqliteDriverOptions = {
   path?: string;
   userTable: string;
   sessionTable?: string | undefined | false;
@@ -11,7 +11,7 @@ type SqliteDriverTraits = {
   sessionTable: SessionDriverTrait;
 };
 
-type SqliteDriver<T extends SqliteDriverOptions> = DriverTraits<
+export type SqliteDriver<T extends SqliteDriverOptions> = DriverTraits<
   SqliteDriverTraits,
   T,
   SqliteDriverOptions

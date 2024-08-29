@@ -12,18 +12,11 @@ export type MaybeTrait<TField, TTrait> = TField extends TraitDisabledValue
   ? Record<never, never>
   : TTrait;
 
-type DefaultedKeys<T, TOps> = Record<keyof Omit<TOps, keyof T>, undefined> & T;
-
-export type DriverOptions<T extends TOptions, TOptions> = DefaultedKeys<
-  T,
-  TOptions
->;
-
 export type EnabledKeys<T> = Values<{
   [Key in keyof T]: T[Key] extends TraitDisabledValue ? never : Key;
 }>;
 
-export type Values<T> = T extends never ? Record<never, never> : T[keyof T];
+type Values<T> = T extends never ? Record<never, never> : T[keyof T];
 
 export type DriverTraitNoBase<
   TMapping extends Partial<Record<keyof TOptions, any>>,
