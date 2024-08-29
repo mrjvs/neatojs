@@ -1,5 +1,10 @@
 import type { SessionDriverTrait } from 'features/sessionTicket.js';
-import type { DriverBase, MaybeTrait, TraitDisabledValue } from './types.js';
+import type {
+  DriverBase,
+  DriverOptions,
+  MaybeTrait,
+  TraitDisabledValue,
+} from './types.js';
 
 // export type SqliteDriverSessionOptions = string;
 
@@ -117,11 +122,19 @@ import type { DriverBase, MaybeTrait, TraitDisabledValue } from './types.js';
 
 type TestDriverOps = {
   userTable: string;
-  sessionTable?: string | undefined;
+  sessionTable?: string;
 };
 
-type TestDriver<T extends TestDriverOps> = DriverBase &
+// type TestDriverMapping = {
+//   sessionTable: SessionDriverTrait;
+// };
+
+type TestDriverTraits<T extends TestDriverOps> = DriverBase &
   MaybeTrait<T['sessionTable'], SessionDriverTrait>;
+
+type TestDriver<T extends TestDriverOps> = TestDriverTraits<
+  DriverOptions<T, TestDriverOps>
+>;
 
 function testDriver<T extends TestDriverOps>(_ops: T): TestDriver<T> {
   return 42 as any;
