@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import type { Database } from 'better-sqlite3';
 import { knex } from 'knex';
 import type {
@@ -32,8 +31,9 @@ export type SqliteDriver<T extends SqliteDriverOptions> = DriverTraits<
 type SessionTable = {
   id: string;
   userId: string;
-  expiresAt: Date;
-  createdAt: Date;
+  expiresAt: number;
+  createdAt: number;
+  securityStamp: string;
 };
 
 export function sqliteDriver<T extends SqliteDriverOptions>(
@@ -56,7 +56,7 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
     async getUser(userId) {
       log.debug(`getting user with id: ${userId}`);
       const user = await db<UserType>(ops.userTable)
-        .select(['id'])
+        .select(['id', 'securityStamp'])
         .where({ id: userId })
         .first();
       return user ?? null;
@@ -72,9 +72,10 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
         const newSession = await db<SessionTable>(sessionTable)
           .insert({
             userId: data.userId,
-            id: randomUUID(),
-            createdAt: new Date(),
-            expiresAt: new Date(), // TODO proper expiry
+            id: data.id,
+            createdAt: new Date().getTime(),
+            expiresAt: data.expiresAt.getTime(),
+            securityStamp: data.securityStamp,
           })
           .returning('*');
         return mapSessionEntity(newSession[0]);
@@ -88,12 +89,11 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
       },
       async getSessionAndUpdateExpiry(id, expiry) {
         log.debug(`getting and updating session expiry for user: ${id}`);
-        // TODO only update if not expired already
         const updatedSessions = await db<SessionTable>(sessionTable)
           .where({ id })
+          .andWhere('expiresAt', '>', new Date(Date.now()).getTime())
           .update({
-            expiresAt: expiry,
-            createdAt: new Date(),
+            expiresAt: expiry.getTime(),
             id,
           })
           .returning('*');
@@ -129,5 +129,8 @@ function mapSessionEntity(table: SessionTable): SessionEntity {
   return {
     id: table.id,
     userId: table.userId,
+    createdAt: new Date(table.createdAt),
+    expiresAt: new Date(table.expiresAt),
+    securityStamp: table.securityStamp,
   };
 }

@@ -1,5 +1,5 @@
 type AnyFunction = (...args: any) => any;
-export type UserType = { id: string };
+export type UserType = { id: string; securityStamp: string };
 export type ExposedFunctionMap = Record<string, AnyFunction>;
 
 export type GuardFeatureType = 'mfa' | 'login' | 'ticket';

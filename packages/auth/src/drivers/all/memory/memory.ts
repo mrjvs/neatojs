@@ -49,6 +49,7 @@ async function createSchema(
     table.uuid('id', {
       primaryKey: true,
     });
+    table.string('securityStamp');
   });
 
   await dbInstance.schema.connection(db).createTable('sessions', (table) => {
@@ -56,6 +57,7 @@ async function createSchema(
       primaryKey: true,
     });
     table.string('userId');
+    table.string('securityStamp');
     table.datetime('expiresAt');
     table.datetime('createdAt');
   });

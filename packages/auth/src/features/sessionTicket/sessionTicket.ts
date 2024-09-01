@@ -1,15 +1,24 @@
+import { randomUUID } from 'node:crypto';
 import { ticketFeature } from 'core/features/ticket';
 import type { VerifiedTicket } from 'core/ticket';
 import { assertVerifiedTicket, createVerifiedTicket } from 'core/ticket';
 import type { DriverBase } from 'drivers/types';
 
+const defaultExpiryInSeconds = 60 * 60 * 24 * 7; // a week
+
 export type SessionEntity = {
   id: string;
   userId: string;
+  securityStamp: string;
+  expiresAt: Date;
+  createdAt: Date;
 };
 
 export type SessionEntityCreate = {
+  id: string;
   userId: string;
+  expiresAt: Date;
+  securityStamp: string;
 };
 
 export type SessionDriverTrait = {
@@ -26,6 +35,8 @@ export type SessionDriverTrait = {
 
 export type SessionTicketOptions = {
   driver: DriverBase & SessionDriverTrait;
+  disableRollingSessions: boolean;
+  expiryInSeconds?: number | undefined | null;
 };
 
 export type Session = {
@@ -43,6 +54,7 @@ function getSessionIdFromToken(token: string): string {
 }
 
 export function sessionTicket(ops: SessionTicketOptions) {
+  const expiryMs = (ops.expiryInSeconds ?? defaultExpiryInSeconds) * 1000;
   return ticketFeature({
     id: 'session',
     expose: {
@@ -70,6 +82,9 @@ export function sessionTicket(ops: SessionTicketOptions) {
         assertVerifiedTicket(ticket);
         const newSession = await ops.driver.createSession({
           userId: ticket.userId,
+          expiresAt: new Date(Date.now() + expiryMs),
+          id: randomUUID(),
+          securityStamp: ticket.user.securityStamp,
         });
 
         return {

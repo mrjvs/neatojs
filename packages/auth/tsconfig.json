@@ -6,6 +6,6 @@
     "baseUrl": "./src",
     "types": ["vitest/globals"],
     "moduleResolution": "Bundler",
-    "module": "Preserve"
+    "module": "ESNext"
   }
 }

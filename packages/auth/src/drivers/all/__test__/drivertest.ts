@@ -36,15 +36,31 @@ export function testDriver(
     });
 
     it('should create a session', async () => {
+      const expiry = new Date();
+      const id = randomUUID();
+      const stamp = '__stamp';
       const session = await driver.createSession({
         userId: userA,
+        expiresAt: expiry,
+        id,
+        securityStamp: stamp,
       });
       expect(session).toBeTruthy();
+      expect(session).toEqual({
+        userId: userA,
+        expiresAt: expiry,
+        id,
+        securityStamp: stamp,
+        createdAt: session.createdAt,
+      });
     });
 
     it('should find a session', async () => {
       const session = await driver.createSession({
         userId: userA,
+        expiresAt: new Date(),
+        id: randomUUID(),
+        securityStamp: 'stamp',
       });
       const foundSession = await driver.getSession(session.id);
       expect(foundSession).toBeTruthy();
@@ -56,27 +72,143 @@ export function testDriver(
     it('should not find invalid session', async () => {
       await driver.createSession({
         userId: userA,
+        expiresAt: new Date(),
+        id: randomUUID(),
+        securityStamp: 'stamp',
       });
       const foundSession = await driver.getSession(randomUUID());
       expect(foundSession).toBeFalsy();
     });
 
-    it.todo('should update expiry');
-    it.todo('should not update expiry if not found');
-    it.todo('should not update expiry if already expired');
-    it.todo('should remove session');
-    it.todo('should remove expired sessions');
-    it.todo('should not remove normal sessions');
+    it('should update expiry', async () => {
+      const newExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      const session = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() + 5000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+      const newSession = await driver.getSessionAndUpdateExpiry(
+        session.id,
+        newExpiry,
+      );
+
+      expect(newSession).toEqual({
+        userId: session.userId,
+        expiresAt: newExpiry,
+        id: session.id,
+        securityStamp: session.securityStamp,
+        createdAt: session.createdAt,
+      });
+    });
+
+    it('should not update expiry if not found', async () => {
+      const session = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() + 5000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+      const notFoundSession = await driver.getSessionAndUpdateExpiry(
+        `${session.id}hi!`,
+        new Date(Date.now() + 24 * 60 * 60 * 1000),
+      );
+      expect(notFoundSession).toEqual(null);
+    });
+
+    it('should not update expiry if already expired', async () => {
+      const newExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      const session = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() - 1000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+      const expiredSession = await driver.getSessionAndUpdateExpiry(
+        session.id,
+        newExpiry,
+      );
+      expect(expiredSession).toEqual(null);
+    });
+
+    it('should remove session', async () => {
+      const session = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() - 1000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+      await driver.removeSession(session.id);
+      const foundSession = await driver.getSession(session.id);
+      expect(foundSession).toEqual(null);
+    });
+
+    it('should remove session', async () => {
+      const session = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() - 1000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+      await driver.removeSession(session.id);
+      const foundSession = await driver.getSession(session.id);
+      expect(foundSession).toEqual(null);
+    });
+
+    it('should remove expired sessions', async () => {
+      const newSessionA = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() - 1000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+
+      await driver.removeExpiredSessions();
+      const sessionA = await driver.getSession(newSessionA.id);
+
+      expect(sessionA).toEqual(null);
+    });
+
+    it('should not remove normal sessions', async () => {
+      const newSessionA = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(Date.now() - 1000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+      const newSessionB = await driver.createSession({
+        userId: userB,
+        expiresAt: new Date(Date.now() + 25000),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+
+      await driver.removeExpiredSessions();
+      const sessionA = await driver.getSession(newSessionA.id);
+      const sessionB = await driver.getSession(newSessionB.id);
+
+      expect(sessionA).toEqual(null);
+      expect(sessionB).toEqual(newSessionB);
+    });
 
     it('should get all users sessions', async () => {
       const sessionA = await driver.createSession({
         userId: userA,
+        expiresAt: new Date(),
+        id: randomUUID(),
+        securityStamp: 'stamp',
       });
       const sessionB = await driver.createSession({
         userId: userA,
+        expiresAt: new Date(),
+        id: randomUUID(),
+        securityStamp: 'stamp',
       });
       const sessionC = await driver.createSession({
         userId: userB,
+        expiresAt: new Date(),
+        id: randomUUID(),
+        securityStamp: 'stamp',
       });
 
       const sessionsA = (await driver.getUserSessions(userA)).map((v) => v.id);
