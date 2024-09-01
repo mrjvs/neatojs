@@ -1,5 +1,5 @@
-import type { SessionDriverTrait } from 'features/sessionTicket.js';
-import type { DriverBase, DriverTraits } from './types.js';
+import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket.js';
+import type { DriverBase, DriverTraits } from '../../types.js';
 
 export type SqliteDriverOptions = {
   path?: string;

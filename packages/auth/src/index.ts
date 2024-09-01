@@ -41,8 +41,8 @@ export type {
   TotpMfaOptions,
   TotpPreperationDetails,
   TotpDriverTrait,
-} from './features/totpMfa.js';
-export { totpMfa } from './features/totpMfa.js';
+} from './features/totpMfa/totpMfa.js';
+export { totpMfa } from './features/totpMfa/totpMfa.js';
 
 export type {
   SessionTicketOptions,
@@ -50,15 +50,15 @@ export type {
   SessionEntity,
   SessionEntityCreate,
   Session,
-} from './features/sessionTicket.js';
-export { sessionTicket } from './features/sessionTicket.js';
+} from './features/sessionTicket/sessionTicket.js';
+export { sessionTicket } from './features/sessionTicket/sessionTicket.js';
 
 export type {
   PasswordLoginOptions,
   PasswordLoginInput,
   PasswordDriverTrait,
-} from './features/passwordLogin.js';
-export { passwordLogin } from './features/passwordLogin.js';
+} from './features/passwordLogin/passwordLogin.js';
+export { passwordLogin } from './features/passwordLogin/passwordLogin.js';
 
 /* drivers */
 export type {
@@ -70,5 +70,8 @@ export type {
 } from './drivers/types.js';
 export { extendDriver } from './drivers/extending.js';
 
-export type { SqliteDriverOptions, SqliteDriver } from './drivers/sqlite.js';
-export { sqliteDriver } from './drivers/sqlite.js';
+export type {
+  SqliteDriverOptions,
+  SqliteDriver,
+} from './drivers/all/sqlite/sqlite.js';
+export { sqliteDriver } from './drivers/all/sqlite/sqlite.js';
