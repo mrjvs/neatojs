@@ -33,12 +33,12 @@ pnpm -C packages/auth run test # run tests
 The todo list for this library/libraries
 
 ### Version 1.0:
-- [ ] Make driver types work
+- [x] Make driver types work
 - [ ] Make sqlite driver
 - [ ] Make prisma driver
-- [ ] finish feature: totp
-- [ ] finish feature: session feature
 - [ ] finish feature: password feature (including password reset + email verification)
+- [ ] finish feature: session feature
+- [ ] finish feature: totp
 - [ ] implement security stamp
 - [ ] Basic documentation:
    - How to use the library

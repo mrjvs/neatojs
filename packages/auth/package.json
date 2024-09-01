@@ -37,7 +37,9 @@
     "extends": [
       "@repo/eslint-config"
     ],
-    "ignorePatterns": ["dist"]
+    "ignorePatterns": [
+      "dist"
+    ]
   },
   "prettier": "@repo/prettier-config",
   "scripts": {
@@ -58,8 +60,13 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^20.11.19",
     "typescript": "^5.4.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "better-sqlite3": "^11.2.1",
+    "knex": "^3.1.0",
+    "pino": "^9.3.2"
+  }
 }
