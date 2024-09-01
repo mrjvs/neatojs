@@ -5,5 +5,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "types": ["vitest/globals"],
+    "moduleResolution": "Bundler",
+    "module": "Preserve"
   }
 }

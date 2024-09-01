@@ -1,8 +1,8 @@
-import type { UserType } from 'core/features.js';
-import { mfaFeature } from 'core/features/mfa.js';
-import type { UnverifiedTicket, VerifiedTicket } from 'core/ticket.js';
-import { createVerifiedTicket } from 'core/ticket.js';
-import type { DriverBase } from 'drivers/types.js';
+import type { UserType } from 'core/features';
+import { mfaFeature } from 'core/features/mfa';
+import type { UnverifiedTicket, VerifiedTicket } from 'core/ticket';
+import { createVerifiedTicket } from 'core/ticket';
+import type { DriverBase } from 'drivers/types';
 
 export type TotpDriverTrait = {
   getTotpSettingsFromUser: (user: UserType) => {

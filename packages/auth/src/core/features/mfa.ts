@@ -3,7 +3,7 @@ import type {
   ExposedFunctionMap,
   GuardFeature,
   UserType,
-} from 'core/features.js';
+} from 'core/features';
 
 export type MfaGuardFeatureComponents = {
   mfa: {

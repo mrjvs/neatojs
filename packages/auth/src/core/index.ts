@@ -1,11 +1,11 @@
-import type { DriverBase } from 'drivers/types.js';
+import type { DriverBase } from 'drivers/types';
 import type {
   CombineFeatures,
   ExposedFunctionMap,
   ExposedGuardFeatures,
   GuardFeature,
   GuardFeatureType,
-} from './features.js';
+} from './features';
 
 export type GuardOptions<TFeatures extends GuardFeature[]> = {
   driver: DriverBase;

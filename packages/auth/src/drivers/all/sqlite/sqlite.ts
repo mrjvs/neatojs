@@ -4,14 +4,14 @@ import { knex } from 'knex';
 import type {
   SessionDriverTrait,
   SessionEntity,
-} from 'features/sessionTicket/sessionTicket.js';
-import type { UserType } from '../../../core/features.js';
-import { logger } from '../../../core/logger.js';
+} from 'features/sessionTicket/sessionTicket';
+import { logger } from 'core/logger';
 import type {
   DriverBase,
   DriverTraits,
   TraitDisabledValue,
-} from '../../types.js';
+} from 'drivers/types';
+import type { UserType } from 'core/features';
 
 export type SqliteDriverOptions = {
   database: Database;

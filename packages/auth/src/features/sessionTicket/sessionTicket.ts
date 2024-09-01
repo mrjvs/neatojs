@@ -1,7 +1,7 @@
-import { ticketFeature } from 'core/features/ticket.js';
-import type { VerifiedTicket } from 'core/ticket.js';
-import { assertVerifiedTicket, createVerifiedTicket } from 'core/ticket.js';
-import type { DriverBase } from 'drivers/types.js';
+import { ticketFeature } from 'core/features/ticket';
+import type { VerifiedTicket } from 'core/ticket';
+import { assertVerifiedTicket, createVerifiedTicket } from 'core/ticket';
+import type { DriverBase } from 'drivers/types';
 
 export type SessionEntity = {
   id: string;

@@ -1,4 +1,4 @@
-import type { UserType } from './features.js';
+import type { UserType } from './features';
 
 export type TicketBase = {
   readonly userId: string;

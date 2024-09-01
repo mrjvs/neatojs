@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import { testDriver } from '../__test__/drivertest.js';
-import { inMemoryDriver } from './memory.js';
+import { testDriver } from '../__test__/drivertest';
+import { inMemoryDriver } from './memory';
 
 describe('memory', () => {
   const ids: [string, string, string] = [

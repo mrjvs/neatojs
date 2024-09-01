@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import SqliteDatabase from 'better-sqlite3';
 import { knex } from 'knex';
-import { testDriver } from '../__test__/drivertest.js';
-import { sqliteDriver } from './sqlite.js';
+import { testDriver } from '../__test__/drivertest';
+import { sqliteDriver } from './sqlite';
 
 describe('sqlite', () => {
   const ids: [string, string, string] = [

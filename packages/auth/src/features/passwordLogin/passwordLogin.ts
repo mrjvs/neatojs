@@ -1,8 +1,8 @@
-import type { UserType } from 'core/features.js';
-import { loginFeature } from 'core/features/login.js';
-import type { Ticket } from 'core/ticket.js';
-import { createVerifiedTicket } from 'core/ticket.js';
-import type { DriverBase } from 'drivers/types.js';
+import type { UserType } from 'core/features';
+import { loginFeature } from 'core/features/login';
+import type { Ticket } from 'core/ticket';
+import { createVerifiedTicket } from 'core/ticket';
+import type { DriverBase } from 'drivers/types';
 
 export type PasswordDriverTrait = {
   getUserFromEmail: (email: string) => Promise<UserType | null>;

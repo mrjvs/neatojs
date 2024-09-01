@@ -1,9 +1,9 @@
 import SqliteDatabase from 'better-sqlite3';
 import { knex } from 'knex';
-import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket.js';
-import type { UserType } from '../../../core/features.js';
-import type { DriverBase } from '../../types.js';
-import { sqliteDriver } from '../sqlite/sqlite.js';
+import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket';
+import type { UserType } from 'core/features';
+import type { DriverBase } from '../../types';
+import { sqliteDriver } from '../sqlite/sqlite';
 
 export type MemoryDriver = DriverBase &
   SessionDriverTrait & {

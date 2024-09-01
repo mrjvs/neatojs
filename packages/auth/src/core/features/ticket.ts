@@ -2,7 +2,7 @@ import type {
   CreateGuardFeatureOptions,
   ExposedFunctionMap,
   GuardFeature,
-} from 'core/features.js';
+} from 'core/features';
 
 export type TicketGuardFeatureComponents = Record<never, never>;
 
