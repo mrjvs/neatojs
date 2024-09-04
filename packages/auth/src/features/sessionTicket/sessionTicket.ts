@@ -3,16 +3,10 @@ import { ticketFeature } from 'core/features/ticket';
 import type { VerifiedTicket } from 'core/ticket';
 import { assertVerifiedTicket, createVerifiedTicket } from 'core/ticket';
 import type { DriverBase } from 'drivers/types';
+import type { SessionEntity, SessionSecretOptions } from './types';
+import { createSessionToken, getSessionIdFromToken } from './tokens';
 
 const defaultExpiryInSeconds = 60 * 60 * 24 * 7; // a week
-
-export type SessionEntity = {
-  id: string;
-  userId: string;
-  securityStamp: string;
-  expiresAt: Date;
-  createdAt: Date;
-};
 
 export type SessionEntityCreate = {
   id: string;
@@ -35,7 +29,8 @@ export type SessionDriverTrait = {
 
 export type SessionTicketOptions = {
   driver: DriverBase & SessionDriverTrait;
-  disableRollingSessions: boolean;
+  secret: string | SessionSecretOptions;
+  disableRollingSessions?: boolean;
   expiryInSeconds?: number | undefined | null;
 };
 
@@ -45,38 +40,56 @@ export type Session = {
   id: string;
 };
 
-function createSessionToken(session: SessionEntity): string {
-  return session.id; // TODO implement
-}
-
-function getSessionIdFromToken(token: string): string {
-  return token; // TODO implement
-}
-
 export function sessionTicket(ops: SessionTicketOptions) {
   const expiryMs = (ops.expiryInSeconds ?? defaultExpiryInSeconds) * 1000;
+  const secrets: SessionSecretOptions =
+    typeof ops.secret === 'string'
+      ? {
+          jwtSigning: ops.secret,
+        }
+      : ops.secret;
+
+  async function fromToken(token: string): Promise<VerifiedTicket | null> {
+    const sessionId = getSessionIdFromToken(secrets, token);
+    if (!sessionId) return null;
+
+    const session = ops.disableRollingSessions
+      ? await ops.driver.getSession(sessionId)
+      : await ops.driver.getSessionAndUpdateExpiry(
+          sessionId,
+          new Date(Date.now() + expiryMs),
+        );
+    if (!session) return null;
+
+    const user = await ops.driver.getUser(session.userId);
+    if (!user) return null;
+
+    return createVerifiedTicket({
+      userId: session.userId,
+      user,
+    });
+  }
+
   return ticketFeature({
     id: 'session',
     expose: {
       async getSessionFromToken(token: string): Promise<SessionEntity> {
-        const sessionId = getSessionIdFromToken(token);
+        const sessionId = getSessionIdFromToken(secrets, token);
+        if (!sessionId) throw new Error('session not found');
+
         const session = await ops.driver.getSession(sessionId);
         if (!session) throw new Error('session not found');
+
         return session;
       },
-      async readFromSessionToken(
-        token: string,
-      ): Promise<VerifiedTicket | null> {
-        const sessionId = getSessionIdFromToken(token);
-        const session = await ops.driver.getSession(sessionId);
-        if (!session) return null;
-        const user = await ops.driver.getUser(session.userId);
-        if (!user) return null;
-
-        return createVerifiedTicket({
-          userId: session.userId,
-          user,
-        });
+      async fromAuthHeader(header: string): Promise<VerifiedTicket | null> {
+        const [type, token] = header.split(' ', 2);
+        if (type.toLowerCase() !== 'bearer') return null;
+        if (typeof token !== 'string') return null;
+        return fromToken(token);
+      },
+      async fromToken(token: string): Promise<VerifiedTicket | null> {
+        return fromToken(token);
       },
       async createSession(ticket: VerifiedTicket): Promise<Session> {
         assertVerifiedTicket(ticket);
@@ -88,7 +101,7 @@ export function sessionTicket(ops: SessionTicketOptions) {
         });
 
         return {
-          token: createSessionToken(newSession),
+          token: createSessionToken(secrets, newSession),
           id: newSession.id,
           userId: newSession.userId,
         };
