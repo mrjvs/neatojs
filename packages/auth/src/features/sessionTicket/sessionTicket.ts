@@ -75,6 +75,7 @@ export function sessionTicket(ops: SessionTicketOptions) {
   return ticketFeature({
     id: 'session',
     expose: {
+      // TODO this is unsafe, maybe hide it?
       async getSessionFromToken(token: string): Promise<SessionEntity> {
         const sessionId = getSessionIdFromToken(secrets, token);
         if (!sessionId) throw new Error('session not found');
