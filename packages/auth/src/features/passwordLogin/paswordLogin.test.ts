@@ -196,6 +196,7 @@ describe('login/password', () => {
         await feat.expose.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();
     });
+    test.todo('test if ticket response is correct');
     it('should rehash when needed', async () => {
       const verifyMock = vi.fn().mockResolvedValue({
         success: true,
