@@ -165,4 +165,75 @@ describe('login/password', () => {
       expect(verifyMock).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('login', () => {
+    it('should reject if user not found', async () => {
+      const { feat } = await getPasswordFeature();
+      expect(await feat.expose.login({ email: 'hi', password: '123' })).toEqual(
+        null,
+      );
+    });
+    it('should reject if there is no password hash on user', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id, 'gmail');
+      expect(
+        await feat.expose.login({ email: `gmail`, password: '123' }),
+      ).toEqual(null);
+    });
+    it('should reject if password is incorrect', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id, 'gmail');
+      await feat.expose.updatePassword(user.id, '123');
+      expect(
+        await feat.expose.login({ email: 'gmail', password: '456' }),
+      ).toEqual(null);
+    });
+    it('should allow if password is correct', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id, 'gmail');
+      await feat.expose.updatePassword(user.id, '456');
+      expect(
+        await feat.expose.login({ email: 'gmail', password: '456' }),
+      ).toBeTruthy();
+    });
+    it('should rehash when needed', async () => {
+      const verifyMock = vi.fn().mockResolvedValue({
+        success: true,
+        needsRehash: false,
+      });
+      const hashMock = vi.fn().mockResolvedValue('OLDHASH');
+      const { feat, driver } = await getPasswordFeature({
+        async verifyPassword(u, passwordHash, password) {
+          return verifyMock(u, passwordHash, password);
+        },
+        async hashPassword(u, password) {
+          return hashMock(u, password);
+        },
+      });
+      await driver.createUser(user.id, 'gmail');
+      await feat.expose.updatePassword(user.id, '456');
+      expect(
+        await feat.expose.login({ email: 'gmail', password: '456' }),
+      ).toBeTruthy();
+      expect(verifyMock).toBeCalledTimes(1);
+      expect(hashMock).toBeCalledTimes(1);
+
+      const dbUserBefore = await driver.getUser(user.id);
+      verifyMock.mockResolvedValueOnce({
+        success: true,
+        needsRehash: true,
+      });
+      hashMock.mockResolvedValueOnce('NEWHASH');
+      expect(
+        await feat.expose.login({ email: 'gmail', password: '456' }),
+      ).toBeTruthy();
+      expect(verifyMock).toBeCalledTimes(2);
+      expect(hashMock).toBeCalledTimes(2);
+      expect(hashMock).toHaveBeenCalledWith(dbUserBefore, '456');
+      const dbUserAfter = await driver.getUser(user.id);
+      expect(driver.getPasswordHashFromUser(dbUserAfter as any)).toBe(
+        'NEWHASH',
+      );
+    });
+  });
 });
