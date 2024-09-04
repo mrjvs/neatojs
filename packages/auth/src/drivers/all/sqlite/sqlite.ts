@@ -1,9 +1,6 @@
 import type { Database } from 'better-sqlite3';
 import { knex } from 'knex';
-import type {
-  SessionDriverTrait,
-  SessionEntity,
-} from 'features/sessionTicket/sessionTicket';
+import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket';
 import { logger } from 'core/logger';
 import type {
   DriverBase,
@@ -11,15 +8,24 @@ import type {
   TraitDisabledValue,
 } from 'drivers/types';
 import type { UserType } from 'core/features';
+import type { PasswordDriverTrait } from 'features/passwordLogin/passwordLogin';
+import type { SessionEntity } from 'features/sessionTicket/types';
 
 export type SqliteDriverOptions = {
   database: Database;
   userTable: string;
   sessionTable?: string | TraitDisabledValue;
+  passwordFields?:
+    | {
+        email: string;
+        passwordHash: string;
+      }
+    | TraitDisabledValue;
 };
 
 type SqliteDriverTraits = {
   sessionTable: SessionDriverTrait;
+  passwordFields: PasswordDriverTrait;
 };
 
 export type SqliteDriver<T extends SqliteDriverOptions> = DriverTraits<
@@ -56,7 +62,7 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
     async getUser(userId) {
       log.debug(`getting user with id: ${userId}`);
       const user = await db<UserType>(ops.userTable)
-        .select(['id', 'securityStamp'])
+        .select()
         .where({ id: userId })
         .first();
       return user ?? null;
@@ -119,9 +125,35 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
     };
   }
 
+  let passwordTrait: PasswordDriverTrait | undefined;
+  if (ops.passwordFields) {
+    const passwordFields = ops.passwordFields;
+    passwordTrait = {
+      async getUserFromEmail(email) {
+        log.debug(`getting user with email: ${email}`);
+        const user = await db<UserType>(ops.userTable)
+          .select()
+          .where({ [passwordFields.email]: email })
+          .first();
+        return user ?? null;
+      },
+      async savePasswordHash(userId, hash) {
+        await db<UserType>(ops.userTable)
+          .where({ id: userId })
+          .update({
+            [passwordFields.passwordHash]: hash,
+          });
+      },
+      getPasswordHashFromUser(user) {
+        return (user as any)[passwordFields.passwordHash];
+      },
+    };
+  }
+
   return {
     ...base,
     ...sessionTrait,
+    ...passwordTrait,
   } as SqliteDriver<T>;
 }
 

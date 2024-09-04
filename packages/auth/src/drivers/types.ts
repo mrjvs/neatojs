@@ -18,13 +18,21 @@ export type EnabledKeys<T> = Values<{
 
 type Values<T> = T extends never ? Record<never, never> : T[keyof T];
 
+type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (
+  x: infer R,
+) => any
+  ? R
+  : never;
+
 export type DriverTraitNoBase<
   TMapping extends Partial<Record<keyof TOptions, any>>,
   TInput extends TOptions,
   TOptions extends Record<string, any>,
-> = Values<{
-  [Key in Extract<EnabledKeys<TInput>, keyof TMapping>]: TMapping[Key];
-}>;
+> = UnionToIntersection<
+  Values<{
+    [Key in Extract<EnabledKeys<TInput>, keyof TMapping>]: TMapping[Key];
+  }>
+>;
 
 export type DriverTraits<
   TMapping extends Partial<Record<keyof TOptions, any>>,

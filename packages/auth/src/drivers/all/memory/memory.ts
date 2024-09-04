@@ -2,12 +2,14 @@ import SqliteDatabase from 'better-sqlite3';
 import { knex } from 'knex';
 import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket';
 import type { UserType } from 'core/features';
+import type { PasswordDriverTrait } from 'features/passwordLogin/passwordLogin';
 import type { DriverBase } from '../../types';
 import { sqliteDriver } from '../sqlite/sqlite';
 
 export type MemoryDriver = DriverBase &
+  PasswordDriverTrait &
   SessionDriverTrait & {
-    createUser: (id: string) => Promise<UserType>;
+    createUser: (id: string, email?: string) => Promise<UserType>;
   };
 
 export function inMemoryDriver(): MemoryDriver {
@@ -20,6 +22,10 @@ export function inMemoryDriver(): MemoryDriver {
     database: db,
     userTable: 'users',
     sessionTable: 'sessions',
+    passwordFields: {
+      email: 'email',
+      passwordHash: 'passwordHash',
+    },
   });
   let alreadyConnected = false;
   return {
@@ -30,10 +36,10 @@ export function inMemoryDriver(): MemoryDriver {
       await createSchema(knexInstance, db);
       alreadyConnected = true;
     },
-    async createUser(id: string) {
-      const result = await knexInstance<UserType>('users')
+    async createUser(id: string, email?: string) {
+      const result = await knexInstance<UserType & { email?: string }>('users')
         .connection(db)
-        .insert([{ id }])
+        .insert([{ id, email }])
         .returning('*');
       if (!result[0]) throw new Error('Could not create user');
       return result[0];
@@ -50,6 +56,8 @@ async function createSchema(
       primaryKey: true,
     });
     table.string('securityStamp');
+    table.string('passwordHash');
+    table.string('email');
   });
 
   await dbInstance.schema.connection(db).createTable('sessions', (table) => {

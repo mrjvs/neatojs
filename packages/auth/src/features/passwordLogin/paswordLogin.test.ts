@@ -1,3 +1,168 @@
+import { inMemoryDriver } from 'drivers/all/memory/memory';
+import { hashPassword, verifyPassword } from './hashing';
+import type { PasswordLoginOptions } from './passwordLogin';
+import { passwordLogin } from './passwordLogin';
+
+const user = { id: '123' };
+const simplePassword = '123456';
+const complexPassword = '  CnUfE+D^Q(!;`rH*gu"SK  xJyL{W7Y<ZT#j-=A62v  ';
+
+async function getPasswordFeature(hashing?: PasswordLoginOptions['hashing']) {
+  const driver = inMemoryDriver();
+  const feat = passwordLogin({
+    driver,
+    hashing,
+  });
+  await driver.connect();
+  return {
+    driver,
+    feat,
+  };
+}
+
+function expectVerify(hash: string, pass: string) {
+  const verifySuccess = async () =>
+    (await verifyPassword(user, hash, pass)).success;
+  return expect(verifySuccess()).resolves;
+}
+
 describe('login/password', () => {
-  test.todo('should exist');
+  describe('default hashing', () => {
+    it('should hash securely', async () => {
+      const simpleHash = await hashPassword(user, simplePassword);
+      const simpleTwiceHash = await hashPassword(user, simplePassword);
+      expect(simpleHash).not.contain(simplePassword);
+      expect(simpleHash).not.contain(simpleTwiceHash);
+
+      const complexHash = await hashPassword(user, complexPassword);
+      const complexTwiceHash = await hashPassword(user, complexPassword);
+      expect(complexHash).not.contain(complexPassword);
+      expect(complexHash).not.contain(complexTwiceHash);
+    });
+    it('should verify correctly', async () => {
+      const simpleHash = await hashPassword(user, simplePassword);
+      const simpleTwiceHash = await hashPassword(user, simplePassword);
+      await expectVerify(simpleHash, simplePassword).toEqual(true);
+      await expectVerify(simpleTwiceHash, simplePassword).toEqual(true);
+      await expectVerify(simpleHash, complexPassword).toEqual(false);
+      await expectVerify(simpleHash, '').toEqual(false);
+
+      const complexHash = await hashPassword(user, complexPassword);
+      const complexTwiceHash = await hashPassword(user, complexPassword);
+      await expectVerify(complexHash, complexPassword).toEqual(true);
+      await expectVerify(complexTwiceHash, complexPassword).toEqual(true);
+      await expectVerify(complexHash, simplePassword).toEqual(false);
+      await expectVerify(complexHash, '').toEqual(false);
+    });
+  });
+
+  describe('updatePassword', () => {
+    it('should update password', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id);
+
+      await feat.expose.updatePassword(user.id, '123');
+      const dbUser = await driver.getUser(user.id);
+      if (!dbUser) throw new Error('user not found');
+      const hashOne = driver.getPasswordHashFromUser(dbUser);
+      if (!hashOne) throw new Error('hash not found');
+      await expectVerify(hashOne, '123').toEqual(true);
+    });
+    it('should not allow old password after update', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id);
+
+      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.updatePassword(user.id, '456');
+      const dbUser = await driver.getUser(user.id);
+      if (!dbUser) throw new Error('user not found');
+      const hash = driver.getPasswordHashFromUser(dbUser);
+      if (!hash) throw new Error('hash not found');
+      await expectVerify(hash, '123').toEqual(false);
+      await expectVerify(hash, '456').toEqual(true);
+    });
+    it('should throw if user doesnt exist', async () => {
+      const { feat } = await getPasswordFeature();
+      await expect(
+        feat.expose.updatePassword(user.id, '123'),
+      ).rejects.toBeInstanceOf(Error);
+    });
+    it('should use specified hashing functions', async () => {
+      const verifyMock = vi
+        .fn()
+        .mockImplementation((_u, _passwordHash, _password) => ({
+          success: true,
+          needsRehash: false,
+        }));
+      const hashMock = vi.fn().mockImplementation((_u, _password) => 'HASHED');
+      const { feat, driver } = await getPasswordFeature({
+        async verifyPassword(u, passwordHash, password) {
+          return verifyMock(u, passwordHash, password);
+        },
+        async hashPassword(u, password) {
+          return hashMock(u, password);
+        },
+      });
+      await driver.createUser(user.id);
+
+      await feat.expose.updatePassword(user.id, '123');
+      const dbUser = await driver.getUser(user.id);
+      if (!dbUser) throw new Error('user not found');
+      const hash = driver.getPasswordHashFromUser(dbUser);
+      expect(hash).toEqual('HASHED');
+      expect(hashMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('verifyPassword', () => {
+    it('should return false when no password set', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      const dbUser = await driver.createUser(user.id);
+      expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(false);
+    });
+    it('should return false with incorrect password', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id);
+      await feat.expose.updatePassword(user.id, '123');
+      const dbUser = await driver.getUser(user.id);
+      if (!dbUser) throw new Error('couldnt find user');
+      expect(await feat.expose.verifyPassword(dbUser, '456')).toEqual(false);
+      expect(await feat.expose.verifyPassword(dbUser, '')).toEqual(false);
+      expect(await feat.expose.verifyPassword(dbUser, '123 ')).toEqual(false);
+    });
+    it('should return true with correct password', async () => {
+      const { feat, driver } = await getPasswordFeature();
+      await driver.createUser(user.id);
+      await feat.expose.updatePassword(user.id, '123');
+      const dbUser = await driver.getUser(user.id);
+      if (!dbUser) throw new Error('couldnt find user');
+      expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(true);
+    });
+    it('should use specified hashing functions', async () => {
+      const verifyMock = vi
+        .fn()
+        .mockImplementation((_u, _passwordHash, _password) => ({
+          success: true,
+          needsRehash: false,
+        }));
+      const hashMock = vi.fn().mockImplementation((_u, _password) => 'HASHED');
+      const { feat, driver } = await getPasswordFeature({
+        async verifyPassword(u, passwordHash, password) {
+          return verifyMock(u, passwordHash, password);
+        },
+        async hashPassword(u, password) {
+          return hashMock(u, password);
+        },
+      });
+
+      await driver.createUser(user.id);
+      await feat.expose.updatePassword(user.id, '123');
+      const dbUser = await driver.getUser(user.id);
+      if (!dbUser) throw new Error('couldnt find user');
+      expect(await feat.expose.verifyPassword(dbUser, '12123612363')).toEqual(
+        true,
+      );
+      expect(verifyMock).toHaveBeenCalledTimes(1);
+    });
+  });
 });

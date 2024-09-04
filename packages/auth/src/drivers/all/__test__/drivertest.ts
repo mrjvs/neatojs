@@ -1,9 +1,12 @@
 import { randomUUID } from 'node:crypto';
 import type { DriverBase } from 'drivers/types.js';
 import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket.js';
+import type { PasswordDriverTrait } from 'features/passwordLogin/passwordLogin';
 
 export function testDriver(
-  makeDb: () => Promise<{ driver: DriverBase & SessionDriverTrait }>,
+  makeDb: () => Promise<{
+    driver: DriverBase & SessionDriverTrait & PasswordDriverTrait;
+  }>,
   userIds: [string, string, string],
 ) {
   const [userA, userB, userC] = userIds;
@@ -220,6 +223,42 @@ export function testDriver(
       expect(sessionsC.length).toBe(0);
       expect(sessionsA.sort()).toStrictEqual([sessionA.id, sessionB.id].sort());
       expect(sessionsB.sort()).toStrictEqual([sessionC.id].sort());
+    });
+  });
+
+  describe('password', async () => {
+    let driver = (await makeDb()).driver;
+
+    beforeEach(async () => {
+      driver = (await makeDb()).driver;
+    });
+
+    it('should find user by email', async () => {
+      const dbUserA = await driver.getUserFromEmail(`${userA}@example.com`);
+      expect(dbUserA).toBeTruthy();
+
+      const dbUserZ = await driver.getUserFromEmail(`hello@example.com`);
+      expect(dbUserZ).toBeNull();
+    });
+
+    it('should get password hash from user', async () => {
+      await driver.savePasswordHash(userA, 'HASH');
+      const dbUserA = await driver.getUser(userA);
+      if (!dbUserA) throw new Error('could not find user');
+      expect(driver.getPasswordHashFromUser(dbUserA)).toEqual('HASH');
+
+      const dbUserB = await driver.getUser(userB);
+      if (!dbUserB) throw new Error('could not find user');
+      expect(driver.getPasswordHashFromUser(dbUserB)).toEqual(null);
+    });
+
+    it('should save password hash on user', async () => {
+      const dbUserA = await driver.getUser(userA);
+      expect((dbUserA as any).passwordHash).toBeFalsy();
+
+      await driver.savePasswordHash(userA, 'HASH');
+      const dbUserARefetched = await driver.getUser(userA);
+      expect((dbUserARefetched as any).passwordHash).toEqual('HASH');
     });
   });
 }

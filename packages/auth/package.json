@@ -37,6 +37,9 @@
     "extends": [
       "@repo/eslint-config"
     ],
+    "rules": {
+      "no-await-in-loop": "off"
+    },
     "ignorePatterns": [
       "dist"
     ]

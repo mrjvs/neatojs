@@ -40,6 +40,8 @@ export type Session = {
   id: string;
 };
 
+// TODO check security stamp before allowing session
+// TODO check expiry before allowing session
 export function sessionTicket(ops: SessionTicketOptions) {
   const expiryMs = (ops.expiryInSeconds ?? defaultExpiryInSeconds) * 1000;
   const secrets: SessionSecretOptions =

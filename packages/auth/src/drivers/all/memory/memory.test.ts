@@ -11,7 +11,7 @@ describe('memory', () => {
   testDriver(async () => {
     const driver = inMemoryDriver();
     await driver.connect();
-    await Promise.all(ids.map((v) => driver.createUser(v)));
+    await Promise.all(ids.map((v) => driver.createUser(v, `${v}@example.com`)));
     return {
       driver,
     };

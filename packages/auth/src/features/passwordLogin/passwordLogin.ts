@@ -35,6 +35,8 @@ export type PasswordLoginInput = {
   password: string;
 };
 
+// TODO password reset links
+// TODO email verification
 export function passwordLogin(ops: PasswordLoginOptions) {
   const populatedHashPassword = ops.hashing?.hashPassword ?? hashPassword;
   const populatedVerifyPasswordHash =
@@ -44,17 +46,19 @@ export function passwordLogin(ops: PasswordLoginOptions) {
     id: 'password',
     expose: {
       async verifyPassword(user: UserType, password: string): Promise<boolean> {
+        // TODO should this rehash?
         const passwordHash = ops.driver.getPasswordHashFromUser(user);
         if (!passwordHash) return false;
-        const validPassword = populatedVerifyPasswordHash(
+        const validPassword = await populatedVerifyPasswordHash(
           user as any,
           passwordHash,
           password,
         );
-        if (!validPassword) return false;
+        if (!validPassword.success) return false;
         return true;
       },
       async updatePassword(userId: string, newPassword: string): Promise<void> {
+        // TODO should this check existing password?
         const user = await ops.driver.getUser(userId);
         if (!user) throw new Error('Cannot find user');
         await ops.driver.savePasswordHash(

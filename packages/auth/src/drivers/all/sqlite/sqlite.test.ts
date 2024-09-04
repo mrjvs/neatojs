@@ -16,6 +16,10 @@ describe('sqlite', () => {
       database: db,
       userTable: 'users',
       sessionTable: 'sessions',
+      passwordFields: {
+        email: 'email',
+        passwordHash: 'passwordHash',
+      },
     });
     const dbInstance = knex({
       client: 'better-sqlite3',
@@ -38,6 +42,8 @@ async function createDBSchema(
       primaryKey: true,
     });
     table.string('securityStamp');
+    table.string('passwordHash');
+    table.string('email');
   });
 
   await dbInstance.schema.connection(db).createTable('sessions', (table) => {
@@ -52,5 +58,9 @@ async function createDBSchema(
 
   await dbInstance('users')
     .connection(db)
-    .insert([{ id: userIds[0] }, { id: userIds[1] }, { id: userIds[2] }]);
+    .insert([
+      { id: userIds[0], email: `${userIds[0]}@example.com` },
+      { id: userIds[1], email: `${userIds[1]}@example.com` },
+      { id: userIds[2], email: `${userIds[2]}@example.com` },
+    ]);
 }
