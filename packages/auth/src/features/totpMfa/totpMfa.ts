@@ -1,7 +1,7 @@
 import type { UserType } from 'core/features';
 import { mfaFeature } from 'core/features/mfa';
 import type { UnverifiedTicket, VerifiedTicket } from 'core/ticket';
-import { createVerifiedTicket } from 'core/ticket';
+import { verifyTicket } from 'core/ticket';
 import type { DriverBase } from 'drivers/types';
 
 export type TotpDriverTrait = {
@@ -27,6 +27,7 @@ function verifyTotpCode(_secret: string, _code: string): boolean {
   return true; // TODO check for real
 }
 
+// TODO add way to verify a code without signing a ticket
 export function totpMfa(ops: TotpMfaOptions) {
   return mfaFeature({
     id: 'totp',
@@ -68,17 +69,19 @@ export function totpMfa(ops: TotpMfaOptions) {
         return true;
       },
 
-      sign(code: string, ticket: UnverifiedTicket): VerifiedTicket {
-        const settings = ops.driver.getTotpSettingsFromUser(ticket.user);
+      async sign(
+        code: string,
+        ticket: UnverifiedTicket,
+      ): Promise<VerifiedTicket> {
+        const user = await ops.driver.getUser(ticket.userId);
+        if (!user) throw new Error('User not found');
+        const settings = ops.driver.getTotpSettingsFromUser(user);
         if (!settings.secret) throw new Error('Totp not configured for user');
 
         if (!verifyTotpCode(settings.secret, code))
           throw new Error('totp code wrong');
 
-        return createVerifiedTicket({
-          userId: ticket.userId,
-          user: ticket.user,
-        });
+        return verifyTicket(ticket);
       },
     },
   });

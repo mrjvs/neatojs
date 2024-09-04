@@ -56,12 +56,12 @@ describe('login/password', () => {
     });
   });
 
-  describe('updatePassword', () => {
+  describe('unsafeForceUpdatePassword', () => {
     it('should update password', async () => {
       const { feat, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hashOne = driver.getPasswordHashFromUser(dbUser);
@@ -72,8 +72,8 @@ describe('login/password', () => {
       const { feat, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.updatePassword(user.id, '123');
-      await feat.expose.updatePassword(user.id, '456');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);
@@ -84,7 +84,7 @@ describe('login/password', () => {
     it('should throw if user doesnt exist', async () => {
       const { feat } = await getPasswordFeature();
       await expect(
-        feat.expose.updatePassword(user.id, '123'),
+        feat.expose.unsafeForceUpdatePassword(user.id, '123'),
       ).rejects.toBeInstanceOf(Error);
     });
     it('should use specified hashing functions', async () => {
@@ -105,7 +105,7 @@ describe('login/password', () => {
       });
       await driver.createUser(user.id);
 
-      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);
@@ -123,7 +123,7 @@ describe('login/password', () => {
     it('should return false with incorrect password', async () => {
       const { feat, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
-      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
       expect(await feat.expose.verifyPassword(dbUser, '456')).toEqual(false);
@@ -133,7 +133,7 @@ describe('login/password', () => {
     it('should return true with correct password', async () => {
       const { feat, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
-      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
       expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(true);
@@ -156,7 +156,7 @@ describe('login/password', () => {
       });
 
       await driver.createUser(user.id);
-      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
       expect(await feat.expose.verifyPassword(dbUser, '12123612363')).toEqual(
@@ -183,7 +183,7 @@ describe('login/password', () => {
     it('should reject if password is incorrect', async () => {
       const { feat, driver } = await getPasswordFeature();
       await driver.createUser(user.id, 'gmail');
-      await feat.expose.updatePassword(user.id, '123');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
       expect(
         await feat.expose.login({ email: 'gmail', password: '456' }),
       ).toEqual(null);
@@ -191,7 +191,7 @@ describe('login/password', () => {
     it('should allow if password is correct', async () => {
       const { feat, driver } = await getPasswordFeature();
       await driver.createUser(user.id, 'gmail');
-      await feat.expose.updatePassword(user.id, '456');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
       expect(
         await feat.expose.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();
@@ -212,7 +212,7 @@ describe('login/password', () => {
         },
       });
       await driver.createUser(user.id, 'gmail');
-      await feat.expose.updatePassword(user.id, '456');
+      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
       expect(
         await feat.expose.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();

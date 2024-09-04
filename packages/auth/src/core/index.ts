@@ -7,6 +7,12 @@ import type {
   GuardFeatureType,
 } from './features';
 
+// TODO function to get enabled MFA methods for user
+// TODO make error class for all errors thrown by the features
+// TODO global logging configuration or use custom logger
+// TODO global backup code system for MFA
+// TODO global way to make a temporary ticket and temporary token for ticket
+
 export type GuardOptions<TFeatures extends GuardFeature[]> = {
   driver: DriverBase;
   features: TFeatures;

@@ -36,7 +36,7 @@ export type PasswordLoginInput = {
 };
 
 // TODO password reset links
-// TODO email verification
+// TODO email verification - seperate feature
 export function passwordLogin(ops: PasswordLoginOptions) {
   const populatedHashPassword = ops.hashing?.hashPassword ?? hashPassword;
   const populatedVerifyPasswordHash =
@@ -46,7 +46,7 @@ export function passwordLogin(ops: PasswordLoginOptions) {
     id: 'password',
     expose: {
       async verifyPassword(user: UserType, password: string): Promise<boolean> {
-        // TODO should this rehash?
+        // TODO rehash here
         const passwordHash = ops.driver.getPasswordHashFromUser(user);
         if (!passwordHash) return false;
         const validPassword = await populatedVerifyPasswordHash(
@@ -57,8 +57,23 @@ export function passwordLogin(ops: PasswordLoginOptions) {
         if (!validPassword.success) return false;
         return true;
       },
-      async updatePassword(userId: string, newPassword: string): Promise<void> {
-        // TODO should this check existing password?
+      async unsafeForceUpdatePassword(
+        userId: string,
+        newPassword: string,
+      ): Promise<void> {
+        const user = await ops.driver.getUser(userId);
+        if (!user) throw new Error('Cannot find user');
+        await ops.driver.savePasswordHash(
+          user.id,
+          await populatedHashPassword(user as any, newPassword),
+        );
+      },
+      async updatePassword(
+        userId: string,
+        oldPassword: string,
+        newPassword: string,
+      ): Promise<void> {
+        // TODO check old password
         const user = await ops.driver.getUser(userId);
         if (!user) throw new Error('Cannot find user');
         await ops.driver.savePasswordHash(
@@ -85,6 +100,7 @@ export function passwordLogin(ops: PasswordLoginOptions) {
           );
         }
 
+        // TODO only create verified ticket if no MFA
         return createVerifiedTicket({
           userId: user.id,
           user,

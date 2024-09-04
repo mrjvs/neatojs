@@ -19,12 +19,6 @@ describe('ticket/session', () => {
     test.todo('handles invalid auth header syntax');
     test.todo('creates ticket if valid');
   });
-  describe('getSessionFromToken', () => {
-    test.todo('handles invalid token');
-    test.todo('handles expired session');
-    test.todo('handles removed session');
-    test.todo('returns session');
-  });
   describe('getSessionIdFromToken', () => {
     test.todo('handles invalid token');
     test.todo('handles insecure token');
@@ -32,5 +26,26 @@ describe('ticket/session', () => {
   });
   describe('createSessionToken', () => {
     test.todo('creates proper token that can be read again');
+  });
+
+  describe('getSessionInfoById', () => {
+    test.todo('handles expired session');
+    test.todo('handles removed session');
+    test.todo('doesnt return session if not verified');
+    test.todo('returns session');
+  });
+  describe('removeExpiredSessions', () => {
+    test.todo('removes expired sessions');
+    test.todo('doesnt remove valid sessions');
+  });
+  describe('removeSessionById', () => {
+    test.todo('removes session completely');
+    test.todo('handles invalid session id');
+  });
+  describe('getUserSessionInfos', () => {
+    test.todo('handles expired sessions');
+    test.todo('doesnt return not verified sessions');
+    test.todo('returns user sessions');
+    test.todo('doesnt return sessions from other users');
   });
 });

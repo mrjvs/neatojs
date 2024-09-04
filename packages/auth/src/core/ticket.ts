@@ -3,7 +3,7 @@ import type { UserType } from './features';
 export type TicketBase = {
   readonly userId: string;
   readonly verified: boolean;
-  readonly user: UserType;
+  readonly securityStamp: string;
   needsMfa: () => boolean;
 };
 
@@ -27,7 +27,18 @@ type TicketCreateOptions = {
 export function createVerifiedTicket(ops: TicketCreateOptions): VerifiedTicket {
   return {
     userId: ops.userId,
-    user: ops.user,
+    securityStamp: ops.user.securityStamp,
+    verified: true,
+    needsMfa() {
+      return false;
+    },
+  };
+}
+
+export function verifyTicket(ops: UnverifiedTicket): VerifiedTicket {
+  return {
+    userId: ops.userId,
+    securityStamp: ops.securityStamp,
     verified: true,
     needsMfa() {
       return false;
@@ -40,7 +51,7 @@ export function createUnverifiedTicket(
 ): UnverifiedTicket {
   return {
     userId: ops.userId,
-    user: ops.user,
+    securityStamp: ops.user.securityStamp,
     verified: false,
     needsMfa() {
       return true;

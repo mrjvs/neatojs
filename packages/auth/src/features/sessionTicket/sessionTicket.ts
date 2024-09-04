@@ -68,22 +68,28 @@ export function sessionTicket(ops: SessionTicketOptions) {
 
     return createVerifiedTicket({
       userId: session.userId,
-      user,
+      user, // TODO add session id to ticket
     });
   }
 
   return ticketFeature({
     id: 'session',
     expose: {
-      // TODO this is unsafe, maybe hide it?
-      async getSessionFromToken(token: string): Promise<SessionEntity> {
-        const sessionId = getSessionIdFromToken(secrets, token);
-        if (!sessionId) throw new Error('session not found');
-
-        const session = await ops.driver.getSession(sessionId);
-        if (!session) throw new Error('session not found');
-
-        return session;
+      async getUserSessionInfos(_userId: string): Promise<SessionEntity[]> {
+        // TODO implement
+        return [];
+      },
+      async getSessionInfoById(
+        _sessionId: string,
+      ): Promise<SessionEntity | null> {
+        // TODO implement
+        return null;
+      },
+      async removeExpiredSessions(): Promise<void> {
+        // TODO implement
+      },
+      async removeSessionById(_sessionId: string): Promise<void> {
+        // TODO implement
       },
       async fromAuthHeader(header: string): Promise<VerifiedTicket | null> {
         const [type, token] = header.split(' ', 2);
@@ -100,7 +106,7 @@ export function sessionTicket(ops: SessionTicketOptions) {
           userId: ticket.userId,
           expiresAt: new Date(Date.now() + expiryMs),
           id: randomUUID(),
-          securityStamp: ticket.user.securityStamp,
+          securityStamp: ticket.securityStamp,
         });
 
         return {
