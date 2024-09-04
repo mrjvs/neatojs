@@ -65,3 +65,4 @@ The todo list for this library/libraries
 - [ ] driver: drizzle
 - [ ] driver: mongoose
 - [ ] driver: redis
+- [ ] implement observability system (hooks for failed logins, success logins ticket usage, etc)
