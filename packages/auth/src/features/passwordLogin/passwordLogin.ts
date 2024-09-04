@@ -3,6 +3,8 @@ import { loginFeature } from 'core/features/login';
 import type { Ticket } from 'core/ticket';
 import { createVerifiedTicket } from 'core/ticket';
 import type { DriverBase } from 'drivers/types';
+import type { VerifyPasswordResult } from './hashing';
+import { hashPassword, verifyPassword } from './hashing';
 
 export type PasswordDriverTrait = {
   getUserFromEmail: (email: string) => Promise<UserType | null>;
@@ -12,6 +14,20 @@ export type PasswordDriverTrait = {
 
 export type PasswordLoginOptions = {
   driver: DriverBase & PasswordDriverTrait;
+  hashing?:
+    | {
+        verifyPassword: <TUser = UserType>(
+          user: TUser,
+          passwordHash: string,
+          password: string,
+        ) => Promise<VerifyPasswordResult>;
+        hashPassword: <TUser = UserType>(
+          user: TUser,
+          password: string,
+        ) => Promise<string>;
+      }
+    | undefined
+    | null;
 };
 
 export type PasswordLoginInput = {
@@ -19,38 +35,51 @@ export type PasswordLoginInput = {
   password: string;
 };
 
-function verifyPassword(_hash: string, _password: string): boolean {
-  return true; // TODO implement
-}
-
-function hashPassword(password: string): string {
-  return password; // TODO implement
-}
-
 export function passwordLogin(ops: PasswordLoginOptions) {
+  const populatedHashPassword = ops.hashing?.hashPassword ?? hashPassword;
+  const populatedVerifyPasswordHash =
+    ops.hashing?.verifyPassword ?? verifyPassword;
+
   return loginFeature({
     id: 'password',
     expose: {
       async verifyPassword(user: UserType, password: string): Promise<boolean> {
-        const hash = ops.driver.getPasswordHashFromUser(user);
-        if (!hash) return false;
-        const validPassword = verifyPassword(hash, password);
+        const passwordHash = ops.driver.getPasswordHashFromUser(user);
+        if (!passwordHash) return false;
+        const validPassword = populatedVerifyPasswordHash(
+          user as any,
+          passwordHash,
+          password,
+        );
         if (!validPassword) return false;
         return true;
       },
       async updatePassword(userId: string, newPassword: string): Promise<void> {
         const user = await ops.driver.getUser(userId);
         if (!user) throw new Error('Cannot find user');
-        await ops.driver.savePasswordHash(user.id, hashPassword(newPassword));
+        await ops.driver.savePasswordHash(
+          user.id,
+          await populatedHashPassword(user as any, newPassword),
+        );
       },
       async login(input: PasswordLoginInput): Promise<Ticket | null> {
         const user = await ops.driver.getUserFromEmail(input.email);
         if (!user) return null;
 
-        const hash = ops.driver.getPasswordHashFromUser(user);
-        if (!hash) return null;
-        const validPassword = verifyPassword(hash, input.password);
-        if (!validPassword) return null;
+        const passwordHash = ops.driver.getPasswordHashFromUser(user);
+        if (!passwordHash) return null;
+        const validPassword = await populatedVerifyPasswordHash(
+          user as any,
+          passwordHash,
+          input.password,
+        );
+        if (!validPassword.success) return null;
+        if (validPassword.needsRehash) {
+          await ops.driver.savePasswordHash(
+            user.id,
+            await populatedHashPassword(user as any, input.password),
+          );
+        }
 
         return createVerifiedTicket({
           userId: user.id,
