@@ -12,6 +12,7 @@ import type {
 // TODO global logging configuration or use custom logger
 // TODO global backup code system for MFA
 // TODO global way to make a temporary ticket and temporary token for ticket
+// TODO global setup function (that calls connect on driver and all features)
 
 export type GuardOptions<TFeatures extends GuardFeature[]> = {
   driver: DriverBase;

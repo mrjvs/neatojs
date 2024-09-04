@@ -68,7 +68,7 @@ export function sessionTicket(ops: SessionTicketOptions) {
 
     return createVerifiedTicket({
       userId: session.userId,
-      user, // TODO add session id to ticket
+      securityStamp: session.securityStamp, // TODO add session id to ticket
     });
   }
 

@@ -1,62 +1,67 @@
-import type { UserType } from './features';
-
-export type TicketBase = {
+export interface TicketBase<TVerified extends boolean = boolean> {
   readonly userId: string;
-  readonly verified: boolean;
+  readonly verified: TVerified;
   readonly securityStamp: string;
-  needsMfa: () => boolean;
-};
+  needsMfa: () => this is UnverifiedTicket;
+}
 
-export type UnverifiedTicket = TicketBase & {
-  readonly verified: false;
-  needsMfa: () => true;
-};
+export type UnverifiedTicket = TicketBase<false>;
 
-export type VerifiedTicket = TicketBase & {
-  readonly verified: true;
-  needsMfa: () => false;
-};
+export type VerifiedTicket = TicketBase<true>;
 
 export type Ticket = UnverifiedTicket | VerifiedTicket;
 
 type TicketCreateOptions = {
   userId: string;
-  user: UserType;
+  securityStamp: string;
 };
 
+function createTicket<TVerified extends boolean>(
+  ops: TicketCreateOptions,
+  verified: TVerified,
+): TicketBase<TVerified> {
+  // type predicates are funky, we need to make a class for it
+  class Ticket implements TicketBase<TVerified> {
+    readonly userId: string = ops.userId;
+    readonly securityStamp: string = ops.securityStamp;
+    readonly verified = verified;
+    needsMfa(): this is UnverifiedTicket {
+      return !this.verified;
+    }
+  }
+  return new Ticket();
+}
+
 export function createVerifiedTicket(ops: TicketCreateOptions): VerifiedTicket {
-  return {
-    userId: ops.userId,
-    securityStamp: ops.user.securityStamp,
-    verified: true,
-    needsMfa() {
-      return false;
+  return createTicket(
+    {
+      userId: ops.userId,
+      securityStamp: ops.securityStamp,
     },
-  };
+    true,
+  );
 }
 
 export function verifyTicket(ops: UnverifiedTicket): VerifiedTicket {
-  return {
-    userId: ops.userId,
-    securityStamp: ops.securityStamp,
-    verified: true,
-    needsMfa() {
-      return false;
+  return createTicket(
+    {
+      userId: ops.userId,
+      securityStamp: ops.securityStamp,
     },
-  };
+    true,
+  );
 }
 
 export function createUnverifiedTicket(
   ops: TicketCreateOptions,
 ): UnverifiedTicket {
-  return {
-    userId: ops.userId,
-    securityStamp: ops.user.securityStamp,
-    verified: false,
-    needsMfa() {
-      return true;
+  return createTicket(
+    {
+      userId: ops.userId,
+      securityStamp: ops.securityStamp,
     },
-  };
+    false,
+  );
 }
 
 export function isVerifiedTicket(ticket: Ticket): ticket is VerifiedTicket {

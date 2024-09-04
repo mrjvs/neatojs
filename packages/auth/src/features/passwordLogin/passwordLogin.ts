@@ -103,7 +103,7 @@ export function passwordLogin(ops: PasswordLoginOptions) {
         // TODO only create verified ticket if no MFA
         return createVerifiedTicket({
           userId: user.id,
-          user,
+          securityStamp: user.securityStamp,
         });
       },
     },
