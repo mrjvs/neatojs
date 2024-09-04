@@ -6,7 +6,7 @@ import type { DriverBase } from 'drivers/types';
 import type { SessionEntity, SessionSecretOptions } from './types';
 import { createSessionToken, getSessionIdFromToken } from './tokens';
 
-const defaultExpiryInSeconds = 60 * 60 * 24 * 7; // a week
+export const defaultExpiryInSeconds = 60 * 60 * 24 * 7; // a week
 
 export type SessionEntityCreate = {
   id: string;
@@ -92,7 +92,9 @@ export function sessionTicket(ops: SessionTicketOptions) {
         // TODO implement
       },
       async fromAuthHeader(header: string): Promise<VerifiedTicket | null> {
-        const [type, token] = header.split(' ', 2);
+        const results = header.split(' ');
+        const [type, token] = results;
+        if (results.length !== 2) return null;
         if (type.toLowerCase() !== 'bearer') return null;
         if (typeof token !== 'string') return null;
         return fromToken(token);

@@ -47,11 +47,11 @@ export { totpMfa } from './features/totpMfa/totpMfa';
 export type {
   SessionTicketOptions,
   SessionDriverTrait,
-  SessionEntity,
   SessionEntityCreate,
   Session,
 } from './features/sessionTicket/sessionTicket';
 export { sessionTicket } from './features/sessionTicket/sessionTicket';
+export type { SessionEntity } from './features/sessionTicket/types';
 
 export type {
   PasswordLoginOptions,
