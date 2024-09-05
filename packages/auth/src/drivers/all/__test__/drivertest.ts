@@ -29,6 +29,16 @@ export function testDriver(
       const userZ = await driver.getUser(randomUUID());
       expect(userZ).toBeFalsy();
     });
+
+    it('should update security stamp', async () => {
+      const newStamp = 'This is a new stamp';
+      const userABefore = await driver.getUser(userIds[0]);
+      expect(userABefore?.securityStamp).not.toEqual(newStamp);
+
+      await driver.setUserSecurityStamp(userIds[0], newStamp);
+      const userAAfter = await driver.getUser(userIds[0]);
+      expect(userAAfter?.securityStamp).toEqual(newStamp);
+    });
   });
 
   describe('session', async () => {

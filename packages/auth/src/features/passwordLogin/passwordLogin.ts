@@ -3,6 +3,7 @@ import { loginFeature } from 'core/features/login';
 import type { Ticket } from 'core/ticket';
 import { createVerifiedTicket } from 'core/ticket';
 import type { DriverBase } from 'drivers/types';
+import { generateSecurityStamp } from 'core/generators';
 import type { VerifyPasswordResult } from './hashing';
 import { hashPassword, verifyPassword } from './hashing';
 
@@ -37,6 +38,7 @@ export type PasswordLoginInput = {
 
 // TODO password reset links
 // TODO email verification - seperate feature
+// TODO update the current session with new security stamp after updating password
 export function passwordLogin(ops: PasswordLoginOptions) {
   const populatedHashPassword = ops.hashing?.hashPassword ?? hashPassword;
   const populatedVerifyPasswordHash =
@@ -46,7 +48,6 @@ export function passwordLogin(ops: PasswordLoginOptions) {
     id: 'password',
     expose: {
       async verifyPassword(user: UserType, password: string): Promise<boolean> {
-        // TODO rehash here
         const passwordHash = ops.driver.getPasswordHashFromUser(user);
         if (!passwordHash) return false;
         const validPassword = await populatedVerifyPasswordHash(
@@ -55,6 +56,13 @@ export function passwordLogin(ops: PasswordLoginOptions) {
           password,
         );
         if (!validPassword.success) return false;
+        if (validPassword.needsRehash) {
+          await ops.driver.savePasswordHash(
+            user.id,
+            await populatedHashPassword(user as any, password),
+          );
+        }
+
         return true;
       },
       async unsafeForceUpdatePassword(
@@ -63,6 +71,7 @@ export function passwordLogin(ops: PasswordLoginOptions) {
       ): Promise<void> {
         const user = await ops.driver.getUser(userId);
         if (!user) throw new Error('Cannot find user');
+        await ops.driver.setUserSecurityStamp(user.id, generateSecurityStamp());
         await ops.driver.savePasswordHash(
           user.id,
           await populatedHashPassword(user as any, newPassword),
@@ -72,14 +81,25 @@ export function passwordLogin(ops: PasswordLoginOptions) {
         userId: string,
         oldPassword: string,
         newPassword: string,
-      ): Promise<void> {
-        // TODO check old password
+      ): Promise<boolean> {
         const user = await ops.driver.getUser(userId);
         if (!user) throw new Error('Cannot find user');
+
+        const passwordHash = ops.driver.getPasswordHashFromUser(user);
+        if (!passwordHash) throw new Error('No existing password');
+        const validPassword = await populatedVerifyPasswordHash(
+          user as any,
+          passwordHash,
+          oldPassword,
+        );
+        if (!validPassword.success) return false;
+
+        await ops.driver.setUserSecurityStamp(user.id, generateSecurityStamp());
         await ops.driver.savePasswordHash(
           user.id,
           await populatedHashPassword(user as any, newPassword),
         );
+        return true;
       },
       async login(input: PasswordLoginInput): Promise<Ticket | null> {
         const user = await ops.driver.getUserFromEmail(input.email);

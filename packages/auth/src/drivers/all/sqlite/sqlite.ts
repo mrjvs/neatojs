@@ -67,6 +67,11 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
         .first();
       return user ?? null;
     },
+    async setUserSecurityStamp(id, securityStamp) {
+      await db<UserType>(ops.userTable).where({ id }).update({
+        securityStamp,
+      });
+    },
   };
 
   let sessionTrait: SessionDriverTrait | undefined;
@@ -100,7 +105,6 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
           .andWhere('expiresAt', '>', new Date(Date.now()).getTime())
           .update({
             expiresAt: expiry.getTime(),
-            id,
           })
           .returning('*');
         return updatedSessions[0] ? mapSessionEntity(updatedSessions[0]) : null;

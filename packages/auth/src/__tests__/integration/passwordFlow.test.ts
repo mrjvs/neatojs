@@ -16,7 +16,7 @@ describe('integration / password flow', async () => {
 
   it('normal login', async () => {
     // setup
-    await driver.createUser('123', 'john@example.com');
+    await driver.createUser('123', { email: 'john@example.com' });
     await guard.password.unsafeForceUpdatePassword('123', 'MySecretPassword');
 
     // authenticate
@@ -36,7 +36,7 @@ describe('integration / password flow', async () => {
 
   it('authenticate with session token', async () => {
     // setup
-    await driver.createUser('123', 'john@example.com');
+    await driver.createUser('123', { email: 'john@example.com' });
     await guard.password.unsafeForceUpdatePassword('123', 'MySecretPassword');
     const tempTicket = await guard.password.login({
       password: 'MySecretPassword',

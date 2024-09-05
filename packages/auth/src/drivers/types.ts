@@ -4,6 +4,10 @@ export type DriverBase = {
   id: string;
   connect: () => Promise<void>;
   getUser: (userId: string) => Promise<UserType | null>;
+  setUserSecurityStamp: (
+    userId: string,
+    securityStamp: string,
+  ) => Promise<void>;
 };
 
 export type TraitDisabledValue = undefined | false | null;

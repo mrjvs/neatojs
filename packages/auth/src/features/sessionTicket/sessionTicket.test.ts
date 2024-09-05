@@ -112,7 +112,7 @@ describe('ticket/session', () => {
   describe('fromToken', () => {
     it('should not allow expired sessions with rolling sessions', async () => {
       const { feat, driver } = await getSessionFeature({ expiryInSeconds: 0 });
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -128,7 +128,7 @@ describe('ticket/session', () => {
         expiryInSeconds: 0,
         disableRollingSessions: true,
       });
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -139,9 +139,11 @@ describe('ticket/session', () => {
       expect(newTicket).toBe(null);
     });
 
+    it.todo('should not allow expired sessions expired through security stamp');
+
     it('should handle removed sessions', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -167,7 +169,7 @@ describe('ticket/session', () => {
 
     it('should use rolling sessions', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -187,7 +189,7 @@ describe('ticket/session', () => {
       const { feat, driver } = await getSessionFeature({
         disableRollingSessions: true,
       });
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -205,7 +207,7 @@ describe('ticket/session', () => {
       const { feat, driver } = await getSessionFeature({
         disableRollingSessions: true,
       });
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -224,7 +226,7 @@ describe('ticket/session', () => {
       const { feat, driver } = await getSessionFeature({
         expiryInSeconds: expiry,
       });
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -254,7 +256,7 @@ describe('ticket/session', () => {
 
     it('should give a verified ticket as output', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -274,7 +276,7 @@ describe('ticket/session', () => {
   describe('fromAuthHeader', () => {
     it('should parse auth header correctly', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -288,7 +290,7 @@ describe('ticket/session', () => {
     });
     it('should parse header case-insensitive', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -302,7 +304,7 @@ describe('ticket/session', () => {
     });
     it('should not allow invalid auth header types', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -314,7 +316,7 @@ describe('ticket/session', () => {
     });
     it('should not throw even with invalid syntax', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -336,7 +338,7 @@ describe('ticket/session', () => {
 
     it('should create a verified ticket if valid', async () => {
       const { feat, driver } = await getSessionFeature();
-      await driver.createUser(user.id);
+      await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,

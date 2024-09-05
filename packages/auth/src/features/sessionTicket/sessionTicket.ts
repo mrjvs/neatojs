@@ -3,6 +3,7 @@ import { ticketFeature } from 'core/features/ticket';
 import type { VerifiedTicket } from 'core/ticket';
 import { assertVerifiedTicket, createVerifiedTicket } from 'core/ticket';
 import type { DriverBase } from 'drivers/types';
+import type { UserType } from 'core/features';
 import type { SessionEntity, SessionSecretOptions } from './types';
 import { createSessionToken, getSessionIdFromToken } from './tokens';
 
@@ -14,6 +15,12 @@ export type SessionEntityCreate = {
   expiresAt: Date;
   securityStamp: string;
 };
+
+export function isSessionValid(user: UserType, session: SessionEntity) {
+  if (session.expiresAt < new Date()) return false;
+  if (user.securityStamp !== session.securityStamp) return false;
+  return true;
+}
 
 export type SessionDriverTrait = {
   removeSession: (id: string) => Promise<void>;
@@ -40,8 +47,6 @@ export type Session = {
   id: string;
 };
 
-// TODO check security stamp before allowing session
-// TODO check expiry before allowing session
 export function sessionTicket(ops: SessionTicketOptions) {
   const expiryMs = (ops.expiryInSeconds ?? defaultExpiryInSeconds) * 1000;
   const secrets: SessionSecretOptions =
@@ -65,6 +70,8 @@ export function sessionTicket(ops: SessionTicketOptions) {
 
     const user = await ops.driver.getUser(session.userId);
     if (!user) return null;
+
+    if (!isSessionValid(user, session)) return null;
 
     return createVerifiedTicket({
       userId: session.userId,

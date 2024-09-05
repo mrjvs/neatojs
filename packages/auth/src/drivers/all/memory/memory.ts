@@ -9,7 +9,10 @@ import { sqliteDriver } from '../sqlite/sqlite';
 export type MemoryDriver = DriverBase &
   PasswordDriverTrait &
   SessionDriverTrait & {
-    createUser: (id: string, email?: string) => Promise<UserType>;
+    createUser: (
+      id: string,
+      data?: { email?: string; stamp?: string },
+    ) => Promise<UserType>;
   };
 
 export function inMemoryDriver(): MemoryDriver {
@@ -36,10 +39,10 @@ export function inMemoryDriver(): MemoryDriver {
       await createSchema(knexInstance, db);
       alreadyConnected = true;
     },
-    async createUser(id: string, email?: string) {
+    async createUser(id: string, data) {
       const result = await knexInstance<UserType & { email?: string }>('users')
         .connection(db)
-        .insert([{ id, email }])
+        .insert([{ id, email: data?.email, securityStamp: data?.stamp }])
         .returning('*');
       if (!result[0]) throw new Error('Could not create user');
       return result[0];
