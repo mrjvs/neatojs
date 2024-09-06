@@ -7,36 +7,45 @@ import { alias } from './features';
 function testLoginFeature() {
   return loginFeature({
     id: 'testlogin',
-    expose: {
-      testLogin() {
-        return true;
+    drivers: [],
+    builder: (_ctx) => ({
+      expose: {
+        testLogin() {
+          return true;
+        },
       },
-    },
+    }),
   });
 }
 function testTicketFeature() {
   return ticketFeature({
     id: 'testticket',
-    expose: {
-      testTicket() {
-        return true;
+    drivers: [],
+    builder: (_ctx) => ({
+      expose: {
+        testTicket() {
+          return true;
+        },
       },
-    },
+    }),
   });
 }
 function testMfaFeature() {
   return mfaFeature({
     id: 'testmfa',
-    mfa: {
-      isEnabledForUser(_user) {
-        return true;
+    drivers: [],
+    builder: (_ctx) => ({
+      mfa: {
+        isEnabledForUser(_user) {
+          return true;
+        },
       },
-    },
-    expose: {
-      testMfa() {
-        return true;
+      expose: {
+        testMfa() {
+          return true;
+        },
       },
-    },
+    }),
   });
 }
 
@@ -59,4 +68,6 @@ describe('core', async () => {
     });
     expect(guard.hello.testLogin).toBeTypeOf('function');
   });
+
+  it.todo('should connect drivers on initialize()');
 });

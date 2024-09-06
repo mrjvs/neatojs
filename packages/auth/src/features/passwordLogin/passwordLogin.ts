@@ -46,86 +46,100 @@ export function passwordLogin(ops: PasswordLoginOptions) {
 
   return loginFeature({
     id: 'password',
-    expose: {
-      async verifyPassword(user: UserType, password: string): Promise<boolean> {
-        const passwordHash = ops.driver.getPasswordHashFromUser(user);
-        if (!passwordHash) return false;
-        const validPassword = await populatedVerifyPasswordHash(
-          user as any,
-          passwordHash,
-          password,
-        );
-        if (!validPassword.success) return false;
-        if (validPassword.needsRehash) {
-          await ops.driver.savePasswordHash(
-            user.id,
-            await populatedHashPassword(user as any, password),
-          );
-        }
+    drivers: [ops.driver],
+    builder: (_ctx) => {
+      return {
+        expose: {
+          async verifyPassword(
+            user: UserType,
+            password: string,
+          ): Promise<boolean> {
+            const passwordHash = ops.driver.getPasswordHashFromUser(user);
+            if (!passwordHash) return false;
+            const validPassword = await populatedVerifyPasswordHash(
+              user as any,
+              passwordHash,
+              password,
+            );
+            if (!validPassword.success) return false;
+            if (validPassword.needsRehash) {
+              await ops.driver.savePasswordHash(
+                user.id,
+                await populatedHashPassword(user as any, password),
+              );
+            }
 
-        return true;
-      },
-      async unsafeForceUpdatePassword(
-        userId: string,
-        newPassword: string,
-      ): Promise<void> {
-        const user = await ops.driver.getUser(userId);
-        if (!user) throw new Error('Cannot find user');
-        await ops.driver.setUserSecurityStamp(user.id, generateSecurityStamp());
-        await ops.driver.savePasswordHash(
-          user.id,
-          await populatedHashPassword(user as any, newPassword),
-        );
-      },
-      async updatePassword(
-        userId: string,
-        oldPassword: string,
-        newPassword: string,
-      ): Promise<boolean> {
-        const user = await ops.driver.getUser(userId);
-        if (!user) throw new Error('Cannot find user');
+            return true;
+          },
+          async unsafeForceUpdatePassword(
+            userId: string,
+            newPassword: string,
+          ): Promise<void> {
+            const user = await ops.driver.getUser(userId);
+            if (!user) throw new Error('Cannot find user');
+            await ops.driver.setUserSecurityStamp(
+              user.id,
+              generateSecurityStamp(),
+            );
+            await ops.driver.savePasswordHash(
+              user.id,
+              await populatedHashPassword(user as any, newPassword),
+            );
+          },
+          async updatePassword(
+            userId: string,
+            oldPassword: string,
+            newPassword: string,
+          ): Promise<boolean> {
+            const user = await ops.driver.getUser(userId);
+            if (!user) throw new Error('Cannot find user');
 
-        const passwordHash = ops.driver.getPasswordHashFromUser(user);
-        if (!passwordHash) throw new Error('No existing password');
-        const validPassword = await populatedVerifyPasswordHash(
-          user as any,
-          passwordHash,
-          oldPassword,
-        );
-        if (!validPassword.success) return false;
+            const passwordHash = ops.driver.getPasswordHashFromUser(user);
+            if (!passwordHash) throw new Error('No existing password');
+            const validPassword = await populatedVerifyPasswordHash(
+              user as any,
+              passwordHash,
+              oldPassword,
+            );
+            if (!validPassword.success) return false;
 
-        await ops.driver.setUserSecurityStamp(user.id, generateSecurityStamp());
-        await ops.driver.savePasswordHash(
-          user.id,
-          await populatedHashPassword(user as any, newPassword),
-        );
-        return true;
-      },
-      async login(input: PasswordLoginInput): Promise<Ticket | null> {
-        const user = await ops.driver.getUserFromEmail(input.email);
-        if (!user) return null;
+            await ops.driver.setUserSecurityStamp(
+              user.id,
+              generateSecurityStamp(),
+            );
+            await ops.driver.savePasswordHash(
+              user.id,
+              await populatedHashPassword(user as any, newPassword),
+            );
+            return true;
+          },
+          async login(input: PasswordLoginInput): Promise<Ticket | null> {
+            const user = await ops.driver.getUserFromEmail(input.email);
+            if (!user) return null;
 
-        const passwordHash = ops.driver.getPasswordHashFromUser(user);
-        if (!passwordHash) return null;
-        const validPassword = await populatedVerifyPasswordHash(
-          user as any,
-          passwordHash,
-          input.password,
-        );
-        if (!validPassword.success) return null;
-        if (validPassword.needsRehash) {
-          await ops.driver.savePasswordHash(
-            user.id,
-            await populatedHashPassword(user as any, input.password),
-          );
-        }
+            const passwordHash = ops.driver.getPasswordHashFromUser(user);
+            if (!passwordHash) return null;
+            const validPassword = await populatedVerifyPasswordHash(
+              user as any,
+              passwordHash,
+              input.password,
+            );
+            if (!validPassword.success) return null;
+            if (validPassword.needsRehash) {
+              await ops.driver.savePasswordHash(
+                user.id,
+                await populatedHashPassword(user as any, input.password),
+              );
+            }
 
-        // TODO only create verified ticket if no MFA
-        return createVerifiedTicket({
-          userId: user.id,
-          securityStamp: user.securityStamp,
-        });
-      },
+            // TODO only create verified ticket if no MFA
+            return createVerifiedTicket({
+              userId: user.id,
+              securityStamp: user.securityStamp,
+            });
+          },
+        },
+      };
     },
   });
 }

@@ -9,7 +9,7 @@ export type LoginGuardFeatureComponents = Record<never, never>;
 export type LoginGuardFeature<
   TId extends string = string,
   TExposed extends ExposedFunctionMap = Record<never, never>,
-> = GuardFeature<TId, 'login', TExposed> & LoginGuardFeatureComponents;
+> = GuardFeature<TId, 'login', TExposed, LoginGuardFeatureComponents>;
 
 export function loginFeature<
   const TId extends string,
@@ -19,7 +19,8 @@ export function loginFeature<
 ): LoginGuardFeature<TId, TExposed> {
   return {
     id: ops.id,
+    drivers: ops.drivers,
     type: 'login',
-    expose: ops.expose,
+    builder: ops.builder,
   };
 }

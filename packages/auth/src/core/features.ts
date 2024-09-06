@@ -1,17 +1,44 @@
+import type { DriverBase } from 'drivers/types';
+
 type AnyFunction = (...args: any) => any;
 export type UserType = { id: string; securityStamp: string };
 export type ExposedFunctionMap = Record<string, AnyFunction>;
 
 export type GuardFeatureType = 'mfa' | 'login' | 'ticket';
 
+export type GuardFeatureContext = {
+  logger: 42;
+};
+
 export type GuardFeature<
   TId extends string = string,
   TType extends GuardFeatureType = GuardFeatureType,
   TExposed extends ExposedFunctionMap = Record<never, never>,
+  TComponents extends Record<never, never> = Record<never, never>,
 > = {
   type: TType;
   id: TId;
-  expose: TExposed;
+  drivers: DriverBase[];
+  builder: (ctx: GuardFeatureContext) => {
+    expose: TExposed;
+  } & TComponents;
+};
+
+export type GuardFeatureExtracted<
+  TId extends string = string,
+  TType extends GuardFeatureType = GuardFeatureType,
+  TExposed extends ExposedFunctionMap = Record<never, never>,
+  TComponents extends Record<never, never> = Record<never, never>,
+> = {
+  type: TType;
+  id: TId;
+  drivers: DriverBase[];
+  builder: (ctx: GuardFeatureContext) => {
+    expose: TExposed;
+  } & TComponents;
+  extracted: {
+    expose: TExposed;
+  } & TComponents;
 };
 
 export type ExposedFeatureFunctions<TFeature extends GuardFeature<any, any>> =
@@ -23,9 +50,12 @@ export type CreateGuardFeatureOptions<
   TId extends string,
   TExposed extends ExposedFunctionMap,
   TComponents,
-> = TComponents & {
+> = {
   id: TId;
-  expose: TExposed;
+  drivers: DriverBase[];
+  builder: (ctx: GuardFeatureContext) => {
+    expose: TExposed;
+  } & TComponents;
 };
 
 export type FilterArray<TArray extends any[], TConstraint> = TArray extends [
@@ -40,7 +70,9 @@ export type FilterArray<TArray extends any[], TConstraint> = TArray extends [
 export type CombineFeatures<TArray extends any[]> = TArray extends [
   {
     id: infer TId extends string;
-    expose: infer TExposed extends ExposedFunctionMap;
+    extracted: {
+      expose: infer TExposed extends ExposedFunctionMap;
+    };
   },
   ...infer R,
 ]
@@ -49,12 +81,12 @@ export type CombineFeatures<TArray extends any[]> = TArray extends [
 
 export type FilterGuardFeatureType<
   TType extends GuardFeatureType,
-  TFeatures extends GuardFeature[],
+  TFeatures extends GuardFeatureExtracted[],
 > = FilterArray<TFeatures, { type: TType }>;
 
 export type ExposedGuardFeatures<
   TType extends GuardFeatureType,
-  TFeatures extends GuardFeature[],
+  TFeatures extends GuardFeatureExtracted[],
 > = CombineFeatures<FilterGuardFeatureType<TType, TFeatures>>;
 
 export function alias<

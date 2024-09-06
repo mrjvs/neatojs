@@ -17,6 +17,9 @@ async function getPasswordFeature(hashing?: PasswordLoginOptions['hashing']) {
   return {
     driver,
     feat,
+    exposed: feat.builder({
+      logger: 42,
+    }).expose,
   };
 }
 
@@ -58,10 +61,10 @@ describe('login/password', () => {
 
   describe('unsafeForceUpdatePassword', () => {
     it('should update password', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hashOne = driver.getPasswordHashFromUser(dbUser);
@@ -69,11 +72,11 @@ describe('login/password', () => {
       await expectVerify(hashOne, '123').toEqual(true);
     });
     it('should not allow old password after update', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
-      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '456');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);
@@ -82,9 +85,9 @@ describe('login/password', () => {
       await expectVerify(hash, '456').toEqual(true);
     });
     it('should throw if user doesnt exist', async () => {
-      const { feat } = await getPasswordFeature();
+      const { exposed } = await getPasswordFeature();
       await expect(
-        feat.expose.unsafeForceUpdatePassword(user.id, '123'),
+        exposed.unsafeForceUpdatePassword(user.id, '123'),
       ).rejects.toBeInstanceOf(Error);
     });
     it('should use specified hashing functions', async () => {
@@ -95,7 +98,7 @@ describe('login/password', () => {
           needsRehash: false,
         }));
       const hashMock = vi.fn().mockImplementation((_u, _password) => 'HASHED');
-      const { feat, driver } = await getPasswordFeature({
+      const { exposed, driver } = await getPasswordFeature({
         async verifyPassword(u, passwordHash, password) {
           return verifyMock(u, passwordHash, password);
         },
@@ -105,7 +108,7 @@ describe('login/password', () => {
       });
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);
@@ -114,14 +117,14 @@ describe('login/password', () => {
     });
 
     it('should update security stamp after update', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUserBefore = await driver.getUser(user.id);
       if (!dbUserBefore) throw new Error('user not found');
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
+      await exposed.unsafeForceUpdatePassword(user.id, '456');
       const dbUserAfter = await driver.getUser(user.id);
       if (!dbUserAfter) throw new Error('user not found');
       expect(dbUserBefore.securityStamp).not.toEqual(dbUserAfter.securityStamp);
@@ -130,29 +133,29 @@ describe('login/password', () => {
 
   describe('verifyPassword', () => {
     it('should return false when no password set', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       const dbUser = await driver.createUser(user.id);
-      expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(false);
+      expect(await exposed.verifyPassword(dbUser, '123')).toEqual(false);
     });
 
     it('should return false with incorrect password', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
-      expect(await feat.expose.verifyPassword(dbUser, '456')).toEqual(false);
-      expect(await feat.expose.verifyPassword(dbUser, '')).toEqual(false);
-      expect(await feat.expose.verifyPassword(dbUser, '123 ')).toEqual(false);
+      expect(await exposed.verifyPassword(dbUser, '456')).toEqual(false);
+      expect(await exposed.verifyPassword(dbUser, '')).toEqual(false);
+      expect(await exposed.verifyPassword(dbUser, '123 ')).toEqual(false);
     });
 
     it('should return true with correct password', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
-      expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(true);
+      expect(await exposed.verifyPassword(dbUser, '123')).toEqual(true);
     });
 
     it('should use specified hashing functions', async () => {
@@ -163,7 +166,7 @@ describe('login/password', () => {
           needsRehash: false,
         }));
       const hashMock = vi.fn().mockImplementation((_u, _password) => 'HASHED');
-      const { feat, driver } = await getPasswordFeature({
+      const { exposed, driver } = await getPasswordFeature({
         async verifyPassword(u, passwordHash, password) {
           return verifyMock(u, passwordHash, password);
         },
@@ -173,12 +176,10 @@ describe('login/password', () => {
       });
 
       await driver.createUser(user.id);
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
-      expect(await feat.expose.verifyPassword(dbUser, '12123612363')).toEqual(
-        true,
-      );
+      expect(await exposed.verifyPassword(dbUser, '12123612363')).toEqual(true);
       expect(verifyMock).toHaveBeenCalledTimes(1);
     });
 
@@ -188,7 +189,7 @@ describe('login/password', () => {
         needsRehash: false,
       });
       const hashMock = vi.fn().mockResolvedValue('OLDHASH');
-      const { feat, driver } = await getPasswordFeature({
+      const { exposed, driver } = await getPasswordFeature({
         async verifyPassword(u, passwordHash, password) {
           return verifyMock(u, passwordHash, password);
         },
@@ -197,12 +198,12 @@ describe('login/password', () => {
         },
       });
       await driver.createUser(user.id);
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('couldnt find user');
       expect(hashMock).toHaveBeenCalledTimes(1);
 
-      expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(true);
+      expect(await exposed.verifyPassword(dbUser, '123')).toEqual(true);
       expect(hashMock).toHaveBeenCalledTimes(1);
       expect(verifyMock).toHaveBeenCalledTimes(1);
 
@@ -211,7 +212,7 @@ describe('login/password', () => {
         needsRehash: true,
       });
       hashMock.mockResolvedValueOnce('NEWHASH');
-      expect(await feat.expose.verifyPassword(dbUser, '123')).toEqual(true);
+      expect(await exposed.verifyPassword(dbUser, '123')).toEqual(true);
       expect(hashMock).toHaveBeenCalledTimes(2);
       expect(verifyMock).toHaveBeenCalledTimes(2);
       const newDbUser = await driver.getUser(user.id);
@@ -222,32 +223,32 @@ describe('login/password', () => {
 
   describe('login', () => {
     it('should reject if user not found', async () => {
-      const { feat } = await getPasswordFeature();
-      expect(await feat.expose.login({ email: 'hi', password: '123' })).toEqual(
+      const { exposed } = await getPasswordFeature();
+      expect(await exposed.login({ email: 'hi', password: '123' })).toEqual(
         null,
       );
     });
     it('should reject if there is no password hash on user', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id, { email: 'gmail' });
-      expect(
-        await feat.expose.login({ email: `gmail`, password: '123' }),
-      ).toEqual(null);
+      expect(await exposed.login({ email: `gmail`, password: '123' })).toEqual(
+        null,
+      );
     });
     it('should reject if password is incorrect', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id, { email: 'gmail' });
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
-      expect(
-        await feat.expose.login({ email: 'gmail', password: '456' }),
-      ).toEqual(null);
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
+      expect(await exposed.login({ email: 'gmail', password: '456' })).toEqual(
+        null,
+      );
     });
     it('should allow if password is correct', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id, { email: 'gmail' });
-      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
+      await exposed.unsafeForceUpdatePassword(user.id, '456');
       expect(
-        await feat.expose.login({ email: 'gmail', password: '456' }),
+        await exposed.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();
     });
     test.todo('test if ticket response is correct');
@@ -257,7 +258,7 @@ describe('login/password', () => {
         needsRehash: false,
       });
       const hashMock = vi.fn().mockResolvedValue('OLDHASH');
-      const { feat, driver } = await getPasswordFeature({
+      const { exposed, driver } = await getPasswordFeature({
         async verifyPassword(u, passwordHash, password) {
           return verifyMock(u, passwordHash, password);
         },
@@ -266,9 +267,9 @@ describe('login/password', () => {
         },
       });
       await driver.createUser(user.id, { email: 'gmail' });
-      await feat.expose.unsafeForceUpdatePassword(user.id, '456');
+      await exposed.unsafeForceUpdatePassword(user.id, '456');
       expect(
-        await feat.expose.login({ email: 'gmail', password: '456' }),
+        await exposed.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();
       expect(verifyMock).toBeCalledTimes(1);
       expect(hashMock).toBeCalledTimes(1);
@@ -280,7 +281,7 @@ describe('login/password', () => {
       });
       hashMock.mockResolvedValueOnce('NEWHASH');
       expect(
-        await feat.expose.login({ email: 'gmail', password: '456' }),
+        await exposed.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();
       expect(verifyMock).toBeCalledTimes(2);
       expect(hashMock).toBeCalledTimes(2);
@@ -294,11 +295,11 @@ describe('login/password', () => {
 
   describe('updatePassword', () => {
     it('should fail with incorrect old password', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
-      const result = await feat.expose.updatePassword(user.id, '456', '999');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
+      const result = await exposed.updatePassword(user.id, '456', '999');
       expect(result).toEqual(false);
 
       const dbUser = await driver.getUser(user.id);
@@ -309,20 +310,20 @@ describe('login/password', () => {
     });
 
     it('should throw if no password set', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
       await expect(
-        feat.expose.updatePassword(user.id, '456', '999'),
+        exposed.updatePassword(user.id, '456', '999'),
       ).rejects.toBeInstanceOf(Error);
     });
 
     it('should update password', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
-      const result = await feat.expose.updatePassword(user.id, '123', '456');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
+      const result = await exposed.updatePassword(user.id, '123', '456');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hashOne = driver.getPasswordHashFromUser(dbUser);
@@ -332,20 +333,20 @@ describe('login/password', () => {
     });
 
     it('should update security stamp after update', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
       const dbUserBefore = await driver.getUser(user.id);
       if (!dbUserBefore) throw new Error('user not found');
 
-      const resOne = await feat.expose.updatePassword(user.id, '1', '456');
+      const resOne = await exposed.updatePassword(user.id, '1', '456');
       expect(resOne).toEqual(false);
       const dbUserUnchanged = await driver.getUser(user.id);
       if (!dbUserUnchanged) throw new Error('user not found');
       expect(dbUserBefore.securityStamp).toEqual(dbUserUnchanged.securityStamp);
 
-      const result = await feat.expose.updatePassword(user.id, '123', '456');
+      const result = await exposed.updatePassword(user.id, '123', '456');
       expect(result).toEqual(true);
       const dbUserAfter = await driver.getUser(user.id);
       if (!dbUserAfter) throw new Error('user not found');
@@ -353,11 +354,11 @@ describe('login/password', () => {
     });
 
     it('should not allow old password after update', async () => {
-      const { feat, driver } = await getPasswordFeature();
+      const { exposed, driver } = await getPasswordFeature();
       await driver.createUser(user.id);
 
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
-      const result = await feat.expose.updatePassword(user.id, '123', '456');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
+      const result = await exposed.updatePassword(user.id, '123', '456');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);
@@ -368,9 +369,9 @@ describe('login/password', () => {
     });
 
     it('should throw if user doesnt exist', async () => {
-      const { feat } = await getPasswordFeature();
+      const { exposed } = await getPasswordFeature();
       await expect(
-        feat.expose.updatePassword(user.id, '123', '123'),
+        exposed.updatePassword(user.id, '123', '123'),
       ).rejects.toBeInstanceOf(Error);
     });
 
@@ -382,7 +383,7 @@ describe('login/password', () => {
           needsRehash: false,
         }));
       const hashMock = vi.fn().mockImplementation((_u, _password) => 'NEWHASH');
-      const { feat, driver } = await getPasswordFeature({
+      const { exposed, driver } = await getPasswordFeature({
         async verifyPassword(u, passwordHash, password) {
           return verifyMock(u, passwordHash, password);
         },
@@ -392,9 +393,9 @@ describe('login/password', () => {
       });
       await driver.createUser(user.id);
       hashMock.mockResolvedValueOnce('OLDHASH');
-      await feat.expose.unsafeForceUpdatePassword(user.id, '123');
+      await exposed.unsafeForceUpdatePassword(user.id, '123');
 
-      await feat.expose.updatePassword(user.id, '123', '456');
+      await exposed.updatePassword(user.id, '123', '456');
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);

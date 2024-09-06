@@ -9,7 +9,7 @@ export type TicketGuardFeatureComponents = Record<never, never>;
 export type TicketGuardFeature<
   TId extends string = string,
   TExposed extends ExposedFunctionMap = Record<never, never>,
-> = GuardFeature<TId, 'ticket', TExposed> & TicketGuardFeatureComponents;
+> = GuardFeature<TId, 'ticket', TExposed, TicketGuardFeatureComponents>;
 
 export function ticketFeature<
   const TId extends string,
@@ -19,7 +19,8 @@ export function ticketFeature<
 ): TicketGuardFeature<TId, TExposed> {
   return {
     id: ops.id,
+    drivers: ops.drivers,
     type: 'ticket',
-    expose: ops.expose,
+    builder: ops.builder,
   };
 }

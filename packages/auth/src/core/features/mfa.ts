@@ -14,7 +14,7 @@ export type MfaGuardFeatureComponents = {
 export type MfaGuardFeature<
   TId extends string = string,
   TExposed extends ExposedFunctionMap = Record<never, never>,
-> = GuardFeature<TId, 'mfa', TExposed> & MfaGuardFeatureComponents;
+> = GuardFeature<TId, 'mfa', TExposed, MfaGuardFeatureComponents>;
 
 export function mfaFeature<
   const TId extends string,
@@ -24,10 +24,8 @@ export function mfaFeature<
 ): MfaGuardFeature<TId, TExposed> {
   return {
     id: ops.id,
+    drivers: ops.drivers,
     type: 'mfa',
-    expose: ops.expose,
-    mfa: {
-      isEnabledForUser: ops.mfa.isEnabledForUser,
-    },
+    builder: ops.builder,
   };
 }

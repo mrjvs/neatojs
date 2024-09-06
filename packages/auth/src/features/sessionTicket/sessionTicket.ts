@@ -81,49 +81,52 @@ export function sessionTicket(ops: SessionTicketOptions) {
 
   return ticketFeature({
     id: 'session',
-    expose: {
-      async getUserSessionInfos(_userId: string): Promise<SessionEntity[]> {
-        // TODO implement
-        return [];
-      },
-      async getSessionInfoById(
-        _sessionId: string,
-      ): Promise<SessionEntity | null> {
-        // TODO implement
-        return null;
-      },
-      async removeExpiredSessions(): Promise<void> {
-        // TODO implement
-      },
-      async removeSessionById(_sessionId: string): Promise<void> {
-        // TODO implement
-      },
-      async fromAuthHeader(header: string): Promise<VerifiedTicket | null> {
-        const results = header.split(' ');
-        const [type, token] = results;
-        if (results.length !== 2) return null;
-        if (type.toLowerCase() !== 'bearer') return null;
-        if (typeof token !== 'string') return null;
-        return fromToken(token);
-      },
-      async fromToken(token: string): Promise<VerifiedTicket | null> {
-        return fromToken(token);
-      },
-      async createSession(ticket: VerifiedTicket): Promise<Session> {
-        assertVerifiedTicket(ticket);
-        const newSession = await ops.driver.createSession({
-          userId: ticket.userId,
-          expiresAt: new Date(Date.now() + expiryMs),
-          id: randomUUID(),
-          securityStamp: ticket.securityStamp,
-        });
+    drivers: [ops.driver],
+    builder: (_ctx) => ({
+      expose: {
+        async getUserSessionInfos(_userId: string): Promise<SessionEntity[]> {
+          // TODO implement
+          return [];
+        },
+        async getSessionInfoById(
+          _sessionId: string,
+        ): Promise<SessionEntity | null> {
+          // TODO implement
+          return null;
+        },
+        async removeExpiredSessions(): Promise<void> {
+          // TODO implement
+        },
+        async removeSessionById(_sessionId: string): Promise<void> {
+          // TODO implement
+        },
+        async fromAuthHeader(header: string): Promise<VerifiedTicket | null> {
+          const results = header.split(' ');
+          const [type, token] = results;
+          if (results.length !== 2) return null;
+          if (type.toLowerCase() !== 'bearer') return null;
+          if (typeof token !== 'string') return null;
+          return fromToken(token);
+        },
+        async fromToken(token: string): Promise<VerifiedTicket | null> {
+          return fromToken(token);
+        },
+        async createSession(ticket: VerifiedTicket): Promise<Session> {
+          assertVerifiedTicket(ticket);
+          const newSession = await ops.driver.createSession({
+            userId: ticket.userId,
+            expiresAt: new Date(Date.now() + expiryMs),
+            id: randomUUID(),
+            securityStamp: ticket.securityStamp,
+          });
 
-        return {
-          token: createSessionToken(secrets, newSession),
-          id: newSession.id,
-          userId: newSession.userId,
-        };
+          return {
+            token: createSessionToken(secrets, newSession),
+            id: newSession.id,
+            userId: newSession.userId,
+          };
+        },
       },
-    },
+    }),
   });
 }

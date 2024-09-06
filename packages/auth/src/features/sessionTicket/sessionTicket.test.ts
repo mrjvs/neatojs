@@ -19,13 +19,16 @@ async function getSessionFeature(ops: Partial<SessionTicketOptions> = {}) {
   return {
     driver,
     feat,
+    exposed: feat.builder({
+      logger: 42,
+    }).expose,
   };
 }
 
 describe('ticket/session', () => {
   describe('createSession', () => {
     it('should only accept verified tickets', async () => {
-      const { feat } = await getSessionFeature();
+      const { exposed } = await getSessionFeature();
       const unverifiedTicket = createUnverifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
@@ -35,20 +38,18 @@ describe('ticket/session', () => {
         userId: user.id,
       });
       await expect(
-        feat.expose.createSession(unverifiedTicket as any),
+        exposed.createSession(unverifiedTicket as any),
       ).rejects.toBeInstanceOf(Error);
-      await expect(
-        feat.expose.createSession(verifiedTicket),
-      ).resolves.toBeTruthy();
+      await expect(exposed.createSession(verifiedTicket)).resolves.toBeTruthy();
     });
 
     it('should create a session', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       const ticket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(ticket);
+      const session = await exposed.createSession(ticket);
       expect(session.id).toBeTruthy();
       expect(session.userId).toEqual(user.id);
       const foundSession = await driver.getSession(session.id);
@@ -70,14 +71,14 @@ describe('ticket/session', () => {
 
     it('should use configured expiry', async () => {
       const expiry = 120;
-      const { feat, driver } = await getSessionFeature({
+      const { exposed, driver } = await getSessionFeature({
         expiryInSeconds: expiry,
       });
       const ticket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(ticket);
+      const session = await exposed.createSession(ticket);
       const foundSession = await driver.getSession(session.id);
       if (!foundSession) throw new Error('Session not found');
 
@@ -91,12 +92,12 @@ describe('ticket/session', () => {
     });
 
     it('should create a valid token', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       const ticket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(ticket);
+      const session = await exposed.createSession(ticket);
       const extractedSessionId = getSessionIdFromToken(
         { jwtSigning: secret },
         session.token,
@@ -111,20 +112,22 @@ describe('ticket/session', () => {
 
   describe('fromToken', () => {
     it('should not allow expired sessions with rolling sessions', async () => {
-      const { feat, driver } = await getSessionFeature({ expiryInSeconds: 0 });
+      const { exposed, driver } = await getSessionFeature({
+        expiryInSeconds: 0,
+      });
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const newTicket = await feat.expose.fromToken(session.token);
+      const newTicket = await exposed.fromToken(session.token);
       expect(newTicket).toBe(null);
     });
 
     it('should not allow expired sessions with static sessions', async () => {
-      const { feat, driver } = await getSessionFeature({
+      const { exposed, driver } = await getSessionFeature({
         expiryInSeconds: 0,
         disableRollingSessions: true,
       });
@@ -133,50 +136,50 @@ describe('ticket/session', () => {
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const newTicket = await feat.expose.fromToken(session.token);
+      const newTicket = await exposed.fromToken(session.token);
       expect(newTicket).toBe(null);
     });
 
     it.todo('should not allow expired sessions expired through security stamp');
 
     it('should handle removed sessions', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
       await driver.removeSession(session.id);
 
-      const newTicket = await feat.expose.fromToken(session.token);
+      const newTicket = await exposed.fromToken(session.token);
       expect(newTicket).toBe(null);
     });
 
     it('should handle removed users', async () => {
-      const { feat } = await getSessionFeature();
+      const { exposed } = await getSessionFeature();
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const newTicket = await feat.expose.fromToken(session.token);
+      const newTicket = await exposed.fromToken(session.token);
       expect(newTicket).toBe(null);
     });
 
     it('should use rolling sessions', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
       const dbSessionBefore = await driver.getSession(session.id);
-      await feat.expose.fromToken(session.token);
+      await exposed.fromToken(session.token);
       const dbSessionAfter = await driver.getSession(session.id);
       if (!dbSessionBefore || !dbSessionAfter)
         throw new Error('session dont exist');
@@ -186,7 +189,7 @@ describe('ticket/session', () => {
     });
 
     it('should not use rolling session if disabled', async () => {
-      const { feat, driver } = await getSessionFeature({
+      const { exposed, driver } = await getSessionFeature({
         disableRollingSessions: true,
       });
       await driver.createUser(user.id, { stamp: user.securityStamp });
@@ -194,9 +197,9 @@ describe('ticket/session', () => {
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
       const dbSessionBefore = await driver.getSession(session.id);
-      await feat.expose.fromToken(session.token);
+      await exposed.fromToken(session.token);
       const dbSessionAfter = await driver.getSession(session.id);
       if (!dbSessionBefore || !dbSessionAfter)
         throw new Error('session dont exist');
@@ -204,7 +207,7 @@ describe('ticket/session', () => {
     });
 
     it('should not use rolling session if disabled', async () => {
-      const { feat, driver } = await getSessionFeature({
+      const { exposed, driver } = await getSessionFeature({
         disableRollingSessions: true,
       });
       await driver.createUser(user.id, { stamp: user.securityStamp });
@@ -212,9 +215,9 @@ describe('ticket/session', () => {
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
       const dbSessionBefore = await driver.getSession(session.id);
-      await feat.expose.fromToken(session.token);
+      await exposed.fromToken(session.token);
       const dbSessionAfter = await driver.getSession(session.id);
       if (!dbSessionBefore || !dbSessionAfter)
         throw new Error('session dont exist');
@@ -223,7 +226,7 @@ describe('ticket/session', () => {
 
     it('should use configured expiry', async () => {
       const expiry = 120;
-      const { feat, driver } = await getSessionFeature({
+      const { exposed, driver } = await getSessionFeature({
         expiryInSeconds: expiry,
       });
       await driver.createUser(user.id, { stamp: user.securityStamp });
@@ -231,12 +234,12 @@ describe('ticket/session', () => {
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
       const dbSessionBefore = await driver.getSessionAndUpdateExpiry(
         session.id,
         new Date(Date.now() + 1000),
       );
-      await feat.expose.fromToken(session.token);
+      await exposed.fromToken(session.token);
       const dbSession = await driver.getSession(session.id);
       if (!dbSession || !dbSessionBefore)
         throw new Error('session doesnt exist');
@@ -255,14 +258,14 @@ describe('ticket/session', () => {
     });
 
     it('should give a verified ticket as output', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
-      const ticket = await feat.expose.fromToken(session.token);
+      const session = await exposed.createSession(startTicket);
+      const ticket = await exposed.fromToken(session.token);
       expect(ticket).toBeTruthy();
       if (!ticket) throw new Error('No ticket');
       expect(ticket.verified).toEqual(true);
@@ -275,56 +278,52 @@ describe('ticket/session', () => {
 
   describe('fromAuthHeader', () => {
     it('should parse auth header correctly', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const ticket = await feat.expose.fromAuthHeader(
-        `Bearer ${session.token}`,
-      );
+      const ticket = await exposed.fromAuthHeader(`Bearer ${session.token}`);
       expect(ticket).toBeTruthy();
     });
     it('should parse header case-insensitive', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const ticket = await feat.expose.fromAuthHeader(
-        `BeaReR ${session.token}`,
-      );
+      const ticket = await exposed.fromAuthHeader(`BeaReR ${session.token}`);
       expect(ticket).toBeTruthy();
     });
     it('should not allow invalid auth header types', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const ticket = await feat.expose.fromAuthHeader(`Basic ${session.token}`);
+      const ticket = await exposed.fromAuthHeader(`Basic ${session.token}`);
       expect(ticket).toBeFalsy();
     });
     it('should not throw even with invalid syntax', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
       const expectFailure = async (header: string) => {
-        expect(await feat.expose.fromAuthHeader(header)).toBeFalsy();
+        expect(await exposed.fromAuthHeader(header)).toBeFalsy();
       };
 
       await expectFailure(`Bearer   ${session.token}`);
@@ -337,17 +336,15 @@ describe('ticket/session', () => {
     });
 
     it('should create a verified ticket if valid', async () => {
-      const { feat, driver } = await getSessionFeature();
+      const { exposed, driver } = await getSessionFeature();
       await driver.createUser(user.id, { stamp: user.securityStamp });
       const startTicket = createVerifiedTicket({
         securityStamp: user.securityStamp,
         userId: user.id,
       });
-      const session = await feat.expose.createSession(startTicket);
+      const session = await exposed.createSession(startTicket);
 
-      const ticket = await feat.expose.fromAuthHeader(
-        `Bearer ${session.token}`,
-      );
+      const ticket = await exposed.fromAuthHeader(`Bearer ${session.token}`);
       expect(ticket).toBeTruthy();
       if (!ticket) throw new Error('No ticket');
       expect(ticket.verified).toEqual(true);
