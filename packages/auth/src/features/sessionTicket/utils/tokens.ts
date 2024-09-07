@@ -1,6 +1,6 @@
 import type { Algorithm } from 'jsonwebtoken';
 import { sign, verify } from 'jsonwebtoken';
-import type { SessionEntity, SessionSecretOptions } from './types';
+import type { SessionEntity, SessionSecretOptions } from '../types';
 
 const algorithm: Algorithm = 'HS512';
 

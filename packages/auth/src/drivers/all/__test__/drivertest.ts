@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import type { DriverBase } from 'drivers/types.js';
-import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket.js';
-import type { PasswordDriverTrait } from 'features/passwordLogin/passwordLogin';
+import type { SessionDriverTrait } from 'features/sessionTicket/types';
+import type { PasswordDriverTrait } from 'features/passwordLogin/types';
 
 export function testDriver(
   makeDb: () => Promise<{

@@ -48,16 +48,16 @@ export type {
   SessionTicketOptions,
   SessionDriverTrait,
   SessionEntityCreate,
-  Session,
-} from './features/sessionTicket/sessionTicket';
+} from './features/sessionTicket/types';
+export type { Session } from './features/sessionTicket/parts/create';
 export { sessionTicket } from './features/sessionTicket/sessionTicket';
 export type { SessionEntity } from './features/sessionTicket/types';
 
 export type {
   PasswordLoginOptions,
-  PasswordLoginInput,
   PasswordDriverTrait,
-} from './features/passwordLogin/passwordLogin';
+} from './features/passwordLogin/types';
+export type { PasswordLoginInput } from './features/passwordLogin/parts/login';
 export { passwordLogin } from './features/passwordLogin/passwordLogin';
 
 /* drivers */

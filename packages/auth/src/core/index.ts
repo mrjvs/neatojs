@@ -1,3 +1,5 @@
+import { pino } from 'pino';
+import type { BaseLogger, Level } from 'pino';
 import type { DriverBase } from 'drivers/types';
 import type {
   CombineFeatures,
@@ -11,7 +13,6 @@ import type {
 
 // TODO function to get enabled MFA methods for user
 // TODO make error class for all errors thrown by the features
-// TODO global logging configuration or use custom logger
 // TODO global backup code system for MFA
 // TODO global way to make a temporary ticket and temporary token for ticket
 // TODO global setup function (that calls connect on driver and all features)
@@ -29,16 +30,23 @@ type ExtractedFeatures<TFeatures extends GuardFeature[]> = TFeatures extends [
   : [];
 
 export type GuardOptions<TFeatures extends GuardFeature[]> = {
+  logger?:
+    | BaseLogger
+    | {
+        level: Level;
+      };
   driver: DriverBase;
   features: TFeatures;
 };
 
-export type Guard<TFeatures extends GuardFeatureExtracted[]> =
-  ExposedGuardFeatures<'login', TFeatures> &
-    ExposedGuardFeatures<'ticket', TFeatures> & {
-      mfa: ExposedGuardFeatures<'mfa', TFeatures>;
-      initialize: () => Promise<void>;
-    };
+export type Guard<TFeatures extends GuardFeature[]> = ExposedGuardFeatures<
+  'login',
+  ExtractedFeatures<TFeatures>
+> &
+  ExposedGuardFeatures<'ticket', ExtractedFeatures<TFeatures>> & {
+    mfa: ExposedGuardFeatures<'mfa', ExtractedFeatures<TFeatures>>;
+    initialize: () => Promise<void>;
+  };
 
 function combineFeatures<TFeatures extends GuardFeatureExtracted[]>(
   features: TFeatures,
@@ -63,9 +71,13 @@ function filterAndCombineFeatures<
 
 export function createGuard<const TFeatures extends GuardFeature[]>(
   ops: GuardOptions<TFeatures>,
-): Guard<ExtractedFeatures<TFeatures>> {
+): Guard<TFeatures> {
+  const logger =
+    ops.logger && 'info' in ops.logger
+      ? ops.logger
+      : pino({ level: ops.logger?.level ?? 'silent' }).child({ src: 'guard' });
   const ctx: GuardFeatureContext = {
-    logger: 42,
+    logger,
   };
   const features = ops.features.map((v: TFeatures[number]) => ({
     ...v,

@@ -1,3 +1,4 @@
+import type { BaseLogger } from 'pino';
 import type { DriverBase } from 'drivers/types';
 
 type AnyFunction = (...args: any) => any;
@@ -7,7 +8,7 @@ export type ExposedFunctionMap = Record<string, AnyFunction>;
 export type GuardFeatureType = 'mfa' | 'login' | 'ticket';
 
 export type GuardFeatureContext = {
-  logger: 42;
+  logger: BaseLogger;
 };
 
 export type GuardFeature<

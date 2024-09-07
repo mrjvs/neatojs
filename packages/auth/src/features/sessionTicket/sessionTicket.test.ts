@@ -1,9 +1,11 @@
 import { sign } from 'jsonwebtoken';
+import { pino } from 'pino';
 import { inMemoryDriver } from 'drivers/all/memory/memory';
 import { createUnverifiedTicket, createVerifiedTicket } from 'core/ticket';
-import type { SessionTicketOptions } from './sessionTicket';
-import { defaultExpiryInSeconds, sessionTicket } from './sessionTicket';
-import { createSessionToken, getSessionIdFromToken } from './tokens';
+import { sessionTicket } from './sessionTicket';
+import { createSessionToken, getSessionIdFromToken } from './utils/tokens';
+import type { SessionTicketOptions } from './types';
+import { defaultExpiryInSeconds } from './utils/expiry';
 
 const user = { id: '123', securityStamp: 'a-stamp' };
 
@@ -20,7 +22,7 @@ async function getSessionFeature(ops: Partial<SessionTicketOptions> = {}) {
     driver,
     feat,
     exposed: feat.builder({
-      logger: 42,
+      logger: pino(),
     }).expose,
   };
 }

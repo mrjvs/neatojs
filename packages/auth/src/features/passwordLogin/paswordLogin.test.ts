@@ -1,7 +1,8 @@
+import { pino } from 'pino';
 import { inMemoryDriver } from 'drivers/all/memory/memory';
-import { hashPassword, verifyPassword } from './hashing';
-import type { PasswordLoginOptions } from './passwordLogin';
+import { hashPassword, verifyPassword } from './utils/hashing';
 import { passwordLogin } from './passwordLogin';
+import type { PasswordLoginOptions } from './types';
 
 const user = { id: '123' };
 const simplePassword = '123456';
@@ -18,7 +19,7 @@ async function getPasswordFeature(hashing?: PasswordLoginOptions['hashing']) {
     driver,
     feat,
     exposed: feat.builder({
-      logger: 42,
+      logger: pino(),
     }).expose,
   };
 }
@@ -287,9 +288,8 @@ describe('login/password', () => {
       expect(hashMock).toBeCalledTimes(2);
       expect(hashMock).toHaveBeenCalledWith(dbUserBefore, '456');
       const dbUserAfter = await driver.getUser(user.id);
-      expect(driver.getPasswordHashFromUser(dbUserAfter as any)).toBe(
-        'NEWHASH',
-      );
+      if (!dbUserAfter) throw new Error('user not found');
+      expect(driver.getPasswordHashFromUser(dbUserAfter)).toBe('NEWHASH');
     });
   });
 

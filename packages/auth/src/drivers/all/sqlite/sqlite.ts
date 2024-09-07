@@ -1,15 +1,16 @@
 import type { Database } from 'better-sqlite3';
 import { knex } from 'knex';
-import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket';
-import { logger } from 'core/logger';
 import type {
   DriverBase,
   DriverTraits,
   TraitDisabledValue,
 } from 'drivers/types';
 import type { UserType } from 'core/features';
-import type { PasswordDriverTrait } from 'features/passwordLogin/passwordLogin';
-import type { SessionEntity } from 'features/sessionTicket/types';
+import type {
+  SessionDriverTrait,
+  SessionEntity,
+} from 'features/sessionTicket/types';
+import type { PasswordDriverTrait } from 'features/passwordLogin/types';
 
 export type SqliteDriverOptions = {
   database: Database;
@@ -45,8 +46,6 @@ type SessionTable = {
 export function sqliteDriver<T extends SqliteDriverOptions>(
   ops: T,
 ): SqliteDriver<T> {
-  const log = logger.child({ driver: 'sqlite' });
-  log.debug('initializing sqlite driver');
   const dbInstance = knex({ client: 'better-sqlite3', useNullAsDefault: true });
   const db = <TTable extends Record<never, never>>(table: string) =>
     dbInstance<TTable>(table).connection(ops.database);
@@ -54,13 +53,11 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
   const base: DriverBase = {
     id: 'sqlite',
     async connect() {
-      log.debug('connecting to sqlite');
       // todo: verify database connection
       // todo: check whether the table types are proper
       // sqlite is already connected since its file based
     },
     async getUser(userId) {
-      log.debug(`getting user with id: ${userId}`);
       const user = await db<UserType>(ops.userTable)
         .select()
         .where({ id: userId })
@@ -79,7 +76,6 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
     const sessionTable = ops.sessionTable;
     sessionTrait = {
       async createSession(data) {
-        log.debug(`creating session for user ${data.userId}`);
         const newSession = await db<SessionTable>(sessionTable)
           .insert({
             userId: data.userId,
@@ -92,14 +88,12 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
         return mapSessionEntity(newSession[0]);
       },
       async getSession(id) {
-        log.debug(`getting session with id: ${id}`);
         const session = await db<SessionTable>(sessionTable)
           .where({ id })
           .first();
         return session ? mapSessionEntity(session) : null;
       },
       async getSessionAndUpdateExpiry(id, expiry) {
-        log.debug(`getting and updating session expiry for user: ${id}`);
         const updatedSessions = await db<SessionTable>(sessionTable)
           .where({ id })
           .andWhere('expiresAt', '>', new Date(Date.now()).getTime())
@@ -110,20 +104,17 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
         return updatedSessions[0] ? mapSessionEntity(updatedSessions[0]) : null;
       },
       async getUserSessions(userId) {
-        log.debug(`getting all user sessions for user: ${userId}`);
         const sessions = await db<SessionTable>(sessionTable)
           .where({ userId })
           .select();
         return sessions.map((session) => mapSessionEntity(session));
       },
       async removeExpiredSessions() {
-        log.debug(`removing expired sessions`);
         await db<SessionTable>(sessionTable)
           .where('expiresAt', '<=', new Date(Date.now()))
           .delete();
       },
       async removeSession(id) {
-        log.debug(`removing session with id: ${id}`);
         await db<SessionTable>(sessionTable).where({ id }).delete();
       },
     };
@@ -134,7 +125,6 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
     const passwordFields = ops.passwordFields;
     passwordTrait = {
       async getUserFromEmail(email) {
-        log.debug(`getting user with email: ${email}`);
         const user = await db<UserType>(ops.userTable)
           .select()
           .where({ [passwordFields.email]: email })

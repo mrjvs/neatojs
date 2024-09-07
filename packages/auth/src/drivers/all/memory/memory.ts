@@ -1,8 +1,8 @@
 import SqliteDatabase from 'better-sqlite3';
 import { knex } from 'knex';
-import type { SessionDriverTrait } from 'features/sessionTicket/sessionTicket';
 import type { UserType } from 'core/features';
-import type { PasswordDriverTrait } from 'features/passwordLogin/passwordLogin';
+import type { PasswordDriverTrait } from 'features/passwordLogin/types';
+import type { SessionDriverTrait } from 'features/sessionTicket/types';
 import type { DriverBase } from '../../types';
 import { sqliteDriver } from '../sqlite/sqlite';
 
