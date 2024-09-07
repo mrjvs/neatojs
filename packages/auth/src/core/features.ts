@@ -1,5 +1,6 @@
 import type { BaseLogger } from 'pino';
 import type { DriverBase } from 'drivers/types';
+import type { Ticket, TicketCreateOptions } from './ticket';
 
 type AnyFunction = (...args: any) => any;
 export type UserType = { id: string; securityStamp: string };
@@ -9,7 +10,21 @@ export type GuardFeatureType = 'mfa' | 'login' | 'ticket';
 
 export type GuardFeatureContext = {
   logger: BaseLogger;
+  getMfaDependentTicket: (ops: TicketCreateOptions) => Promise<Ticket>;
 };
+
+export type ExtractedFeatures<TFeatures extends GuardFeature[]> =
+  TFeatures extends [
+    infer L extends GuardFeature,
+    ...infer R extends GuardFeature[],
+  ]
+    ? [
+        L & {
+          extracted: ReturnType<L['builder']>;
+        },
+        ...ExtractedFeatures<R>,
+      ]
+    : [];
 
 export type GuardFeature<
   TId extends string = string,

@@ -1,5 +1,4 @@
 import type { Ticket } from 'core/ticket';
-import { createVerifiedTicket } from 'core/ticket';
 import type { PasswordLoginContext } from '../types';
 
 export type PasswordLoginInput = {
@@ -29,8 +28,7 @@ export async function login(
     );
   }
 
-  // TODO only create verified ticket if no MFA
-  return createVerifiedTicket({
+  return ctx.ctx.getMfaDependentTicket({
     userId: user.id,
     securityStamp: user.securityStamp,
   });

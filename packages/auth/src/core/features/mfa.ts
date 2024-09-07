@@ -8,6 +8,7 @@ import type {
 export type MfaGuardFeatureComponents = {
   mfa: {
     isEnabledForUser: (user: UserType) => boolean;
+    getMfaType: () => string;
   };
 };
 

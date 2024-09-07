@@ -38,6 +38,9 @@ export function totpMfa(ops: TotpMfaOptions) {
           const settings = ops.driver.getTotpSettingsFromUser(user);
           return settings.enabled;
         },
+        getMfaType() {
+          return 'totp';
+        },
       },
       expose: {
         async remove(userId: string) {

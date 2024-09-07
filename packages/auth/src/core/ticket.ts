@@ -11,7 +11,7 @@ export type VerifiedTicket = TicketBase<true>;
 
 export type Ticket = UnverifiedTicket | VerifiedTicket;
 
-type TicketCreateOptions = {
+export type TicketCreateOptions = {
   userId: string;
   securityStamp: string;
 };

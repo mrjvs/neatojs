@@ -5,29 +5,18 @@ import type {
   CombineFeatures,
   ExposedFunctionMap,
   ExposedGuardFeatures,
+  ExtractedFeatures,
   GuardFeature,
   GuardFeatureContext,
   GuardFeatureExtracted,
   GuardFeatureType,
 } from './features';
+import type { GuardMfaMethod } from './mfa';
+import { getEnabledMfaMethodsForUser, getMfaDependentTicket } from './mfa';
 
-// TODO function to get enabled MFA methods for user
 // TODO make error class for all errors thrown by the features
 // TODO global backup code system for MFA
 // TODO global way to make a temporary ticket and temporary token for ticket
-// TODO global setup function (that calls connect on driver and all features)
-
-type ExtractedFeatures<TFeatures extends GuardFeature[]> = TFeatures extends [
-  infer L extends GuardFeature,
-  ...infer R extends GuardFeature[],
-]
-  ? [
-      L & {
-        extracted: ReturnType<L['builder']>;
-      },
-      ...ExtractedFeatures<R>,
-    ]
-  : [];
 
 export type GuardOptions<TFeatures extends GuardFeature[]> = {
   logger?:
@@ -44,7 +33,11 @@ export type Guard<TFeatures extends GuardFeature[]> = ExposedGuardFeatures<
   ExtractedFeatures<TFeatures>
 > &
   ExposedGuardFeatures<'ticket', ExtractedFeatures<TFeatures>> & {
-    mfa: ExposedGuardFeatures<'mfa', ExtractedFeatures<TFeatures>>;
+    mfa: ExposedGuardFeatures<'mfa', ExtractedFeatures<TFeatures>> & {
+      getEnabledMfaMethodsForUser: (
+        userId: string,
+      ) => Promise<GuardMfaMethod[]>;
+    };
     initialize: () => Promise<void>;
   };
 
@@ -78,17 +71,34 @@ export function createGuard<const TFeatures extends GuardFeature[]>(
       : pino({ level: ops.logger?.level ?? 'silent' }).child({ src: 'guard' });
   const ctx: GuardFeatureContext = {
     logger,
+    getMfaDependentTicket(ticketOps) {
+      return getMfaDependentTicket(features, ops.driver, ticketOps);
+    },
   };
   const features = ops.features.map((v: TFeatures[number]) => ({
     ...v,
     extracted: v.builder(ctx),
   })) as ExtractedFeatures<TFeatures>;
-  const drivers = [...new Set(ops.features.map((v) => v.drivers).flat())];
+  const allDrivers = [
+    ...ops.features.map((v) => v.drivers),
+    [ops.driver],
+  ].flat();
+  const drivers = [...new Set(allDrivers)];
 
   return {
     ...filterAndCombineFeatures('login', features),
     ...filterAndCombineFeatures('ticket', features),
-    mfa: filterAndCombineFeatures('mfa', features),
+    mfa: {
+      ...filterAndCombineFeatures('mfa', features),
+      async getEnabledMfaMethodsForUser(userId) {
+        const methods = await getEnabledMfaMethodsForUser(
+          features,
+          ops.driver,
+          userId,
+        );
+        return methods ?? [];
+      },
+    },
     async initialize() {
       for (const driver of drivers) {
         await driver.connect();

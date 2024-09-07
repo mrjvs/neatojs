@@ -23,6 +23,9 @@ async function getSessionFeature(ops: Partial<SessionTicketOptions> = {}) {
     feat,
     exposed: feat.builder({
       logger: pino(),
+      async getMfaDependentTicket(o) {
+        return createVerifiedTicket(o);
+      },
     }).expose,
   };
 }

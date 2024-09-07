@@ -1,5 +1,6 @@
 import { pino } from 'pino';
 import { inMemoryDriver } from 'drivers/all/memory/memory';
+import { createVerifiedTicket } from 'core/ticket';
 import { hashPassword, verifyPassword } from './utils/hashing';
 import { passwordLogin } from './passwordLogin';
 import type { PasswordLoginOptions } from './types';
@@ -20,6 +21,9 @@ async function getPasswordFeature(hashing?: PasswordLoginOptions['hashing']) {
     feat,
     exposed: feat.builder({
       logger: pino(),
+      async getMfaDependentTicket(ops) {
+        return createVerifiedTicket(ops);
+      },
     }).expose,
   };
 }
@@ -252,7 +256,8 @@ describe('login/password', () => {
         await exposed.login({ email: 'gmail', password: '456' }),
       ).toBeTruthy();
     });
-    test.todo('test if ticket response is correct');
+    test.todo('should give verified ticket if no MFA');
+    test.todo('should give unverified ticket if MFA');
     it('should rehash when needed', async () => {
       const verifyMock = vi.fn().mockResolvedValue({
         success: true,
