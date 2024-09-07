@@ -414,6 +414,7 @@ describe('ticket/session', () => {
 
   describe('getSessionInfoById', () => {
     test.todo('handles expired session');
+    test.todo('handles session from removed user');
     test.todo('handles removed session');
     test.todo('doesnt return session if not verified');
     test.todo('returns session');
@@ -428,6 +429,7 @@ describe('ticket/session', () => {
   });
   describe('getUserSessionInfos', () => {
     test.todo('handles expired sessions');
+    test.todo('handles session from removed user');
     test.todo('doesnt return not verified sessions');
     test.todo('returns user sessions');
     test.todo('doesnt return sessions from other users');

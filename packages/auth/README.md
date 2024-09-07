@@ -66,3 +66,7 @@ The todo list for this library/libraries
 - [ ] driver: mongoose
 - [ ] driver: redis
 - [ ] implement observability system (hooks for failed logins, success logins ticket usage, etc)
+
+### How to do?
+- Update security stamp of existing session when password gets updated
+- Force update security stamp of user, so everything gets logged out

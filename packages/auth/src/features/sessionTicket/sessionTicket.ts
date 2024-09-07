@@ -1,13 +1,15 @@
 import { ticketFeature } from 'core/features/ticket';
 import type { VerifiedTicket } from 'core/ticket';
-import type {
-  SessionEntity,
-  SessionTicketContext,
-  SessionTicketOptions,
-} from './types';
+import type { SessionTicketContext, SessionTicketOptions } from './types';
 import { defaultExpiryInSeconds } from './utils/expiry';
 import { fromAuthHeader, fromToken } from './parts/fromToken';
 import { createSession } from './parts/create';
+import {
+  getSessionInfoById,
+  getUserSessionInfos,
+  removeExpiredSessions,
+  removeSessionById,
+} from './parts/sessions';
 
 export function sessionTicket(ops: SessionTicketOptions) {
   return ticketFeature({
@@ -28,21 +30,17 @@ export function sessionTicket(ops: SessionTicketOptions) {
       };
       return {
         expose: {
-          async getUserSessionInfos(_userId: string): Promise<SessionEntity[]> {
-            // TODO implement
-            return [];
+          getUserSessionInfos(userId: string) {
+            return getUserSessionInfos(sessionContext, userId);
           },
-          async getSessionInfoById(
-            _sessionId: string,
-          ): Promise<SessionEntity | null> {
-            // TODO implement
-            return null;
+          getSessionInfoById(sessionId: string) {
+            return getSessionInfoById(sessionContext, sessionId);
           },
-          async removeExpiredSessions(): Promise<void> {
-            // TODO implement
+          removeExpiredSessions() {
+            return removeExpiredSessions(sessionContext);
           },
-          async removeSessionById(_sessionId: string): Promise<void> {
-            // TODO implement
+          removeSessionById(sessionId: string) {
+            return removeSessionById(sessionContext, sessionId);
           },
           fromAuthHeader(header: string) {
             return fromAuthHeader(sessionContext, header);
