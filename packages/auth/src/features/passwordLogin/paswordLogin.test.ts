@@ -304,7 +304,11 @@ describe('login/password', () => {
       await driver.createUser(user.id);
 
       await exposed.unsafeForceUpdatePassword(user.id, '123');
-      const result = await exposed.updatePassword(user.id, '456', '999');
+      const result = await exposed.updatePassword({
+        userId: user.id,
+        oldPassword: '456',
+        newPassword: '999',
+      });
       expect(result).toEqual(false);
 
       const dbUser = await driver.getUser(user.id);
@@ -319,7 +323,11 @@ describe('login/password', () => {
       await driver.createUser(user.id);
 
       await expect(
-        exposed.updatePassword(user.id, '456', '999'),
+        exposed.updatePassword({
+          userId: user.id,
+          oldPassword: '456',
+          newPassword: '999',
+        }),
       ).rejects.toBeInstanceOf(Error);
     });
 
@@ -328,7 +336,11 @@ describe('login/password', () => {
       await driver.createUser(user.id);
 
       await exposed.unsafeForceUpdatePassword(user.id, '123');
-      const result = await exposed.updatePassword(user.id, '123', '456');
+      const result = await exposed.updatePassword({
+        userId: user.id,
+        oldPassword: '123',
+        newPassword: '456',
+      });
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hashOne = driver.getPasswordHashFromUser(dbUser);
@@ -345,13 +357,21 @@ describe('login/password', () => {
       const dbUserBefore = await driver.getUser(user.id);
       if (!dbUserBefore) throw new Error('user not found');
 
-      const resOne = await exposed.updatePassword(user.id, '1', '456');
+      const resOne = await exposed.updatePassword({
+        userId: user.id,
+        oldPassword: '1',
+        newPassword: '456',
+      });
       expect(resOne).toEqual(false);
       const dbUserUnchanged = await driver.getUser(user.id);
       if (!dbUserUnchanged) throw new Error('user not found');
       expect(dbUserBefore.securityStamp).toEqual(dbUserUnchanged.securityStamp);
 
-      const result = await exposed.updatePassword(user.id, '123', '456');
+      const result = await exposed.updatePassword({
+        userId: user.id,
+        oldPassword: '123',
+        newPassword: '456',
+      });
       expect(result).toEqual(true);
       const dbUserAfter = await driver.getUser(user.id);
       if (!dbUserAfter) throw new Error('user not found');
@@ -363,7 +383,11 @@ describe('login/password', () => {
       await driver.createUser(user.id);
 
       await exposed.unsafeForceUpdatePassword(user.id, '123');
-      const result = await exposed.updatePassword(user.id, '123', '456');
+      const result = await exposed.updatePassword({
+        userId: user.id,
+        oldPassword: '123',
+        newPassword: '456',
+      });
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);
@@ -376,7 +400,11 @@ describe('login/password', () => {
     it('should throw if user doesnt exist', async () => {
       const { exposed } = await getPasswordFeature();
       await expect(
-        exposed.updatePassword(user.id, '123', '123'),
+        exposed.updatePassword({
+          userId: user.id,
+          oldPassword: '123',
+          newPassword: '123',
+        }),
       ).rejects.toBeInstanceOf(Error);
     });
 
@@ -400,7 +428,11 @@ describe('login/password', () => {
       hashMock.mockResolvedValueOnce('OLDHASH');
       await exposed.unsafeForceUpdatePassword(user.id, '123');
 
-      await exposed.updatePassword(user.id, '123', '456');
+      await exposed.updatePassword({
+        userId: user.id,
+        oldPassword: '123',
+        newPassword: '456',
+      });
       const dbUser = await driver.getUser(user.id);
       if (!dbUser) throw new Error('user not found');
       const hash = driver.getPasswordHashFromUser(dbUser);

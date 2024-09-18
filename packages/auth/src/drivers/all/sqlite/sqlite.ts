@@ -93,6 +93,11 @@ export function sqliteDriver<T extends SqliteDriverOptions>(
           .first();
         return session ? mapSessionEntity(session) : null;
       },
+      async updateSessionSecurityStamp(id, newStamp) {
+        await db<SessionTable>(sessionTable).where({ id }).update({
+          securityStamp: newStamp,
+        });
+      },
       async getSessionAndUpdateExpiry(id, expiry) {
         const updatedSessions = await db<SessionTable>(sessionTable)
           .where({ id })

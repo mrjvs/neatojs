@@ -416,19 +416,130 @@ describe('ticket/session', () => {
   });
 
   describe('getSessionInfoById', () => {
-    test.todo('handles expired session');
-    test.todo('handles session from removed user');
-    test.todo('handles removed session');
+    it('should get session info', async () => {
+      const { exposed, driver } = await getSessionFeature();
+      await driver.createUser(user.id, { stamp: user.securityStamp });
+      const startTicket = createVerifiedTicket({
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      const session = await exposed.createSession(startTicket);
+
+      const fetchedSession = await exposed.getSessionInfoById(session.id);
+      expect(fetchedSession).toMatchObject({
+        id: session.id,
+        userId: session.userId,
+        securityStamp: user.securityStamp,
+      });
+    });
+
+    it('should not return expired sessions', async () => {
+      const { exposed, driver } = await getSessionFeature({
+        expiryInSeconds: 0,
+      });
+      await driver.createUser(user.id, { stamp: user.securityStamp });
+      const startTicket = createVerifiedTicket({
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      const session = await exposed.createSession(startTicket);
+
+      const fetchedSession = await exposed.getSessionInfoById(session.id);
+      expect(fetchedSession).toEqual(null);
+    });
+
+    it('should not return sessions without users', async () => {
+      const { exposed } = await getSessionFeature();
+      const startTicket = createVerifiedTicket({
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      const session = await exposed.createSession(startTicket);
+
+      const fetchedSession = await exposed.getSessionInfoById(session.id);
+      expect(fetchedSession).toEqual(null);
+    });
+
+    it('should not return removed sessions', async () => {
+      const { exposed } = await getSessionFeature();
+      const startTicket = createVerifiedTicket({
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      const session = await exposed.createSession(startTicket);
+      await exposed.removeSessionById(session.id);
+
+      const fetchedSession = await exposed.getSessionInfoById(session.id);
+      expect(fetchedSession).toEqual(null);
+    });
+
+    it('should not return expired session through security stamp', async () => {
+      const { exposed, driver } = await getSessionFeature();
+      const startTicket = createVerifiedTicket({
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      const session = await exposed.createSession(startTicket);
+      await driver.setUserSecurityStamp(user.id, 'wrongstamp');
+
+      const fetchedSession = await exposed.getSessionInfoById(session.id);
+      expect(fetchedSession).toEqual(null);
+    });
+
     test.todo('doesnt return session if not verified');
-    test.todo('returns session');
   });
+
   describe('removeExpiredSessions', () => {
-    test.todo('removes expired sessions');
-    test.todo('doesnt remove valid sessions');
+    it('should remove only expired sessions', async () => {
+      const { exposed, driver } = await getSessionFeature();
+      await driver.createSession({
+        id: '1',
+        expiresAt: new Date(Date.now() - 10000),
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      await driver.createSession({
+        id: '2',
+        expiresAt: new Date(Date.now() - 1),
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+      await driver.createSession({
+        id: '3',
+        expiresAt: new Date(Date.now() + 10000),
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+
+      await exposed.removeExpiredSessions();
+
+      expect(await driver.getSession('1')).toBe(null);
+      expect(await driver.getSession('2')).toBe(null);
+      expect(await driver.getSession('3')).toBeTruthy();
+    });
   });
+
   describe('removeSessionById', () => {
-    test.todo('removes session completely');
-    test.todo('handles invalid session id');
+    it('should remove session completely', async () => {
+      const { exposed, driver } = await getSessionFeature();
+      await driver.createSession({
+        id: '1',
+        expiresAt: new Date(Date.now() + 10000),
+        securityStamp: user.securityStamp,
+        userId: user.id,
+      });
+
+      expect(await driver.getSession('1')).toBeTruthy();
+
+      await exposed.removeSessionById('1');
+
+      expect(await driver.getSession('1')).toBeFalsy();
+    });
+    it('should not throw with invalid ID', async () => {
+      const { exposed } = await getSessionFeature();
+
+      await exposed.removeSessionById('12352');
+    });
   });
   describe('getUserSessionInfos', () => {
     test.todo('handles expired sessions');

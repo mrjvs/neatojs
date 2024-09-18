@@ -3,6 +3,7 @@ export interface TicketBase<TVerified extends boolean = boolean> {
   readonly verified: TVerified;
   readonly securityStamp: string;
   needsMfa: () => this is UnverifiedTicket;
+  updateSecurityStamp: (newStamp: string) => Promise<void>;
 }
 
 export type UnverifiedTicket = TicketBase<false>;
@@ -14,6 +15,7 @@ export type Ticket = UnverifiedTicket | VerifiedTicket;
 export type TicketCreateOptions = {
   userId: string;
   securityStamp: string;
+  updateSecurityStamp?: (newStamp: string) => Promise<void>;
 };
 
 function createTicket<TVerified extends boolean>(
@@ -28,6 +30,10 @@ function createTicket<TVerified extends boolean>(
     needsMfa(): this is UnverifiedTicket {
       return !this.verified;
     }
+    async updateSecurityStamp(newStamp: string) {
+      if (!ops.updateSecurityStamp) return;
+      return ops.updateSecurityStamp(newStamp);
+    }
   }
   return new Ticket();
 }
@@ -37,6 +43,7 @@ export function createVerifiedTicket(ops: TicketCreateOptions): VerifiedTicket {
     {
       userId: ops.userId,
       securityStamp: ops.securityStamp,
+      updateSecurityStamp: ops.updateSecurityStamp,
     },
     true,
   );
@@ -47,6 +54,7 @@ export function verifyTicket(ops: UnverifiedTicket): VerifiedTicket {
     {
       userId: ops.userId,
       securityStamp: ops.securityStamp,
+      updateSecurityStamp: ops.updateSecurityStamp,
     },
     true,
   );
@@ -59,6 +67,7 @@ export function createUnverifiedTicket(
     {
       userId: ops.userId,
       securityStamp: ops.securityStamp,
+      updateSecurityStamp: ops.updateSecurityStamp,
     },
     false,
   );

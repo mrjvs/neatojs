@@ -234,6 +234,24 @@ export function testDriver(
       expect(sessionsA.sort()).toStrictEqual([sessionA.id, sessionB.id].sort());
       expect(sessionsB.sort()).toStrictEqual([sessionC.id].sort());
     });
+
+    it('should update session security stamp', async () => {
+      const sessionA = await driver.createSession({
+        userId: userA,
+        expiresAt: new Date(),
+        id: randomUUID(),
+        securityStamp: 'stamp',
+      });
+
+      const sessionABefore = await driver.getSession(sessionA.id);
+      await driver.updateSessionSecurityStamp(sessionA.id, 'newstamp');
+      const sessionAAfter = await driver.getSession(sessionA.id);
+
+      expect(sessionABefore?.securityStamp).toBe('stamp');
+      expect(sessionAAfter?.securityStamp).toBe('newstamp');
+
+      await driver.updateSessionSecurityStamp('wrongid', 'newstamp');
+    });
   });
 
   describe('password', async () => {

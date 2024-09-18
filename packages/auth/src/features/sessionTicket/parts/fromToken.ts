@@ -39,5 +39,8 @@ export async function fromToken(
   return createVerifiedTicket({
     userId: session.userId,
     securityStamp: session.securityStamp, // TODO add session id to ticket
+    async updateSecurityStamp(newStamp) {
+      await ctx.driver.updateSessionSecurityStamp(session.id, newStamp);
+    },
   });
 }

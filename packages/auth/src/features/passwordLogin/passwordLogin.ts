@@ -3,6 +3,7 @@ import { loginFeature } from 'core/features/login';
 import * as hashing from './utils/hashing';
 import type { PasswordLoginContext, PasswordLoginOptions } from './types';
 import { verifyPassword } from './parts/verifyPassword';
+import type { UpdatePasswordOptions } from './parts/updatePassword';
 import {
   unsafeForceUpdatePassword,
   updatePassword,
@@ -12,7 +13,6 @@ import { login } from './parts/login';
 
 // TODO password reset links
 // TODO email verification - seperate feature
-// TODO update the current session with new security stamp after updating password
 export function passwordLogin(ops: PasswordLoginOptions) {
   return loginFeature({
     id: 'password',
@@ -36,17 +36,8 @@ export function passwordLogin(ops: PasswordLoginOptions) {
               newPassword,
             );
           },
-          async updatePassword(
-            userId: string,
-            oldPassword: string,
-            newPassword: string,
-          ) {
-            return updatePassword(
-              passwordContext,
-              userId,
-              oldPassword,
-              newPassword,
-            );
+          async updatePassword(options: UpdatePasswordOptions) {
+            return updatePassword(passwordContext, options);
           },
           async login(input: PasswordLoginInput) {
             return login(passwordContext, input);

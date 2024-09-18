@@ -39,6 +39,9 @@ function testMfaFeature() {
         isEnabledForUser(_user) {
           return true;
         },
+        getMfaType() {
+          return 'passkey';
+        },
       },
       expose: {
         testMfa() {

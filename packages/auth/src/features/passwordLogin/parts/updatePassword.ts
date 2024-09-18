@@ -1,4 +1,5 @@
 import { generateSecurityStamp } from 'core/generators';
+import type { Ticket } from 'core/ticket';
 import type { PasswordLoginContext } from '../types';
 
 export async function unsafeForceUpdatePassword(
@@ -15,13 +16,18 @@ export async function unsafeForceUpdatePassword(
   );
 }
 
+export type UpdatePasswordOptions = {
+  ticket?: Ticket;
+  userId: string;
+  oldPassword: string;
+  newPassword: string;
+};
+
 export async function updatePassword(
   ctx: PasswordLoginContext,
-  userId: string,
-  oldPassword: string,
-  newPassword: string,
+  ops: UpdatePasswordOptions,
 ): Promise<boolean> {
-  const user = await ctx.driver.getUser(userId);
+  const user = await ctx.driver.getUser(ops.userId);
   if (!user) throw new Error('Cannot find user');
 
   const passwordHash = ctx.driver.getPasswordHashFromUser(user);
@@ -29,14 +35,18 @@ export async function updatePassword(
   const validPassword = await ctx.verifyPassword(
     user as any,
     passwordHash,
-    oldPassword,
+    ops.oldPassword,
   );
   if (!validPassword.success) return false;
 
-  await ctx.driver.setUserSecurityStamp(user.id, generateSecurityStamp());
+  const newSecurityStamp = generateSecurityStamp();
+  await ctx.driver.setUserSecurityStamp(user.id, newSecurityStamp);
   await ctx.driver.savePasswordHash(
     user.id,
-    await ctx.hashPassword(user as any, newPassword),
+    await ctx.hashPassword(user as any, ops.newPassword),
   );
+
+  await ops.ticket?.updateSecurityStamp(newSecurityStamp);
+
   return true;
 }

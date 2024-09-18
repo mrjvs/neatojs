@@ -24,6 +24,7 @@ export type SessionDriverTrait = {
   removeSession: (id: string) => Promise<void>;
   removeExpiredSessions: () => Promise<void>;
   createSession: (data: SessionEntityCreate) => Promise<SessionEntity>;
+  updateSessionSecurityStamp: (id: string, newStamp: string) => Promise<void>;
   getSession: (id: string) => Promise<SessionEntity | null>;
   getSessionAndUpdateExpiry: (
     id: string,
