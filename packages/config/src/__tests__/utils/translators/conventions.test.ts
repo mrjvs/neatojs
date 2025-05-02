@@ -3,7 +3,7 @@ import {
   pascalCaseNaming,
   screamingSnakeCaseNaming,
   snakeCaseNaming,
-} from '../../../utils/translators/conventions';
+} from '../../../old/utils/translators/conventions';
 
 describe('naming convention translators', () => {
   test('pascalCaseNaming()', () => {

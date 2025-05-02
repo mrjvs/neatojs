@@ -1,5 +1,5 @@
 import { setEnv } from '__tests__/test';
-import { getKeysFromEnvironment } from '../../loaders/environment';
+import { getKeysFromEnvironment } from '../../old/loaders/environment';
 
 describe('Environment loader', () => {
   beforeAll(() => {

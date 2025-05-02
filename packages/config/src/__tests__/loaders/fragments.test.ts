@@ -1,8 +1,8 @@
-import type { FragmentLoader } from '../../loaders/fragment';
+import type { FragmentLoader } from '../../old/loaders/fragment';
 import {
   expandFragments,
   extractFragmentDefinitionFromKeys,
-} from '../../loaders/fragment';
+} from '../../old/loaders/fragment';
 
 describe('fragment loader', () => {
   test('no fragments', () => {

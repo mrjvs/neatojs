@@ -1,6 +1,6 @@
 import * as PathMod from 'node:path';
 import * as fs from 'node:fs';
-import { getKeysFromDir } from '../../loaders/dir';
+import { getKeysFromDir } from '../../old/loaders/dir';
 
 vi.mock('fs', (originalModule) => {
   let files: [string, string][] = [];

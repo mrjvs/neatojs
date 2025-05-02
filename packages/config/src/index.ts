@@ -1,5 +1,5 @@
 // methods
-export { createConfigLoader } from 'builder/builder';
+export { createConfigLoader } from 'old/builder/builder';
 
 // name conventions
 export {
@@ -7,7 +7,7 @@ export {
   pascalCaseNaming,
   screamingSnakeCaseNaming,
   snakeCaseNaming,
-} from 'utils/translators/conventions';
+} from 'old/utils/translators/conventions';
 
 // errors
 export {
@@ -16,15 +16,15 @@ export {
   FileLoadError,
   LoaderInputError,
   type Validation,
-} from 'utils/errors';
+} from 'old/utils/errors';
 
 // utils
-export { zodCoercedBoolean } from 'utils/zod-types';
+export { zodCoercedBoolean } from 'old/utils/zod-types';
 
 // types
-export type { ConfigBuilder } from 'builder/base';
-export type { Fragment } from 'loaders/fragment';
-export type { ParserTypesType, FileOptions } from 'loaders/file';
-export type { DirOptions } from 'loaders/dir';
-export type { NamingConventionFunc } from 'utils/translators/conventions';
-export type { ConfigLoaderOptions } from 'builder/builder';
+export type { ConfigBuilder } from 'old/builder/base';
+export type { Fragment } from 'old/loaders/fragment';
+export type { ParserTypesType, FileOptions } from 'old/loaders/file';
+export type { DirOptions } from 'old/loaders/dir';
+export type { NamingConventionFunc } from 'old/utils/translators/conventions';
+export type { ConfigLoaderOptions } from 'old/builder/builder';

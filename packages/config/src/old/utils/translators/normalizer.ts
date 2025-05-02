@@ -1,4 +1,4 @@
-import type { ConfigKeys } from 'loaders/base';
+import type { ConfigKeys } from 'old/loaders/base';
 
 /**
  * normalize key segment:

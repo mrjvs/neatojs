@@ -3,7 +3,7 @@ import { createConfigLoader } from '../..';
 import {
   camelCaseNaming,
   pascalCaseNaming,
-} from '../../utils/translators/conventions';
+} from '../../old/utils/translators/conventions';
 
 describe('integration tests - basic', () => {
   test('load standard config', () => {

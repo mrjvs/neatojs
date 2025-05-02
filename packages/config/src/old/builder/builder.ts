@@ -1,27 +1,27 @@
 import type { AnyZodObject, z } from 'zod';
-import type { ObjectSchema } from 'utils/joi-types';
-import type { ConfigBuilder, ConfigLoader } from 'builder/base';
-import { loadLoaders } from 'builder/base';
-import { populateLoaderFromCLI } from 'loaders/cli';
-import type { DirOptions } from 'loaders/dir';
-import { populateLoaderFromDir } from 'loaders/dir';
-import { populateLoaderFromEnvironment } from 'loaders/environment';
-import type { FileOptions } from 'loaders/file';
-import { populateLoaderFromFile } from 'loaders/file';
-import type { Fragment } from 'loaders/fragment';
+import type { ObjectSchema } from 'old/utils/joi-types';
+import type { ConfigBuilder, ConfigLoader } from 'old/builder/base';
+import { loadLoaders } from 'old/builder/base';
+import { populateLoaderFromCLI } from 'old/loaders/cli';
+import type { DirOptions } from 'old/loaders/dir';
+import { populateLoaderFromDir } from 'old/loaders/dir';
+import { populateLoaderFromEnvironment } from 'old/loaders/environment';
+import type { FileOptions } from 'old/loaders/file';
+import { populateLoaderFromFile } from 'old/loaders/file';
+import type { Fragment } from 'old/loaders/fragment';
 import {
   expandFragments,
   extractFragmentDefinitionFromKeys,
   populateFragmentLoaderFromFragment,
   populateFragmentLoaderWithKey,
-} from 'loaders/fragment';
-import { buildObjectFromKeys } from 'utils/build';
-import { deepFreeze } from 'utils/freeze';
-import type { NamingConventionFunc } from 'utils/translators/conventions';
-import { camelCaseNaming } from 'utils/translators/conventions';
-import { useTranslatorMap } from 'utils/translators/map';
-import { normalizeConfigKeys } from 'utils/translators/normalizer';
-import { NeatConfigError } from 'utils/errors';
+} from 'old/loaders/fragment';
+import { buildObjectFromKeys } from 'old/utils/build';
+import { deepFreeze } from 'old/utils/freeze';
+import type { NamingConventionFunc } from 'old/utils/translators/conventions';
+import { camelCaseNaming } from 'old/utils/translators/conventions';
+import { useTranslatorMap } from 'old/utils/translators/map';
+import { normalizeConfigKeys } from 'old/utils/translators/normalizer';
+import { NeatConfigError } from 'old/utils/errors';
 import type { ConfigSchema } from './schema';
 import {
   ConfigSchemaType,

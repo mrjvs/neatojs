@@ -1,4 +1,4 @@
-import { buildObjectFromKeys } from '../../utils/build';
+import { buildObjectFromKeys } from '../../old/utils/build';
 
 describe('buildObjectFromKeys()', () => {
   test('Basic usage', () => {

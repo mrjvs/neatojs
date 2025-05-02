@@ -1,4 +1,4 @@
-import { getKeysFromCLI } from '../../loaders/cli';
+import { getKeysFromCLI } from '../../old/loaders/cli';
 
 describe('cli loader', () => {
   function setupArgv() {

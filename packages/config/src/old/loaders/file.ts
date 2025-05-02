@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
-import type { ConfigLoader } from 'builder/base';
-import type { ConfigKeys } from 'loaders/base';
-import { LoaderInputError } from 'utils/errors';
+import type { ConfigLoader } from 'old/builder/base';
+import type { ConfigKeys } from 'old/loaders/base';
+import { LoaderInputError } from 'old/utils/errors';
 import { loadKeysFromJsonFileData } from './files/json';
 import { loadKeysFromEnvFileData } from './files/env';
 

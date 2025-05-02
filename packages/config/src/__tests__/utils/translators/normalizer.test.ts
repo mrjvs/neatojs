@@ -2,7 +2,7 @@ import {
   normalizeConfigKeys,
   normalizeKey,
   normalizeKeys,
-} from '../../../utils/translators/normalizer';
+} from '../../../old/utils/translators/normalizer';
 
 describe('normalizeKeys()', () => {
   test('normalize single key', () => {

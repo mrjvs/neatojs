@@ -1,4 +1,4 @@
-import { zodCoercedBoolean } from '../../utils/zod-types';
+import { zodCoercedBoolean } from '../../old/utils/zod-types';
 
 describe('zodCoercedBoolean()', () => {
   function check(val: any) {

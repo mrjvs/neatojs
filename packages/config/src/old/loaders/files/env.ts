@@ -1,5 +1,5 @@
 import { parse } from 'dotenv';
-import type { ConfigKeys } from 'loaders/base';
+import type { ConfigKeys } from 'old/loaders/base';
 
 export function loadKeysFromEnvFileData(
   data: string,
