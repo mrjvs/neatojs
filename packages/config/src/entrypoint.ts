@@ -1,22 +1,9 @@
-import type Joi from 'joi';
-import type { ZodAny } from 'zod';
 import type { NeatConfigError } from 'old/utils/errors';
 import type { NamingConventionFunc } from 'old/utils/translators/conventions';
-
-export type KeyCollection = Record<string, string>;
-
-export type KeyLoader = {
-  name: string;
-  load: () => KeyCollection;
-};
-
-export type ZodSchema = ZodAny;
-export type JoiSchema = Joi.Schema;
-export type CustomSchema<T> = {
-  __config: 'schema';
-  validate: (keys: KeyCollection) => T;
-};
-export type ConfigSchema<T> = CustomSchema<T> | ZodSchema | JoiSchema;
+import type { KeyCollection, KeyLoader } from 'loading/types';
+import { deepFreeze } from 'freeze';
+import { makeSchemaFromConfig } from 'schemas/handle';
+import type { ConfigSchema } from 'schemas/types';
 
 export type ConfigAssertionType =
   | 'throw'
@@ -35,7 +22,30 @@ export type ConfigCreatorOptions<T> = {
   loaders: KeyLoader[];
 };
 
-export function createConfig<T>(_ops: ConfigCreatorOptions<T>): T {
-  // TODO implement the logic to load the config
-  return {} as T;
+export function createConfig<T>(ops: ConfigCreatorOptions<T>): T {
+  const schema = ops.schema ? makeSchemaFromConfig(ops.schema) : null;
+  const _keyMap = schema?.extract() ?? [];
+
+  // loading keys
+  const loadedKeys: KeyCollection[] = [];
+  const ctx = {
+    envPrefix: ops.envPrefix ?? null,
+  };
+  ops.loaders.forEach((loader) => {
+    loadedKeys.push(loader.load(ctx));
+  });
+  const keys = loadedKeys.flat();
+
+  // build
+  let output = {} as T; // TODO build object using keys
+  // TODO use keyMap to transform keys
+  // TODO use presets
+  // TODO naming convention
+
+  // validation
+  if (schema) output = schema?.validate({ keys, object: output as any });
+
+  // post processing
+  if (!ops.unfreeze) output = deepFreeze(output) as T; // TODO proper type
+  return output;
 }
