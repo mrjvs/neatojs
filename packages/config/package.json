@@ -1,6 +1,6 @@
 {
   "name": "@neato/config",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Cloud-native type-safe configuration",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -8,9 +8,19 @@
   "files": [
     "dist/**"
   ],
+  "type": "module",
+  "homepage": "https://neatojs.com/docs/config",
+  "repository": "https://github.com/mrjvs/neatojs",
+  "bugs": {
+    "url": "https://github.com/mrjvs/neatojs/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "keywords": [
     "config"
   ],
+  "license": "MIT",
   "exports": {
     ".": {
       "import": {
@@ -28,7 +38,6 @@
       "@repo/eslint-config"
     ],
     "ignorePatterns": [
-      "examples",
       "dist"
     ]
   },
@@ -38,8 +47,8 @@
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --root=src",
+    "test:watch": "vitest --root=src",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
