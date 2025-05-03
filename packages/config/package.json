@@ -43,7 +43,7 @@
   },
   "prettier": "@repo/prettier-config",
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "build": "tsup src/index.ts --format esm,cjs --dts && tsc --noEmit",
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
