@@ -1,17 +1,37 @@
 # Changelog
 
+## V4.0.0 - Simplified configuration
+<Caution>
+**BREAKING CHANGES:**
+
+Configuration is no longer a method chain but a simple object.
+
+Env file loaders now use a global prefix option.
+</Caution>
+- You can now make custom schema handlers. [Read more about it here](../guide/plugins.mdx).
+- You can now make custom configuration lodaers. [Read more about it here](../guide/plugins.mdx).
+- Error handling can now be done with a custom error handler.
+- Fragments are now named Presets
+<Note>
+There is an [upgrade guide](./upgrade-guide.mdx) available to help you migrate from the v3 configuration to v4.
+</Note>
+
 ## V3.0.0 - Error handling
 <Caution>
-- **BREAKING CHANGE:** Errors now have proper types, does not throw but uses process.exit.
-- **BREAKING CHANGE:** Env files now handle quotes as you would expect. Using `dotenv` for parsing.
-- **BREAKING CHANGE:** Frozen configs are now default, To opt out, you can do `.unfreeze()`. [Read more about freezing here](../api/formatting.mdx).
+**BREAKING CHANGES:**
+
+Errors now have proper types, does not throw but uses process.exit.
+
+Env files now handle quotes as you would expect. Using `dotenv` for parsing.
+
+Frozen configs are now default, To opt out, you can do `.unfreeze()`. [Read more about freezing here](../api/formatting.mdx).
 </Caution>
 - Errors are now logged with pretty colors and will exit the process by default. [Read more about errors here](../api/errors.mdx).
 - A new zod helper for easier boolean schemas: `zodCoercedBoolean`. [Read more about it here](../api/utils.mdx).
 
 ## V2.0.0 - File loader prefixes & freezing
 <Caution>
-- **BREAKING CHANGE:** file loaders now take a options argument
+**BREAKING CHANGE:** file loaders now take a options argument
 </Caution>
 - Make your configuration readonly with `.freeze()`. [Read more about freezing here](../api/formatting.mdx).
 - Strip prefixes from `.env` files. [Read more about file loader prefixes here](../api/schemas.mdx).
@@ -19,7 +39,7 @@
 ## V1.1.0 - Documentation & zod schemas
 - Schema validation with zod: `.addZodSchema(schema)` (supports type inference)
 <Note>
-- Documentation is now available (you're current reading it)
+Documentation is now available (you're current reading it)
 </Note>
 
 ## V1.0.0 - Initial release

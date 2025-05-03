@@ -1,0 +1,75 @@
+# Plugins
+
+The library supports extending its functionality with a few types of plugins.
+
+## Custom loaders
+
+Although the library comes with a few loaders out of the box, you can create your own loaders to load configuration from any source you want.
+
+A loader is an object with a `name` field and a `load` method that returns that returns a list of configuration keys with their value.
+
+Here is an example of a custom loader that loads configuration from a TOML file:
+
+```ts
+import toml from 'toml';
+import type { KeyCollection, KeyLoader, KeyLoaderContext } from '@neato/config';
+
+export function tomlLoader(filePath: string): KeyLoader {
+  return {
+    name: 'toml', // identifies the loader
+    load(ctx: KeyLoaderContext) {
+      const tomlString = fs.readFileSync(filePath, 'utf-8');
+      const config = toml.parse(tomlString);
+
+      // this doesn't support TOML nested objects, only top level keys
+      const keys: KeyCollection = Object.entries(config).map(([key, value]) => ({
+        key,
+        value,
+      }));
+      return keys;
+    },
+  };
+}
+```
+
+## Custom schemas
+
+You can also create custom schemas to validate your configuration.
+
+To make a custom schema, you need to implement the `SchemaTransformer` type.
+- Implement the `extract` method to extract keys from your schema, those keys are used to build the final object with correct naming conventions.
+- Implement the `validate` method to validate the value of the final object and optionally transform it.
+
+Here is some psuedo code for a custom schema:
+
+```ts
+import { Type, type Static } from '@sinclair/typebox'
+import type { SchemaTransformer, SchemaTransformerContext } from '@neato/config';
+import { ValidationError } from '@neato/config';
+
+export function typeboxSchema<T>(schema: T): SchemaTransformer<Static<T>>{
+  return {
+    extract() {
+      // TODO implement key extraction from schema
+      return [{
+        normalizedKey: 'SERVER__PORT', // internal normalized key
+        originalKey: 'server__port', // key for the output object. Still uses double underscore for seperator
+      }]
+    }
+    validate(ctx: SchemaTransformerContext) {
+      const output = Value.Parse(schema, ctx.object);
+
+      // TODO extract errors from the output
+      if (!output) throw new ValidationError([{
+        message: 'Invalid value',
+        path: '$'
+      }]);
+
+      return output;
+    },
+  };
+}
+```
+
+This implementation isn't complete. To see a complete implementation, check out an existing schema implementation in the source code.
+

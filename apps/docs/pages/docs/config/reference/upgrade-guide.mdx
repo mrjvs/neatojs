@@ -1,0 +1,46 @@
+# Upgrade guide
+
+## From V3 to V4
+
+First, update the entrypoint of your configuration to use the new `createConfig` function. This is a breaking change, as the previous method chain is no longer supported.
+
+```ts
+import { createConfig, loaders, naming } from 'config-schema';
+import { z } from 'zod';
+
+const config = createConfig({
+  assert: ..., // if you use a custom error handler, add it here
+  envPrefix: ..., // If applicable, add the prefix you specified in `.addFromEnvironment()`
+  loaders: [
+    // all these loaders have the same options as before
+    loaders.environment(), // Add this line if you use `.addFromEnvironment()`. Prefix has been moved to `envPrefix`
+    loaders.cli(), // Add this line if you use `.addFromCLI()`
+    loaders.file('file.txt'), // Add this line if you use `.addFromFile()`
+    loaders.dir('/path/here'), // Add this line if you use `.addFromDirectory()`
+  ],
+  namingConvention: naming.camelCase, // If you set a naming convention, add it here. Use the `naming` import to access the available conventions.
+  schema: ... // Add the schema you specified in `.addZodSchema()` or `.addJoiSchema()`
+});
+```
+
+<Caution>
+Environment variables and file loaders no longer have a `prefix` option. Instead, you can set the prefix on a global level with `envPrefix`.
+</Caution>
+
+Next up we can set the presets. Presets are the new name for fragments.
+
+```ts
+import { createConfig } from 'config-schema';
+
+const config = createConfig({
+  loaders: [
+   ...
+  ],
+  presetKey: ..., // Replacement for `.setFragmentKey()`, Now defaults to `configPresets`
+  presets: {
+    // Add all your fragments from your `.addConfigFragments(fragments)` and `addConfigFragment(name, fragment)` calls here.
+    presetOne: {...}
+    presetTwo: {...}
+  }
+});
+```
