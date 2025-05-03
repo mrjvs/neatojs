@@ -5,7 +5,7 @@ import type { ConfigSchema } from 'schemas/types';
 import { useTranslatorMap } from 'keys/mapping';
 import { buildObjectFromKeys } from 'keys/build';
 import { normalizeKeys } from 'keys/normalize';
-import type { NamingConventionFunc } from 'utils/conventions';
+import { naming, type NamingConventionFunc } from 'utils/conventions';
 import { NeatConfigError } from 'utils/errors';
 
 export type ConfigAssertionType =
@@ -46,7 +46,7 @@ function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
   const translatedKeys = useTranslatorMap(
     translationMap,
     keys,
-    ops.namingConvention ?? null,
+    ops.namingConvention ?? naming.camelCase,
   );
   let output: any = buildObjectFromKeys(translatedKeys);
 
