@@ -134,13 +134,13 @@ const config = createConfig({
 });
 ```
 
-## `loaders.cli(options)`
+## `loaders.cli(options?)`
 
-This loader loads configuration from the command line arguments. You must set a prefix for it to work.
+This loader loads configuration from the command line arguments. You can optionally set a prefix to only load arguments that start with the supplied prefix.
 
 It supports both `--key value` and `--key=value` formats.
 
-The prefix is stripped from the key before it is processed. So with a prefix of `app-`, the CLI argument `--app-server__port=8080` will be parsed as `server.port=8080`.
+If set, prefix is stripped from the key before it is processed. So with a prefix of `app-`, the CLI argument `--app-server__port=8080` will be parsed as `server.port=8080`.
 
 ```ts title="Example"
 const config = createConfig({

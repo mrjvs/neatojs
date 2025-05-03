@@ -2,7 +2,7 @@ import type { KeyCollection, KeyLoader } from 'loading/types';
 import { LoaderInputError } from 'utils/errors';
 
 export type CliLoaderOptions = {
-  prefix: string;
+  prefix?: string;
 };
 
 export function getKeysFromCLI(prefix: string): KeyCollection {
@@ -53,11 +53,11 @@ export function getKeysFromCLI(prefix: string): KeyCollection {
   return keys;
 }
 
-export function cliLoader(ops: CliLoaderOptions): KeyLoader {
+export function cliLoader(ops?: CliLoaderOptions): KeyLoader {
   return {
     name: 'cli',
     load(_ctx) {
-      return getKeysFromCLI(ops.prefix);
+      return getKeysFromCLI(ops?.prefix ?? '');
     },
   };
 }
