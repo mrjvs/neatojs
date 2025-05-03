@@ -1,10 +1,8 @@
 import * as fs from 'node:fs';
+import { loaderCtx, runKeyLoader } from '__tests__/test';
+import { ParserTypes } from 'loading/loaders/file';
 import type { ConfigLoader } from '../../builder/base';
-import {
-  getKeysFromFiles,
-  populateLoaderFromFile,
-  ParserTypes,
-} from '../../loaders/file';
+import { loaders } from '../..';
 
 vi.mock('fs');
 
@@ -71,27 +69,11 @@ describe('file loader - json', () => {
       test2: true,
       test3: 42,
     });
-    checkIfArrayHas(
-      getKeysFromFiles([{ path: 'hi', type: ParserTypes.JSON }]),
-      [
-        { key: 'test1', value: 'abc' },
-        { key: 'test2', value: 'true' },
-        { key: 'test3', value: '42' },
-      ],
-    );
-  });
-
-  test('prefixes', () => {
-    mockJsonFile({
-      test1: 'abc',
-      test2: true,
-      test3: 42,
-    });
-    expect(() =>
-      getKeysFromFiles([
-        { path: 'hi', type: ParserTypes.JSON, prefix: 'TEST' },
-      ]),
-    ).toThrowError();
+    checkIfArrayHas(runKeyLoader(loaders.file('hi', { type: 'JSON' })), [
+      { key: 'test1', value: 'abc' },
+      { key: 'test2', value: 'true' },
+      { key: 'test3', value: '42' },
+    ]);
   });
 
   test('deep key loading', () => {
@@ -104,14 +86,11 @@ describe('file loader - json', () => {
         l2v2: 'ghi',
       },
     });
-    checkIfArrayHas(
-      getKeysFromFiles([{ path: 'hi', type: ParserTypes.JSON }]),
-      [
-        { key: 'test1', value: 'abc' },
-        { key: 'l1__l2__l3', value: 'def' },
-        { key: 'l1__l2v2', value: 'ghi' },
-      ],
-    );
+    checkIfArrayHas(runKeyLoader(loaders.file('hi', { type: 'JSON' })), [
+      { key: 'test1', value: 'abc' },
+      { key: 'l1__l2__l3', value: 'def' },
+      { key: 'l1__l2v2', value: 'ghi' },
+    ]);
   });
 });
 
@@ -122,7 +101,7 @@ describe('file loader - env', () => {
 
   test('simple key loading', () => {
     mockEnvFile(`TEST=abc`);
-    checkIfArrayHas(getKeysFromFiles([{ path: 'hi', type: ParserTypes.ENV }]), [
+    checkIfArrayHas(runKeyLoader(loaders.file('hi', { type: 'ENV' })), [
       { key: 'TEST', value: 'abc' },
     ]);
   });
@@ -133,14 +112,14 @@ describe('file loader - env', () => {
       A_TEST=def
     `);
     checkIfArrayHas(
-      getKeysFromFiles([{ path: 'hi', type: ParserTypes.ENV, prefix: 'A_' }]),
+      runKeyLoader(loaders.file('hi', { type: 'ENV' }), loaderCtx('A_')),
       [{ key: 'TEST', value: 'def' }],
     );
   });
 
   test('newlines', () => {
     mockEnvFile(`TEST=abc\r\n\r\nTEST2=2\nTEST3=3`);
-    checkIfArrayHas(getKeysFromFiles([{ path: 'hi', type: ParserTypes.ENV }]), [
+    checkIfArrayHas(runKeyLoader(loaders.file('hi', { type: 'ENV' })), [
       { key: 'TEST', value: 'abc' },
       { key: 'TEST2', value: '2' },
       { key: 'TEST3', value: '3' },
@@ -156,7 +135,7 @@ describe('file loader - env', () => {
       TEST3=3#another comment
     `,
     );
-    checkIfArrayHas(getKeysFromFiles([{ path: 'hi', type: ParserTypes.ENV }]), [
+    checkIfArrayHas(runKeyLoader(loaders.file('hi', { type: 'ENV' })), [
       { key: 'TEST', value: 'abc' },
       { key: 'TEST2', value: '2' },
       { key: 'TEST3', value: '3' },
@@ -169,7 +148,7 @@ describe('file loader - env', () => {
       TEST2='2'
     `,
     );
-    checkIfArrayHas(getKeysFromFiles([{ path: 'hi', type: ParserTypes.ENV }]), [
+    checkIfArrayHas(runKeyLoader(loaders.file('hi', { type: 'ENV' })), [
       { key: 'TEST', value: 'abc' },
       { key: 'TEST2', value: '2' },
     ]);

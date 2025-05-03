@@ -1,4 +1,5 @@
-import { getKeysFromCLI } from '../../old/loaders/cli';
+import { runKeyLoader } from '__tests__/test';
+import { loaders } from '../..';
 
 describe('cli loader', () => {
   function setupArgv() {
@@ -29,7 +30,7 @@ describe('cli loader', () => {
 
   test('key parsing without prefix', () => {
     setupArgv();
-    checkIfArrayHas(getKeysFromCLI([{ prefix: '' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.cli({ prefix: '' })), [
       { key: 'conf-test1', value: 'abc' },
       { key: 'conf-test2', value: 'def' },
       { key: 'conf-test3', value: 'ghi' },
@@ -39,26 +40,11 @@ describe('cli loader', () => {
 
   test('key parsing with prefix', () => {
     setupArgv();
-    checkIfArrayHas(getKeysFromCLI([{ prefix: 'conf-test' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.cli({ prefix: 'conf-test' })), [
       { key: '1', value: 'abc' },
       { key: '2', value: 'def' },
       { key: '3', value: 'ghi' },
     ]);
-  });
-
-  test('loading multiple prefixes', () => {
-    setupArgv();
-    checkIfArrayHas(
-      getKeysFromCLI([{ prefix: 'conf-' }, { prefix: 'conf-test' }]),
-      [
-        { key: 'test1', value: 'abc' },
-        { key: 'test2', value: 'def' },
-        { key: 'test3', value: 'ghi' },
-        { key: '1', value: 'abc' },
-        { key: '2', value: 'def' },
-        { key: '3', value: 'ghi' },
-      ],
-    );
   });
 
   test('unbalanced arguments', () => {
@@ -74,11 +60,11 @@ describe('cli loader', () => {
       'another-arg',
       '--conf-test5',
     ];
-    expect(() => getKeysFromCLI([{ prefix: 'conf-' }])).toThrowError(); // TODO better errors
+    expect(() => runKeyLoader(loaders.cli({ prefix: 'conf-' }))).toThrowError(); // TODO better errors
   });
 
   test('no values found', () => {
     setupArgv();
-    expect(getKeysFromCLI([{ prefix: 'hello-' }])).toStrictEqual([]);
+    expect(runKeyLoader(loaders.cli({ prefix: 'hello-' }))).toStrictEqual([]);
   });
 });
