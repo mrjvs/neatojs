@@ -22,7 +22,7 @@ export type ConfigAssertionType =
 
 export type ConfigCreatorOptions<T> = {
   envPrefix?: string;
-  unfreeze?: boolean;
+  freeze?: boolean;
   assert?: ConfigAssertionType;
   presetKey?: string;
   presets?: Record<string, Preset>;
@@ -33,7 +33,7 @@ export type ConfigCreatorOptions<T> = {
 
 export type NormalizedConfigCreatorOptions<T> = {
   envPrefix: string | null;
-  unfreeze: boolean;
+  freeze: boolean;
   assert: ConfigAssertionType;
   presetKey: string;
   presets: Record<string, Preset> | null;
@@ -47,7 +47,7 @@ function normalizeConfig<T>(
 ): NormalizedConfigCreatorOptions<T> {
   return {
     envPrefix: ops.envPrefix ?? null,
-    unfreeze: ops.unfreeze ?? false,
+    freeze: ops.unfreeze ?? true,
     assert: ops.assert ?? 'pretty',
     presetKey: normalizeKey(ops.presetKey ?? 'configPresets'),
     presets: ops.presets ? normalizePresetNames(ops.presets) : null,
@@ -90,7 +90,7 @@ function buildConfig<T>(ops: NormalizedConfigCreatorOptions<T>) {
   if (schema) output = schema?.validate({ keys, object: output });
 
   // post processing
-  if (!ops.unfreeze) output = deepFreeze(output);
+  if (!ops.freeze) output = deepFreeze(output);
 
   return output as T;
 }

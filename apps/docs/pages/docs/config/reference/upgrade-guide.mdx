@@ -18,6 +18,7 @@ const config = createConfig({
     loaders.file('file.txt'), // Add this line if you use `.addFromFile()`
     loaders.dir('/path/here'), // Add this line if you use `.addFromDirectory()`
   ],
+  freeze: true, // Set this to false if you used `.unfreeze()`
   namingConvention: naming.camelCase, // If you set a naming convention, add it here. Use the `naming` import to access the available conventions.
   schema: ... // Add the schema you specified in `.addZodSchema()` or `.addJoiSchema()`
 });
