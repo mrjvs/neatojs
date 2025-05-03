@@ -23,7 +23,7 @@ function recursiveSearchForKeys(
   return out;
 }
 
-export function isZodSchema(schema: any): schema is ZodObjectDef {
+export function isZodSchema(schema: any): schema is AnyZodObject {
   return (
     typeof schema.safeParse === 'function' &&
     schema._def &&

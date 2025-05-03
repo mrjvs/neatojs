@@ -1,8 +1,8 @@
 import type Joi from 'joi';
-import type { ZodAnyDef } from 'zod';
+import type { AnyZodObject } from 'zod';
 import type { KeyCollection } from 'loading/types';
 
-export type ZodSchema = ZodAnyDef;
+export type ZodSchema = AnyZodObject;
 export type JoiSchema = Joi.Schema;
 
 export type KeyTransformationMap = {
