@@ -83,6 +83,12 @@ describe('integration tests - type inference', () => {
       }),
       freeze: true,
     });
+    const frozenConf4 = createConfig({
+      loaders: [],
+      schema: z.object({
+        hi: z.string(),
+      }),
+    });
     expectTypeOf(frozenConf).toEqualTypeOf<DeepReadonly<{
       hi: string;
     }>>();
@@ -90,6 +96,9 @@ describe('integration tests - type inference', () => {
       hi: string;
     }>>();
     expectTypeOf(frozenConf3).toEqualTypeOf<DeepReadonly<{
+      hi: string;
+    }>>();
+    expectTypeOf(frozenConf4).toEqualTypeOf<DeepReadonly<{
       hi: string;
     }>>();
   });
