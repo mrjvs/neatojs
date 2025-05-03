@@ -7,8 +7,7 @@
     "dist",
     "build",
     "node_modules",
-    "examples",
-    "src/__tests__"
+    "examples"
   ],
   "compilerOptions": {
     "baseUrl": "./src",

@@ -59,7 +59,7 @@ function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
   return output as T;
 }
 
-export function createConfig<T>(ops: ConfigCreatorOptions<T>): T {
+export function createConfig<T = any>(ops: ConfigCreatorOptions<T>): T {
   const assertConfig = ops.assert ?? 'pretty';
   try {
     return buildConfig(ops);

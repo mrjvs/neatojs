@@ -8,6 +8,7 @@ export {
   LoaderInputError,
 } from 'utils/errors';
 export { normalizeKey } from 'keys/normalize';
+export { zodCoercedBoolean } from 'utils/zod';
 
 export type { ConfigCreatorOptions, ConfigAssertionType } from 'entrypoint';
 export type {
