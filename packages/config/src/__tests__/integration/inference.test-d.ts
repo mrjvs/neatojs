@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { createConfig, loaders, SchemaTransformer } from '../..';
 import Joi from 'joi';
-import { DeepReadonly } from 'utils/freeze';
+import type { DeepReadonly } from 'utils/freeze';
+import type { SchemaTransformer } from '../..';
+import { createConfig, loaders } from '../..';
 
 describe('integration tests - type inference', () => {
   test('load without schema', () => {
@@ -20,9 +21,11 @@ describe('integration tests - type inference', () => {
         hi: z.string(),
       }),
     });
-    expectTypeOf(config).toEqualTypeOf<DeepReadonly<{
-      hi: string;
-    }>>();
+    expectTypeOf(config).toEqualTypeOf<
+      DeepReadonly<{
+        hi: string;
+      }>
+    >();
   });
 
   test('load with joi schema', () => {
@@ -31,11 +34,13 @@ describe('integration tests - type inference', () => {
       loaders: [loaders.environment()],
       schema: Joi.object<{ hello: string }>({
         hello: Joi.string(),
-      })
+      }),
     });
-    expectTypeOf(config).toEqualTypeOf<DeepReadonly<{
-      hello: string;
-    }>>();
+    expectTypeOf(config).toEqualTypeOf<
+      DeepReadonly<{
+        hello: string;
+      }>
+    >();
   });
 
   test('load with custom schema', () => {
@@ -47,18 +52,20 @@ describe('integration tests - type inference', () => {
         validate(_ctx) {
           return obj;
         },
-      }
-    }
+      };
+    };
     const config = createConfig({
       assert: 'throw',
       loaders: [loaders.environment()],
       schema: makeMySchema({
         goodbye: 'string',
-      })
+      }),
     });
-    expectTypeOf(config).toEqualTypeOf<DeepReadonly<{
-      goodbye: string;
-    }>>();
+    expectTypeOf(config).toEqualTypeOf<
+      DeepReadonly<{
+        goodbye: string;
+      }>
+    >();
   });
 
   test('load with freeze', () => {
@@ -89,18 +96,26 @@ describe('integration tests - type inference', () => {
         hi: z.string(),
       }),
     });
-    expectTypeOf(frozenConf).toEqualTypeOf<DeepReadonly<{
-      hi: string;
-    }>>();
-    expectTypeOf(frozenConf2).toEqualTypeOf<DeepReadonly<{
-      hi: string;
-    }>>();
-    expectTypeOf(frozenConf3).toEqualTypeOf<DeepReadonly<{
-      hi: string;
-    }>>();
-    expectTypeOf(frozenConf4).toEqualTypeOf<DeepReadonly<{
-      hi: string;
-    }>>();
+    expectTypeOf(frozenConf).toEqualTypeOf<
+      DeepReadonly<{
+        hi: string;
+      }>
+    >();
+    expectTypeOf(frozenConf2).toEqualTypeOf<
+      DeepReadonly<{
+        hi: string;
+      }>
+    >();
+    expectTypeOf(frozenConf3).toEqualTypeOf<
+      DeepReadonly<{
+        hi: string;
+      }>
+    >();
+    expectTypeOf(frozenConf4).toEqualTypeOf<
+      DeepReadonly<{
+        hi: string;
+      }>
+    >();
   });
 
   test('load without freeze', () => {

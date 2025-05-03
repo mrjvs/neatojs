@@ -41,7 +41,7 @@ describe('integration tests - freezing', () => {
     // testing freeze
     expect(Object.isFrozen(config)).toBe(true);
     expect(() => {
-      // @ts-expect-error
+      // @ts-expect-error -- its a reaodnly object and we expect it to throw for this test
       config.hi = 'HELLO WORLD';
     }).toThrowError(); // in strict mode readonly objects throw typeError when assigned
     expect(config).toStrictEqual({
@@ -68,7 +68,7 @@ describe('integration tests - freezing', () => {
     expect(Object.isFrozen(config.l1)).toBe(true);
     expect(Object.isFrozen(config.l1.l2)).toBe(true);
     expect(() => {
-      // @ts-expect-error
+      // @ts-expect-error -- its a reaodnly object and we expect it to throw for this test
       config.hi = 'HELLO WORLD';
       config.l1.l2.l3 = 'more tests';
     }).toThrowError(); // in strict mode readonly objects throw typeError when assigned
