@@ -38,6 +38,20 @@ Then we can create your configuration loader:
     console.log(`Server running on port ${config.server.port}`);
     ```
   </CodeGroup.Code>
+  <CodeGroup.Code title=".env">
+    ```sh
+    APP_SERVER__PORT=3000
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="config.json">
+    ```json
+    {
+      "server": {
+        "port": 3000
+      }
+    }
+    ```
+  </CodeGroup.Code>
 </CodeGroup>
 
 <Note>
