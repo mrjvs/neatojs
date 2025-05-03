@@ -1,9 +1,10 @@
 import type Joi from 'joi';
-import type { AnyZodObject } from 'zod';
+import type { AnyZodObject, z } from 'zod';
 import type { KeyCollection } from 'loading/types';
+import { Z } from 'vitest/dist/reporters-yx5ZTtEV.js';
 
 export type ZodSchema = AnyZodObject;
-export type JoiSchema = Joi.Schema;
+export type JoiSchema<T = any> = Joi.Schema<T>;
 
 export type KeyTransformationMap = {
   normalizedKey: string;
@@ -21,4 +22,10 @@ export type SchemaTransformer<T> = {
   validate: (ctx: SchemaTransformerContext) => T;
 };
 
-export type ConfigSchema<T> = SchemaTransformer<T> | ZodSchema | JoiSchema;
+export type ConfigSchema<T> = SchemaTransformer<T> | ZodSchema | JoiSchema<T>;
+
+export type InferConfigSchema<T extends ConfigSchema<any>> =
+  T extends ZodSchema ? z.infer<T>
+  : T extends JoiSchema<infer Result> ? Result
+  : T extends SchemaTransformer<infer Result> ? Result
+  : never;

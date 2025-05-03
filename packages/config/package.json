@@ -47,8 +47,8 @@
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test": "vitest run --root=src",
-    "test:watch": "vitest --root=src",
+    "test": "vitest run --root=src --typecheck",
+    "test:watch": "vitest --root=src --typecheck",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 import type { KeyCollection, KeyLoader } from 'loading/types';
 import { deepFreeze } from 'utils/freeze';
 import { makeSchemaFromConfig } from 'schemas/handle';
-import type { ConfigSchema } from 'schemas/types';
+import type { ConfigSchema, InferConfigSchema } from 'schemas/types';
 import { useTranslatorMap } from 'keys/mapping';
 import { buildObjectFromKeys } from 'keys/build';
 import { normalizeKey, normalizeKeys } from 'keys/normalize';
@@ -20,34 +20,34 @@ export type ConfigAssertionType =
   | 'plain'
   | ((err: NeatConfigError) => void);
 
-export type ConfigCreatorOptions<T> = {
+export type ConfigCreatorOptions<TSchema extends ConfigSchema<any>> = {
   envPrefix?: string;
   freeze?: boolean;
   assert?: ConfigAssertionType;
   presetKey?: string;
   presets?: Record<string, Preset>;
-  schema?: ConfigSchema<T>;
+  schema?: TSchema;
   namingConvention?: NamingConventionFunc;
   loaders: KeyLoader[];
 };
 
-export type NormalizedConfigCreatorOptions<T> = {
+export type NormalizedConfigCreatorOptions<TSchema extends ConfigSchema<any>> = {
   envPrefix: string | null;
   freeze: boolean;
   assert: ConfigAssertionType;
   presetKey: string;
   presets: Record<string, Preset> | null;
-  schema: ConfigSchema<T> | null;
+  schema: TSchema | null;
   namingConvention: NamingConventionFunc;
   loaders: KeyLoader[];
 };
 
-function normalizeConfig<T>(
-  ops: ConfigCreatorOptions<T>,
-): NormalizedConfigCreatorOptions<T> {
+function normalizeConfig<TSchema extends ConfigSchema<any>>(
+  ops: ConfigCreatorOptions<TSchema>,
+): NormalizedConfigCreatorOptions<TSchema> {
   return {
     envPrefix: ops.envPrefix ?? null,
-    freeze: ops.unfreeze ?? true,
+    freeze: ops.freeze ?? true,
     assert: ops.assert ?? 'pretty',
     presetKey: normalizeKey(ops.presetKey ?? 'configPresets'),
     presets: ops.presets ? normalizePresetNames(ops.presets) : null,
@@ -57,7 +57,7 @@ function normalizeConfig<T>(
   };
 }
 
-function buildConfig<T>(ops: NormalizedConfigCreatorOptions<T>) {
+function buildConfig<TSchema extends ConfigSchema<any>>(ops: NormalizedConfigCreatorOptions<TSchema>) {
   const schema = ops.schema ? makeSchemaFromConfig(ops.schema) : null;
   const translationMap = schema?.extract() ?? [];
 
@@ -90,12 +90,12 @@ function buildConfig<T>(ops: NormalizedConfigCreatorOptions<T>) {
   if (schema) output = schema?.validate({ keys, object: output });
 
   // post processing
-  if (!ops.freeze) output = deepFreeze(output);
+  if (ops.freeze) output = deepFreeze(output);
 
-  return output as T;
+  return output as InferConfigSchema<TSchema>;
 }
 
-export function createConfig<T = any>(ops: ConfigCreatorOptions<T>): T {
+export function createConfig<TSchema extends ConfigSchema<any>>(ops: ConfigCreatorOptions<TSchema>): InferConfigSchema<TSchema> {
   const normalizedOps = normalizeConfig(ops);
   const assertConfig = normalizedOps.assert;
   try {

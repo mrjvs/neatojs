@@ -10,7 +10,7 @@ describe('integration tests - freezing', () => {
     const config = createConfig({
       assert: 'throw',
       loaders: [loaders.environment()],
-      unfreeze: true,
+      freeze: false,
     });
     expect(config).toStrictEqual({
       l1: { l2: { l3: 'test' } },
