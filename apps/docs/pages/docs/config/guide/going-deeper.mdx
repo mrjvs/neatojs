@@ -21,6 +21,15 @@ z.object({
 ```
 
 
+## Nested fields & complex objects
+
+The library supports nested fields and complex objects. This means that you can have nested objects in your configuration, and they will be properly parsed and validated.
+
+To target nested fields inside a flat configuration source like environment variables, you can use double underscores (`__`) to separate the keys. This is a common convention in many libraries and is supported by this library as well.
+
+For example the environment variable `APP__SERVER__PORT=8080` will be parsed as `app.server.port = 8080` in the final configuration object.
+
+
 ## Naming convention detection
 
 This library supports multiple naming conventions. If you are using a schema, it detects the naming convention of the schema and uses that.
