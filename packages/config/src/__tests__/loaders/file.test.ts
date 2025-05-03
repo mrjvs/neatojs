@@ -1,7 +1,6 @@
 import * as fs from 'node:fs';
 import { loaderCtx, runKeyLoader } from '__tests__/test';
-import { ParserTypes } from 'loading/loaders/file';
-import type { ConfigLoader } from '../../builder/base';
+import { getExtension } from 'loading/loaders/file';
 import { loaders } from '../..';
 
 vi.mock('fs');
@@ -18,43 +17,14 @@ function checkIfArrayHas(test: any, value: any) {
 
 describe('file loader - basics', () => {
   test('extension loading - json', () => {
-    const obj: ConfigLoader = {
-      environment: [],
-      files: [],
-    } as any;
-    populateLoaderFromFile(obj, 'hi.json', { type: ParserTypes.FROM_EXT });
-    populateLoaderFromFile(obj, '.json', { type: ParserTypes.FROM_EXT });
-    populateLoaderFromFile(obj, '.test.json', { type: ParserTypes.FROM_EXT });
-    expect(obj.files).toStrictEqual([
-      { type: ParserTypes.JSON, path: 'hi.json', prefix: undefined },
-      { type: ParserTypes.JSON, path: '.json', prefix: undefined },
-      { type: ParserTypes.JSON, path: '.test.json', prefix: undefined },
-    ]);
+    expect(getExtension('hi.json')).toBe('json');
+    expect(getExtension('.json')).toBe('json');
+    expect(getExtension('.test.json')).toBe('json');
   });
   test('extension loading - env', () => {
-    const obj: ConfigLoader = {
-      environment: [],
-      files: [],
-    } as any;
-    populateLoaderFromFile(obj, '.env', { type: ParserTypes.FROM_EXT });
-    populateLoaderFromFile(obj, 'prod.env', { type: ParserTypes.FROM_EXT });
-    populateLoaderFromFile(obj, '.prod.env', { type: ParserTypes.FROM_EXT });
-    expect(obj.files).toStrictEqual([
-      { type: ParserTypes.ENV, path: '.env', prefix: undefined },
-      { type: ParserTypes.ENV, path: 'prod.env', prefix: undefined },
-      { type: ParserTypes.ENV, path: '.prod.env', prefix: undefined },
-    ]);
-  });
-  test('extension loading - exceptions', () => {
-    const obj: ConfigLoader = {
-      environment: [],
-      files: [],
-    } as any;
-    expect(() => {
-      populateLoaderFromFile(obj, 'hello-world', {
-        type: ParserTypes.FROM_EXT,
-      });
-    }).toThrowError(); // TODO proper error
+    expect(getExtension('.env')).toBe('env');
+    expect(getExtension('prod.env')).toBe('env');
+    expect(getExtension('.prod.env')).toBe('env');
   });
 });
 

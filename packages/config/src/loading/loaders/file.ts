@@ -32,7 +32,7 @@ export const fileParsers: Record<
   },
 };
 
-function getExtension(path: string): string {
+export function getExtension(path: string): string {
   const filename = basename(path);
   if (!filename) return '';
   const extensionIndex = filename.lastIndexOf('.');
