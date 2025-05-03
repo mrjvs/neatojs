@@ -7,6 +7,8 @@ import { buildObjectFromKeys } from 'keys/build';
 import { normalizeKeys } from 'keys/normalize';
 import { naming, type NamingConventionFunc } from 'utils/conventions';
 import { NeatConfigError } from 'utils/errors';
+import type { Preset } from 'loading/presets';
+import { expandPresets, extractUsedPresets } from 'loading/presets';
 
 export type ConfigAssertionType =
   | 'throw'
@@ -19,7 +21,7 @@ export type ConfigCreatorOptions<T> = {
   unfreeze?: boolean;
   assert?: ConfigAssertionType;
   presetKey?: string;
-  presets?: Record<string, unknown>;
+  presets?: Record<string, Preset>;
   schema?: ConfigSchema<T>;
   namingConvention?: NamingConventionFunc;
   loaders: KeyLoader[];
@@ -37,10 +39,15 @@ function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
   ops.loaders.forEach((loader) => {
     loadedKeys.push(loader.load(ctx));
   });
-  const keys = normalizeKeys(loadedKeys.flat());
+  let keys = normalizeKeys(loadedKeys.flat());
 
   // Presets
-  // TODO handle presets
+  if (ops.presets) {
+    const presetKey = ops.presetKey ?? 'configPresets';
+    const presets = extractUsedPresets(presetKey, keys);
+    const keysFromPresets = expandPresets(ops.presets, presets.selectedPresets);
+    keys = [...keysFromPresets, ...presets.keys]; // placed at the front to allow overrides
+  }
 
   // translate normalized keys to output keys and build object
   const translatedKeys = useTranslatorMap(

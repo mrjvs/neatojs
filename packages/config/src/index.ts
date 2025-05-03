@@ -20,3 +20,4 @@ export type { KeyLoader, KeyLoaderContext, KeyCollection } from 'loading/types';
 export type { FileLoaderOptions } from 'loading/loaders/file';
 export type { CliLoaderOptions } from 'loading/loaders/cli';
 export type { DirLoaderOptions } from 'loading/loaders/dir';
+export type { Preset } from 'loading/presets';
