@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { createConfig, loaders, SchemaTransformer } from '../..';
 import Joi from 'joi';
+import { DeepReadonly } from 'utils/freeze';
 
 describe('integration tests - type inference', () => {
   test('load without schema', () => {
@@ -8,7 +9,7 @@ describe('integration tests - type inference', () => {
       assert: 'throw',
       loaders: [loaders.environment()],
     });
-    expectTypeOf(config).toBeAny();
+    expectTypeOf(config).toEqualTypeOf<DeepReadonly<any>>();
   });
 
   test('load with zod schema', () => {
@@ -19,9 +20,9 @@ describe('integration tests - type inference', () => {
         hi: z.string(),
       }),
     });
-    expectTypeOf(config).toEqualTypeOf<{
+    expectTypeOf(config).toEqualTypeOf<DeepReadonly<{
       hi: string;
-    }>();
+    }>>();
   });
 
   test('load with joi schema', () => {
@@ -32,9 +33,9 @@ describe('integration tests - type inference', () => {
         hello: Joi.string(),
       })
     });
-    expectTypeOf(config).toEqualTypeOf<{
+    expectTypeOf(config).toEqualTypeOf<DeepReadonly<{
       hello: string;
-    }>();
+    }>>();
   });
 
   test('load with custom schema', () => {
@@ -55,8 +56,54 @@ describe('integration tests - type inference', () => {
         goodbye: 'string',
       })
     });
-    expectTypeOf(config).toEqualTypeOf<{
+    expectTypeOf(config).toEqualTypeOf<DeepReadonly<{
       goodbye: string;
+    }>>();
+  });
+
+  test('load with freeze', () => {
+    const frozenConf = createConfig({
+      loaders: [],
+      schema: z.object({
+        hi: z.string(),
+      }),
+      freeze: null,
+    });
+    const frozenConf2 = createConfig({
+      loaders: [],
+      schema: z.object({
+        hi: z.string(),
+      }),
+      freeze: undefined,
+    });
+    const frozenConf3 = createConfig({
+      loaders: [],
+      schema: z.object({
+        hi: z.string(),
+      }),
+      freeze: true,
+    });
+    expectTypeOf(frozenConf).toEqualTypeOf<DeepReadonly<{
+      hi: string;
+    }>>();
+    expectTypeOf(frozenConf2).toEqualTypeOf<DeepReadonly<{
+      hi: string;
+    }>>();
+    expectTypeOf(frozenConf3).toEqualTypeOf<DeepReadonly<{
+      hi: string;
+    }>>();
+  });
+
+  test('load without freeze', () => {
+    const unfrozenConfig = createConfig({
+      loaders: [],
+      schema: z.object({
+        hi: z.string(),
+      }),
+      freeze: false,
+    });
+    expectTypeOf(unfrozenConfig).toEqualTypeOf<{
+      hi: string;
     }>();
   });
 });

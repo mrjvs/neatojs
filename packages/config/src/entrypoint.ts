@@ -1,7 +1,7 @@
 import type { KeyCollection, KeyLoader } from 'loading/types';
 import { deepFreeze } from 'utils/freeze';
 import { makeSchemaFromConfig } from 'schemas/handle';
-import type { ConfigSchema, InferConfigSchema } from 'schemas/types';
+import type { ConfigSchema, FrozenOption, InferConfigSchema } from 'schemas/types';
 import { useTranslatorMap } from 'keys/mapping';
 import { buildObjectFromKeys } from 'keys/build';
 import { normalizeKey, normalizeKeys } from 'keys/normalize';
@@ -20,9 +20,9 @@ export type ConfigAssertionType =
   | 'plain'
   | ((err: NeatConfigError) => void);
 
-export type ConfigCreatorOptions<TSchema extends ConfigSchema<any>> = {
+export type ConfigCreatorOptions<TSchema extends ConfigSchema<any>, TIsFrozen extends FrozenOption> = {
   envPrefix?: string;
-  freeze?: boolean;
+  freeze?: TIsFrozen;
   assert?: ConfigAssertionType;
   presetKey?: string;
   presets?: Record<string, Preset>;
@@ -43,7 +43,7 @@ export type NormalizedConfigCreatorOptions<TSchema extends ConfigSchema<any>> = 
 };
 
 function normalizeConfig<TSchema extends ConfigSchema<any>>(
-  ops: ConfigCreatorOptions<TSchema>,
+  ops: ConfigCreatorOptions<TSchema, any>,
 ): NormalizedConfigCreatorOptions<TSchema> {
   return {
     envPrefix: ops.envPrefix ?? null,
@@ -92,14 +92,14 @@ function buildConfig<TSchema extends ConfigSchema<any>>(ops: NormalizedConfigCre
   // post processing
   if (ops.freeze) output = deepFreeze(output);
 
-  return output as InferConfigSchema<TSchema>;
+  return output;
 }
 
-export function createConfig<TSchema extends ConfigSchema<any>>(ops: ConfigCreatorOptions<TSchema>): InferConfigSchema<TSchema> {
+export function createConfig<TSchema extends ConfigSchema<any>, TIsFrozen extends FrozenOption = undefined>(ops: ConfigCreatorOptions<TSchema, TIsFrozen>): InferConfigSchema<TSchema, TIsFrozen> {
   const normalizedOps = normalizeConfig(ops);
   const assertConfig = normalizedOps.assert;
   try {
-    return buildConfig(normalizedOps);
+    return buildConfig(normalizedOps) as InferConfigSchema<TSchema, TIsFrozen>;
   } catch (error: any) {
     if (assertConfig === 'throw') throw error;
     if (!(error instanceof NeatConfigError)) throw error;
