@@ -1,5 +1,6 @@
 import type { Description, Schema } from 'joi';
 import { ValidationError } from 'utils/errors';
+import { normalizeKey } from 'keys/normalize';
 import type { KeyTransformationMap, SchemaTransformer } from './types';
 
 function recursiveSearchForKeys(
@@ -14,8 +15,8 @@ function recursiveSearchForKeys(
       return;
     }
     out.push({
-      normalizedKey: keyArray.join('__'),
-      outputKey: keyArray.join('__'), // TODO this is not correct
+      normalizedKey: normalizeKey(keyArray.join('__')),
+      outputKey: keyArray.join('__'),
     });
   });
   return out;
