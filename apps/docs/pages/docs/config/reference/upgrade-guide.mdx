@@ -9,10 +9,10 @@ import { createConfig, loaders, naming } from 'config-schema';
 import { z } from 'zod';
 
 const config = createConfig({
-  assert: ..., // if you use a custom error handler, add it here
+  assert: ..., // If you use a custom error handler, add it here
   envPrefix: ..., // If applicable, add the prefix you specified in `.addFromEnvironment()`
   loaders: [
-    // all these loaders have the same options as before
+    // All these loaders have the same options as before
     loaders.environment(), // Add this line if you use `.addFromEnvironment()`. Prefix has been moved to `envPrefix`
     loaders.cli(), // Add this line if you use `.addFromCLI()`
     loaders.file('file.txt'), // Add this line if you use `.addFromFile()`

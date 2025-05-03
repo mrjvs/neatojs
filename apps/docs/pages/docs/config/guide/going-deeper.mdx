@@ -6,9 +6,19 @@ The library is designed to be easy to use and understand, but there are some adv
 ## Loading as strings
 
 The library loads all configuration as strings. This means that if you have a number in your `.env` file, it will be loaded as a string. This is done to ensure that the library can load configuration from any source, including files and environment variables.
-The convert it back to the expected type. Make sure you configure your schema to coerce the types to the expected type.
+You can configure your schema to convert it back to the expected type.
 
-With zod, you can easily do this using `z.coerce.number()`. For boolean you will have to use a helper function `zodCoercedBoolean` to coerce the string to a boolean. This is because zod does not have proper built-in coercion for booleans.
+With Zod, you can easily do this using `z.coerce.number()`. For boolean values you will have to use a helper function provided by the library `zodCoercedBoolean` to coerce the string to a boolean. This is because Zod does not have proper built-in coercion for booleans.
+
+```ts
+import { zodCoercedBoolean } from '@neato/config';
+import { z } from 'zod';
+
+z.object({
+  serverPort: z.coerce.number(),
+  useStrictHeaders: zodCoercedBoolean().default(false),
+})
+```
 
 
 ## Naming convention detection
