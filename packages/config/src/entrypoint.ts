@@ -1,4 +1,3 @@
-import { NeatConfigError } from 'old/utils/errors';
 import type { KeyCollection, KeyLoader } from 'loading/types';
 import { deepFreeze } from 'utils/freeze';
 import { makeSchemaFromConfig } from 'schemas/handle';
@@ -7,6 +6,7 @@ import { useTranslatorMap } from 'keys/mapping';
 import { buildObjectFromKeys } from 'keys/build';
 import { normalizeKeys } from 'keys/normalize';
 import type { NamingConventionFunc } from 'utils/conventions';
+import { NeatConfigError } from 'utils/errors';
 
 export type ConfigAssertionType =
   | 'throw'

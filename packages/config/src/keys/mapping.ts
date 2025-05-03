@@ -1,6 +1,6 @@
 import type { KeyCollection } from 'loading/types';
-import type { NamingConventionFunc } from 'old/utils/translators/conventions';
 import type { KeyTransformationMap } from 'schemas/types';
+import type { NamingConventionFunc } from 'utils/conventions';
 
 export type TranslatorMap = Record<string, string>;
 

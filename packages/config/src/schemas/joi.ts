@@ -1,5 +1,5 @@
-import { ValidationError } from 'utils/errors';
 import type { Description, Schema } from 'joi';
+import { ValidationError } from 'utils/errors';
 import type { KeyTransformationMap, SchemaTransformer } from './types';
 
 function recursiveSearchForKeys(
@@ -32,10 +32,10 @@ export function joiSchemaToTransformer<T>(
 ): SchemaTransformer<T> {
   return {
     extract() {
-      return recursiveSearchForKeys(schema.schema.describe());
+      return recursiveSearchForKeys(schema.describe());
     },
     validate(ctx) {
-      const { error, value } = schema.schema.validate(ctx.object);
+      const { error, value } = schema.validate(ctx.object);
       if (error) {
         const validations = error.details.map((issue: any) => ({
           message: issue.message,
