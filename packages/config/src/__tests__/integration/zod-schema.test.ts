@@ -48,8 +48,7 @@ describe('integration tests - zod schema', () => {
       }).toThrowError(); // TODO better errors
     }
     trySchema({ hi: 42 });
-    trySchema(null);
-    trySchema(undefined);
+    trySchema(42);
     trySchema(z.string().email());
   });
   test('complex object usage', () => {

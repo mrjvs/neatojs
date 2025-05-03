@@ -50,8 +50,7 @@ describe('integration tests - joi schema', () => {
     }
 
     trySchema({ hi: 42 });
-    trySchema(null);
-    trySchema(undefined);
+    trySchema(42);
     trySchema(Joi.string().email());
   });
 
