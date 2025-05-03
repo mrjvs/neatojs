@@ -16,10 +16,10 @@ Load complex configuration from many sources on runtime with type-safety. Check 
 
 ## 🍄Installation / usage
 
-> **Visit the [documentation](https://neatojs.com/docs/config/guide/why-neat-config) on how to install.**
+> **Visit the [documentation](https://neatojs.com/docs/config/guide/getting-started) on how to install.**
 
 ```sh
-npm install neat-config
+npm install @neato/config
 ```
 
 

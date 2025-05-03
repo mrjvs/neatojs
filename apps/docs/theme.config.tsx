@@ -262,6 +262,7 @@ export default defineTheme([
             link('Getting started', '/docs/config/guide/getting-started'),
             link('Going deeper', '/docs/config/guide/going-deeper'),
             link('Plugins', '/docs/config/guide/plugins'),
+            link('Error handling', '/docs/config/guide/error-handling'),
           ]),
           group('Reference', [
             link('Changelog', '/docs/config/reference/changelog'),
