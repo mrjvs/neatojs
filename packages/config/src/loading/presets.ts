@@ -5,6 +5,14 @@ import type { KeyCollection } from './types';
 
 export type Preset = Record<string, any>;
 
+export function normalizePresetNames(
+  allPresets: Record<string, Preset>,
+): Record<string, Preset> {
+  return Object.fromEntries(
+    Object.entries(allPresets).map(([k, v]) => [normalizeKey(k), v]),
+  );
+}
+
 export function extractUsedPresets(
   presetKey: string,
   keys: KeyCollection,

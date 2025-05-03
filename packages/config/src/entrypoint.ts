@@ -4,11 +4,15 @@ import { makeSchemaFromConfig } from 'schemas/handle';
 import type { ConfigSchema } from 'schemas/types';
 import { useTranslatorMap } from 'keys/mapping';
 import { buildObjectFromKeys } from 'keys/build';
-import { normalizeKeys } from 'keys/normalize';
+import { normalizeKey, normalizeKeys } from 'keys/normalize';
 import { naming, type NamingConventionFunc } from 'utils/conventions';
 import { NeatConfigError } from 'utils/errors';
 import type { Preset } from 'loading/presets';
-import { expandPresets, extractUsedPresets } from 'loading/presets';
+import {
+  expandPresets,
+  extractUsedPresets,
+  normalizePresetNames,
+} from 'loading/presets';
 
 export type ConfigAssertionType =
   | 'throw'
@@ -27,14 +31,40 @@ export type ConfigCreatorOptions<T> = {
   loaders: KeyLoader[];
 };
 
-function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
+export type NormalizedConfigCreatorOptions<T> = {
+  envPrefix: string | null;
+  unfreeze: boolean;
+  assert: ConfigAssertionType;
+  presetKey: string;
+  presets: Record<string, Preset> | null;
+  schema: ConfigSchema<T> | null;
+  namingConvention: NamingConventionFunc;
+  loaders: KeyLoader[];
+};
+
+function normalizeConfig<T>(
+  ops: ConfigCreatorOptions<T>,
+): NormalizedConfigCreatorOptions<T> {
+  return {
+    envPrefix: ops.envPrefix ?? null,
+    unfreeze: ops.unfreeze ?? false,
+    assert: ops.assert ?? 'pretty',
+    presetKey: normalizeKey(ops.presetKey ?? 'configPresets'),
+    presets: ops.presets ? normalizePresetNames(ops.presets) : null,
+    schema: ops.schema ?? null,
+    namingConvention: ops.namingConvention ?? naming.camelCase,
+    loaders: ops.loaders,
+  };
+}
+
+function buildConfig<T>(ops: NormalizedConfigCreatorOptions<T>) {
   const schema = ops.schema ? makeSchemaFromConfig(ops.schema) : null;
   const translationMap = schema?.extract() ?? [];
 
   // loading keys
   const loadedKeys: KeyCollection[] = [];
   const ctx = {
-    envPrefix: ops.envPrefix ?? null,
+    envPrefix: ops.envPrefix,
   };
   ops.loaders.forEach((loader) => {
     loadedKeys.push(loader.load(ctx));
@@ -43,8 +73,7 @@ function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
 
   // Presets
   if (ops.presets) {
-    const presetKey = ops.presetKey ?? 'configPresets';
-    const presets = extractUsedPresets(presetKey, keys);
+    const presets = extractUsedPresets(ops.presetKey, keys);
     const keysFromPresets = expandPresets(ops.presets, presets.selectedPresets);
     keys = [...keysFromPresets, ...presets.keys]; // placed at the front to allow overrides
   }
@@ -53,7 +82,7 @@ function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
   const translatedKeys = useTranslatorMap(
     translationMap,
     keys,
-    ops.namingConvention ?? naming.camelCase,
+    ops.namingConvention,
   );
   let output: any = buildObjectFromKeys(translatedKeys);
 
@@ -67,9 +96,10 @@ function buildConfig<T>(ops: ConfigCreatorOptions<T>) {
 }
 
 export function createConfig<T = any>(ops: ConfigCreatorOptions<T>): T {
-  const assertConfig = ops.assert ?? 'pretty';
+  const normalizedOps = normalizeConfig(ops);
+  const assertConfig = normalizedOps.assert;
   try {
-    return buildConfig(ops);
+    return buildConfig(normalizedOps);
   } catch (error: any) {
     if (assertConfig === 'throw') throw error;
     if (!(error instanceof NeatConfigError)) throw error;
