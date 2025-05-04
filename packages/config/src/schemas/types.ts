@@ -2,6 +2,7 @@ import type Joi from 'joi';
 import type { AnyZodObject, z } from 'zod';
 import type { KeyCollection } from 'loading/types';
 import type { DeepReadonly } from 'utils/freeze';
+import type { NormalizedConfigCreatorOptions } from 'entrypoint';
 
 export type ZodSchema = AnyZodObject;
 export type JoiSchema<T = any> = Joi.Schema<T>;
@@ -11,10 +12,21 @@ export type KeyTransformationMap = {
   outputKey: string;
 }[];
 
-// TODO make this a proper context object
 export type SchemaTransformerContext = {
+  /**
+   * The list of normalized key and values used to build the object
+   */
   keys: KeyCollection;
+
+  /**
+   * The final object built from the keys
+   */
   object: Record<string, any>;
+
+  /**
+   * The options used to create the config
+   */
+  config: NormalizedConfigCreatorOptions<any>;
 };
 
 export type SchemaTransformer<T> = {

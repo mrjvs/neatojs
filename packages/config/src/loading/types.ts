@@ -1,11 +1,20 @@
+import type { NormalizedConfigCreatorOptions } from 'entrypoint';
+
 export type KeyCollection = {
   key: string;
   value: string;
 }[];
 
-// TODO make this a proper context object
 export type KeyLoaderContext = {
-  envPrefix: string | null;
+  /**
+   * The configured env prefix
+   */
+  envPrefix: string;
+
+  /**
+   * The options used to create the config
+   */
+  config: NormalizedConfigCreatorOptions<any>;
 };
 
 export type KeyLoader = {

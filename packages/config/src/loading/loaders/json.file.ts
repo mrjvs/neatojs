@@ -26,7 +26,7 @@ export function loadKeysFromObject(obj: any) {
 
 export function loadKeysFromJsonFile(
   data: string,
-  _prefix?: string, // prefix doesn't matter for json
+  _prefix: string, // prefix doesn't matter for json
 ): KeyCollection {
   let obj: Record<string, any>;
   try {

@@ -3,7 +3,7 @@ import type { KeyCollection } from 'loading/types';
 
 export function loadKeysFromEnvFile(
   data: string,
-  prefix?: string,
+  prefix: string,
 ): KeyCollection {
   const envObject = parse(data);
   let output = Object.entries(envObject).map((v) => ({

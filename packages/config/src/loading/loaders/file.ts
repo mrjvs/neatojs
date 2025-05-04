@@ -23,7 +23,7 @@ const parserMap: Record<string, ParserTypesType> = {
 
 export const fileParsers: Record<
   ParserTypesType,
-  (data: string, prefix?: string) => KeyCollection
+  (data: string, prefix: string) => KeyCollection
 > = {
   JSON: loadKeysFromJsonFile,
   ENV: loadKeysFromEnvFile,
@@ -58,7 +58,7 @@ export function getKeysFromFile(
 
   let prefix = '';
   if (parserType === ParserTypes.ENV) {
-    prefix = ctx.envPrefix ?? '';
+    prefix = ctx.envPrefix;
   }
 
   let data;

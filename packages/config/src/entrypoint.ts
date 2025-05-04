@@ -40,7 +40,7 @@ export type ConfigCreatorOptions<
 
 export type NormalizedConfigCreatorOptions<TSchema extends ConfigSchema<any>> =
   {
-    envPrefix: string | null;
+    envPrefix: string;
     freeze: boolean;
     assert: ConfigAssertionType;
     presetKey: string;
@@ -54,7 +54,7 @@ function normalizeConfig<TSchema extends ConfigSchema<any>>(
   ops: ConfigCreatorOptions<TSchema, any>,
 ): NormalizedConfigCreatorOptions<TSchema> {
   return {
-    envPrefix: ops.envPrefix ?? null,
+    envPrefix: ops.envPrefix ?? '',
     freeze: ops.freeze ?? true,
     assert: ops.assert ?? 'pretty',
     presetKey: normalizeKey(ops.presetKey ?? 'configPresets'),
@@ -75,6 +75,7 @@ function buildConfig<TSchema extends ConfigSchema<any>>(
   const loadedKeys: KeyCollection[] = [];
   const ctx = {
     envPrefix: ops.envPrefix,
+    config: ops,
   };
   ops.loaders.forEach((loader) => {
     loadedKeys.push(loader.load(ctx));
@@ -97,7 +98,7 @@ function buildConfig<TSchema extends ConfigSchema<any>>(
   let output: any = buildObjectFromKeys(translatedKeys);
 
   // validate and transform
-  if (schema) output = schema?.validate({ keys, object: output });
+  if (schema) output = schema?.validate({ keys, object: output, config: ops });
 
   // post processing
   if (ops.freeze) output = deepFreeze(output);

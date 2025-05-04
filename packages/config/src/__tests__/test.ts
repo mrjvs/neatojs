@@ -13,6 +13,7 @@ export function setEnv(env: Record<string, string>) {
 export function loaderCtx(envPrefix?: string): KeyLoaderContext {
   return {
     envPrefix: envPrefix ?? '',
+    config: null as any, // currently unused, so no need to mock
   };
 }
 
