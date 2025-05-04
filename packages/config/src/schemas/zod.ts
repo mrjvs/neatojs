@@ -22,17 +22,15 @@ function recursiveSearchForKeys(
   if (def.typeName === ZodFirstPartyTypeKind.ZodObject) {
     const shape = def.shape();
     const entries = Object.entries(shape);
-    const newKeys = entries.map(([k, v]) => {
+    return entries.flatMap(([k, v]) => {
       return recursiveSearchForKeys(v._def, [...path, k]);
     });
-    return newKeys.flat();
   }
 
   if (def.typeName === ZodFirstPartyTypeKind.ZodDiscriminatedUnion) {
-    const newKeys = def.options.map((objType) =>
+    return def.options.flatMap((objType) =>
       recursiveSearchForKeys(objType._def, path),
     );
-    return newKeys.flat();
   }
 
   if (def.typeName === ZodFirstPartyTypeKind.ZodDefault) {
