@@ -259,22 +259,16 @@ export default defineTheme([
         sidebar: [
           ...starLinks,
           group('Guide', [
-            link('Why use @neato/config', '/docs/config/guide/why-neat-config'),
-            link('Installation', '/docs/config/guide/installation'),
-            link('Usage', '/docs/config/guide/usage'),
-            link('Basic example', '/docs/config/guide/basic-example'),
+            link('Getting started', '/docs/config/guide/getting-started'),
+            link('Going deeper', '/docs/config/guide/going-deeper'),
+            link('Plugins', '/docs/config/guide/plugins'),
+            link('Error handling', '/docs/config/guide/error-handling'),
           ]),
-          group('API', [
-            link('Loaders', '/docs/config/api/loaders'),
-            link('Schemas', '/docs/config/api/schemas'),
-            link('Formatting', '/docs/config/api/formatting'),
-            link('Fragments', '/docs/config/api/fragments'),
-            link('Error handling', '/docs/config/api/errors'),
-            link('Utilities', '/docs/config/api/utils'),
-          ]),
-          group('Miscellaneous', [
-            link('Security', '/docs/config/misc/security'),
-            link('Changelog', '/docs/config/misc/changelog'),
+          group('Reference', [
+            link('Changelog', '/docs/config/reference/changelog'),
+            link('API reference', '/docs/config/reference/api-reference'),
+            link('Upgrade guide', '/docs/config/reference/upgrade-guide'),
+            link('Security', '/docs/config/reference/security'),
           ]),
         ],
       }),

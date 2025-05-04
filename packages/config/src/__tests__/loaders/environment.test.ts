@@ -1,5 +1,5 @@
-import { setEnv } from '__tests__/test';
-import { getKeysFromEnvironment } from '../../loaders/environment';
+import { loaderCtx, runKeyLoader, setEnv } from '__tests__/test';
+import { loaders } from '../..';
 
 describe('Environment loader', () => {
   beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Environment loader', () => {
   }
 
   test('key parsing without prefix', () => {
-    checkIfArrayHas(getKeysFromEnvironment([{ prefix: '' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.environment(), loaderCtx('')), [
       { key: 'test1', value: 'abc' },
       { key: 'test2', value: 'def' },
       { key: 'test3', value: 'ghi' },
@@ -29,24 +29,10 @@ describe('Environment loader', () => {
   });
 
   test('key parsing with prefix', () => {
-    checkIfArrayHas(getKeysFromEnvironment([{ prefix: 'test' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.environment(), loaderCtx('test')), [
       { key: '1', value: 'abc' },
       { key: '2', value: 'def' },
       { key: '3', value: 'ghi' },
     ]);
-  });
-
-  test('loading multiple environments', () => {
-    checkIfArrayHas(
-      getKeysFromEnvironment([{ prefix: 'test' }, { prefix: '' }]),
-      [
-        { key: 'test1', value: 'abc' },
-        { key: 'test2', value: 'def' },
-        { key: 'test3', value: 'ghi' },
-        { key: '1', value: 'abc' },
-        { key: '2', value: 'def' },
-        { key: '3', value: 'ghi' },
-      ],
-    );
   });
 });

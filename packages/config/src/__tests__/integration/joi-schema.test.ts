@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 import { setEnv } from '__tests__/test';
-import { createConfigLoader } from '../..';
+import { createConfig, loaders } from '../..';
 
 describe('integration tests - joi schema', () => {
   test('normal usage, valid', () => {
@@ -10,10 +10,12 @@ describe('integration tests - joi schema', () => {
     const schema = Joi.object({
       HI: Joi.string(),
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addJOISchema<any>(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
     expect(config).toStrictEqual({
       HI: 'test2',
     });
@@ -26,22 +28,29 @@ describe('integration tests - joi schema', () => {
     const schema = Joi.object({
       HI: Joi.number(),
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addJOISchema<any>(schema);
-    expect(() => config.load()).toThrowError(); // TODO better errors;
+    expect(() => {
+      createConfig({
+        assert: 'throw',
+        envPrefix: 'CONF_',
+        loaders: [loaders.environment()],
+        schema,
+      });
+    }).toThrowError(); // TODO better errors;
   });
 
   test('invalid schema', () => {
     function trySchema(s: any) {
-      expect(() =>
-        createConfigLoader({ assert: 'throw' }).addJOISchema(s),
-      ).toThrowError(); // TODO better errors
+      expect(() => {
+        createConfig({
+          assert: 'throw',
+          loaders: [],
+          schema: s,
+        });
+      }).toThrowError(); // TODO better errors
     }
 
     trySchema({ hi: 42 });
-    trySchema(null);
-    trySchema(undefined);
+    trySchema(42);
     trySchema(Joi.string().email());
   });
 
@@ -59,10 +68,12 @@ describe('integration tests - joi schema', () => {
       CONF_HI: 'abc',
       CONF_L1__L2__L3: 'def',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addJOISchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
 
     expect(config).toStrictEqual({
       HI: 'abc',
@@ -83,10 +94,12 @@ describe('integration tests - joi schema', () => {
       CONF_HELLO_WORLD: 'a',
       'CONF_hi-again': 'a',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addJOISchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
 
     expect(config).toStrictEqual({
       hi: 'a',
@@ -104,10 +117,12 @@ describe('integration tests - joi schema', () => {
     setEnv({
       CONF_HI: 'AAAA',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addJOISchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
 
     expect(config).toStrictEqual({
       hi: 'aaaa',

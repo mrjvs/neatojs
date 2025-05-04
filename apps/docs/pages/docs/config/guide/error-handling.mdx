@@ -1,0 +1,27 @@
+# Error handling
+
+By default when the configuration is invalid, the library will immediately exit with an error message in the console.
+This behaviour can be changed by setting the `assert` configuration option.
+
+There are three possible values for the `assert` option:
+- `pretty`: The library will exit with a colored and formatted error message in the console. This is the default behaviour.
+- `plain`: The library will exit with a plain text error message in the console.
+- `throw`: The library will throw a `NeatConfig` error, but it will not exit. This can be used to handle the error manually.
+
+## Custom error handling
+
+The `assert` option can also be set to a function that will be called with the error object. Use this to implement custom error handling logic, such as logging the error to a file or sending it to an external service.
+
+```ts
+import { NeatConfigError, createConfig } from '@neato/config';
+
+const config = createConfig({
+  assert(error: NeatConfigError) {
+    // Add your custom error handling logic here
+    console.error('It broke:', error);
+
+    // If nothing is thrown or process.exit is not called in this handler, the library will still throw the error after this function returns.
+  },
+  loaders: [...],
+});
+```

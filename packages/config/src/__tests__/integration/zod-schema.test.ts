@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { setEnv } from '__tests__/test';
-import { createConfigLoader } from '../..';
+import { createConfig, loaders } from '../..';
 
 describe('integration tests - zod schema', () => {
   test('normal usage, valid', () => {
@@ -10,10 +10,12 @@ describe('integration tests - zod schema', () => {
     const schema = z.object({
       HI: z.string(),
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addZodSchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
     expect(config).toStrictEqual({
       HI: 'test2',
     });
@@ -25,20 +27,28 @@ describe('integration tests - zod schema', () => {
     const schema = z.object({
       HI: z.number(),
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addZodSchema(schema);
-    expect(() => config.load()).toThrowError(); // TODO better errors;
+
+    expect(() => {
+      createConfig({
+        assert: 'throw',
+        envPrefix: 'CONF_',
+        loaders: [loaders.environment()],
+        schema,
+      });
+    }).toThrowError(); // TODO better errors;
   });
   test('invalid schema', () => {
     function trySchema(s: any) {
-      expect(() =>
-        createConfigLoader({ assert: 'throw' }).addZodSchema(s),
-      ).toThrowError(); // TODO better errors
+      expect(() => {
+        createConfig({
+          assert: 'throw',
+          loaders: [],
+          schema: s,
+        });
+      }).toThrowError(); // TODO better errors
     }
     trySchema({ hi: 42 });
-    trySchema(null);
-    trySchema(undefined);
+    trySchema(42);
     trySchema(z.string().email());
   });
   test('complex object usage', () => {
@@ -54,10 +64,12 @@ describe('integration tests - zod schema', () => {
       CONF_HI: 'abc',
       CONF_L1__L2__L3: 'def',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addZodSchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
     expect(config).toStrictEqual({
       HI: 'abc',
       L1: { L2: { L3: 'def' } },
@@ -76,10 +88,12 @@ describe('integration tests - zod schema', () => {
       CONF_HELLO_WORLD: 'a',
       'CONF_hi-again': 'a',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addZodSchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
     expect(config).toStrictEqual({
       hi: 'a',
       Hello: 'a',
@@ -95,10 +109,12 @@ describe('integration tests - zod schema', () => {
     setEnv({
       CONF_HI: 'AAAA',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment('CONF_')
-      .addZodSchema(schema)
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      envPrefix: 'CONF_',
+      loaders: [loaders.environment()],
+      schema,
+    });
     expect(config).toStrictEqual({
       hi: 'aaaa',
       hoi: 'yike',

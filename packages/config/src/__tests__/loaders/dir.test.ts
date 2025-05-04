@@ -1,6 +1,7 @@
 import * as PathMod from 'node:path';
 import * as fs from 'node:fs';
-import { getKeysFromDir } from '../../loaders/dir';
+import { runKeyLoader } from '__tests__/test';
+import { loaders } from '../..';
 
 vi.mock('fs', (originalModule) => {
   let files: [string, string][] = [];
@@ -59,7 +60,7 @@ describe('directory loader', () => {
       'f:test2': 'def',
       'f:test3': 'ghi',
     });
-    checkIfArrayHas(getKeysFromDir([{ path: 'test-dir', prefix: '' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.dir('test-dir', { prefix: '' })), [
       { key: 'test1', value: 'abc' },
       { key: 'test2', value: 'def' },
       { key: 'test3', value: 'ghi' },
@@ -73,7 +74,7 @@ describe('directory loader', () => {
       'd:test3': 'ghi',
       's:test4': 'aaaa',
     });
-    checkIfArrayHas(getKeysFromDir([{ path: 'test-dir', prefix: '' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.dir('test-dir', { prefix: '' })), [
       { key: 'test1', value: 'abc' },
       { key: 'test2', value: 'def' },
     ]);
@@ -84,28 +85,9 @@ describe('directory loader', () => {
       'f:test1': 'abc',
       'f:test2': 'def',
     });
-    checkIfArrayHas(getKeysFromDir([{ path: 'test-dir', prefix: 'test' }]), [
+    checkIfArrayHas(runKeyLoader(loaders.dir('test-dir', { prefix: 'test' })), [
       { key: '1', value: 'abc' },
       { key: '2', value: 'def' },
     ]);
-  });
-
-  test('multiple prefixes', () => {
-    mockFiles('test-dir', {
-      'f:test1': 'abc',
-      'f:test2': 'def',
-    });
-    checkIfArrayHas(
-      getKeysFromDir([
-        { path: 'test-dir', prefix: 'test' },
-        { path: 'test-dir', prefix: '' },
-      ]),
-      [
-        { key: 'test1', value: 'abc' },
-        { key: 'test2', value: 'def' },
-        { key: '1', value: 'abc' },
-        { key: '2', value: 'def' },
-      ],
-    );
   });
 });

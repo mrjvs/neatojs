@@ -1,39 +1,13 @@
 import type { AnyZodObject, ZodObjectDef } from 'zod';
-import type { ConfigSchemaType } from 'builder/schema';
-import { LoaderInputError, ValidationError } from 'utils/errors';
-
-export interface ConfigZodSchema {
-  type: ConfigSchemaType.ZOD;
-  schema: AnyZodObject;
-}
-
-export function validateZodSchemaDefintion(schemaData: ConfigZodSchema) {
-  const def = schemaData.schema._def;
-  if (!def) throw new LoaderInputError('Schema not a valid Zod schema');
-  if ((def as any).typeName !== 'ZodObject')
-    throw new LoaderInputError('Base of schema not an object');
-}
-
-export function validateObjectWithZodSchema(
-  obj: Record<string, any>,
-  schemaData: ConfigZodSchema,
-): Record<string, any> {
-  const result = schemaData.schema.safeParse(obj);
-  if (!result.success) {
-    const validations = result.error.issues.map((issue) => ({
-      message: issue.message,
-      path: issue.path.join('.'),
-    }));
-    throw new ValidationError(validations);
-  }
-  return result.data;
-}
+import { ValidationError } from 'utils/errors';
+import { normalizeKey } from 'keys/normalize';
+import type { KeyTransformationMap, SchemaTransformer } from './types';
 
 function recursiveSearchForKeys(
   desc: ZodObjectDef,
   path: string[] = [],
-): string[] {
-  const out: string[] = [];
+): KeyTransformationMap {
+  const out: KeyTransformationMap = [];
   const shape = desc.shape();
   Object.entries(shape).forEach(([k, v]) => {
     const keyArray = [...path, k];
@@ -42,12 +16,39 @@ function recursiveSearchForKeys(
       out.push(...recursiveSearchForKeys(v._def, keyArray));
       return;
     }
-    out.push(keyArray.join('__'));
+    out.push({
+      normalizedKey: normalizeKey(keyArray.join('__')),
+      outputKey: keyArray.join('__'),
+    });
   });
   return out;
 }
 
-export function getKeysFromZodSchema(schemaData: ConfigZodSchema): string[] {
-  const data = recursiveSearchForKeys(schemaData.schema._def);
-  return data;
+export function isZodSchema(schema: any): schema is AnyZodObject {
+  return (
+    typeof schema.safeParse === 'function' &&
+    schema._def &&
+    schema._def.typeName === 'ZodObject'
+  );
+}
+
+export function zodSchemaToTransformer<T>(
+  schema: AnyZodObject,
+): SchemaTransformer<T> {
+  return {
+    extract() {
+      return recursiveSearchForKeys(schema._def);
+    },
+    validate(ctx) {
+      const result = schema.safeParse(ctx.object);
+      if (!result.success) {
+        const validations = result.error.issues.map((issue) => ({
+          message: issue.message,
+          path: issue.path.join('.'),
+        }));
+        throw new ValidationError(validations);
+      }
+      return result.data as T;
+    },
+  };
 }

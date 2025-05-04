@@ -1,0 +1,147 @@
+# Going deeper
+
+The library is designed to be easy to use and understand, but there are some advanced features that aren't immediately obvious. This section will cover some of those features and how to use them effectively.
+
+
+## Loading as strings
+
+The library loads all configuration as strings. This means that if you have a number in your `.env` file, it will be loaded as a string. This is done to ensure that the library can load configuration from any source, including files and environment variables.
+You can configure your schema to convert it back to the expected type.
+
+With Zod, you can easily do this using `z.coerce.number()`. For boolean values you will have to use a helper function provided by the library `zodCoercedBoolean` to coerce the string to a boolean. This is because Zod does not have proper built-in coercion for booleans.
+
+```ts
+import { zodCoercedBoolean } from '@neato/config';
+import { z } from 'zod';
+
+z.object({
+  serverPort: z.coerce.number(),
+  useStrictHeaders: zodCoercedBoolean().default(false),
+})
+```
+
+
+## Nested fields & complex objects
+
+The library supports nested fields and complex objects. This means that you can have nested objects in your configuration, and they will be properly parsed and validated.
+
+To target nested fields inside a flat configuration source like environment variables, you can use double underscores (`__`) to separate the keys. This is a common convention in many libraries and is supported by this library as well.
+
+For example the environment variable `APP__SERVER__PORT=8080` will be parsed as `app.server.port = 8080` in the final configuration object.
+
+
+## Naming convention detection
+
+This library supports multiple naming conventions. If you are using a schema, it detects the naming convention of the schema and uses that.
+
+Here is an example of naming convention detection for a schema:
+
+<CodeGroup>
+  <CodeGroup.Code title="Schema naming conventions">
+    ```ts
+    import { createConfig, loaders } from '@neato/config';
+    import { z } from 'zod';
+
+    /* .env:
+    APP_CAMEL_CASE=one
+    APP_PASCAL_CASE=two
+    APP_SNAKE_CASE=three
+    APP_UPPER_CASE=four
+    */
+
+    // with the following schema and keys, all keys will fit as expected
+    const config = createConfig({
+      envPrefix: 'APP_',
+      loaders: [
+        loaders.file('.env'),
+      ],
+      schema: z.object({
+        camelCase: z.string(),
+        PascalCase: z.string(),
+        snake_case: z.string(),
+        UPPER_CASE: z.string(),
+      })
+    });
+
+    console.log(config);
+    /* {
+      camelCase: 'one',
+      PascalCase: 'two',
+      snake_case: 'three',
+      UPPER_CASE: 'four'
+    } */
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+Keys are also normalized to the schema's naming convention. This means that you don't have to worry about the naming convention of the keys in your configuration files. The library will take care of that for you.
+Here is an example:
+
+<CodeGroup>
+  <CodeGroup.Code title="Key normalization">
+    ```ts
+    import { createConfig, loaders } from '@neato/config';
+    import { z } from 'zod';
+
+    /* .env:
+    APP_keyOne=one
+    APP_KeyTwo=two
+    APP_KEY_THREE=three
+    APP_key_four=four
+    */
+
+    // with the following schema and keys, all keys will fit as expected
+    const config = createConfig({
+      envPrefix: 'APP_', // prefix is fixed naming convention
+      loaders: [
+        loaders.file('.env'),
+      ],
+      schema: z.object({
+        keyOne: z.string(),
+        keyTwo: z.string(),
+        keyThree: z.string(),
+        keyFour: z.string(),
+      })
+    });
+
+    console.log(config);
+    /* {
+      keyOne: 'one',
+      keyTwo: 'two',
+      keyThree: 'three',
+      keyFour: 'four'
+    } */
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+
+## Custom naming conventions
+
+If you are not using a schema, you can set the naming convention manually. This is useful if you are using a custom naming convention or if you want to use a different naming convention for different parts of your configuration.
+Here is an example of setting the naming convention manually:
+
+```ts
+import { createConfig, loaders, naming } from '@neato/config';
+import { z } from 'zod';
+/* .env:
+APP_KEY_ONE=one
+APP_KEY_TWO=two
+*/
+
+// with the following schema and keys, all keys will fit as expected
+const config = createConfig({
+  envPrefix: 'APP_',
+  loaders: [
+    loaders.file('.env'),
+  ],
+  namingConvention: naming.pascalCase, // load keys as PascalCase
+});
+
+console.log(config);
+/* {
+  KeyOne: 'one',
+  KeyTwo: 'two',
+} */
+```
