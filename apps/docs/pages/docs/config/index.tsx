@@ -16,7 +16,7 @@ export default function LandingPage() {
           losing type-safety
         </Hero.Subtitle>
         <Hero.Actions>
-          <Button to="/docs/config/guide/why-neat-config">Get started</Button>
+          <Button to="/docs/config/guide/getting-started">Get started</Button>
           <Button to="https://github.com/mrjvs/neatojs" type="secondary">
             View on GitHub
           </Button>

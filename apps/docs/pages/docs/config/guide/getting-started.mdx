@@ -1,0 +1,61 @@
+# Getting started
+
+`neato/config` is a configuration library for Node.js that allows you to load configuration from multiple sources (.env files, JSON files, environment variables, etc).
+It provides a simple and flexible API for managing configuration, including support for nested configuration and type safety through schema validation.
+
+
+## First steps
+
+Let's get started with `@neato/config`. First lets install the package:
+
+We also install `zod` for schema validation. A schema library is not required, but it is highly recommended to use one for the added type safety and validation.
+
+```sh npm2yarn
+npm i @neato/config zod
+```
+
+Then we can create your configuration loader:
+
+<CodeGroup>
+  <CodeGroup.Code title="config.ts">
+    ```ts
+    import { createConfig, zodCoercedBoolean, loaders } from '@neato/config';
+    import { z } from 'zod';
+
+    export const config = createConfig({
+      envPrefix: 'APP_', // Load environment variables with prefix `APP_`
+      loaders: [
+        loaders.environment(), // Load config from environment variables
+        loaders.cli(), // Load config from CLI arguments
+        loaders.file('.env'), // Load config from .env file
+        loaders.file('config.json'), // Load config from JSON file
+      ],
+      schema: z.object({
+        server: z.object({
+          port: z.coerce.number(),
+        }),
+      })
+    });
+
+    console.log(`Server running on port ${config.server.port}`);
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title=".env">
+    ```sh
+    APP_SERVER__PORT=3000
+    ```
+  </CodeGroup.Code>
+  <CodeGroup.Code title="config.json">
+    ```json
+    {
+      "server": {
+        "port": 3000
+      }
+    }
+    ```
+  </CodeGroup.Code>
+</CodeGroup>
+
+<Note>
+Those are the basics! For more details you can [read the "Going deeper" section](./going-deeper.mdx).
+</Note>

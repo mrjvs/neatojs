@@ -1,53 +1,75 @@
-import type { AnyZodObject, ZodObjectDef } from 'zod';
-import type { ConfigSchemaType } from 'builder/schema';
-import { LoaderInputError, ValidationError } from 'utils/errors';
+import type {
+  ZodDiscriminatedUnionDef,
+  AnyZodObject,
+  ZodDefaultDef,
+  ZodObjectDef,
+} from 'zod';
+import { ZodFirstPartyTypeKind } from 'zod';
+import { ValidationError } from 'utils/errors';
+import { normalizeKey } from 'keys/normalize';
+import type { KeyTransformationMap, SchemaTransformer } from './types';
 
-export interface ConfigZodSchema {
-  type: ConfigSchemaType.ZOD;
-  schema: AnyZodObject;
-}
-
-export function validateZodSchemaDefintion(schemaData: ConfigZodSchema) {
-  const def = schemaData.schema._def;
-  if (!def) throw new LoaderInputError('Schema not a valid Zod schema');
-  if ((def as any).typeName !== 'ZodObject')
-    throw new LoaderInputError('Base of schema not an object');
-}
-
-export function validateObjectWithZodSchema(
-  obj: Record<string, any>,
-  schemaData: ConfigZodSchema,
-): Record<string, any> {
-  const result = schemaData.schema.safeParse(obj);
-  if (!result.success) {
-    const validations = result.error.issues.map((issue) => ({
-      message: issue.message,
-      path: issue.path.join('.'),
-    }));
-    throw new ValidationError(validations);
-  }
-  return result.data;
-}
+// This only holds special cases -- more cases can be added as needed
+type SupportedZodTypeDef =
+  | ZodObjectDef
+  | ZodDefaultDef
+  | ZodDiscriminatedUnionDef<string>;
 
 function recursiveSearchForKeys(
-  desc: ZodObjectDef,
+  def: SupportedZodTypeDef,
   path: string[] = [],
-): string[] {
-  const out: string[] = [];
-  const shape = desc.shape();
-  Object.entries(shape).forEach(([k, v]) => {
-    const keyArray = [...path, k];
-    // TODO potentionally does not work with list of options or something like that
-    if (v._def.typeName === 'ZodObject') {
-      out.push(...recursiveSearchForKeys(v._def, keyArray));
-      return;
-    }
-    out.push(keyArray.join('__'));
-  });
-  return out;
+): KeyTransformationMap {
+  if (def.typeName === ZodFirstPartyTypeKind.ZodObject) {
+    const shape = def.shape();
+    const entries = Object.entries(shape);
+    return entries.flatMap(([k, v]) => {
+      return recursiveSearchForKeys(v._def, [...path, k]);
+    });
+  }
+
+  if (def.typeName === ZodFirstPartyTypeKind.ZodDiscriminatedUnion) {
+    return def.options.flatMap((objType) =>
+      recursiveSearchForKeys(objType._def, path),
+    );
+  }
+
+  if (def.typeName === ZodFirstPartyTypeKind.ZodDefault) {
+    return recursiveSearchForKeys(def.innerType._def, path);
+  }
+
+  return [
+    {
+      normalizedKey: normalizeKey(path.join('__')),
+      outputKey: path.join('__'),
+    },
+  ];
 }
 
-export function getKeysFromZodSchema(schemaData: ConfigZodSchema): string[] {
-  const data = recursiveSearchForKeys(schemaData.schema._def);
-  return data;
+export function isZodSchema(schema: any): schema is AnyZodObject {
+  return (
+    typeof schema.safeParse === 'function' &&
+    schema._def &&
+    schema._def.typeName === 'ZodObject'
+  );
+}
+
+export function zodSchemaToTransformer<T>(
+  schema: AnyZodObject,
+): SchemaTransformer<T> {
+  return {
+    extract() {
+      return recursiveSearchForKeys(schema._def);
+    },
+    validate(ctx) {
+      const result = schema.safeParse(ctx.object);
+      if (!result.success) {
+        const validations = result.error.issues.map((issue) => ({
+          message: issue.message,
+          path: issue.path.join('.'),
+        }));
+        throw new ValidationError(validations);
+      }
+      return result.data as T;
+    },
+  };
 }

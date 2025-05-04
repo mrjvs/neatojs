@@ -1,5 +1,5 @@
 import { setEnv } from '__tests__/test';
-import { createConfigLoader } from '../..';
+import { createConfig, loaders } from '../..';
 
 describe('integration tests - freezing', () => {
   test('without freeze', () => {
@@ -7,10 +7,11 @@ describe('integration tests - freezing', () => {
       L1__L2__L3: 'test',
       HI: 'test2',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment()
-      .unfreeze()
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      loaders: [loaders.environment()],
+      freeze: false,
+    });
     expect(config).toStrictEqual({
       l1: { l2: { l3: 'test' } },
       hi: 'test2',
@@ -29,9 +30,10 @@ describe('integration tests - freezing', () => {
     setEnv({
       HI: 'test2',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment()
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      loaders: [loaders.environment()],
+    });
     expect(config).toStrictEqual({
       hi: 'test2',
     });
@@ -39,7 +41,8 @@ describe('integration tests - freezing', () => {
     // testing freeze
     expect(Object.isFrozen(config)).toBe(true);
     expect(() => {
-      (config as any).hi = 'HELLO WORLD';
+      // @ts-expect-error -- its a reaodnly object and we expect it to throw for this test
+      config.hi = 'HELLO WORLD';
     }).toThrowError(); // in strict mode readonly objects throw typeError when assigned
     expect(config).toStrictEqual({
       hi: 'test2',
@@ -51,9 +54,10 @@ describe('integration tests - freezing', () => {
       L1__L2__L3: 'test',
       HI: 'test2',
     });
-    const config = createConfigLoader({ assert: 'throw' })
-      .addFromEnvironment()
-      .load();
+    const config = createConfig({
+      assert: 'throw',
+      loaders: [loaders.environment()],
+    });
     expect(config).toStrictEqual({
       l1: { l2: { l3: 'test' } },
       hi: 'test2',
@@ -64,8 +68,9 @@ describe('integration tests - freezing', () => {
     expect(Object.isFrozen(config.l1)).toBe(true);
     expect(Object.isFrozen(config.l1.l2)).toBe(true);
     expect(() => {
-      (config as any).hi = 'HELLO WORLD';
-      (config as any).l1.l2.l3 = 'more tests';
+      // @ts-expect-error -- its a reaodnly object and we expect it to throw for this test
+      config.hi = 'HELLO WORLD';
+      config.l1.l2.l3 = 'more tests';
     }).toThrowError(); // in strict mode readonly objects throw typeError when assigned
     expect(config).toStrictEqual({
       l1: { l2: { l3: 'test' } },
