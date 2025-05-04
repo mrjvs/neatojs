@@ -86,7 +86,7 @@ function buildConfig<TSchema extends ConfigSchema<any>>(
   if (ops.presets) {
     const presets = extractUsedPresets(ops.presetKey, keys);
     const keysFromPresets = expandPresets(ops.presets, presets.selectedPresets);
-    keys = [...keysFromPresets, ...presets.keys]; // placed at the front to allow overrides
+    keys = normalizeKeys([...keysFromPresets, ...presets.keys]); // placed at the front to allow overrides
   }
 
   // translate normalized keys to output keys and build object
