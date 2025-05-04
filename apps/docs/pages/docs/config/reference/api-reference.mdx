@@ -28,6 +28,8 @@ const config = createConfig({
   Find all the built-in loaders [here](../api/loaders.mdx).
 </Field>
 <Field title="schema" type="SchemaTransformer<T> | ZodSchema | JoiSchema | undefined">
+  - Default: `undefined`
+
   The schema to use for validation and transformation of the configuration object. The schema is used to validate the final configuration object and transform it to the expected type.
 
   You can use Zod, Joi or custom schemas. The schema is optional, but it is recommended to use it to ensure the configuration is valid and has the expected types.
@@ -35,6 +37,8 @@ const config = createConfig({
   Naming conventions are automatically detected from the schema, read more [about naming conventions here](../guide/going-deeper.mdx#naming-convention-detection).
 </Field>
 <Field title="envPrefix" type="string?">
+  - Default: `""`
+
   This is the prefix to use for environment variables. If it is set, the prefix is used to filter the environment variables that are loaded by the environment variable based loaders.
 
   If no prefix is set, all environment variables are loaded. Loading all environment variables is not recommended as it will load variables that are unrelated to your app.
@@ -42,9 +46,13 @@ const config = createConfig({
   The prefix is stripped from the environment variable names before they are processed. This means that if you have an environment variable `APP_SERVER__PORT`, it will be parsed as `SERVER__PORT`.
 </Field>
 <Field title="freeze" type="boolean?">
+  - Default: `true`
+
   This option is used to freeze or unfreeze the configuration object. By default, the configuration object is deep frozen to prevent accidental mutations. If you set this option to `false`, the configuration object will not be frozen and can be mutated.
 </Field>
 <Field title="assert" type="string | ((error: NeatConfigError) => void) | undefined">
+  - Default: `"pretty"`
+
   This option is used to handle errors. By default it is set to `pretty`, which means the library will exit with a colored and formatted error message in the console. You can change this behaviour by setting the `assert` option to `plain` (plain text) or `throw` (throws an error).
 
   Alternatively, you can set this option to a function that will be called with the error object. Use this to implement custom error handling logic, such as logging the error to a file or sending it to an external service.
@@ -52,16 +60,22 @@ const config = createConfig({
   Read more about [error handling here](../guide/error-handling.mdx).
 </Field>
 <Field title="namingConvention" type="NamingConventionFunc?">
+  - Default: `naming.camelCase`
+
   This option is used to set the naming convention for the configuration object. By default, the library will detect the naming convention from the schema. If you don't have a schema, you can use this option to set the default naming convention.
 
   There are a few [built-in naming conventions](#naming), you can use those or create your own by passing a function.
 </Field>
 <Field title="presetKey" type="string?">
+  - Default: `"configPresets"`
+
   When using presets, this is they key used to identify which presets to load. It defaults to `configPresets`, meaning you can use `CONFIG_PRESETS=abc,foo` to load the `abc` and `foo` presets.
 
   You don't need to set this option if you are not using presets.
 </Field>
 <Field title="presets" type="Record<string, Preset>?">
+  - Default: `undefined`
+
   An object containing the presets to use. Presets are a way to make standardize your configuration and make it easier to use in different environments. You can use presets to load different configurations for different environments, such as local development, dev containers, or similar.
 </Field>
 
