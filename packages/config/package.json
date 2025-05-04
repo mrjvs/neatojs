@@ -1,16 +1,12 @@
 {
   "name": "@neato/config",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Cloud-native type-safe configuration",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**"
   ],
   "type": "module",
   "homepage": "https://neatojs.com/docs/config",
-  "repository": "https://github.com/mrjvs/neatojs",
   "bugs": {
     "url": "https://github.com/mrjvs/neatojs/issues"
   },
@@ -24,12 +20,12 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     }
   },
