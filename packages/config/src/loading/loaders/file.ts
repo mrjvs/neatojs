@@ -69,7 +69,7 @@ export function getKeysFromFile(
     return [];
   }
 
-  const parser = fileParsers[type];
+  const parser = fileParsers[parserType];
   return parser(data, prefix);
 }
 
