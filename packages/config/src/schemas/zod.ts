@@ -1,27 +1,50 @@
-import type { AnyZodObject, ZodObjectDef } from 'zod';
+import type {
+  ZodDiscriminatedUnionDef,
+  AnyZodObject,
+  ZodDefaultDef,
+  ZodObjectDef,
+} from 'zod';
+import { ZodFirstPartyTypeKind } from 'zod';
 import { ValidationError } from 'utils/errors';
 import { normalizeKey } from 'keys/normalize';
 import type { KeyTransformationMap, SchemaTransformer } from './types';
 
+// This only holds special cases -- more cases can be added as needed
+type SupportedZodTypeDef =
+  | ZodObjectDef
+  | ZodDefaultDef
+  | ZodDiscriminatedUnionDef<string>;
+
 function recursiveSearchForKeys(
-  desc: ZodObjectDef,
+  def: SupportedZodTypeDef,
   path: string[] = [],
 ): KeyTransformationMap {
-  const out: KeyTransformationMap = [];
-  const shape = desc.shape();
-  Object.entries(shape).forEach(([k, v]) => {
-    const keyArray = [...path, k];
-    // TODO potentionally does not work with list of options or something like that
-    if (v._def.typeName === 'ZodObject') {
-      out.push(...recursiveSearchForKeys(v._def, keyArray));
-      return;
-    }
-    out.push({
-      normalizedKey: normalizeKey(keyArray.join('__')),
-      outputKey: keyArray.join('__'),
+  if (def.typeName === ZodFirstPartyTypeKind.ZodObject) {
+    const shape = def.shape();
+    const entries = Object.entries(shape);
+    const newKeys = entries.map(([k, v]) => {
+      return recursiveSearchForKeys(v._def, [...path, k]);
     });
-  });
-  return out;
+    return newKeys.flat();
+  }
+
+  if (def.typeName === ZodFirstPartyTypeKind.ZodDiscriminatedUnion) {
+    const newKeys = def.options.map((objType) =>
+      recursiveSearchForKeys(objType._def, path),
+    );
+    return newKeys.flat();
+  }
+
+  if (def.typeName === ZodFirstPartyTypeKind.ZodDefault) {
+    return recursiveSearchForKeys(def.innerType._def, path);
+  }
+
+  return [
+    {
+      normalizedKey: normalizeKey(path.join('__')),
+      outputKey: path.join('__'),
+    },
+  ];
 }
 
 export function isZodSchema(schema: any): schema is AnyZodObject {

@@ -14,6 +14,16 @@ describe('schemas - zod schema', () => {
             my_key: z.string().default('default'),
           })
           .default({}),
+        obj_three: z.discriminatedUnion('type', [
+          z.object({
+            type: z.literal('type_one'),
+            my_first_key: z.string(),
+          }),
+          z.object({
+            type: z.literal('type_two'),
+            my_second_key: z.string(),
+          }),
+        ]),
       }),
     );
     const keys = schema.extract();
@@ -28,6 +38,18 @@ describe('schemas - zod schema', () => {
     expect(keys).toContainEqual({
       normalizedKey: 'OBJ_TWO__MY_KEY',
       outputKey: 'obj_two__my_key',
+    });
+    expect(keys).toContainEqual({
+      normalizedKey: 'OBJ_THREE__TYPE',
+      outputKey: 'obj_three__type',
+    });
+    expect(keys).toContainEqual({
+      normalizedKey: 'OBJ_THREE__MY_FIRST_KEY',
+      outputKey: 'obj_three__my_first_key',
+    });
+    expect(keys).toContainEqual({
+      normalizedKey: 'OBJ_THREE__MY_SECOND_KEY',
+      outputKey: 'obj_three__my_second_key',
     });
   });
 });
