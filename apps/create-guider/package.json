@@ -47,7 +47,7 @@
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20.11.19",
     "concurrently": "^8.2.2",
-    "tsup": "7.2.0",
+    "tsup": "8.5.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
