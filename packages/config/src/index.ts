@@ -9,6 +9,8 @@ export {
 } from 'utils/errors';
 export { normalizeKey } from 'keys/normalize';
 export { zodCoercedBoolean } from 'utils/zod';
+export { zodSchemaToTransformer } from 'schemas/zod';
+export { joiSchemaToTransformer } from 'schemas/joi';
 
 export type { ConfigCreatorOptions, ConfigAssertionType } from 'entrypoint';
 export type {
