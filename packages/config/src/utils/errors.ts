@@ -46,7 +46,7 @@ function makeFancyError(ops: FancyErrorOptions) {
 
 export interface Validation {
   message: string;
-  path: string;
+  path: string | undefined;
 }
 
 export class ValidationError extends NeatConfigError {

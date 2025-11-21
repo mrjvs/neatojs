@@ -1,6 +1,6 @@
 {
   "name": "@neato/config",
-  "version": "4.0.4",
+  "version": "4.1.0",
   "description": "Cloud-native type-safe configuration",
   "files": [
     "dist/**"
@@ -55,9 +55,10 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@standard-schema/spec": "^1.0.0",
     "chalk": "^4.1.2",
     "dotenv": "^16.4.1",
     "joi": "^17",
-    "zod": "^3"
+    "zod": "^3.25.0 || ^4.0.0"
   }
 }
