@@ -27,12 +27,19 @@ const config = createConfig({
 
   Find all the built-in loaders [here](../api/loaders.mdx).
 </Field>
-<Field title="schema" type="SchemaTransformer<T> | ZodSchema | JoiSchema | undefined">
+<Field title="schema" type="SchemaTransformer<T> | ZodSchema | JoiSchema | StandardSchema | undefined">
   - Default: `undefined`
 
   The schema to use for validation and transformation of the configuration object. The schema is used to validate the final configuration object and transform it to the expected type.
 
-  You can use Zod, Joi or custom schemas. The schema is optional, but it is recommended to use it to ensure the configuration is valid and has the expected types.
+  The schema is optional, but it is recommended to use it to ensure the configuration is valid and has the expected types.
+
+  Supported schemas:
+    - Zod v3
+    - Zod v4
+    - Joi
+    - A schema that implements the [Standard Schema](https://standardschema.dev/) interface.
+    - [Custom schemas](../guide/plugins.mdx#custom-schemas)
 
   Naming conventions are automatically detected from the schema, read more [about naming conventions here](../guide/going-deeper.mdx#naming-convention-detection).
 </Field>
