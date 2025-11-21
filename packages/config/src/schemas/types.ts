@@ -1,10 +1,13 @@
 import type Joi from 'joi';
-import type { AnyZodObject, z } from 'zod';
+import type * as z3 from 'zod/v3';
+import type * as z4 from 'zod/v4/core';
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type { KeyCollection } from 'loading/types';
 import type { DeepReadonly } from 'utils/freeze';
 import type { NormalizedConfigCreatorOptions } from 'entrypoint';
 
-export type ZodSchema = AnyZodObject;
+export type ZodV3Schema = z3.ZodTypeAny;
+export type ZodV4Schema = z4.$ZodType;
 export type JoiSchema<T = any> = Joi.Schema<T>;
 
 export type KeyTransformationMap = {
@@ -34,11 +37,26 @@ export type SchemaTransformer<T> = {
   validate: (ctx: SchemaTransformerContext) => T;
 };
 
-export type ConfigSchema<T> = SchemaTransformer<T> | ZodSchema | JoiSchema<T>;
+export type ConfigSchema<T> =
+  | SchemaTransformer<T>
+  | ZodV3Schema
+  | ZodV4Schema
+  | StandardSchemaV1
+  | JoiSchema<T>;
 
-export type InferConfigSchemaType<T extends ConfigSchema<any>> =
-  T extends ZodSchema
-    ? z.infer<T>
+export type InferZodConfigSchemaType<T extends ZodV3Schema | ZodV4Schema> =
+  T extends ZodV4Schema
+    ? z4.infer<T>
+    : T extends ZodV3Schema
+      ? z3.infer<T>
+      : never;
+
+export type InferConfigSchemaType<T extends ConfigSchema<any>> = T extends
+  | ZodV3Schema
+  | ZodV4Schema
+  ? InferZodConfigSchemaType<T>
+  : T extends StandardSchemaV1
+    ? StandardSchemaV1.InferOutput<T>
     : T extends JoiSchema<infer Result>
       ? Result
       : T extends SchemaTransformer<infer Result>

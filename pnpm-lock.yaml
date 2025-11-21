@@ -152,6 +152,9 @@ importers:
 
   packages/config:
     dependencies:
+      '@standard-schema/spec':
+        specifier: ^1.0.0
+        version: 1.0.0
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -162,8 +165,8 @@ importers:
         specifier: ^17
         version: 17.12.1
       zod:
-        specifier: ^3
-        version: 3.22.4
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -1503,6 +1506,10 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
+
+  /@standard-schema/spec@1.0.0:
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
+    dev: false
 
   /@swc/helpers@0.5.2:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
@@ -7681,6 +7688,10 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false
+
+  /zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
     dev: false
 
   /zustand@4.5.2(@types/react@18.2.56)(react@18.2.0):
