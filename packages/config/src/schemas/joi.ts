@@ -24,7 +24,9 @@ function recursiveSearchForKeys(
 
 export function isJoiSchema(schema: any): schema is Schema {
   return (
-    typeof schema.describe === 'function' && schema.describe().type === 'object'
+    typeof schema.describe === 'function' &&
+    schema.describe().type === 'object' &&
+    Boolean(schema.$_root)
   );
 }
 
