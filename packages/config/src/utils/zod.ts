@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
-export const zodCoercedBoolean = () =>
+export const zodV3CoercedBoolean = () =>
   z.preprocess((val) => {
     if (typeof val === 'boolean') return val;
     if (typeof val !== 'string') return false;

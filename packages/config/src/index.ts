@@ -8,7 +8,10 @@ export {
   LoaderInputError,
 } from 'utils/errors';
 export { normalizeKey } from 'keys/normalize';
-export { zodCoercedBoolean } from 'utils/zod';
+export {
+  zodV3CoercedBoolean,
+  zodV3CoercedBoolean as zodCoercedBoolean,
+} from 'utils/zod';
 export {
   zodV3SchemaToTransformer,
   zodV3SchemaToTransformer as zodSchemaToTransformer,
