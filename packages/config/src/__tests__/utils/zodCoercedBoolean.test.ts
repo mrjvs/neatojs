@@ -1,8 +1,8 @@
-import { zodCoercedBoolean } from '../..';
+import { zodV3CoercedBoolean } from '../..';
 
-describe('zodCoercedBoolean()', () => {
+describe('zodV3CoercedBoolean()', () => {
   function check(val: any) {
-    return expect(zodCoercedBoolean().parse(val));
+    return expect(zodV3CoercedBoolean().parse(val));
   }
 
   test('Basic usage', () => {

@@ -3,8 +3,8 @@ import type {
   AnyZodObject,
   ZodDefaultDef,
   ZodObjectDef,
-} from 'zod';
-import { ZodFirstPartyTypeKind } from 'zod';
+} from 'zod/v3';
+import { ZodFirstPartyTypeKind } from 'zod/v3';
 import { ValidationError } from 'utils/errors';
 import { normalizeKey } from 'keys/normalize';
 import type { KeyTransformationMap, SchemaTransformer } from './types';
@@ -45,7 +45,7 @@ function recursiveSearchForKeys(
   ];
 }
 
-export function isZodSchema(schema: any): schema is AnyZodObject {
+export function isZodV3Schema(schema: any): schema is AnyZodObject {
   return (
     typeof schema.safeParse === 'function' &&
     schema._def &&
@@ -53,7 +53,7 @@ export function isZodSchema(schema: any): schema is AnyZodObject {
   );
 }
 
-export function zodSchemaToTransformer<T>(
+export function zodV3SchemaToTransformer<T>(
   schema: AnyZodObject,
 ): SchemaTransformer<T> {
   return {

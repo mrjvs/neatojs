@@ -56,6 +56,23 @@ Then we can create your configuration loader:
   </CodeGroup.Code>
 </CodeGroup>
 
+
+## Choosing a schema
+
+While a schema is optional, it's highly recommended. These are the supported schemas:
+- Zod v3
+- Zod v4
+- Joi
+- Schemas that implements the [Standard Schema](https://standardschema.dev/) interface.
+
+<Caution>
+Schema that aren't in the above list but are implementing the `Standard Schema` interface do not have naming convention detection. You can [set up naming conventions](../guide/going-deeper.mdx#custom-naming-conventions) manually to make it work.
+</Caution>
+
+If you want something custom, you can also [implement your own](../guide/plugins.mdx#custom-schemas) very easily.
+
+---
+
 <Note>
 Those are the basics! For more details you can [read the "Going deeper" section](./going-deeper.mdx).
 </Note>

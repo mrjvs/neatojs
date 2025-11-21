@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { setEnv } from '__tests__/test';
 import { createConfig, loaders } from '../..';
 
-describe('integration tests - zod schema', () => {
+describe('integration tests - zod schema v3', () => {
   test('normal usage, valid', () => {
     setEnv({
       CONF_HI: 'test2',
